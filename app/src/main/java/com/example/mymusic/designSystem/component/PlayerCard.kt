@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
 import com.example.mymusic.data.Track
+import com.example.mymusic.designSystem.icon.MyMusicIcons
 import com.example.mymusic.designSystem.theme.MyMusicTheme
 
 @Composable
@@ -84,7 +85,7 @@ fun PlayerCard(
                         modifier = Modifier.size(50.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Rounded.SkipPrevious,
+                            imageVector = MyMusicIcons.SkipPrevious,
                             contentDescription = stringResource(id = R.string.skip_previous),
                             modifier = Modifier.size(50.dp)
                         )
@@ -95,7 +96,7 @@ fun PlayerCard(
                             modifier = Modifier.size(50.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.Rounded.PlayArrow,
+                                imageVector = MyMusicIcons.Play,
                                 contentDescription = stringResource(id = R.string.skip_previous),
                                 modifier = Modifier.size(50.dp)
                             )
@@ -106,7 +107,7 @@ fun PlayerCard(
                             modifier = Modifier.size(50.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.Rounded.Pause,
+                                imageVector = MyMusicIcons.Pause,
                                 contentDescription = stringResource(id = R.string.skip_previous),
                                 modifier = Modifier.size(50.dp)
                             )
@@ -117,7 +118,7 @@ fun PlayerCard(
                         modifier = Modifier.size(50.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Rounded.SkipNext,
+                            imageVector = MyMusicIcons.SkipNext,
                             contentDescription = stringResource(id = R.string.skip_next),
                             modifier = Modifier.size(50.dp)
                         )
