@@ -133,7 +133,7 @@ fun PlayerCard(
 @Composable
 fun PlayerCardPreview() {
     MyMusicTheme {
-        val mockTrack = Track(cover = R.drawable.screenshot_2024_02_18_at_15_28_12_todays_top_hits)
+        val mockTrack = Track("0", cover = R.drawable.screenshot_2024_02_18_at_15_28_12_todays_top_hits)
         PlayerCard(mockTrack.cover, mockTrack.name, mockTrack.artist, false)
     }
 }

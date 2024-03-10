@@ -3,6 +3,7 @@ package com.example.mymusic.ui.home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -15,6 +16,8 @@ import com.example.mymusic.ui.library.LIBRARY_ROUTE
 import com.example.mymusic.ui.library.navigateToLibrary
 import com.example.mymusic.ui.search.SEARCH_ROUTE
 import com.example.mymusic.ui.search.navigateToSearch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun rememberMyMusicAppState(
@@ -32,13 +35,10 @@ fun rememberMyMusicAppState(
 class MyMusicAppState(
     val navController: NavHostController
 ) {
-    val currentTrack = Track(R.drawable.dua_lipa___future_nostalgia__official_album_cover_)
+    val currentTrack = Track("0", R.drawable.dua_lipa___future_nostalgia__official_album_cover_)
     val user = User("0", "Polina", R.drawable.dua_lipa___future_nostalgia__official_album_cover_)
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
-
-    val shouldShowBottomBar = true
-    val shouldShowPlayerCard = true
 
     val currentDestination: NavDestination?
         @Composable get() = navController

@@ -5,5 +5,5 @@ import com.example.mymusic.R
 import com.example.mymusic.data.Track
 
 class PlayerViewModel: ViewModel() {
-    val playingTrack = Track(cover = R.drawable.images)
+    val playingTrack = Track("0", cover = R.drawable.images)
 }

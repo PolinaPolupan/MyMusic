@@ -1,5 +1,6 @@
 package com.example.mymusic.ui.home
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +10,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -30,11 +37,13 @@ import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 
+@SuppressLint("NewApi")
 @Composable
 fun MyMusicApp(
     appState: MyMusicAppState = rememberMyMusicAppState()
 ) {
     val hazeState = remember { HazeState() }
+    val destination = appState.currentTopLevelDestination
     Box(
         contentAlignment = Alignment.BottomCenter,
         modifier = Modifier
@@ -55,7 +64,8 @@ fun MyMusicApp(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (appState.shouldShowPlayerCard) {
+            // Show on top level destinations.
+            if (destination != null) {
                 PlayerCard(
                     cover = currentTrack.cover,
                     name = currentTrack.name,
@@ -67,8 +77,6 @@ fun MyMusicApp(
                         style = HazeStyle(tint = MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.2f))
                     )
                 )
-            }
-            if (appState.shouldShowBottomBar) {
                 BottomNavigationBar(
                     destinations = appState.topLevelDestinations,
                     onNavigateToDestination = appState::navigateToTopLevelDestination,
@@ -131,7 +139,7 @@ fun BottomNavigationBar(
     }
 }
 
-private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
+fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
     this?.hierarchy?.any {
         it.route?.contains(destination.name, true) ?: false
     } ?: false

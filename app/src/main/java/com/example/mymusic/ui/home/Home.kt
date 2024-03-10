@@ -61,6 +61,7 @@ import kotlin.math.absoluteValue
 
 @Composable
 fun Home(
+    onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = HomeViewModel()
 ) {
@@ -72,6 +73,7 @@ fun Home(
             topPicks = viewModel.topPicks,
             recentlyPlayed = viewModel.recentlyPlayed,
             artists = viewModel.artists,
+            onTrackClick = onTrackClick,
             modifier = modifier
                 .verticalScroll(rememberScrollState())
         )
@@ -84,6 +86,7 @@ fun HomeContent(
     topPicks: List<Track>,
     artists: List<TempArtist>,
     recentlyPlayed: List<Track>,
+    onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     MyMusicHomeBackground(modifier = modifier) {
@@ -97,11 +100,17 @@ fun HomeContent(
                 onAvatarClick = { /*TODO*/ },
                 avatarImageRes = R.drawable.ic_launcher_background
             )
-            TopPicks(topPicks = topPicks)
+            TopPicks(
+                onTrackClick = onTrackClick,
+                topPicks = topPicks
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            RecentlyPlayed(recentlyPlayed = recentlyPlayed)
+            RecentlyPlayed(
+                recentlyPlayed = recentlyPlayed,
+                onTrackClick = onTrackClick
+            )
             for (artist in artists) {
-                MoreLikeArtist(artist = artist)
+                MoreLikeArtist(artist = artist, onTrackClick = onTrackClick)
             }
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.bottom_bar_height)))
         }
@@ -112,6 +121,7 @@ fun HomeContent(
 @Composable
 fun TopPicks(
     topPicks: List<Track>,
+    onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val surfaceColor = MaterialTheme.colorScheme.surface
@@ -158,7 +168,7 @@ fun TopPicks(
                     cover = topPicks[page % topPicks.size].cover,
                     name = topPicks[page % topPicks.size].name,
                     artist = topPicks[page % topPicks.size].artist,
-                    onClick = {/*TODO*/ },
+                    onClick = { onTrackClick(topPicks[page % topPicks.size].id) },
                     modifier = Modifier
                         .size(
                             dimensionResource(id = R.dimen.top_picks_card_min_size)
@@ -205,6 +215,7 @@ fun TopPicks(
 @Composable
 fun RecentlyPlayed(
     recentlyPlayed: List<Track>,
+    onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -217,7 +228,10 @@ fun RecentlyPlayed(
                     vertical = dimensionResource(id = R.dimen.padding_small)
                 )
         )
-        TrackCarousel(tracks = recentlyPlayed)
+        TrackCarousel(
+            tracks = recentlyPlayed,
+            onTrackClick = onTrackClick
+        )
     }
 }
 
@@ -225,6 +239,7 @@ fun RecentlyPlayed(
 @Composable
 fun TrackCarousel(
     tracks: List<Track>,
+    onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val pageCount = tracks.size
@@ -243,7 +258,7 @@ fun TrackCarousel(
             name = tracks[page].name,
             artist = tracks[page].artist,
             cover = tracks[page].cover,
-            onClick = { /*TODO*/ }
+            onClick = { onTrackClick(tracks[page].id) }
         )
     }
 }
@@ -359,6 +374,7 @@ fun TrackCard(
 @Composable
 fun MoreLikeArtist(
     artist: TempArtist,
+    onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.padding(vertical = 16.dp)) {
@@ -367,7 +383,7 @@ fun MoreLikeArtist(
             picture = artist.picture,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
-        TrackCarousel(tracks = artist.topTracks)
+        TrackCarousel(tracks = artist.topTracks, onTrackClick = onTrackClick)
     }
 }
 
@@ -417,32 +433,33 @@ fun ArtistHeaderPreview() {
 fun HomePreview() {
     MyMusicTheme {
         HomeContent(
+            onTrackClick = {},
             topPicks = listOf(
-                Track(R.drawable.dua_lipa___future_nostalgia__official_album_cover_),
-                Track(R.drawable.images),
-                Track(R.drawable.screenshot_2024_02_18_at_15_27_40_todays_top_hits)
+                Track("0", R.drawable.dua_lipa___future_nostalgia__official_album_cover_),
+                Track("0",R.drawable.images),
+                Track("0",R.drawable.screenshot_2024_02_18_at_15_27_40_todays_top_hits)
             ),
             recentlyPlayed = listOf(
-                Track(R.drawable.dua_lipa___future_nostalgia__official_album_cover_),
-                Track(R.drawable.images),
-                Track(R.drawable.screenshot_2024_02_18_at_15_27_40_todays_top_hits)
+                Track("0",R.drawable.dua_lipa___future_nostalgia__official_album_cover_),
+                Track("0",R.drawable.images),
+                Track("0",R.drawable.screenshot_2024_02_18_at_15_27_40_todays_top_hits)
             ),
             artists = listOf(
                 TempArtist(
                 name = "Dua Lipa",
                 picture = R.drawable.dua_lipa___future_nostalgia__official_album_cover_,
                     topTracks = listOf(
-                        Track(R.drawable.dua_lipa___future_nostalgia__official_album_cover_),
-                        Track(R.drawable.images),
-                        Track(R.drawable.screenshot_2024_02_18_at_15_27_40_todays_top_hits)
+                        Track("0",R.drawable.dua_lipa___future_nostalgia__official_album_cover_),
+                        Track("0",R.drawable.images),
+                        Track("0",R.drawable.screenshot_2024_02_18_at_15_27_40_todays_top_hits)
                     )),
                 TempArtist(
                     name = "Dua Lipa",
                     picture = R.drawable.dua_lipa___future_nostalgia__official_album_cover_,
                     topTracks = listOf(
-                        Track(R.drawable.dua_lipa___future_nostalgia__official_album_cover_),
-                        Track(R.drawable.images),
-                        Track(R.drawable.screenshot_2024_02_18_at_15_27_40_todays_top_hits)
+                        Track("0", R.drawable.dua_lipa___future_nostalgia__official_album_cover_),
+                        Track("0", R.drawable.images),
+                        Track("0", R.drawable.screenshot_2024_02_18_at_15_27_40_todays_top_hits)
                     )),
                 )
         )

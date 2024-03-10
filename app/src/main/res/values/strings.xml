@@ -23,4 +23,6 @@
     <string name="sort">Sort</string>
     <string name="sort_by">Sort by</string>
     <string name="sort_option_selection_desc">Current sort option</string>
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="more">More</string>
 </resources>

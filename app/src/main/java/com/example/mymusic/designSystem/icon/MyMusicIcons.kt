@@ -1,6 +1,10 @@
 package com.example.mymusic.designSystem.icon
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ChevronLeft
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SkipNext
@@ -36,5 +40,7 @@ object MyMusicIcons {
     val SkipNext = Icons.Filled.SkipNext
     val Play = Icons.Filled.PlayArrow
     val Pause = Icons.Filled.Pause
+    val Add = Icons.Filled.Add
+    val ArrowDropDown = Icons.Filled.KeyboardArrowDown
 }
 
