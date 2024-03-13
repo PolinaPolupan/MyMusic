@@ -25,4 +25,6 @@
     <string name="sort_option_selection_desc">Current sort option</string>
     <string name="add_to_playlist">Add to playlist</string>
     <string name="more">More</string>
+    <string name="is_checked">Is checked</string>
+    <string name="done">Done</string>
 </resources>

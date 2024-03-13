@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +42,7 @@ import com.example.mymusic.designSystem.component.ScreenHeader
 import com.example.mymusic.designSystem.component.Sort
 import com.example.mymusic.designSystem.component.SortBottomSheet
 import com.example.mymusic.designSystem.component.SortOption
+import com.example.mymusic.designSystem.icon.MyMusicIcons
 import com.example.mymusic.designSystem.theme.MyMusicTheme
 
 @Composable
@@ -104,14 +108,15 @@ fun LibraryContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun PlaylistCard(
+fun PlaylistCard(
     name: String,
     owner: String,
     @DrawableRes coverRes: Int,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isSelectable: Boolean = false,
+    isSelected: Boolean = false
 ) {
     ClippedShadowCard(
         elevation = 8.dp,
@@ -147,6 +152,13 @@ private fun PlaylistCard(
                 Text(
                     text = stringResource(id = R.string.playlist_label, owner),
                     style = MaterialTheme.typography.titleSmall
+                )
+            }
+            if (isSelectable && isSelected) {
+                Icon(
+                    imageVector = MyMusicIcons.Check,
+                    contentDescription = stringResource(id = R.string.is_checked),
+                    modifier = Modifier.padding(16.dp)
                 )
             }
         }
