@@ -18,7 +18,7 @@ package com.example.mymusic.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.mymusic.R
-import com.example.mymusic.designSystem.icon.MyMusicIcons
+import com.example.mymusic.core.designSystem.icon.MyMusicIcons
 
 /**
  * Type for the top level destinations in the application. Each of these destinations

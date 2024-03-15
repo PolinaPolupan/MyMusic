@@ -5,13 +5,13 @@
       <entry key="AddToPlayListPreview">
         <State />
       </entry>
+      <entry key="HomePreview (tracksResource 0)">
+        <State />
+      </entry>
       <entry key="LibraryPreview">
         <State />
       </entry>
       <entry key="PlayerPreview">
-        <State />
-      </entry>
-      <entry key="SearchPreview">
         <State />
       </entry>
       <entry key="SortBottomSheetPreview">
@@ -32,6 +32,9 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-02-24T11:00:16.726934200Z" />
         </State>
+      </entry>
+      <entry key="app.feature">
+        <State />
       </entry>
     </value>
   </component>
