@@ -4,21 +4,6 @@ import com.example.mymusic.core.model.Artist
 import com.example.mymusic.core.model.Track
 
 object PreviewParameterData {
-    val moreLikeArtists = mapOf<Artist, List<Track>>(
-
-    )
-    val artists = listOf(
-        Artist(
-            id = "0",
-            name = "BLACKPINK",
-            imageUrl = "https://i.scdn.co/image/ab6761610000f178c9690bc711d04b3d4fd4b87c"
-        ),
-        Artist(
-            id = "1",
-            name = "Adele",
-            imageUrl = "https://i.scdn.co/image/ab6761610000e5ebb99cacf8acd537820676726"
-        )
-    )
     val tracks = listOf(
         Track(
             id = "0",
@@ -45,4 +30,31 @@ object PreviewParameterData {
             artist = "Taylor Swift"
         ),
     )
+    val moreLikeArtists = mapOf<Artist, List<Track>>(
+        Pair(
+            Artist(
+            id = "0",
+            name = "BLACKPINK",
+            imageUrl = "https://i.scdn.co/image/ab6761610000f178c9690bc711d04b3d4fd4b87c"),
+            tracks),
+        Pair(
+            Artist(
+                id = "1",
+                name = "Major Lazer",
+                imageUrl = "https://i.scdn.co/image/ab6761610000f178133f44ab343b35c715a4ac97"),
+            tracks),
+    )
+    val artists = listOf(
+        Artist(
+            id = "0",
+            name = "BLACKPINK",
+            imageUrl = "https://i.scdn.co/image/ab6761610000f178c9690bc711d04b3d4fd4b87c"
+        ),
+        Artist(
+            id = "1",
+            name = "Adele",
+            imageUrl = "https://i.scdn.co/image/ab6761610000e5ebb99cacf8acd537820676726"
+        )
+    )
+
 }

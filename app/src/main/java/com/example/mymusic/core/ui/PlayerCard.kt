@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,15 +28,18 @@ import com.example.mymusic.core.designSystem.icon.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.model.Track
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlayerCard(
     coverUrl: String,
     name: String,
     artist: String,
     isPaused: Boolean,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
         Card(
+            onClick = onClick,
             colors = CardDefaults.outlinedCardColors(
                 containerColor = Color.Black.copy(alpha = 0.3f)
             ),
@@ -126,6 +130,6 @@ fun PlayerCard(
 fun PlayerCardPreview() {
     MyMusicTheme {
         val mockTrack = Track("0", coverUrl = "")
-        PlayerCard(mockTrack.coverUrl, mockTrack.name, mockTrack.artist, false)
+        PlayerCard(mockTrack.coverUrl, mockTrack.name, mockTrack.artist, false, onClick = {})
     }
 }

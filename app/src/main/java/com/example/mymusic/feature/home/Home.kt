@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.example.mymusic.R
+import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
 import com.example.mymusic.core.designSystem.component.MyMusicHomeBackground
 import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.component.ScreenHeader
@@ -64,20 +65,14 @@ fun Home(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = HomeViewModel()
 ) {
-    Surface(
+    HomeContent(
+        topPicks = viewModel.topPicks,
+        recentlyPlayed = viewModel.recentlyPlayed,
+        moreLikeArtists = viewModel.moreLikeArtists,
+        onTrackClick = onTrackClick,
         modifier = modifier
-            .fillMaxSize()
-    ) {
-        HomeContent(
-            topPicks = viewModel.topPicks,
-            recentlyPlayed = viewModel.recentlyPlayed,
-            moreLikeArtists = PreviewParameterData.moreLikeArtists,
-            onTrackClick = onTrackClick,
-            modifier = modifier
-                .verticalScroll(rememberScrollState())
-        )
-    }
-
+            .verticalScroll(rememberScrollState())
+    )
 }
 
 @Composable
@@ -88,7 +83,10 @@ fun HomeContent(
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    MyMusicHomeBackground(modifier = modifier) {
+    MyMusicGradientBackground(
+        modifier = modifier,
+        contentAlignment = Alignment.TopCenter
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -111,7 +109,7 @@ fun HomeContent(
             for (artist in moreLikeArtists) {
                 MoreLikeArtist(artist = artist.key, tracks = artist.value, onTrackClick = onTrackClick)
             }
-            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.bottom_bar_height)))
+            Spacer(modifier = Modifier.height(160.dp))
         }
     }
 }

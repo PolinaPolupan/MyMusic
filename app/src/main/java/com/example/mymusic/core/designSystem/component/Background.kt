@@ -23,10 +23,11 @@ import com.example.mymusic.core.designSystem.util.saturation
 @Composable
 fun MyMusicGradientBackground(
     modifier: Modifier = Modifier,
+    contentAlignment: Alignment = Alignment.BottomCenter,
     content: @Composable () -> Unit,
 ) {
     Box(
-        contentAlignment = Alignment.BottomCenter,
+        contentAlignment = contentAlignment,
         modifier = modifier
             .fillMaxSize()
             .background(
@@ -61,10 +62,11 @@ fun MyMusicGradientBackground(
 @Composable
 fun MyMusicHomeBackground(
     modifier: Modifier = Modifier,
+    contentAlignment: Alignment = Alignment.BottomCenter,
     content: @Composable () -> Unit,
 ) {
     Box(
-        contentAlignment = Alignment.BottomCenter,
+        contentAlignment = contentAlignment,
         modifier = modifier
             .fillMaxSize()
             .background(
