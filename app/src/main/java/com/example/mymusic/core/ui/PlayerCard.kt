@@ -13,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,7 +39,7 @@ fun PlayerCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-        Card(
+        OutlinedCard(
             onClick = onClick,
             colors = CardDefaults.outlinedCardColors(
                 containerColor = Color.Black.copy(alpha = 0.3f)
@@ -129,7 +130,7 @@ fun PlayerCard(
 @Composable
 fun PlayerCardPreview() {
     MyMusicTheme {
-        val mockTrack = Track("0", coverUrl = "")
-        PlayerCard(mockTrack.coverUrl, mockTrack.name, mockTrack.artist, false, onClick = {})
+        val mockTrack = Track("0", imageUrl = "")
+        PlayerCard(mockTrack.imageUrl, mockTrack.name, mockTrack.artist, false, onClick = {})
     }
 }

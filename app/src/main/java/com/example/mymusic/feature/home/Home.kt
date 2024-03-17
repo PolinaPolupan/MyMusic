@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,7 +23,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,14 +39,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.example.mymusic.R
+import com.example.mymusic.core.designSystem.component.BlurredImageHeader
 import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
-import com.example.mymusic.core.designSystem.component.MyMusicHomeBackground
 import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.component.ScreenHeader
 import com.example.mymusic.core.designSystem.theme.DynamicThemePrimaryColorsFromImage
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
-import com.example.mymusic.core.designSystem.component.advancedShadow
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
@@ -75,49 +74,12 @@ fun Home(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeContent(
     topPicks: List<Track>,
     moreLikeArtists: Map<Artist, List<Track>>,
     recentlyPlayed: List<Track>,
-    onTrackClick: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    MyMusicGradientBackground(
-        modifier = modifier,
-        contentAlignment = Alignment.TopCenter
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-
-        ) {
-            ScreenHeader(
-                titleRes = R.string.listen_now,
-                onAvatarClick = { /*TODO*/ },
-                avatarImageRes = R.drawable.ic_launcher_background
-            )
-            TopPicks(
-                onTrackClick = onTrackClick,
-                topPicks = topPicks
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            RecentlyPlayed(
-                recentlyPlayed = recentlyPlayed,
-                onTrackClick = onTrackClick
-            )
-            for (artist in moreLikeArtists) {
-                MoreLikeArtist(artist = artist.key, tracks = artist.value, onTrackClick = onTrackClick)
-            }
-            Spacer(modifier = Modifier.height(160.dp))
-        }
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun TopPicks(
-    topPicks: List<Track>,
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -132,79 +94,114 @@ fun TopPicks(
             initialPage = pageCount / 2,
             pageCount = { pageCount }
         )
-        val selectedImageUrl = topPicks.getOrNull(pagerState.currentPage)
-            ?.coverUrl
-
         // When the selected image url changes, call updateColorsFromImageUrl() or reset()
         LaunchedEffect(pagerState.currentPage) {
-            dominantColorState.updateColorsFromImageUrl(topPicks[pagerState.currentPage % topPicks.size].coverUrl)
+            dominantColorState.updateColorsFromImageUrl(topPicks[pagerState.currentPage % topPicks.size].imageUrl)
         }
 
-        Column(modifier = modifier) {
-            Text(
-                text = stringResource(id = R.string.top_picks),
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier
-                    .padding(
-                        horizontal = dimensionResource(id = R.dimen.padding_large),
-                        vertical = dimensionResource(id = R.dimen.padding_small)
-                    )
+        MyMusicGradientBackground(
+            modifier = modifier,
+            contentAlignment = Alignment.TopCenter
+        ) {
+            BlurredImageHeader(
+                imageUrl = topPicks[pagerState.currentPage % topPicks.size].imageUrl,
+                alpha = 0.5f
             )
-            HorizontalPager(
-                pageSpacing = 30.dp,
-                pageSize = PageSize.Fixed(dimensionResource(id = R.dimen.top_picks_card_min_size)),
-                contentPadding = PaddingValues(
-                    horizontal = dimensionResource(id = R.dimen.top_picks_card_min_size) / 2
-                ),
-                state = pagerState,
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(dimensionResource(id = R.dimen.top_picks_card_max_size))
-            ) { page ->
-                FeaturedTrack(
-                    coverUrl = topPicks[page % topPicks.size].coverUrl,
-                    name = topPicks[page % topPicks.size].name,
-                    artist = topPicks[page % topPicks.size].artist,
-                    onClick = { onTrackClick(topPicks[page % topPicks.size].id) },
-                    modifier = Modifier
-                        .size(
-                            dimensionResource(id = R.dimen.top_picks_card_min_size)
-                        )
-                        .graphicsLayer {
-                            // Calculate the absolute offset for the current page from the
-                            // scroll position. We use the absolute value which allows us to mirror
-                            // any effects for both directions
-                            val pageOffset = (
-                                    (pagerState.currentPage - page) + pagerState
-                                        .currentPageOffsetFraction
-                                    ).absoluteValue
+                    .fillMaxSize()
 
-                            // We animate the alpha, between 50% and 100%
-                            alpha = lerp(
-                                start = 0.5f,
-                                stop = 1f,
-                                fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                            )
-                            scaleX = lerp(
-                                start = 1f,
-                                stop = 1.25f,
-                                fraction = 1f - pageOffset.coerceIn(0f, 1.25f)
-                            )
-                            scaleY = lerp(
-                                start = 1f,
-                                stop = 1.25f,
-                                fraction = 1f - pageOffset.coerceIn(0f, 1.25f)
-                            )
-
-                        }
-                        .advancedShadow(
-                            color = MaterialTheme.colorScheme.primary
-                                .saturation(6f)
-                                .darker(0.7f),
-                            shadowBlurRadius = 16.dp
-                        )
+            ) {
+                ScreenHeader(
+                    titleRes = R.string.listen_now,
+                    onAvatarClick = { /*TODO*/ },
+                    avatarImageRes = R.drawable.ic_launcher_background
                 )
+                Spacer(modifier = Modifier.height(16.dp))
+                TopPicks(
+                    onTrackClick = onTrackClick,
+                    topPicks = topPicks,
+                    pagerState = pagerState
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                RecentlyPlayed(
+                    recentlyPlayed = recentlyPlayed,
+                    onTrackClick = onTrackClick
+                )
+                for (artist in moreLikeArtists) {
+                    MoreLikeArtist(
+                        artist = artist.key,
+                        tracks = artist.value,
+                        onTrackClick = onTrackClick
+                    )
+                }
+                Spacer(modifier = Modifier.height(160.dp))
             }
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun TopPicks(
+    topPicks: List<Track>,
+    pagerState: PagerState,
+    onTrackClick: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = stringResource(id = R.string.top_picks),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+                .padding(
+                    horizontal = dimensionResource(id = R.dimen.padding_large),
+                    vertical = dimensionResource(id = R.dimen.padding_small)
+                )
+        )
+        HorizontalPager(
+            pageSpacing = 30.dp,
+            pageSize = PageSize.Fixed(dimensionResource(id = R.dimen.top_picks_card_min_size)),
+            contentPadding = PaddingValues(
+                horizontal = dimensionResource(id = R.dimen.top_picks_card_min_size) / 2
+            ),
+            state = pagerState,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(dimensionResource(id = R.dimen.top_picks_card_max_size))
+        ) { page ->
+            FeaturedTrack(
+                coverUrl = topPicks[page % topPicks.size].imageUrl,
+                name = topPicks[page % topPicks.size].name,
+                artist = topPicks[page % topPicks.size].artist,
+                onClick = { onTrackClick(topPicks[page % topPicks.size].id) },
+                modifier = Modifier
+                    .size(
+                        dimensionResource(id = R.dimen.top_picks_card_min_size)
+                    )
+                    .graphicsLayer {
+                        // Calculate the absolute offset for the current page from the
+                        // scroll position. We use the absolute value which allows us to mirror
+                        // any effects for both directions
+                        val pageOffset = (
+                                (pagerState.currentPage - page) + pagerState
+                                    .currentPageOffsetFraction
+                                ).absoluteValue
+
+                        scaleX = lerp(
+                            start = 1f,
+                            stop = 1.25f,
+                            fraction = 1f - pageOffset.coerceIn(0f, 1.25f)
+                        )
+                        scaleY = lerp(
+                            start = 1f,
+                            stop = 1.25f,
+                            fraction = 1f - pageOffset.coerceIn(0f, 1.25f)
+                        )
+
+                    }
+
+            )
         }
     }
 }
@@ -254,7 +251,7 @@ fun TrackCarousel(
         TrackCard(
             name = tracks[page].name,
             artist = tracks[page].artist,
-            coverUrl = tracks[page].coverUrl,
+            coverUrl = tracks[page].imageUrl,
             onClick = { onTrackClick(tracks[page].id) }
         )
     }
@@ -287,7 +284,7 @@ fun FeaturedTrack(
                         .matchParentSize()
                         .linearGradientScrim(
                             color = MaterialTheme.colorScheme.primary
-                                .saturation(6f)
+                                .saturation(2f)
                                 .darker(0.5f),
                             start = Offset(0f, 0f),
                             end = Offset(0f, 500f)

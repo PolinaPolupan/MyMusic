@@ -93,7 +93,7 @@ fun PlayerContent(
     DynamicThemePrimaryColorsFromImage(dominantColorState) {
         // When the selected image url changes, call updateColorsFromImageUrl() or reset()
         LaunchedEffect(track) {
-            dominantColorState.updateColorsFromImageUrl(track.coverUrl)
+            dominantColorState.updateColorsFromImageUrl(track.imageUrl)
         }
         Box(
             modifier = modifier
@@ -101,7 +101,7 @@ fun PlayerContent(
         ) {
             Box(modifier = Modifier.size(540.dp)) {
                 NetworkImage(
-                    track.coverUrl,
+                    track.imageUrl,
                     modifier = Modifier.fillMaxSize()
                 )
             }
@@ -119,7 +119,7 @@ fun PlayerContent(
                     )
             )
             NetworkImage(
-                track.coverUrl,
+                track.imageUrl,
                 modifier = Modifier
                     .fillMaxSize()
                     .blur(50.dp)
@@ -361,7 +361,7 @@ fun TopAppBarPreview() {
 @Composable
 fun PlayerPreview() {
     MyMusicTheme {
-        PlayerContent(onAddToPlaylistClick = {},onBackClick = {}, track = Track("0", coverUrl = ""))
+        PlayerContent(onAddToPlaylistClick = {},onBackClick = {}, track = Track("0", imageUrl = ""))
     }
 }
 

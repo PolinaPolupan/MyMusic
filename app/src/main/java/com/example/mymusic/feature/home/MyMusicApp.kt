@@ -3,7 +3,6 @@ package com.example.mymusic.feature.home
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
@@ -25,6 +24,7 @@ import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.MyMusicNavigationBarItem
 import com.example.mymusic.core.ui.PlayerCard
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
+import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.feature.player.navigateToPlayer
 import com.example.mymusic.navigation.MyMusicNavHost
 import com.example.mymusic.navigation.TopLevelDestination
@@ -63,7 +63,7 @@ fun MyMusicApp(
             // Show on top level destinations.
             if (destination != null) {
                PlayerCard(
-                    coverUrl = currentTrack.coverUrl,
+                    coverUrl = currentTrack.imageUrl,
                     name = currentTrack.name,
                     artist = currentTrack.artist,
                     isPaused = true,
@@ -71,7 +71,7 @@ fun MyMusicApp(
                     modifier = Modifier.hazeChild(
                         state = hazeState,
                         shape = MaterialTheme.shapes.medium,
-                        style = HazeStyle(tint = MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.2f))
+                        style = HazeStyle(tint = MaterialTheme.colorScheme.surfaceTint.darker(0.8f).copy(alpha = 0.4f))
                     )
                 )
                 BottomNavigationBar(
