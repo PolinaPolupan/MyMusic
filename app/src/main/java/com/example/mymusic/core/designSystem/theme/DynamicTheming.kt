@@ -101,20 +101,20 @@ class DominantColorState(
         else -> null
     }
 
-    suspend fun <T>updateColorsFromImageUrl(
-        url: T
+    suspend fun updateColorsFromImageUrl(
+        url: String
     ) {
         val result = calculateDominantColor(url)
         color = result?.color ?: defaultColor
         onColor = result?.onColor ?: defaultOnColor
     }
 
-    private suspend fun <T>calculateDominantColor(url: T): DominantColors? {
-       /* val cached = cache?.get(url)
+    private suspend fun calculateDominantColor(url: String): DominantColors? {
+       val cached = cache?.get(url)
         if (cached != null) {
             // If we already have the result cached, return early now...
             return cached
-        }*/
+        }
 
         // Otherwise we calculate the swatches in the image, and return the first valid color
         return calculateSwatchesInImage(context, url)
@@ -130,7 +130,7 @@ class DominantColorState(
                 )
             }
             // Cache the resulting [DominantColors]
-            //?.also { result -> cache?.put(url, result) }
+            ?.also { result -> cache?.put(url, result) }
     }
 
     /**
@@ -148,9 +148,9 @@ private data class DominantColors(val color: Color, val onColor: Color)
 /**
  * Fetches the given [imageUrl] with Coil, then uses [Palette] to calculate the dominant color.
  */
-private suspend fun <T>calculateSwatchesInImage (
+private suspend fun calculateSwatchesInImage (
     context: Context,
-    imageUrl: T
+    imageUrl: String
 ): List<Palette.Swatch> {
     val request = coil.request.ImageRequest.Builder(context)
         .data(imageUrl)
@@ -178,7 +178,6 @@ private suspend fun <T>calculateSwatchesInImage (
                 // We reduce the maximum color count down to 8
                 .maximumColorCount(8)
                 .generate()
-
             palette.swatches
         }
     } ?: emptyList()

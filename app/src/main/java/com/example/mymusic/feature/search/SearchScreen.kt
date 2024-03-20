@@ -38,7 +38,7 @@ import com.example.mymusic.core.designSystem.icon.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 
 @Composable
-fun Search(
+fun SearchScreen(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = SearchViewModel()
 ) {

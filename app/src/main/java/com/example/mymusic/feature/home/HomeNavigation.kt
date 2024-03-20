@@ -13,6 +13,6 @@ fun NavGraphBuilder.homeScreen(onTrackClick: (String) -> Unit) {
     composable(
         route = HOME_ROUTE
     ) {
-        Home(onTrackClick = onTrackClick)
+        HomeScreen(onTrackClick = onTrackClick)
     }
 }

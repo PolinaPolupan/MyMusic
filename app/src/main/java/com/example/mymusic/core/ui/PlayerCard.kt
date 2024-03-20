@@ -1,5 +1,6 @@
 package com.example.mymusic.core.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,6 +42,7 @@ fun PlayerCard(
     modifier: Modifier = Modifier
 ) {
         OutlinedCard(
+            border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)),
             onClick = onClick,
             colors = CardDefaults.outlinedCardColors(
                 containerColor = Color.Black.copy(alpha = 0.3f)

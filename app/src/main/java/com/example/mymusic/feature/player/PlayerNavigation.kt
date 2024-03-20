@@ -29,6 +29,6 @@ fun NavGraphBuilder.playerScreen(
             navArgument(TRACK_ID_ARG) { type = NavType.StringType },
         ),
     ) {
-        Player(onBackClick = onBackClick, onAddToPlaylistClick = onAddToPlaylistClick)
+        PlayerScreen(onBackClick = onBackClick, onAddToPlaylistClick = onAddToPlaylistClick)
     }
 }

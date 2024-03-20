@@ -40,7 +40,7 @@ import com.example.mymusic.core.model.Playlist
 
 
 @Composable
-fun Library(
+fun LibraryScreen(
     modifier: Modifier = Modifier,
     viewModel: LibraryViewModel = LibraryViewModel()
 ) {

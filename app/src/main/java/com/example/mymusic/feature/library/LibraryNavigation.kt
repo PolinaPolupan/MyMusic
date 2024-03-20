@@ -13,6 +13,6 @@ fun NavGraphBuilder.libraryScreen() {
     composable(
         route = LIBRARY_ROUTE
     ) {
-        Library()
+        LibraryScreen()
     }
 }

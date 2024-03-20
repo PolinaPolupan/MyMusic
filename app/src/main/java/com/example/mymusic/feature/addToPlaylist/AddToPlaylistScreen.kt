@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -28,10 +27,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
@@ -51,7 +50,7 @@ import com.example.mymusic.core.ui.viewModelProviderFactoryOf
 import com.example.mymusic.feature.library.PlaylistCard
 
 @Composable
-fun AddToPlayList(
+fun AddToPlayListScreen(
     trackId: String,
     onBackPress: () -> Unit,
     modifier: Modifier = Modifier
@@ -101,7 +100,8 @@ fun AddToPlayListContent(
                 SortBottomSheet(
                     currentOption = currentSortOption,
                     onDismissRequest = { showBottomSheet = false },
-                    onSelection = onSortOptionChanged
+                    onSelection = onSortOptionChanged,
+                    containerColor = MaterialTheme.colorScheme.primary.darker(0.75f)
                 )
             }
             Column(modifier = Modifier.fillMaxSize()) {
@@ -150,28 +150,34 @@ private fun TopAppBar(
     onBackPress: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
-        Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+        Column(modifier = modifier
+            .fillMaxWidth()
         ) {
-            IconButton(onClick = onBackPress, modifier = Modifier.size(30.dp)) {
-                Icon(
-                    imageVector = MyMusicIcons.ArrowBack,
-                    contentDescription = stringResource(id = R.string.back),
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
-            Text(
-                text = stringResource(id = R.string.add_to_playlist),
-                style = MaterialTheme.typography.headlineSmall,
+            Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .weight(1f)
-                    .wrapContentSize()
-            )
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
+                    val text = createRef()
+                    IconButton(onClick = onBackPress, modifier = Modifier.size(30.dp)) {
+                        Icon(
+                            imageVector = MyMusicIcons.ArrowBack,
+                            contentDescription = stringResource(id = R.string.back),
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                    Text(
+                        text = stringResource(id = R.string.add_to_playlist),
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .constrainAs(text) {
+                                centerHorizontallyTo(parent) }
+                    )
+            }
         }
     }
 }

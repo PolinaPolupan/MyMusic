@@ -13,6 +13,6 @@ fun NavGraphBuilder.searchScreen() {
     composable(
         route = SEARCH_ROUTE
     ) {
-        Search()
+        SearchScreen()
     }
 }

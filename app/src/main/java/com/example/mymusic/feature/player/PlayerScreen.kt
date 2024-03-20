@@ -59,7 +59,7 @@ import java.time.Duration
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Player(
+fun PlayerScreen(
     onBackClick: () -> Unit,
     onAddToPlaylistClick: (String) -> Unit,
     modifier: Modifier = Modifier,

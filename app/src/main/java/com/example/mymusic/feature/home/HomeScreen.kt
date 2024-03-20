@@ -59,7 +59,7 @@ import kotlin.math.absoluteValue
 
 
 @Composable
-fun Home(
+fun HomeScreen(
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = HomeViewModel()
