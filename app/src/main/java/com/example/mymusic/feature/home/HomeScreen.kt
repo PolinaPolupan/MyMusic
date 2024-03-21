@@ -173,7 +173,7 @@ fun TopPicks(
             FeaturedTrack(
                 coverUrl = topPicks[page % topPicks.size].imageUrl,
                 name = topPicks[page % topPicks.size].name,
-                artist = topPicks[page % topPicks.size].artist,
+                artist = topPicks[page % topPicks.size].artists[0].name,
                 onClick = { onTrackClick(topPicks[page % topPicks.size].id) },
                 modifier = Modifier
                     .size(
@@ -250,7 +250,7 @@ fun TrackCarousel(
     ) {page ->
         TrackCard(
             name = tracks[page].name,
-            artist = tracks[page].artist,
+            artist = tracks[page].artists[0].name,
             coverUrl = tracks[page].imageUrl,
             onClick = { onTrackClick(tracks[page].id) }
         )

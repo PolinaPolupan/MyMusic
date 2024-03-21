@@ -1,6 +1,8 @@
 package com.example.mymusic.core.ui
 
+import com.example.mymusic.core.model.Album
 import com.example.mymusic.core.model.Artist
+import com.example.mymusic.core.model.Playlist
 import com.example.mymusic.core.model.Track
 
 object PreviewParameterData {
@@ -9,25 +11,49 @@ object PreviewParameterData {
             id = "0",
             imageUrl = "https://www.musictour.eu/sites/default/files/pictures/blog/dua_packshot_standard_1_1.jpg",
             name = "New Rules",
-            artist = "Dua Lipa"
+            artists = listOf(
+                Artist(
+                    id = "",
+                    name = "Dua Lipa",
+                    imageUrl = ""
+                )
+            )
         ),
         Track(
             id = "1",
             imageUrl = "https://images.genius.com/c05b3c4739a994bca85d932f6d6cb586.1000x1000x1.png",
             name = "Sugar",
-            artist = "Maroon 5"
+            artists = listOf(
+                Artist(
+                    id = "",
+                    name = "Maroon 5",
+                    imageUrl = ""
+                )
+            )
         ),
         Track(
             id = "2",
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273dd0a40eecd4b13e4c59988da",
             name = "Happier",
-            artist = "Marshmello"
+            artists = listOf(
+                Artist(
+                    id = "",
+                    imageUrl = "",
+                    name = "Marshmello"
+                )
+            )
         ),
         Track(
             id = "3",
             imageUrl = "https://i.scdn.co/image/ab67616d0000b27352b2a3824413eefe9e33817a",
             name = "Blank Space",
-            artist = "Taylor Swift"
+            artists = listOf(
+                Artist(
+                    id = "",
+                    imageUrl = "",
+                    name = "Taylor Swift"
+                )
+            )
         ),
     )
     val moreLikeArtists = mapOf<Artist, List<Track>>(
@@ -57,4 +83,36 @@ object PreviewParameterData {
         )
     )
 
+    val playlist = listOf<Playlist>(
+
+    )
+
+    val albums = listOf<Album>(
+        Album(
+            id = "6nxDQi0FeEwccEPJeNySoS",
+            imageUrl = "https://i.scdn.co/image/ab67616d0000b273407bd04707c463bbb3410737",
+            name = "Night Visions",
+            artists = listOf(
+                Artist(
+                    id = "53XhwfbYqKCa1cC15pYq2q",
+                    name = "Imagine Dragons",
+                    imageUrl = "https://i.scdn.co/image/ab6761610000e5eb920dc1f617550de8388f368e"
+                )
+            ),
+            tracks = listOf(
+                Track(
+                    id = "62yJjFtgkhUrXktIoSjgP2",
+                    name = "Radioactive",
+                    imageUrl = "https://i.scdn.co/image/ab67616d0000b273407bd04707c463bbb3410737",
+                    artists = listOf(
+                        Artist(
+                        id = "53XhwfbYqKCa1cC15pYq2q",
+                        name = "Imagine Dragons",
+                        imageUrl = "https://i.scdn.co/image/ab6761610000e5eb920dc1f617550de8388f368e"
+                        )
+                    )
+                )
+            )
+        )
+    )
 }

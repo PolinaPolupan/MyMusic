@@ -1,9 +1,12 @@
 package com.example.mymusic.core.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -31,15 +34,21 @@ import com.example.mymusic.core.designSystem.icon.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.model.Track
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Player card which is visible across all of the screens
+ * NOTE: In case there are several artists the first artist's name is visible
+ */
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun PlayerCard(
     coverUrl: String,
     name: String,
-    artist: String,
+    artistName: String,
     isPaused: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    buttonModifier: Modifier = Modifier
+        .size(36.dp)
 ) {
         OutlinedCard(
             border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)),
@@ -67,60 +76,66 @@ fun PlayerCard(
                 ) {
                     Text(
                         text = name,
+                        maxLines = 1,
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier
                             .padding(bottom = 4.dp)
+                            .basicMarquee()
                     )
                     Text(
-                        text = artist,
-                        style = MaterialTheme.typography.titleSmall
+                        text = artistName,
+                        maxLines = 1,
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier
+                            .basicMarquee()
                     )
                 }
                 Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .padding(dimensionResource(id = R.dimen.padding_small))
                 ) {
                     IconButton(
                         onClick = {/*TODO*/},
-                        modifier = Modifier.size(50.dp)
+                        modifier = buttonModifier
                     ) {
                         Icon(
                             imageVector = MyMusicIcons.SkipPrevious,
                             contentDescription = stringResource(id = R.string.skip_previous),
-                            modifier = Modifier.size(50.dp)
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
                     if (isPaused) {
                         IconButton(
                             onClick = {/*TODO*/},
-                            modifier = Modifier.size(50.dp)
+                            modifier = Modifier.size(40.dp)
                         ) {
                             Icon(
                                 imageVector = MyMusicIcons.Play,
-                                contentDescription = stringResource(id = R.string.skip_previous),
-                                modifier = Modifier.size(50.dp)
+                                contentDescription = stringResource(id = R.string.play),
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
                     } else {
                         IconButton(
                             onClick = {/*TODO*/},
-                            modifier = Modifier.size(50.dp)
+                            modifier = Modifier.size(40.dp)
                         ) {
                             Icon(
                                 imageVector = MyMusicIcons.Pause,
-                                contentDescription = stringResource(id = R.string.skip_previous),
-                                modifier = Modifier.size(50.dp)
+                                contentDescription = stringResource(id = R.string.pause),
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
                     }
                     IconButton(
                         onClick = {/*TODO*/},
-                        modifier = Modifier.size(50.dp)
+                        modifier = buttonModifier
                     ) {
                         Icon(
                             imageVector = MyMusicIcons.SkipNext,
                             contentDescription = stringResource(id = R.string.skip_next),
-                            modifier = Modifier.size(50.dp)
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
                 }
@@ -133,7 +148,25 @@ fun PlayerCard(
 @Composable
 fun PlayerCardPreview() {
     MyMusicTheme {
-        val mockTrack = Track("0", imageUrl = "")
-        PlayerCard(mockTrack.imageUrl, mockTrack.name, mockTrack.artist, false, onClick = {})
+        val mockTrack = PreviewParameterData.tracks[0]
+        PlayerCard(mockTrack.imageUrl, mockTrack.name, mockTrack.artists[0].name, false, onClick = {})
+    }
+}
+
+@Preview
+@Composable
+fun PlayerCardLongNamePreview() {
+    MyMusicTheme {
+        val mockTrack = PreviewParameterData.tracks[0]
+        PlayerCard(mockTrack.imageUrl, "This is a very very very very long name", mockTrack.artists[0].name, false, onClick = {})
+    }
+}
+
+@Preview
+@Composable
+fun PlayerCardLongArtistsNamePreview() {
+    MyMusicTheme {
+        val mockTrack = PreviewParameterData.tracks[0]
+        PlayerCard(mockTrack.imageUrl, mockTrack.name, "This is a very very very very long artists name", false, onClick = {})
     }
 }

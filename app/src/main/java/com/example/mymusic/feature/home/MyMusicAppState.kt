@@ -2,6 +2,7 @@ package com.example.mymusic.feature.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -9,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.example.mymusic.core.model.Track
 import com.example.mymusic.core.model.User
+import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.navigation.TopLevelDestination
 import com.example.mymusic.feature.library.LIBRARY_ROUTE
 import com.example.mymusic.feature.library.navigateToLibrary
@@ -31,7 +33,7 @@ fun rememberMyMusicAppState(
 class MyMusicAppState(
     val navController: NavHostController
 ) {
-    val currentTrack = Track("0", "")
+    val currentTrack = PreviewParameterData.tracks[0]
     val user = User("0", "Polina", "")
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries

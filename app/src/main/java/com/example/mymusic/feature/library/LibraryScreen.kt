@@ -37,6 +37,7 @@ import com.example.mymusic.core.designSystem.component.SortOption
 import com.example.mymusic.core.designSystem.icon.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.model.Playlist
+import com.example.mymusic.core.ui.PlaylistCard
 
 
 @Composable
@@ -101,64 +102,6 @@ fun LibraryContent(
         }
     }
 }
-
-@Composable
-fun PlaylistCard(
-    name: String,
-    owner: String,
-    coverUrl: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    isSelectable: Boolean = false,
-    isSelected: Boolean = false
-) {
-    ClippedShadowCard(
-        elevation = 8.dp,
-        onClick = onClick,
-        colors = CardDefaults.outlinedCardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.1f)),
-        modifier = modifier
-            .width(dimensionResource(id = R.dimen.player_card_width))
-            .padding(8.dp)
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            NetworkImage(
-                imageUrl = coverUrl,
-                modifier = Modifier
-                    .size(70.dp)
-            )
-            Column(
-                modifier = Modifier
-                    .padding(dimensionResource(id = R.dimen.padding_small))
-                    .weight(2f)
-            ) {
-                Text(
-                    text = name,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier
-                        .padding(bottom = 4.dp)
-                )
-                Text(
-                    text = stringResource(id = R.string.playlist_label, owner),
-                    style = MaterialTheme.typography.titleSmall
-                )
-            }
-            if (isSelectable && isSelected) {
-                Icon(
-                    imageVector = MyMusicIcons.Check,
-                    contentDescription = stringResource(id = R.string.is_checked),
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-        }
-    }
-}
-
-
 
 @Preview
 @Composable

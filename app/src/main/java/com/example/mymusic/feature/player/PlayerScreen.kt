@@ -55,6 +55,7 @@ import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.core.designSystem.util.saturation
 import com.example.mymusic.core.model.Track
+import com.example.mymusic.core.ui.PreviewParameterData
 import java.time.Duration
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -149,7 +150,7 @@ fun PlayerContent(
                 Column {
                     TrackPlayer(
                         trackName = track.name,
-                        artistName = track.artist,
+                        artistName = track.artists[0].name,
                         trackDuration = Duration.ZERO,
                         onPlayClick = { /*TODO*/ },
                         onSkipPreviousClick = { /*TODO*/ },
@@ -361,7 +362,7 @@ fun TopAppBarPreview() {
 @Composable
 fun PlayerPreview() {
     MyMusicTheme {
-        PlayerContent(onAddToPlaylistClick = {},onBackClick = {}, track = Track("0", imageUrl = ""))
+        PlayerContent(onAddToPlaylistClick = {},onBackClick = {}, track = PreviewParameterData.tracks[0])
     }
 }
 

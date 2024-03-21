@@ -46,8 +46,9 @@ import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.model.Playlist
 import com.example.mymusic.core.model.Track
+import com.example.mymusic.core.ui.PlaylistCard
+import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.viewModelProviderFactoryOf
-import com.example.mymusic.feature.library.PlaylistCard
 
 @Composable
 fun AddToPlayListScreen(
@@ -122,7 +123,7 @@ fun AddToPlayListContent(
                     PlaylistCard(
                         name = it.name,
                         owner = it.owner,
-                        coverUrl = it.coverUrl,
+                        coverUrl = it.imageUrl,
                         onClick = { isSelected = !isSelected },
                         isSelectable = true,
                         isSelected = isSelected,
@@ -187,13 +188,8 @@ private fun TopAppBar(
 fun AddToPlayListPreview(modifier: Modifier = Modifier) {
     MyMusicTheme {
         AddToPlayListContent(
-            track = Track(
-                id = "1",
-                imageUrl = "https://images.genius.com/c05b3c4739a994bca85d932f6d6cb586.1000x1000x1.png",
-                name = "Sugar",
-                artist = "Maroon 5"
-            ),
-            playlists = listOf(Playlist("", "Dua Lipa", "Polina Polupan")),
+            track = PreviewParameterData.tracks[0],
+            playlists = listOf(Playlist(id = "", name = "Dua Lipa", owner = "Polina Polupan", tracks = listOf(), imageUrl = "")),
             currentSortOption = SortOption.RECENTLY_ADDED,
             onSortOptionChanged = {},
             onBackPress = {}

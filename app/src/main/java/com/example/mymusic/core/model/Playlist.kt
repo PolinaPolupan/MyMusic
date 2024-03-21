@@ -1,7 +1,9 @@
 package com.example.mymusic.core.model
 
 data class Playlist(
-    val coverUrl: String,
+    val id: String,
+    val imageUrl: String,
     val name: String,
-    val owner: String
+    val owner: String,
+    val tracks: List<Track>
 )

@@ -65,7 +65,7 @@ fun MyMusicApp(
                PlayerCard(
                     coverUrl = currentTrack.imageUrl,
                     name = currentTrack.name,
-                    artist = currentTrack.artist,
+                    artistName = currentTrack.artists[0].name,
                     isPaused = true,
                     onClick = { appState.navController.navigateToPlayer(currentTrack.id) },
                     modifier = Modifier.hazeChild(
