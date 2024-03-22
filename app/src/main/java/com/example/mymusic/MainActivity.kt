@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            MyMusicTheme {
+            MyMusicTheme(dynamicColor = true) {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     MyMusicApp()

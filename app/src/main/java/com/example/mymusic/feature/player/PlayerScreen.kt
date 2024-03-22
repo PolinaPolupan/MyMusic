@@ -147,10 +147,15 @@ fun PlayerContent(
                     ),
                 contentAlignment = Alignment.BottomCenter
             ) {
+                var artistsString = ""
+                for (artist in track.artists) {
+                    artistsString += artist.name + ", "
+                }
+                artistsString = artistsString.substring(0, artistsString.length - 2)
                 Column {
                     TrackPlayer(
                         trackName = track.name,
-                        artistName = track.artists[0].name,
+                        artistName = artistsString,
                         trackDuration = Duration.ZERO,
                         onPlayClick = { /*TODO*/ },
                         onSkipPreviousClick = { /*TODO*/ },
@@ -241,7 +246,7 @@ private fun PlayerSlider(trackDuration: Duration?) {
 @Composable
 private fun TrackDescription(
     trackName: String,
-    artistName: String,
+    artists: String,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -252,9 +257,10 @@ private fun TrackDescription(
             modifier = Modifier.basicMarquee()
         )
         Text(
-            text = artistName,
+            text = artists,
             style = MaterialTheme.typography.titleMedium,
-            maxLines = 1
+            maxLines = 1,
+            modifier = Modifier.basicMarquee()
         )
     }
 }
@@ -275,7 +281,7 @@ fun TrackPlayer(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            TrackDescription(trackName = trackName, artistName = artistName)
+            TrackDescription(trackName = trackName, artists = artistName)
             IconButton(
                 onClick = onAddToPlaylistClick,
                 modifier = Modifier.size(50.dp)
@@ -370,7 +376,7 @@ fun PlayerPreview() {
 @Composable
 fun TrackDescriptionPreview() {
     MyMusicTheme {
-        TrackDescription(trackName = "Name", artistName = "artist")
+        TrackDescription(trackName = "Name", artists = "artist")
     }
 }
 

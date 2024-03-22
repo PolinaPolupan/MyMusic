@@ -11,7 +11,7 @@ class AddToPlaylistViewModel(
     private val trackId: String
 ): ViewModel() {
     val currentTrack  = PreviewParameterData.tracks[0]
-    val usersPlaylists: List<Playlist> = listOf(Playlist("", "Dua Lipa", "Polina Polupan"))
+    val usersPlaylists: List<Playlist> = PreviewParameterData.playlists
     var currentSortOption = mutableStateOf(SortOption.RECENTLY_ADDED)
 
     fun setSortOption(sortOption: SortOption) {

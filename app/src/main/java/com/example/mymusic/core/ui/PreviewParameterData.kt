@@ -9,13 +9,13 @@ object PreviewParameterData {
     val tracks = listOf(
         Track(
             id = "0",
-            imageUrl = "https://www.musictour.eu/sites/default/files/pictures/blog/dua_packshot_standard_1_1.jpg",
+            imageUrl = "https://i.scdn.co/image/ab67616d0000b273838698485511bd9108fadadc",
             name = "New Rules",
             artists = listOf(
                 Artist(
-                    id = "",
+                    id = "2ekn2ttSfGqwhhate0LSR0",
                     name = "Dua Lipa",
-                    imageUrl = ""
+                    imageUrl = "https://i.scdn.co/image/ab67616d0000b273838698485511bd9108fadadc"
                 )
             )
         ),
@@ -80,11 +80,27 @@ object PreviewParameterData {
             id = "1",
             name = "Adele",
             imageUrl = "https://i.scdn.co/image/ab6761610000e5ebb99cacf8acd537820676726"
+        ),
+        Artist(
+            id = "04gDigrS5kc9YWfZHwBETP",
+            name = "Maroon 5",
+            imageUrl = "https://i.scdn.co/image/ab6761610000e5ebf8349dfb619a7f842242de77"
+        ),
+        Artist(
+            id = "53XhwfbYqKCa1cC15pYq2q",
+            name = "Imagine Dragons",
+            imageUrl = "https://i.scdn.co/image/ab6761610000e5eb920dc1f617550de8388f368e"
         )
     )
 
-    val playlist = listOf<Playlist>(
-
+    val playlists = listOf<Playlist>(
+        Playlist(
+            id = "37i9dQZF1DXaMu9xyX1HzK",
+            name = "Best of the Decade For You",
+            ownerName = "Spotify",
+            imageUrl = "https://i.scdn.co/image/ab67706f00000003ba77a2166a7b66e9a300ffaa",
+            tracks = tracks
+        )
     )
 
     val albums = listOf<Album>(

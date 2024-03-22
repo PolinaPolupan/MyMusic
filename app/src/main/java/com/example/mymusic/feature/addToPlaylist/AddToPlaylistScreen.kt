@@ -122,8 +122,8 @@ fun AddToPlayListContent(
                     }
                     PlaylistCard(
                         name = it.name,
-                        owner = it.owner,
-                        coverUrl = it.imageUrl,
+                        ownerName = it.ownerName,
+                        imageUrl = it.imageUrl,
                         onClick = { isSelected = !isSelected },
                         isSelectable = true,
                         isSelected = isSelected,
@@ -189,7 +189,7 @@ fun AddToPlayListPreview(modifier: Modifier = Modifier) {
     MyMusicTheme {
         AddToPlayListContent(
             track = PreviewParameterData.tracks[0],
-            playlists = listOf(Playlist(id = "", name = "Dua Lipa", owner = "Polina Polupan", tracks = listOf(), imageUrl = "")),
+            playlists = listOf(Playlist(id = "", name = "Dua Lipa", ownerName = "Polina Polupan", tracks = listOf(), imageUrl = "")),
             currentSortOption = SortOption.RECENTLY_ADDED,
             onSortOptionChanged = {},
             onBackPress = {}

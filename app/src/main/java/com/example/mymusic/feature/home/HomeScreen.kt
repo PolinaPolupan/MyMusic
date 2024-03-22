@@ -2,7 +2,6 @@ package com.example.mymusic.feature.home
 
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -19,9 +18,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,11 +25,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -47,19 +42,17 @@ import com.example.mymusic.core.designSystem.theme.DynamicThemePrimaryColorsFrom
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
-import com.example.mymusic.core.designSystem.util.darker
-import com.example.mymusic.core.designSystem.component.linearGradientScrim
-import com.example.mymusic.core.designSystem.util.saturation
-import com.example.mymusic.core.ui.PreviewParameterData
-import com.example.mymusic.core.ui.TracksPreviewParameterProvider
 import com.example.mymusic.core.model.Artist
 import com.example.mymusic.core.model.Track
-
+import com.example.mymusic.core.ui.FeaturedTrack
+import com.example.mymusic.core.ui.PreviewParameterData
+import com.example.mymusic.core.ui.TrackCard
+import com.example.mymusic.core.ui.TracksPreviewParameterProvider
 import kotlin.math.absoluteValue
 
 
 @Composable
-fun HomeScreen(
+internal fun HomeScreen(
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = HomeViewModel()
@@ -76,7 +69,7 @@ fun HomeScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeContent(
+internal fun HomeContent(
     topPicks: List<Track>,
     moreLikeArtists: Map<Artist, List<Track>>,
     recentlyPlayed: List<Track>,
@@ -143,7 +136,7 @@ fun HomeContent(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TopPicks(
+internal fun TopPicks(
     topPicks: List<Track>,
     pagerState: PagerState,
     onTrackClick: (String) -> Unit,
@@ -173,12 +166,9 @@ fun TopPicks(
             FeaturedTrack(
                 coverUrl = topPicks[page % topPicks.size].imageUrl,
                 name = topPicks[page % topPicks.size].name,
-                artist = topPicks[page % topPicks.size].artists[0].name,
+                artists = topPicks[page % topPicks.size].artists,
                 onClick = { onTrackClick(topPicks[page % topPicks.size].id) },
                 modifier = Modifier
-                    .size(
-                        dimensionResource(id = R.dimen.top_picks_card_min_size)
-                    )
                     .graphicsLayer {
                         // Calculate the absolute offset for the current page from the
                         // scroll position. We use the absolute value which allows us to mirror
@@ -207,7 +197,7 @@ fun TopPicks(
 }
 
 @Composable
-fun RecentlyPlayed(
+internal fun RecentlyPlayed(
     recentlyPlayed: List<Track>,
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -231,7 +221,7 @@ fun RecentlyPlayed(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TrackCarousel(
+internal fun TrackCarousel(
     tracks: List<Track>,
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -250,119 +240,16 @@ fun TrackCarousel(
     ) {page ->
         TrackCard(
             name = tracks[page].name,
-            artist = tracks[page].artists[0].name,
-            coverUrl = tracks[page].imageUrl,
-            onClick = { onTrackClick(tracks[page].id) }
+            artists = tracks[page].artists,
+            imageUrl = tracks[page].imageUrl,
+            onClick = { onTrackClick(tracks[page].id) },
+            modifier = Modifier.padding(4.dp)
         )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FeaturedTrack(
-    name: String,
-    artist: String,
-    coverUrl: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        onClick = onClick,
-        modifier = modifier
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                NetworkImage(
-                    imageUrl = coverUrl,
-                    modifier = Modifier
-                        .fillMaxSize()
-                )
-                Box(
-                    modifier = Modifier
-                        .matchParentSize()
-                        .linearGradientScrim(
-                            color = MaterialTheme.colorScheme.primary
-                                .saturation(2f)
-                                .darker(0.5f),
-                            start = Offset(0f, 0f),
-                            end = Offset(0f, 500f)
-                        )
-                )
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = name,
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                    Text(
-                        text = artist,
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                    )
-                }
-            }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TrackCard(
-    name: String,
-    artist: String,
-    coverUrl: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    ElevatedCard(
-        onClick = onClick,
-        shape = RoundedCornerShape(2.dp),
-        modifier = modifier
-            .padding(4.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            NetworkImage(
-                imageUrl = coverUrl,
-                modifier = Modifier
-                    .fillMaxSize()
-            )
-            Box(
-                modifier = Modifier
-                    .matchParentSize()
-                    .linearGradientScrim(
-                        color = Color.Black,
-                        start = Offset(0f, 0f),
-                        end = Offset(0f, 500f)
-                    )
-            )
-            Column(
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(8.dp)
-            ) {
-                Text(
-                    text = name,
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = artist,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun MoreLikeArtist(
+private fun MoreLikeArtist(
     artist: Artist,
     tracks: List<Track>,
     onTrackClick: (String) -> Unit,
@@ -379,7 +266,7 @@ fun MoreLikeArtist(
 }
 
 @Composable
-fun ArtistHeader(
+private fun ArtistHeader(
     name: String,
     pictureUrl: String,
     modifier: Modifier = Modifier
@@ -402,7 +289,9 @@ fun ArtistHeader(
             )
             Text(
                 text = name,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }

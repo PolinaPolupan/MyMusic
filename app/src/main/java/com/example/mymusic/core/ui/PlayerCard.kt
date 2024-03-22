@@ -144,7 +144,7 @@ fun PlayerCard(
     
 }
 
-@Preview
+@PreviewWithBackground
 @Composable
 fun PlayerCardPreview() {
     MyMusicTheme {
@@ -153,7 +153,7 @@ fun PlayerCardPreview() {
     }
 }
 
-@Preview
+@PreviewWithBackground
 @Composable
 fun PlayerCardLongNamePreview() {
     MyMusicTheme {
@@ -162,7 +162,7 @@ fun PlayerCardLongNamePreview() {
     }
 }
 
-@Preview
+@PreviewWithBackground
 @Composable
 fun PlayerCardLongArtistsNamePreview() {
     MyMusicTheme {

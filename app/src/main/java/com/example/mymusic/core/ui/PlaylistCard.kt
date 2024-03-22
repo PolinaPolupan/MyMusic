@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.ClippedShadowCard
@@ -27,8 +27,8 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 @Composable
 fun PlaylistCard(
     name: String,
-    owner: String,
-    coverUrl: String,
+    ownerName: String,
+    imageUrl: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isSelectable: Boolean = false,
@@ -41,7 +41,6 @@ fun PlaylistCard(
             containerColor = MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.1f)),
         modifier = modifier
             .width(dimensionResource(id = R.dimen.player_card_width))
-            .padding(8.dp)
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -49,7 +48,7 @@ fun PlaylistCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             NetworkImage(
-                imageUrl = coverUrl,
+                imageUrl = imageUrl,
                 modifier = Modifier
                     .size(70.dp)
             )
@@ -61,15 +60,19 @@ fun PlaylistCard(
                 Text(
                     text = name,
                     style = MaterialTheme.typography.titleMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     modifier = Modifier
                         .padding(bottom = 4.dp)
                 )
                 Text(
-                    text = stringResource(id = R.string.playlist_label, owner),
+                    text = stringResource(id = R.string.playlist_label, ownerName),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.titleSmall
                 )
             }
-            if (isSelectable && isSelected) {
+            if (isSelected && isSelectable) {
                 Icon(
                     imageVector = MyMusicIcons.Check,
                     contentDescription = stringResource(id = R.string.is_checked),
@@ -80,11 +83,60 @@ fun PlaylistCard(
     }
 }
 
-@Preview
+@PreviewWithBackground
 @Composable
 fun PlaylistCardPreview() {
     MyMusicTheme {
-        //val mockPlaylist = PreviewParameterData.
-        PlaylistCard(name = "", owner = "", coverUrl = "", onClick = { /*TODO*/ })
+        val mockPlaylist = PreviewParameterData.playlists[0]
+        PlaylistCard(
+            name = mockPlaylist.name,
+            ownerName = mockPlaylist.ownerName,
+            imageUrl = mockPlaylist.imageUrl,
+            onClick = { /*TODO*/ }
+        )
+    }
+}
+
+@PreviewWithBackground
+@Composable
+fun PlaylistCardLongNamePreview() {
+    MyMusicTheme {
+        val mockPlaylist = PreviewParameterData.playlists[0]
+        PlaylistCard(
+            name = "This is a very very very very long name",
+            ownerName = mockPlaylist.ownerName,
+            imageUrl = mockPlaylist.imageUrl,
+            onClick = { /*TODO*/ }
+        )
+    }
+}
+
+@PreviewWithBackground
+@Composable
+fun PlaylistCardLongOwnerNamePreview() {
+    MyMusicTheme {
+        val mockPlaylist = PreviewParameterData.playlists[0]
+        PlaylistCard(
+            name = "This is a very very very very long name",
+            ownerName = "This is a very very very very long owner name",
+            imageUrl = mockPlaylist.imageUrl,
+            onClick = { /*TODO*/ }
+        )
+    }
+}
+
+@PreviewWithBackground
+@Composable
+fun SelectablePlaylistCardPreview() {
+    MyMusicTheme {
+        val mockPlaylist = PreviewParameterData.playlists[0]
+        PlaylistCard(
+            name = "This is a very very very very long name",
+            ownerName = mockPlaylist.ownerName,
+            imageUrl = mockPlaylist.imageUrl,
+            onClick = { /*TODO*/ },
+            isSelected = true,
+            isSelectable = true
+        )
     }
 }
