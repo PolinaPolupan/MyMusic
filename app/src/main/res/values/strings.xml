@@ -28,4 +28,7 @@
     <string name="is_checked">Is checked</string>
     <string name="done">Done</string>
     <string name="title_feature">feature</string>
+    <string name="album_type_name">Album</string>
+    <string name="single_type_name">Single</string>
+    <string name="compilation_type_name">Compilation</string>
 </resources>

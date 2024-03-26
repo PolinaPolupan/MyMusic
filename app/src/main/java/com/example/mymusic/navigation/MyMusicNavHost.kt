@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.example.mymusic.feature.addToPlaylist.addToPlaylistScreen
 import com.example.mymusic.feature.addToPlaylist.navigateToAddToPlaylist
+import com.example.mymusic.feature.album.albumScreen
 import com.example.mymusic.feature.home.HOME_ROUTE
 import com.example.mymusic.feature.home.MyMusicAppState
 import com.example.mymusic.feature.home.homeScreen
@@ -33,5 +34,6 @@ fun MyMusicNavHost(
         libraryScreen()
         playerScreen(onBackClick = navController::popBackStack, onAddToPlaylistClick = navController::navigateToAddToPlaylist)
         addToPlaylistScreen(onBackClick = navController::popBackStack)
+        albumScreen(onBackClick = navController::popBackStack)
     }
 }

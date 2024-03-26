@@ -316,10 +316,10 @@ private fun TopAppBar(
         ) {
             IconButton(
                 onClick = onBackPress,
-                modifier = Modifier.size(50.dp)
+                modifier = Modifier.size(40.dp)
             ) {
                 Icon(
-                    imageVector = MyMusicIcons.ArrowDropDown,
+                    imageVector = MyMusicIcons.ArrowBack,
                     contentDescription = stringResource(R.string.back),
                     modifier = Modifier.fillMaxSize()
                 )
