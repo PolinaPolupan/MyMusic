@@ -149,7 +149,7 @@ fun PlayerCard(
 fun PlayerCardPreview() {
     MyMusicTheme {
         val mockTrack = PreviewParameterData.tracks[0]
-        PlayerCard(mockTrack.imageUrl, mockTrack.name, mockTrack.artists[0].name, false, onClick = {})
+        PlayerCard(mockTrack.album.imageUrl, mockTrack.name, mockTrack.artists[0].name, false, onClick = {})
     }
 }
 
@@ -158,7 +158,7 @@ fun PlayerCardPreview() {
 fun PlayerCardLongNamePreview() {
     MyMusicTheme {
         val mockTrack = PreviewParameterData.tracks[0]
-        PlayerCard(mockTrack.imageUrl, "This is a very very very very long name", mockTrack.artists[0].name, false, onClick = {})
+        PlayerCard(mockTrack.album.imageUrl, "This is a very very very very long name", mockTrack.artists[0].name, false, onClick = {})
     }
 }
 
@@ -167,6 +167,6 @@ fun PlayerCardLongNamePreview() {
 fun PlayerCardLongArtistsNamePreview() {
     MyMusicTheme {
         val mockTrack = PreviewParameterData.tracks[0]
-        PlayerCard(mockTrack.imageUrl, mockTrack.name, "This is a very very very very long artists name", false, onClick = {})
+        PlayerCard(mockTrack.album.imageUrl, mockTrack.name, "This is a very very very very long artists name", false, onClick = {})
     }
 }

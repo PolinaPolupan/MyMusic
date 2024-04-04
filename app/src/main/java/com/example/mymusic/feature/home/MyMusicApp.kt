@@ -1,6 +1,9 @@
 package com.example.mymusic.feature.home
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,16 +41,19 @@ import dev.chrisbanes.haze.hazeChild
 fun MyMusicApp(
     appState: MyMusicAppState = rememberMyMusicAppState()
 ) {
+    // Is used to show the content behind PlayerCard.
     val hazeState = remember { HazeState() }
+
     val destination = appState.currentTopLevelDestination
+
+    val currentTrack = appState.currentTrack
+    val user = appState.user
+
     Box(
         contentAlignment = Alignment.BottomCenter,
         modifier = Modifier
             .fillMaxSize()
     ) {
-        val currentTrack = appState.currentTrack
-        val user = appState.user
-
         Box(modifier = Modifier
            .haze(
                 state = hazeState
@@ -57,22 +63,28 @@ fun MyMusicApp(
                 appState = appState
             )
         }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+        AnimatedVisibility(
+            visible = destination != null,
+            enter = fadeIn(initialAlpha = 0.0f),
+            exit = fadeOut()
         ) {
-            // Show on top level destinations.
-            if (destination != null) {
-               PlayerCard(
-                    coverUrl = currentTrack.imageUrl,
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Show on top level destinations.
+                PlayerCard(
+                    coverUrl = currentTrack.album.imageUrl,
                     name = currentTrack.name,
                     artistName = currentTrack.artists[0].name,
                     isPaused = true,
                     onClick = { appState.navController.navigateToPlayer(currentTrack.id) },
-                    modifier = Modifier.hazeChild(
-                        state = hazeState,
-                        shape = MaterialTheme.shapes.medium,
-                        style = HazeStyle(tint = MaterialTheme.colorScheme.surfaceTint.darker(0.8f).copy(alpha = 0.4f))
-                    )
+                    modifier = Modifier
+                        /* TODO: Performance bug during exiting animations */
+                        .hazeChild(
+                            state = hazeState,
+                            shape = MaterialTheme.shapes.medium,
+                            style = HazeStyle(tint = MaterialTheme.colorScheme.surfaceTint.darker(0.8f).copy(alpha = 0.4f))
+                        )
                 )
                 BottomNavigationBar(
                     destinations = appState.topLevelDestinations,
@@ -82,7 +94,6 @@ fun MyMusicApp(
             }
         }
     }
-
 }
 
 @Composable
@@ -106,6 +117,7 @@ fun BottomNavigationBar(
             )
     )
     {
+        /* TODO: Think about creating a custom bottom navigation bar component */
         NavigationBar(
             modifier = Modifier,
             containerColor = Color.Transparent,
@@ -140,13 +152,16 @@ fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestin
     this?.hierarchy?.any {
         it.route?.contains(destination.name, true) ?: false
     } ?: false
- /*
+
+/* TODO: Make Bottom Navigation Bar preview work
 @Preview
 @Composable
 fun BottomNavigationBarPreview() {
     val items = listOf(TopLevelDestination.HOME, TopLevelDestination.SEARCH, TopLevelDestination.LIBRARY)
     BottomNavigationBar(
         destinations = items,
-        currentDestination =
+        currentDestination = TopLevelDestination.HOME,
+        onNavigateToDestination = {}
     )
-}*/
+}
+*/

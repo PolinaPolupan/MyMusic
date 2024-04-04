@@ -75,14 +75,10 @@ fun FeaturedTrack(
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
-                var artistsString = ""
-                for (artist in artists) {
-                    artistsString += artist.name + ", "
-                }
-                artistsString = artistsString.substring(0, artistsString.length - 2)
+
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = artistsString,
+                    text = artistsString(artists),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     maxLines = 1,
@@ -101,7 +97,7 @@ fun FeaturedTrackPreview() {
         FeaturedTrack(
             name = mockTrack.name,
             artists = PreviewParameterData.artists,
-            coverUrl = mockTrack.imageUrl,
+            coverUrl = mockTrack.album.imageUrl,
             onClick = { /*TODO*/ }
         )
     }
@@ -115,7 +111,7 @@ fun FeaturedTrackLongNamePreview() {
         FeaturedTrack(
             name = "This is a very very very very long name",
             artists = PreviewParameterData.artists,
-            coverUrl = mockTrack.imageUrl,
+            coverUrl = mockTrack.album.imageUrl,
             onClick = { /*TODO*/ }
         )
     }

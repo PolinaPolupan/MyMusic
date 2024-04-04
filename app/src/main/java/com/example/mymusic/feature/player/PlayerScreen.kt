@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,14 +19,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsTopHeight
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -63,19 +61,18 @@ import java.time.Duration
 fun PlayerScreen(
     onBackClick: () -> Unit,
     onAddToPlaylistClick: (String) -> Unit,
+    onNavigateToAlbum: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PlayerViewModel = PlayerViewModel()
 ) {
-    Surface(
+    PlayerContent(
+        track = viewModel.playingTrack,
+        onBackClick = onBackClick,
+        onAddToPlaylistClick = onAddToPlaylistClick,
+        onNavigateToAlbum = onNavigateToAlbum,
         modifier = modifier
             .fillMaxSize()
-    ) {
-        PlayerContent(
-            track = viewModel.playingTrack,
-            onBackClick = onBackClick,
-            onAddToPlaylistClick = onAddToPlaylistClick
-        )
-    }
+    )
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -84,6 +81,7 @@ fun PlayerContent(
     track: Track,
     onBackClick: () -> Unit,
     onAddToPlaylistClick: (String) -> Unit,
+    onNavigateToAlbum: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val surfaceColor = MaterialTheme.colorScheme.surface
@@ -94,7 +92,7 @@ fun PlayerContent(
     DynamicThemePrimaryColorsFromImage(dominantColorState) {
         // When the selected image url changes, call updateColorsFromImageUrl() or reset()
         LaunchedEffect(track) {
-            dominantColorState.updateColorsFromImageUrl(track.imageUrl)
+            dominantColorState.updateColorsFromImageUrl(track.album.imageUrl)
         }
         Box(
             modifier = modifier
@@ -102,7 +100,7 @@ fun PlayerContent(
         ) {
             Box(modifier = Modifier.size(540.dp)) {
                 NetworkImage(
-                    track.imageUrl,
+                    track.album.imageUrl,
                     modifier = Modifier.fillMaxSize()
                 )
             }
@@ -120,7 +118,7 @@ fun PlayerContent(
                     )
             )
             NetworkImage(
-                track.imageUrl,
+                track.album.imageUrl,
                 modifier = Modifier
                     .fillMaxSize()
                     .blur(50.dp)
@@ -154,6 +152,7 @@ fun PlayerContent(
                 artistsString = artistsString.substring(0, artistsString.length - 2)
                 Column {
                     TrackPlayer(
+                        trackId = track.id,
                         trackName = track.name,
                         artistName = artistsString,
                         trackDuration = Duration.ZERO,
@@ -161,6 +160,7 @@ fun PlayerContent(
                         onSkipPreviousClick = { /*TODO*/ },
                         onSkipNextClick = { /*TODO*/ },
                         onAddToPlaylistClick = { onAddToPlaylistClick(track.id) },
+                        onNavigateToAlbum = onNavigateToAlbum,
                         modifier = Modifier.padding(32.dp)
                     )
 
@@ -177,7 +177,7 @@ private fun PlayerButtons(
     onSkipPreviousClick: () -> Unit,
     onSkipNextClick: () -> Unit,
     modifier: Modifier = Modifier,
-    playerButtonSize: Dp = 100.dp,
+    playerButtonSize: Dp = 80.dp,
     sideButtonSize: Dp = 70.dp
 ) {
     Row(
@@ -188,6 +188,9 @@ private fun PlayerButtons(
         val buttonsModifier = Modifier
             .size(sideButtonSize)
             .semantics { role = Role.Button }
+        val playerButtonModifier = Modifier
+            .size(playerButtonSize)
+            .semantics { role = Role.Button }
         IconButton(
             onClick = onSkipPreviousClick,
             modifier = buttonsModifier
@@ -197,19 +200,19 @@ private fun PlayerButtons(
                 contentDescription = stringResource(R.string.skip_previous),
                 contentScale = ContentScale.Fit,
                 colorFilter = ColorFilter.tint(LocalContentColor.current),
-                modifier = Modifier.fillMaxSize()
+                modifier = buttonsModifier
             )
         }
         IconButton(
             onClick = onPlayClick,
-            modifier = buttonsModifier
+            modifier = playerButtonModifier
         ) {
             Image(
                 imageVector = MyMusicIcons.Play,
                 contentDescription = stringResource(R.string.play),
                 contentScale = ContentScale.Fit,
                 colorFilter = ColorFilter.tint(LocalContentColor.current),
-                modifier = Modifier.fillMaxSize()
+                modifier = playerButtonModifier
             )
         }
         IconButton(
@@ -221,7 +224,7 @@ private fun PlayerButtons(
                 contentDescription = stringResource(R.string.skip_next),
                 contentScale = ContentScale.Fit,
                 colorFilter = ColorFilter.tint(LocalContentColor.current),
-                modifier = Modifier.fillMaxSize()
+                modifier = buttonsModifier
             )
         }
     }
@@ -245,8 +248,10 @@ private fun PlayerSlider(trackDuration: Duration?) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun TrackDescription(
+    trackId: String,
     trackName: String,
     artists: String,
+    onNavigateToAlbum: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -254,7 +259,7 @@ private fun TrackDescription(
             text = trackName,
             style = MaterialTheme.typography.headlineSmall,
             maxLines = 1,
-            modifier = Modifier.basicMarquee()
+            modifier = Modifier.basicMarquee().clickable { onNavigateToAlbum(trackId) }
         )
         Text(
             text = artists,
@@ -267,6 +272,7 @@ private fun TrackDescription(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TrackPlayer(
+    trackId: String,
     trackName: String,
     artistName: String,
     trackDuration: Duration,
@@ -274,6 +280,7 @@ fun TrackPlayer(
     onSkipPreviousClick: () -> Unit,
     onSkipNextClick: () -> Unit,
     onAddToPlaylistClick: () -> Unit,
+    onNavigateToAlbum: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -281,7 +288,7 @@ fun TrackPlayer(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            TrackDescription(trackName = trackName, artists = artistName)
+            TrackDescription(trackId = trackId, trackName = trackName, artists = artistName, onNavigateToAlbum = onNavigateToAlbum)
             IconButton(
                 onClick = onAddToPlaylistClick,
                 modifier = Modifier.size(50.dp)
@@ -330,7 +337,7 @@ private fun TopAppBar(
                 modifier = Modifier.size(40.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.MoreVert,
+                    imageVector = MyMusicIcons.More,
                     contentDescription = stringResource(R.string.more),
                     modifier = Modifier.fillMaxSize()
                 )
@@ -345,13 +352,16 @@ private fun TopAppBar(
 fun TrackPlayerPreview() {
     MyMusicTheme {
         TrackPlayer(
+            trackId = "0",
             trackName = "New Rules",
             artistName = "Dua Lipa",
             trackDuration = Duration.ZERO,
-            onPlayClick = { /*TODO*/ },
-            onSkipPreviousClick = { /*TODO*/ },
-            onSkipNextClick = { /*TODO*/ },
-            onAddToPlaylistClick = { /*TODO*/ })
+            onPlayClick = {},
+            onSkipPreviousClick = {},
+            onSkipNextClick = {},
+            onAddToPlaylistClick = {},
+            onNavigateToAlbum = {}
+        )
     }
 }
 
@@ -368,7 +378,7 @@ fun TopAppBarPreview() {
 @Composable
 fun PlayerPreview() {
     MyMusicTheme {
-        PlayerContent(onAddToPlaylistClick = {},onBackClick = {}, track = PreviewParameterData.tracks[0])
+        PlayerContent(onAddToPlaylistClick = {},onBackClick = {}, track = PreviewParameterData.tracks[0], onNavigateToAlbum = {})
     }
 }
 
@@ -376,7 +386,7 @@ fun PlayerPreview() {
 @Composable
 fun TrackDescriptionPreview() {
     MyMusicTheme {
-        TrackDescription(trackName = "Name", artists = "artist")
+        TrackDescription(trackName = "Name", artists = "artist", trackId = "0", onNavigateToAlbum = {})
     }
 }
 
@@ -394,8 +404,8 @@ fun PlayerSliderPreview() {
 fun PlayerButtonsPreview() {
     MyMusicTheme {
         PlayerButtons(
-            onPlayClick = { /*TODO*/ },
-            onSkipPreviousClick = { /*TODO*/ },
-            onSkipNextClick = { /*TODO*/ })
+            onPlayClick = {},
+            onSkipPreviousClick = {},
+            onSkipNextClick = {})
     }
 }

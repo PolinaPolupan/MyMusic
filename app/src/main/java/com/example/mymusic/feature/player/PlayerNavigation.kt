@@ -21,6 +21,7 @@ fun NavController.navigateToPlayer(trackId: String) {
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.playerScreen(
     onAddToPlaylistClick: (String) -> Unit,
+    onNavigateToAlbum: (String) -> Unit,
     onBackClick: () -> Unit,
 ) {
     composable(
@@ -29,6 +30,6 @@ fun NavGraphBuilder.playerScreen(
             navArgument(TRACK_ID_ARG) { type = NavType.StringType },
         ),
     ) {
-        PlayerScreen(onBackClick = onBackClick, onAddToPlaylistClick = onAddToPlaylistClick)
+        PlayerScreen(onBackClick = onBackClick, onAddToPlaylistClick = onAddToPlaylistClick, onNavigateToAlbum = onNavigateToAlbum)
     }
 }

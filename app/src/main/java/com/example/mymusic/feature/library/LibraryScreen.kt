@@ -1,9 +1,17 @@
 package com.example.mymusic.feature.library
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -13,8 +21,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.isPopupLayout
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
 import com.example.mymusic.core.designSystem.component.ScreenHeader
@@ -32,16 +42,13 @@ fun LibraryScreen(
     modifier: Modifier = Modifier,
     viewModel: LibraryViewModel = LibraryViewModel()
 ) {
-    Surface(
+    LibraryContent(
+        playlists = viewModel.usersPlaylists,
+        currentSortOption = viewModel.currentSortOption.value,
+        onSortOptionChanged =  { viewModel.currentSortOption.value = it },
         modifier = modifier
             .fillMaxSize()
-    ) {
-        LibraryContent(
-            playlists = viewModel.usersPlaylists,
-            currentSortOption = viewModel.currentSortOption.value,
-            onSortOptionChanged =  { viewModel.currentSortOption.value = it }
-        )
-    }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,8 +90,13 @@ fun LibraryContent(
                         showBottomSheet = true
                     }
             )
-            for (playlist in playlists) {
-                PlaylistCard(name = playlist.name, ownerName = playlist.ownerName, imageUrl = playlist.imageUrl, onClick = {})
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(bottom = dimensionResource(id = R.dimen.player_with_bottom_app_bar_height))
+            ) {
+                items(items = playlists) { playlist ->
+                    PlaylistCard(name = playlist.name, ownerName = playlist.ownerName, imageUrl = playlist.imageUrl, onClick = {})
+                }
             }
         }
     }

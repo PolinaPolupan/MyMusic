@@ -23,4 +23,5 @@
    <dimen name="track_card_size">150dp</dimen>
    <dimen name="bottom_bar_height">100dp</dimen>
    <dimen name="player_card_width">360dp</dimen>
+   <dimen name="player_with_bottom_app_bar_height">180dp</dimen>
 </resources>

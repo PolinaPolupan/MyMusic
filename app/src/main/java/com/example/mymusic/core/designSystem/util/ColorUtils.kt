@@ -16,6 +16,7 @@
 
 package com.example.mymusic.core.designSystem.util
 
+import androidx.annotation.FloatRange
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.luminance
@@ -33,13 +34,13 @@ fun Color.contrastAgainst(background: Color): Float {
     return max(fgLuminance, bgLuminance) / min(fgLuminance, bgLuminance)
 }
 
-fun Color.lighter(factor: Float = 1f) =
+fun Color.lighter(@FloatRange(from = 0.0, to = 1.0) factor: Float = 1f) =
     Color(ColorUtils.blendARGB(this.toArgb(), Color.White.toArgb(), factor))
 
-fun Color.darker(factor: Float = 1f) =
+fun Color.darker(@FloatRange(from = 0.0, to = 1.0) factor: Float = 1f) =
     Color(ColorUtils.blendARGB(this.toArgb(), Color.Black.toArgb(), factor))
 
-fun Color.saturation(factor: Float = 1f): Color {
+fun Color.saturation(@FloatRange(from = 0.0, to = 1.0) factor: Float = 1f): Color {
     val res: FloatArray = FloatArray(3)
     ColorUtils.colorToHSL(this.toArgb(), res)
     res[1] *= factor

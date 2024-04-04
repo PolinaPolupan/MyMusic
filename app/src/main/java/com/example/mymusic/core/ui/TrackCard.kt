@@ -70,13 +70,8 @@ fun TrackCard(
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
-                var artistsString = ""
-                for (artist in artists) {
-                    artistsString += artist.name + ", "
-                }
-                artistsString = artistsString.substring(0, artistsString.length - 2)
                 Text(
-                    text = artistsString,
+                    text = artistsString(artists),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     maxLines = 1,
@@ -95,7 +90,7 @@ fun TrackCardPreview() {
         TrackCard(
             name = mockTrack.name,
             artists = PreviewParameterData.artists,
-            imageUrl = mockTrack.imageUrl,
+            imageUrl = mockTrack.album.imageUrl,
             onClick = { /*TODO*/ }
         )
     }
@@ -109,7 +104,7 @@ fun TrackCardLongNamePreview() {
         TrackCard(
             name = "This is a very very very very long name",
             artists = PreviewParameterData.artists,
-            imageUrl = mockTrack.imageUrl,
+            imageUrl = mockTrack.album.imageUrl,
             onClick = { /*TODO*/ }
         )
     }

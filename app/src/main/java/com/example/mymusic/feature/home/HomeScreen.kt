@@ -89,15 +89,16 @@ internal fun HomeContent(
         )
         // When the selected image url changes, call updateColorsFromImageUrl() or reset()
         LaunchedEffect(pagerState.currentPage) {
-            dominantColorState.updateColorsFromImageUrl(topPicks[pagerState.currentPage % topPicks.size].imageUrl)
+            dominantColorState.updateColorsFromImageUrl(topPicks[pagerState.currentPage % topPicks.size].album.imageUrl)
         }
 
         MyMusicGradientBackground(
             modifier = modifier,
             contentAlignment = Alignment.TopCenter
         ) {
+            /* TODO: Bad behavior in case the image changes too fast */
             BlurredImageHeader(
-                imageUrl = topPicks[pagerState.currentPage % topPicks.size].imageUrl,
+                imageUrl = topPicks[pagerState.currentPage % topPicks.size].album.imageUrl,
                 alpha = 0.5f
             )
             Column(
@@ -128,7 +129,7 @@ internal fun HomeContent(
                         onTrackClick = onTrackClick
                     )
                 }
-                Spacer(modifier = Modifier.height(160.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.player_with_bottom_app_bar_height)))
             }
         }
     }
@@ -158,13 +159,14 @@ internal fun TopPicks(
             contentPadding = PaddingValues(
                 horizontal = dimensionResource(id = R.dimen.top_picks_card_min_size) / 2
             ),
+            verticalAlignment = Alignment.CenterVertically,
             state = pagerState,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(dimensionResource(id = R.dimen.top_picks_card_max_size))
         ) { page ->
             FeaturedTrack(
-                coverUrl = topPicks[page % topPicks.size].imageUrl,
+                coverUrl = topPicks[page % topPicks.size].album.imageUrl,
                 name = topPicks[page % topPicks.size].name,
                 artists = topPicks[page % topPicks.size].artists,
                 onClick = { onTrackClick(topPicks[page % topPicks.size].id) },
@@ -241,7 +243,7 @@ internal fun TrackCarousel(
         TrackCard(
             name = tracks[page].name,
             artists = tracks[page].artists,
-            imageUrl = tracks[page].imageUrl,
+            imageUrl = tracks[page].album.imageUrl,
             onClick = { onTrackClick(tracks[page].id) },
             modifier = Modifier.padding(4.dp)
         )
