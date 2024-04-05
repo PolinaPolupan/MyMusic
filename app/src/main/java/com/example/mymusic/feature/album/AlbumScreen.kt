@@ -1,8 +1,9 @@
 package com.example.mymusic.feature.album
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Icon
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -10,11 +11,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,39 +25,28 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.fontscaling.MathUtils.constrainedMap
-import androidx.compose.ui.unit.fontscaling.MathUtils.lerp
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
@@ -68,13 +56,13 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
-import com.example.mymusic.core.designSystem.util.saturation
+import com.example.mymusic.core.designSystem.util.lerpScrollOffset
+import com.example.mymusic.core.model.SimplifiedArtist
 import com.example.mymusic.core.model.SimplifiedTrack
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.PreviewWithBackground
 import com.example.mymusic.core.ui.artistsString
 import com.example.mymusic.core.ui.rememberCurrentOffset
-import kotlin.math.min
 
 @Composable
 fun AlbumScreen(
@@ -85,7 +73,7 @@ fun AlbumScreen(
     AlbumScreenContent(
         name = viewModel.currentAlbum.name,
         imageUrl = viewModel.currentAlbum.imageUrl,
-        artists = artistsString(viewModel.currentAlbum.artists),
+        artists = viewModel.currentAlbum.artists,
         tracks = viewModel.currentAlbum.tracks,
         onBackClick = onBackClick,
         modifier = modifier
@@ -98,7 +86,7 @@ fun AlbumScreen(
 fun AlbumScreenContent(
     name: String,
     imageUrl: String,
-    artists: String,
+    artists: List<SimplifiedArtist>,
     tracks: List<SimplifiedTrack>,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -112,7 +100,11 @@ fun AlbumScreenContent(
         color.contrastAgainst(surfaceColor) >= 3f
     }
 
-    val alpha: Float by animateFloatAsState(if (scrollState.value >= 500) 1f else 0.0f, label = "")
+    val alpha: Float by animateFloatAsState(
+        if (scrollState.value >= 600) 1f else 0.0f,
+        animationSpec = tween(500, easing = LinearOutSlowInEasing
+        ), label = "album:alpha"
+    )
 
     DynamicThemePrimaryColorsFromImage {
         // When the selected image url changes, call updateColorsFromImageUrl() or reset()
@@ -126,68 +118,14 @@ fun AlbumScreenContent(
             contentAlignment = Alignment.TopCenter,
             modifier = modifier
         ) {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                state = lazyListState,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .background(
-                        MaterialTheme.colorScheme.primary
-                            .darker(0.95f)
-                    )
-            ) {
-                item {
-                    Box(modifier = Modifier
-                        .graphicsLayer(alpha = 1 - min(
-                            1.0f,
-                            if (scrollState.value >= 300) constrainedMap(
-                                0.0f,
-                                1.0f,
-                                300.0f,
-                                800.0f,
-                                scrollState.value.toFloat()
-                            ) else 0.0f
-                        ))) {
-                        NetworkImage(
-                            imageUrl = imageUrl,
-                            modifier = Modifier
-                                .size(400.dp)
-                                .graphicsLayer {
-                                    translationY = -scrollState.value * 0.1f
-                                }
-                        )
-                        Box(
-                            modifier = Modifier
-                                .matchParentSize()
-                                .linearGradientScrim(
-                                    color = MaterialTheme.colorScheme.primary.darker(0.95f),
-                                    start = Offset(0f, 0f),
-                                    end = Offset(0f, 1000f)
-                                )
-                        )
-                        AlbumHeaderWithContent(
-                            name = name,
-                            artists = artists,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(horizontal = 16.dp)
-                        )
-
-                    }
-                }
-                items(tracks) {track ->
-                    TrackItem(
-                        name = track.name,
-                        artists = artistsString(track.artists),
-                        onSettingsClick = { /*TODO*/ },
-                        onTrackClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-
-                    )
-                }
-            }
-
+            TracksList(
+                name = name,
+                imageUrl = imageUrl,
+                artists = artists,
+                tracks = tracks,
+                lazyListState = lazyListState,
+                scrollState = scrollState
+            )
 
             TopAppBar(
                 name = name,
@@ -198,19 +136,75 @@ fun AlbumScreenContent(
                     .background(
                         MaterialTheme.colorScheme.primary
                             .darker(0.9f)
-                            .copy(
-                                alpha = min(
-                                    1.0f,
-                                    if (scrollState.value >= 500) constrainedMap(
-                                        0.0f,
-                                        1.0f,
-                                        500.0f,
-                                        800.0f,
-                                        scrollState.value.toFloat()
-                                    ) else 0.0f
-                                )
-                            )
+                            .copy(alpha = lerpScrollOffset(scrollState, 500f, 800f))
                     )
+                    .testTag("album:topAppBar")
+            )
+        }
+    }
+}
+
+@Composable
+fun TracksList(
+    name: String,
+    imageUrl: String,
+    artists: List<SimplifiedArtist>,
+    tracks: List<SimplifiedTrack>,
+    lazyListState: LazyListState,
+    scrollState: MutableState<Int>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        state = lazyListState,
+        modifier = modifier
+            .fillMaxHeight()
+            .background(
+                MaterialTheme.colorScheme.primary
+                    .darker(0.92f)
+            )
+            .testTag("album:lazyColumn")
+    ) {
+        item {
+            Box(modifier = Modifier
+                .graphicsLayer(alpha = lerpScrollOffset(scrollState, 400f, 800f, reverse = true))
+            ) {
+                NetworkImage(
+                    imageUrl = imageUrl,
+                    modifier = Modifier
+                        .size(400.dp)
+                        .graphicsLayer {
+                            translationY = -scrollState.value * 0.1f
+                        }
+                )
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .linearGradientScrim(
+                            color = MaterialTheme.colorScheme.primary.darker(0.92f),
+                            start = Offset(0f, 0f),
+                            end = Offset(0f, 1000f)
+                        )
+                )
+                AlbumHeaderWithContent(
+                    name = name,
+                    artists = artistsString(artists),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                )
+
+            }
+        }
+        items(tracks) {track ->
+            TrackItem(
+                name = track.name,
+                artists = artistsString(track.artists),
+                onSettingsClick = { /*TODO*/ },
+                onTrackClick = { /*TODO*/ },
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+
             )
         }
     }
@@ -242,7 +236,7 @@ fun AlbumHeaderWithContent(
                 Column {
                     Text(
                         text = name,
-                        style = MaterialTheme.typography.headlineLarge,
+                        style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.SemiBold),
                         maxLines = 1,
                         modifier = Modifier.basicMarquee()
                     )
@@ -276,6 +270,7 @@ fun AlbumHeaderWithContent(
         }
 }
 
+/* TODO: Write tests */
 @Composable
 private fun TopAppBar(
     name: String,
@@ -365,7 +360,7 @@ fun AlbumScreenPreview(
         AlbumScreenContent(
             name = mockAlbum.name,
             imageUrl = mockAlbum.imageUrl,
-            artists = artistsString(mockAlbum.artists),
+            artists = mockAlbum.artists,
             tracks = mockAlbum.tracks,
             onBackClick = {}
         )

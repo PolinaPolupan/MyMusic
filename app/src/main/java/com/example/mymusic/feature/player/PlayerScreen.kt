@@ -111,7 +111,7 @@ fun PlayerContent(
                     .align(Alignment.BottomCenter)
                     .linearGradientScrim(
                         color = MaterialTheme.colorScheme.primary
-                            .saturation(3f),
+                            .saturation(1f),
                         start = Offset(0f, 0f),
                         end = Offset(300f, 1700f),
                         decay = 2f
@@ -131,7 +131,7 @@ fun PlayerContent(
                     .align(Alignment.BottomCenter)
                     .linearGradientScrim(
                         color = MaterialTheme.colorScheme.primary
-                            .saturation(2f)
+                            .saturation(1f)
                             .copy(alpha = 0.7f),
                         start = Offset(0f, 0f),
                         end = Offset(600f, 1400f),

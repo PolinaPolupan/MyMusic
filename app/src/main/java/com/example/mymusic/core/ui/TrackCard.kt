@@ -89,7 +89,7 @@ fun TrackCardPreview() {
         val mockTrack = PreviewParameterData.tracks[0]
         TrackCard(
             name = mockTrack.name,
-            artists = PreviewParameterData.artists,
+            artists = mockTrack.artists,
             imageUrl = mockTrack.album.imageUrl,
             onClick = { /*TODO*/ }
         )
@@ -103,7 +103,7 @@ fun TrackCardLongNamePreview() {
         val mockTrack = PreviewParameterData.tracks[0]
         TrackCard(
             name = "This is a very very very very long name",
-            artists = PreviewParameterData.artists,
+            artists = mockTrack.artists,
             imageUrl = mockTrack.album.imageUrl,
             onClick = { /*TODO*/ }
         )
