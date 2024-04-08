@@ -28,6 +28,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -62,7 +63,7 @@ import com.example.mymusic.core.model.SimplifiedTrack
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.PreviewWithBackground
 import com.example.mymusic.core.ui.artistsString
-import com.example.mymusic.core.ui.rememberCurrentOffset
+import com.example.mymusic.core.ui.rememberScrollState
 
 @Composable
 fun AlbumScreen(
@@ -92,7 +93,7 @@ fun AlbumScreenContent(
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
-    val scrollState = rememberCurrentOffset(state = lazyListState)
+    val scrollState = rememberScrollState(state = lazyListState)
 
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->
@@ -100,10 +101,18 @@ fun AlbumScreenContent(
         color.contrastAgainst(surfaceColor) >= 3f
     }
 
-    val alpha: Float by animateFloatAsState(
+    // Top app bar text alpha dynamically changes with scrolling
+    val textAlpha: Float by animateFloatAsState(
         if (scrollState.value >= 600) 1f else 0.0f,
         animationSpec = tween(500, easing = LinearOutSlowInEasing
-        ), label = "album:alpha"
+        ), label = "album:textAlpha"
+    )
+    // Top app bar divider alpha dynamically changes with scrolling.
+    // The Divider should appear later than the other elements, so the offset is bigger
+    val dividerAlpha: Float by animateFloatAsState(
+        if (scrollState.value >= 800) 1f else 0.0f,
+        animationSpec = tween(500, easing = LinearOutSlowInEasing
+        ), label = "album:dividerAlpha"
     )
 
     DynamicThemePrimaryColorsFromImage {
@@ -118,7 +127,7 @@ fun AlbumScreenContent(
             contentAlignment = Alignment.TopCenter,
             modifier = modifier
         ) {
-            TracksList(
+            AlbumContent(
                 name = name,
                 imageUrl = imageUrl,
                 artists = artists,
@@ -130,12 +139,13 @@ fun AlbumScreenContent(
             TopAppBar(
                 name = name,
                 onBackPress = onBackClick,
-                textAlpha = alpha,
+                textAlpha = textAlpha,
+                dividerAlpha = dividerAlpha,
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
                         MaterialTheme.colorScheme.primary
-                            .darker(0.9f)
+                            .darker(0.92f)
                             .copy(alpha = lerpScrollOffset(scrollState, 500f, 800f))
                     )
                     .testTag("album:topAppBar")
@@ -145,7 +155,7 @@ fun AlbumScreenContent(
 }
 
 @Composable
-fun TracksList(
+fun AlbumContent(
     name: String,
     imageUrl: String,
     artists: List<SimplifiedArtist>,
@@ -277,6 +287,7 @@ private fun TopAppBar(
     onBackPress: () -> Unit,
     modifier: Modifier = Modifier,
     textAlpha: Float = 1.0f,
+    dividerAlpha: Float = 1.0f,
 ) {
     Column(modifier = modifier
         .fillMaxWidth()
@@ -295,7 +306,7 @@ private fun TopAppBar(
                     modifier = Modifier.fillMaxSize()
                 )
             }
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(16.dp))
             Text(
                 text = name,
                 maxLines = 1,
@@ -307,6 +318,7 @@ private fun TopAppBar(
 
             )
         }
+        Divider(modifier = Modifier.alpha(dividerAlpha))
     }
 }
 

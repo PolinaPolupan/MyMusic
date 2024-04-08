@@ -40,7 +40,7 @@ fun Color.lighter(@FloatRange(from = 0.0, to = 1.0) factor: Float = 1f) =
 fun Color.darker(@FloatRange(from = 0.0, to = 1.0) factor: Float = 1f) =
     Color(ColorUtils.blendARGB(this.toArgb(), Color.Black.toArgb(), factor))
 
-fun Color.saturation(@FloatRange(from = 0.0, to = 1.0) factor: Float = 1f): Color {
+fun Color.saturation(factor: Float = 1f): Color {
     val res: FloatArray = FloatArray(3)
     ColorUtils.colorToHSL(this.toArgb(), res)
     res[1] *= factor

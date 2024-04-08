@@ -32,10 +32,10 @@ fun MyMusicGradientBackground(
             .fillMaxSize()
             .background(
                 MaterialTheme.colorScheme.tertiary
-                    .darker(0.8f)
+                    .darker(0.9f)
                     .saturation(1f)
             )
-            .linearGradientScrim(
+            /*.linearGradientScrim(
                 color = MaterialTheme.colorScheme.primary
                     .saturation(6f)
                     .copy(alpha = 0.3f),
@@ -53,7 +53,7 @@ fun MyMusicGradientBackground(
                 start = Offset(0f, 0f),
                 end = Offset(0f, 1500f),
                 decay = 1f
-            )
+            )*/
     ) {
         content()
     }
@@ -74,7 +74,7 @@ fun MyMusicHomeBackground(
                     .darker(0.9f)
                     .saturation(1f)
             )
-            .linearGradientScrim(
+            /*.linearGradientScrim(
                 color = MaterialTheme.colorScheme.secondary
                     .saturation(2f)
                     .copy(alpha = 0.3f),
@@ -102,7 +102,7 @@ fun MyMusicHomeBackground(
                 start = Offset(0f, 0f),
                 end = Offset(0f, 700f),
                 decay = 3f
-            )
+            )*/
     ) {
         content()
     }

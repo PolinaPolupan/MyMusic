@@ -1,7 +1,11 @@
 package com.example.mymusic.feature.home
 
 
+import android.util.Log
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -22,9 +26,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -42,6 +54,8 @@ import com.example.mymusic.core.designSystem.theme.DynamicThemePrimaryColorsFrom
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
+import com.example.mymusic.core.designSystem.util.darker
+import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.model.Artist
 import com.example.mymusic.core.model.Track
 import com.example.mymusic.core.ui.FeaturedTrack
@@ -49,6 +63,7 @@ import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.TrackCard
 import com.example.mymusic.core.ui.TracksPreviewParameterProvider
 import kotlin.math.absoluteValue
+import kotlin.math.max
 
 
 @Composable
@@ -63,7 +78,6 @@ internal fun HomeScreen(
         moreLikeArtists = viewModel.moreLikeArtists,
         onTrackClick = onTrackClick,
         modifier = modifier
-            .verticalScroll(rememberScrollState())
     )
 }
 
@@ -76,6 +90,7 @@ internal fun HomeContent(
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val scrollState = rememberScrollState()
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->
         // We want a color which has sufficient contrast against the surface color
@@ -92,14 +107,17 @@ internal fun HomeContent(
             dominantColorState.updateColorsFromImageUrl(topPicks[pagerState.currentPage % topPicks.size].album.imageUrl)
         }
 
-        MyMusicGradientBackground(
-            modifier = modifier,
+        Box(
+            modifier = modifier
+                .verticalScroll(scrollState)
+                .background(MaterialTheme.colorScheme.primary.darker(0.95f))
+            ,
             contentAlignment = Alignment.TopCenter
         ) {
             /* TODO: Bad behavior in case the image changes too fast */
             BlurredImageHeader(
                 imageUrl = topPicks[pagerState.currentPage % topPicks.size].album.imageUrl,
-                alpha = 0.5f
+                alpha = max(0.0f, lerpScrollOffset(scrollState = scrollState, valueMin = 100f, valueMax = 300f, reverse = true) - 0.3f)
             )
             Column(
                 modifier = Modifier
@@ -154,7 +172,7 @@ internal fun TopPicks(
                 )
         )
         HorizontalPager(
-            pageSpacing = 30.dp,
+            pageSpacing = 25.dp,
             pageSize = PageSize.Fixed(dimensionResource(id = R.dimen.top_picks_card_min_size)),
             contentPadding = PaddingValues(
                 horizontal = dimensionResource(id = R.dimen.top_picks_card_min_size) / 2
@@ -182,17 +200,43 @@ internal fun TopPicks(
 
                         scaleX = lerp(
                             start = 1f,
-                            stop = 1.25f,
-                            fraction = 1f - pageOffset.coerceIn(0f, 1.25f)
+                            stop = 1.15f,
+                            fraction = 1f - pageOffset.coerceIn(0f, 1.15f)
                         )
                         scaleY = lerp(
                             start = 1f,
-                            stop = 1.25f,
-                            fraction = 1f - pageOffset.coerceIn(0f, 1.25f)
+                            stop = 1.15f,
+                            fraction = 1f - pageOffset.coerceIn(0f, 1.15f)
                         )
+                        alpha = lerp(
+                            start = 0.5f,
+                            stop = 1.25f,
+                            fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1.25f)
+                        )
+                        shadowElevation = 30f
 
+                    },
+                imageModifier = Modifier
+                    .graphicsLayer {
+                        // Calculate the absolute offset for the current page from the
+                        // scroll position. We use the absolute value which allows us to mirror
+                        // any effects for both directions
+                        val pageOffset = (
+                                (pagerState.currentPage - page) + pagerState
+                                    .currentPageOffsetFraction
+                                )
+
+                        scaleX = lerp(
+                            start = 1.2f,
+                            stop = 1f,
+                            fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1.2f)
+                        )
+                        scaleY = lerp(
+                            start = 1.2f,
+                            stop = 1f,
+                            fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1.2f)
+                        )
                     }
-
             )
         }
     }

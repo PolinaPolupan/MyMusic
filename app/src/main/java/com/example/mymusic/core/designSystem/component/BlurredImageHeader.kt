@@ -64,7 +64,6 @@ fun BlurredImageHeader(
                         .height(250.dp)
 
                 )
-
             }
         }
     }
