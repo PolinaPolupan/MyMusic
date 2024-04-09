@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -70,33 +71,34 @@ fun LibraryContent(
     }
 
     MyMusicGradientBackground(modifier = modifier) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(end = 16.dp, start = 16.dp, bottom = dimensionResource(id = R.dimen.player_with_bottom_app_bar_height))
         ) {
-            ScreenHeader(
-                titleRes = R.string.your_library,
-                onAvatarClick = { /*TODO*/ },
-                avatarImageRes = R.drawable.images
-            )
+            item {
+                ScreenHeader(
+                    titleRes = R.string.your_library,
+                    onAvatarClick = { /*TODO*/ },
+                    avatarImageRes = R.drawable.images
+                )
 
-            Sort(
-                sortOption = currentSortOption,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(16.dp)
-                    .clickable {
-                        showBottomSheet = true
-                    }
-            )
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(bottom = dimensionResource(id = R.dimen.player_with_bottom_app_bar_height))
-            ) {
-                items(items = playlists) { playlist ->
-                    PlaylistCard(name = playlist.name, ownerName = playlist.ownerName, imageUrl = playlist.imageUrl, onClick = {})
-                }
+                Sort(
+                    sortOption = currentSortOption,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .clickable {
+                            showBottomSheet = true
+                        }
+                )
+            }
+            items(items = playlists) { playlist ->
+                PlaylistCard(
+                    name = playlist.name,
+                    ownerName = playlist.ownerName,
+                    imageUrl = playlist.imageUrl,
+                    onClick = {/*TODO*/},
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }

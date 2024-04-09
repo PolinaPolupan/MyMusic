@@ -37,7 +37,7 @@ fun ScreenHeader(
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .padding(dimensionResource(id = R.dimen.padding_large))
+                .padding(16.dp)
                 .fillMaxWidth()
         ) {
             Text(
