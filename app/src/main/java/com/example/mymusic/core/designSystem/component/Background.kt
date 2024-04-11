@@ -35,16 +35,6 @@ fun MyMusicGradientBackground(
                     .darker(0.9f)
                     .saturation(1f)
             )
-            /*.linearGradientScrim(
-                color = MaterialTheme.colorScheme.primary
-                    .saturation(6f)
-                    .copy(alpha = 0.3f),
-                startYPercentage = 1f,
-                endYPercentage = 0f,
-                start = Offset(0f, 0f),
-                end = Offset(500f, 500f),
-                decay = 3f
-            )
             .linearGradientScrim(
                 color = Color.Black
                     .copy(alpha = 0.9f),
@@ -53,7 +43,7 @@ fun MyMusicGradientBackground(
                 start = Offset(0f, 0f),
                 end = Offset(0f, 1500f),
                 decay = 1f
-            )*/
+            )
     ) {
         content()
     }
