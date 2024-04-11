@@ -103,6 +103,7 @@ fun BottomNavigationBar(
     currentDestination: NavDestination?,
     modifier: Modifier = Modifier
 ) {
+
     Box(
         contentAlignment = Alignment.BottomCenter,
         modifier = modifier

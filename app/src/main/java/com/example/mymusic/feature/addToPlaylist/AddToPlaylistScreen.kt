@@ -221,38 +221,38 @@ private fun TopAppBar(
     modifier: Modifier = Modifier,
     dividerAlpha: Float = 1f
 ) {
-        Column(modifier = modifier
-            .fillMaxWidth()
+    Column(modifier = modifier
+        .fillMaxWidth()
+    ) {
+        Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
-            Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
-                    val text = createRef()
-                    IconButton(onClick = onBackPress, modifier = Modifier.size(30.dp)) {
-                        Icon(
-                            imageVector = MyMusicIcons.ArrowBack,
-                            contentDescription = stringResource(id = R.string.back),
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                    Text(
-                        text = stringResource(id = R.string.add_to_playlist),
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .constrainAs(text) {
-                                centerHorizontallyTo(parent)
-                            }
+            ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
+                val text = createRef()
+                IconButton(onClick = onBackPress, modifier = Modifier.size(30.dp)) {
+                    Icon(
+                        imageVector = MyMusicIcons.ArrowBack,
+                        contentDescription = stringResource(id = R.string.back),
+                        modifier = Modifier.fillMaxSize()
                     )
-            }
+                }
+                Text(
+                    text = stringResource(id = R.string.add_to_playlist),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .constrainAs(text) {
+                            centerHorizontallyTo(parent)
+                        }
+                )
         }
-            Divider(modifier = Modifier.alpha(dividerAlpha))
     }
+        Divider(modifier = Modifier.alpha(dividerAlpha))
+}
 }
 
 @Preview
