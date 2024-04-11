@@ -209,7 +209,7 @@ fun AlbumContent(
         items(tracks) {track ->
             TrackItem(
                 name = track.name,
-                artists = artistsString(track.artists),
+                artists = track.artists,
                 onSettingsClick = { /*TODO*/ },
                 onTrackClick = { /*TODO*/ },
                 modifier = Modifier
@@ -325,7 +325,7 @@ private fun TopAppBar(
 @Composable
 private fun TrackItem(
     name: String,
-    artists: String,
+    artists: List<SimplifiedArtist>,
     onSettingsClick: () -> Unit,
     onTrackClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -339,7 +339,7 @@ private fun TrackItem(
         Column() {
             Text(text = name, style = MaterialTheme.typography.titleMedium)
             Text(
-                text = artists,
+                text = artistsString(artists),
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier
                     .alpha(0.5f)
