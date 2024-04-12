@@ -45,7 +45,9 @@ import com.example.mymusic.core.designSystem.component.SortOption
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
+import com.example.mymusic.core.model.Album
 import com.example.mymusic.core.model.Playlist
+import com.example.mymusic.core.ui.AlbumCard
 import com.example.mymusic.core.ui.PlaylistCard
 import com.example.mymusic.core.ui.PreviewParameterData
 import kotlin.math.max
@@ -54,21 +56,29 @@ import kotlin.math.max
 @Composable
 fun LibraryScreen(
     modifier: Modifier = Modifier,
+    onPlaylistClick: (String) -> Unit,
+    onAlbumClick: (String) -> Unit,
     viewModel: LibraryViewModel = LibraryViewModel()
 ) {
     LibraryContent(
+        albums = viewModel.albums,
         playlists = viewModel.usersPlaylists,
-        currentSortOption = viewModel.currentSortOption.value,
         onSortOptionChanged =  { viewModel.currentSortOption.value = it },
+        onPlaylistClick = onPlaylistClick,
+        onAlbumClick = onAlbumClick,
+        currentSortOption = viewModel.currentSortOption.value,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     )
 }
 
 @Composable
 fun LibraryContent(
+    albums: List<Album>,
     playlists: List<Playlist>,
     onSortOptionChanged: (SortOption) -> Unit,
+    onPlaylistClick: (String) -> Unit,
+    onAlbumClick: (String) -> Unit,
     currentSortOption: SortOption,
     modifier: Modifier = Modifier
 ) {
@@ -141,7 +151,16 @@ fun LibraryContent(
                         name = playlist.name,
                         ownerName = playlist.ownerName,
                         imageUrl = playlist.imageUrl,
-                        onClick = {/*TODO*/ },
+                        onClick = { onPlaylistClick(playlist.id) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                items(items = albums) { album ->
+                    AlbumCard(
+                        name = album.name,
+                        artists = album.artists,
+                        imageUrl = album.imageUrl,
+                        onClick = { onAlbumClick(album.id) },
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -194,9 +213,12 @@ private fun TopAppBar(
 fun LibraryPreview() {
     MyMusicTheme {
         LibraryContent(
+            albums = PreviewParameterData.albums,
             playlists = PreviewParameterData.playlists,
+            onSortOptionChanged = {},
             currentSortOption = SortOption.RECENTLY_ADDED,
-            onSortOptionChanged = {}
+            onPlaylistClick = {},
+            onAlbumClick = {},
         )
     }
 }

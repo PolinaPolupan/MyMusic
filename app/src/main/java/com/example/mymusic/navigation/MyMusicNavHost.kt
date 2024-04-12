@@ -15,6 +15,8 @@ import com.example.mymusic.feature.home.homeScreen
 import com.example.mymusic.feature.library.libraryScreen
 import com.example.mymusic.feature.player.navigateToPlayer
 import com.example.mymusic.feature.player.playerScreen
+import com.example.mymusic.feature.playlist.navigateToPlaylist
+import com.example.mymusic.feature.playlist.playlistScreen
 import com.example.mymusic.feature.search.searchScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -32,9 +34,10 @@ fun MyMusicNavHost(
     ) {
         homeScreen(onTrackClick = navController::navigateToPlayer)
         searchScreen()
-        libraryScreen()
+        libraryScreen(onPlaylistClick = navController::navigateToPlaylist, onAlbumClick = navController::navigateToAlbum)
         playerScreen(onBackClick = navController::popBackStack, onAddToPlaylistClick = navController::navigateToAddToPlaylist, onNavigateToAlbum = navController::navigateToAlbum)
         addToPlaylistScreen(onBackClick = navController::popBackStack)
         albumScreen(onBackClick = navController::popBackStack)
+        playlistScreen(onBackClick = navController::popBackStack)
     }
 }

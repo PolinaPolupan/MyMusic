@@ -17,6 +17,7 @@
     <string name="close">Close</string>
     <string name="your_library">Your Library</string>
     <string name="playlist_label">Playlist \u2022 %s</string>
+    <string name="album_label">Album \u2022 %s</string>
     <string name="recently_added">Recently added</string>
     <string name="alphabetical">Alphabetical</string>
     <string name="creator">Creator</string>
