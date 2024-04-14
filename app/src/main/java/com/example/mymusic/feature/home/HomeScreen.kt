@@ -110,8 +110,7 @@ internal fun HomeContent(
         Box(
             modifier = modifier
                 .verticalScroll(scrollState)
-                .background(MaterialTheme.colorScheme.primary.darker(0.95f))
-            ,
+                .background(MaterialTheme.colorScheme.primary.darker(0.95f)),
             contentAlignment = Alignment.TopCenter
         ) {
             /* TODO: Bad behavior in case the image changes too fast */

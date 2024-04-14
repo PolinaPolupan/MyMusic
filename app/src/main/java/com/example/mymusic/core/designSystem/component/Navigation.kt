@@ -47,7 +47,7 @@ fun RowScope.MyMusicNavigationBarItem(
             unselectedIconColor = MyMusicNavigationDefaults.navigationContentColor(),
             selectedTextColor = MyMusicNavigationDefaults.navigationSelectedItemColor(),
             unselectedTextColor = MyMusicNavigationDefaults.navigationContentColor(),
-            indicatorColor = MyMusicNavigationDefaults.navigationIndicatorColor()
+            indicatorColor = Color.Transparent
         ),
     )
 }
@@ -62,5 +62,5 @@ object MyMusicNavigationDefaults {
     fun navigationSelectedItemColor() = MaterialTheme.colorScheme.onPrimaryContainer
 
     @Composable
-    fun navigationIndicatorColor() = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+    fun navigationIndicatorColor() = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0f)
 }
