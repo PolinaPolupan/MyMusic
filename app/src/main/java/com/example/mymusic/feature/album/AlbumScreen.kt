@@ -217,6 +217,9 @@ fun AlbumContent(
 
             )
         }
+        item {
+            Spacer(Modifier.height(100.dp))
+        }
     }
 }
 
