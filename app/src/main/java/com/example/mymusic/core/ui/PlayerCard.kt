@@ -50,98 +50,97 @@ fun PlayerCard(
     buttonModifier: Modifier = Modifier
         .size(36.dp)
 ) {
-        OutlinedCard(
-            border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)),
-            onClick = onClick,
-            colors = CardDefaults.outlinedCardColors(
-                containerColor = Color.Black.copy(alpha = 0.3f)
-            ),
-            modifier = modifier
-                .width(dimensionResource(id = R.dimen.player_card_width))
+    OutlinedCard(
+        border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)),
+        onClick = onClick,
+        colors = CardDefaults.outlinedCardColors(
+            containerColor = Color.Black.copy(alpha = 0.8f)
+        ),
+        modifier = modifier
+            .width(dimensionResource(id = R.dimen.player_card_width))
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+            NetworkImage(
+                imageUrl = coverUrl,
+                modifier = Modifier
+                    .size(70.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .padding(dimensionResource(id = R.dimen.padding_small))
+                    .weight(2f)
             ) {
-                NetworkImage(
-                    imageUrl = coverUrl,
+                Text(
+                    text = name,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier
-                        .size(70.dp)
+                        .padding(bottom = 4.dp)
+                        .basicMarquee()
                 )
-                Column(
+                Text(
+                    text = artistName,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier
-                        .padding(dimensionResource(id = R.dimen.padding_small))
-                        .weight(2f)
+                        .basicMarquee()
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(dimensionResource(id = R.dimen.padding_small))
+            ) {
+                IconButton(
+                    onClick = {/*TODO*/},
+                    modifier = buttonModifier
                 ) {
-                    Text(
-                        text = name,
-                        maxLines = 1,
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier
-                            .padding(bottom = 4.dp)
-                            .basicMarquee()
-                    )
-                    Text(
-                        text = artistName,
-                        maxLines = 1,
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier
-                            .basicMarquee()
+                    Icon(
+                        imageVector = MyMusicIcons.SkipPrevious,
+                        contentDescription = stringResource(id = R.string.skip_previous),
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(dimensionResource(id = R.dimen.padding_small))
+                if (isPaused) {
+                    IconButton(
+                        onClick = {/*TODO*/},
+                        modifier = Modifier.size(40.dp)
+                    ) {
+                        Icon(
+                            imageVector = MyMusicIcons.Play,
+                            contentDescription = stringResource(id = R.string.play),
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                } else {
+                    IconButton(
+                        onClick = {/*TODO*/},
+                        modifier = Modifier.size(40.dp)
+                    ) {
+                        Icon(
+                            imageVector = MyMusicIcons.Pause,
+                            contentDescription = stringResource(id = R.string.pause),
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                }
+                IconButton(
+                    onClick = {/*TODO*/},
+                    modifier = buttonModifier
                 ) {
-                    IconButton(
-                        onClick = {/*TODO*/},
-                        modifier = buttonModifier
-                    ) {
-                        Icon(
-                            imageVector = MyMusicIcons.SkipPrevious,
-                            contentDescription = stringResource(id = R.string.skip_previous),
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                    if (isPaused) {
-                        IconButton(
-                            onClick = {/*TODO*/},
-                            modifier = Modifier.size(40.dp)
-                        ) {
-                            Icon(
-                                imageVector = MyMusicIcons.Play,
-                                contentDescription = stringResource(id = R.string.play),
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-                    } else {
-                        IconButton(
-                            onClick = {/*TODO*/},
-                            modifier = Modifier.size(40.dp)
-                        ) {
-                            Icon(
-                                imageVector = MyMusicIcons.Pause,
-                                contentDescription = stringResource(id = R.string.pause),
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-                    }
-                    IconButton(
-                        onClick = {/*TODO*/},
-                        modifier = buttonModifier
-                    ) {
-                        Icon(
-                            imageVector = MyMusicIcons.SkipNext,
-                            contentDescription = stringResource(id = R.string.skip_next),
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
+                    Icon(
+                        imageVector = MyMusicIcons.SkipNext,
+                        contentDescription = stringResource(id = R.string.skip_next),
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
             }
         }
-    
+    }
 }
 
 @PreviewWithBackground
