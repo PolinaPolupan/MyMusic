@@ -3,12 +3,7 @@ package com.example.mymusic
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.performScrollToIndex
-import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.ui.PreviewParameterData
-import com.example.mymusic.core.ui.rememberScrollState
-import com.example.mymusic.feature.album.AlbumContent
 import org.junit.Rule
 import org.junit.Test
 

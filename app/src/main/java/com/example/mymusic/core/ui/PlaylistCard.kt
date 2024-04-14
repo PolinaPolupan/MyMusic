@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.ClippedShadowCard
 import com.example.mymusic.core.designSystem.component.NetworkImage
-import com.example.mymusic.core.designSystem.icon.MyMusicIcons
+import com.example.mymusic.core.designSystem.component.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 
 @Composable

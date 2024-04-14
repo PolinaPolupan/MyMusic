@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.CroppedShape
 import com.example.mymusic.core.designSystem.component.NetworkImage
-import com.example.mymusic.core.designSystem.icon.MyMusicIcons
+import com.example.mymusic.core.designSystem.component.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.DynamicThemePrimaryColorsFromImage
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
@@ -111,7 +111,7 @@ fun PlayerContent(
                     .align(Alignment.BottomCenter)
                     .linearGradientScrim(
                         color = MaterialTheme.colorScheme.primary
-                            .saturation(1f),
+                            .saturation(5f),
                         start = Offset(0f, 0f),
                         end = Offset(300f, 1700f),
                         decay = 2f
@@ -131,7 +131,7 @@ fun PlayerContent(
                     .align(Alignment.BottomCenter)
                     .linearGradientScrim(
                         color = MaterialTheme.colorScheme.primary
-                            .saturation(1f)
+                            .saturation(3f)
                             .copy(alpha = 0.7f),
                         start = Offset(0f, 0f),
                         end = Offset(600f, 1400f),

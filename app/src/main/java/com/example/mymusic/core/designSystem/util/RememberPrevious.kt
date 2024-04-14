@@ -1,4 +1,4 @@
-package com.example.mymusic.core.ui
+package com.example.mymusic.core.designSystem.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState

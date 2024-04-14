@@ -1,8 +1,5 @@
 package com.example.mymusic.feature.home
 
-
-import android.util.Log
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -26,30 +23,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
-import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
 import com.example.mymusic.core.designSystem.component.NetworkImage
-import com.example.mymusic.core.designSystem.component.ScreenHeader
+import com.example.mymusic.core.ui.ScreenHeader
 import com.example.mymusic.core.designSystem.theme.DynamicThemePrimaryColorsFromImage
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
@@ -61,10 +48,8 @@ import com.example.mymusic.core.model.Track
 import com.example.mymusic.core.ui.FeaturedTrack
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.TrackCard
-import com.example.mymusic.core.ui.TracksPreviewParameterProvider
 import kotlin.math.absoluteValue
 import kotlin.math.max
-
 
 @Composable
 internal fun HomeScreen(
@@ -126,7 +111,8 @@ internal fun HomeContent(
                 ScreenHeader(
                     titleRes = R.string.listen_now,
                     onAvatarClick = { /*TODO*/ },
-                    avatarImageRes = R.drawable.ic_launcher_background
+                    avatarImageRes = R.drawable.ic_launcher_background,
+                    modifier = Modifier.padding(horizontal = 16.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 TopPicks(
@@ -352,12 +338,11 @@ fun ArtistHeaderPreview() {
         )
     }
 }
+
 @Preview
 @Composable
-fun HomePreview(
-    @PreviewParameter(TracksPreviewParameterProvider::class)
-    tracks : List<Track>
-) {
+fun HomePreview() {
+    val tracks = PreviewParameterData.tracks
     MyMusicTheme {
         HomeContent(
             onTrackClick = {},

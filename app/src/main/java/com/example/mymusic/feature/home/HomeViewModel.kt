@@ -9,5 +9,4 @@ class HomeViewModel: ViewModel() {
     val topPicks: List<Track> = PreviewParameterData.tracks
     val moreLikeArtists: Map<Artist, List<Track>> = PreviewParameterData.moreLikeArtists
     val recentlyPlayed: List<Track> = PreviewParameterData.tracks
-
 }

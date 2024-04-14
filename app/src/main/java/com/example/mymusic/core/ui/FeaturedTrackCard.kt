@@ -30,10 +30,10 @@ import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
+import com.example.mymusic.core.designSystem.util.artistsString
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.saturation
 import com.example.mymusic.core.model.Artist
-import com.example.mymusic.core.model.SimplifiedArtist
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

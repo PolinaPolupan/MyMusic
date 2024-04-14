@@ -48,10 +48,11 @@ import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
-import com.example.mymusic.core.designSystem.icon.MyMusicIcons
+import com.example.mymusic.core.designSystem.component.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.DynamicThemePrimaryColorsFromImage
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
+import com.example.mymusic.core.designSystem.util.artistsString
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
@@ -59,8 +60,7 @@ import com.example.mymusic.core.model.Artist
 import com.example.mymusic.core.model.Track
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.PreviewWithBackground
-import com.example.mymusic.core.ui.artistsString
-import com.example.mymusic.core.ui.rememberScrollState
+import com.example.mymusic.core.designSystem.util.rememberScrollState
 
 @Composable
 fun PlaylistScreen(

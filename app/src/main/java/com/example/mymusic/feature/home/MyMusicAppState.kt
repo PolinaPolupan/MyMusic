@@ -2,20 +2,18 @@ package com.example.mymusic.feature.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.example.mymusic.core.model.Track
 import com.example.mymusic.core.model.User
 import com.example.mymusic.core.ui.PreviewParameterData
-import com.example.mymusic.navigation.TopLevelDestination
 import com.example.mymusic.feature.library.LIBRARY_ROUTE
 import com.example.mymusic.feature.library.navigateToLibrary
 import com.example.mymusic.feature.search.SEARCH_ROUTE
 import com.example.mymusic.feature.search.navigateToSearch
+import com.example.mymusic.navigation.TopLevelDestination
 
 @Composable
 fun rememberMyMusicAppState(

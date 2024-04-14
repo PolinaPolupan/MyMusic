@@ -38,20 +38,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
-import com.example.mymusic.core.designSystem.component.ScreenHeader
-import com.example.mymusic.core.designSystem.component.Sort
-import com.example.mymusic.core.designSystem.component.SortBottomSheet
-import com.example.mymusic.core.designSystem.component.SortOption
+import com.example.mymusic.core.ui.ScreenHeader
+import com.example.mymusic.core.ui.Sort
+import com.example.mymusic.core.ui.SortBottomSheet
+import com.example.mymusic.core.ui.SortOption
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
+import com.example.mymusic.core.designSystem.util.rememberScrollState
 import com.example.mymusic.core.model.Album
 import com.example.mymusic.core.model.Playlist
 import com.example.mymusic.core.ui.AlbumCard
 import com.example.mymusic.core.ui.PlaylistCard
 import com.example.mymusic.core.ui.PreviewParameterData
 import kotlin.math.max
-
 
 @Composable
 fun LibraryScreen(
@@ -83,7 +83,7 @@ fun LibraryContent(
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
-    val scrollState = com.example.mymusic.core.ui.rememberScrollState(state = lazyListState)
+    val scrollState = rememberScrollState(state = lazyListState)
 
     var showBottomSheet by remember { mutableStateOf(false) }
 

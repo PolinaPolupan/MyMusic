@@ -5,15 +5,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -35,8 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
-import com.example.mymusic.core.designSystem.component.ScreenHeader
-import com.example.mymusic.core.designSystem.icon.MyMusicIcons
+import com.example.mymusic.core.ui.ScreenHeader
+import com.example.mymusic.core.designSystem.component.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 
 @Composable
@@ -70,7 +67,8 @@ fun SearchContent(
             ScreenHeader(
                 titleRes = R.string.search,
                 onAvatarClick = { /*TODO*/ },
-                avatarImageRes = R.drawable.images
+                avatarImageRes = R.drawable.images,
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
             SearchToolbar(
                 searchQuery = searchQuery,

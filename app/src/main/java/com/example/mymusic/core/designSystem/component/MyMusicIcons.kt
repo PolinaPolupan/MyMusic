@@ -1,4 +1,4 @@
-package com.example.mymusic.core.designSystem.icon
+package com.example.mymusic.core.designSystem.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add

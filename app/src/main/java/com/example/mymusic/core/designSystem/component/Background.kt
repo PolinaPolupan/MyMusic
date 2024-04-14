@@ -32,8 +32,8 @@ fun MyMusicGradientBackground(
             .fillMaxSize()
             .background(
                 MaterialTheme.colorScheme.tertiary
-                    .darker(0.9f)
-                    .saturation(1f)
+                    .darker(0.85f)
+                    .saturation(3f)
             )
             .linearGradientScrim(
                 color = Color.Black

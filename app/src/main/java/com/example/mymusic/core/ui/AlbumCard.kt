@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,9 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.ClippedShadowCard
 import com.example.mymusic.core.designSystem.component.NetworkImage
-import com.example.mymusic.core.designSystem.icon.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
-import com.example.mymusic.core.model.Artist
+import com.example.mymusic.core.designSystem.util.artistsString
 import com.example.mymusic.core.model.SimplifiedArtist
 
 @Composable

@@ -49,22 +49,23 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
-import com.example.mymusic.core.designSystem.component.Sort
-import com.example.mymusic.core.designSystem.component.SortBottomSheet
-import com.example.mymusic.core.designSystem.component.SortOption
+import com.example.mymusic.core.ui.Sort
+import com.example.mymusic.core.ui.SortBottomSheet
+import com.example.mymusic.core.ui.SortOption
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
-import com.example.mymusic.core.designSystem.icon.MyMusicIcons
+import com.example.mymusic.core.designSystem.component.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.DynamicThemePrimaryColorsFromImage
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
+import com.example.mymusic.core.designSystem.util.rememberScrollState
 import com.example.mymusic.core.model.Playlist
 import com.example.mymusic.core.model.Track
 import com.example.mymusic.core.ui.PlaylistCard
 import com.example.mymusic.core.ui.PreviewParameterData
-import com.example.mymusic.core.ui.viewModelProviderFactoryOf
+import com.example.mymusic.core.designSystem.util.viewModelProviderFactoryOf
 
 @Composable
 fun AddToPlayListScreen(
@@ -97,7 +98,7 @@ fun AddToPlayListContent(
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
-    val scrollState = com.example.mymusic.core.ui.rememberScrollState(state = lazyListState)
+    val scrollState = rememberScrollState(state = lazyListState)
 
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->
@@ -250,7 +251,7 @@ private fun TopAppBar(
 
 @Preview
 @Composable
-fun AddToPlayListPreview(modifier: Modifier = Modifier) {
+fun AddToPlayListPreview() {
     MyMusicTheme {
         val playlists = List(10) {
             Playlist(

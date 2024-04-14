@@ -1,4 +1,4 @@
-package com.example.mymusic.core.ui
+package com.example.mymusic.core.designSystem.util
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
@@ -7,6 +7,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import com.example.mymusic.core.designSystem.util.rememberPrevious
 
 /**
  * Returns the scroll Y position value in LazyColumn

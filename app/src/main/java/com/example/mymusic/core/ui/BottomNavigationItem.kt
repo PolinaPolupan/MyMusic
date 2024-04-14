@@ -1,17 +1,13 @@
-package com.example.mymusic.core.designSystem.component
+package com.example.mymusic.core.ui
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -43,7 +39,7 @@ fun RowScope.BottomNavigationBarItem(
 ) {
     val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
 
-    val alpha: Float by animateFloatAsState(if (selected) 1f else 0.5f)
+    val alpha: Float by animateFloatAsState(if (selected) 1f else 0.5f, label = "bottomNavigationItem")
 
     val contentColor =
         if (selected) Color.White else Color.White
