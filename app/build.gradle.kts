@@ -57,15 +57,23 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui:$version")
     implementation ("androidx.compose.ui:ui-util:$version")
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("androidx.palette:palette-ktx:1.0.0")
     implementation("com.android.volley:volley:1.2.1")
     implementation("androidx.compose.material:material-icons-extended")
-    implementation("dev.chrisbanes.haze:haze:$version")
     implementation("dev.chrisbanes.haze:haze-jetpack-compose:0.5.4")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    // Spotify
+    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation(files("libs/spotify-app-remote-release-0.8.0.aar"))
+    implementation("com.spotify.android:auth:1.2.5")
+    // Splash API
+    implementation("androidx.core:core-splashscreen:1.0.1")
+    // Lottie
+    implementation("com.airbnb.android:lottie-compose:6.3.0")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

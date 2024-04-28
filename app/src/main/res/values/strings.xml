@@ -32,4 +32,8 @@
     <string name="album_type_name">Album</string>
     <string name="single_type_name">Single</string>
     <string name="compilation_type_name">Compilation</string>
+
+    <string name="login_text">Explore millions of songs</string>
+    <string name="login_description">Log in to your Spotify to use My Music</string>
+    <string name="login">Log in</string>
 </resources>

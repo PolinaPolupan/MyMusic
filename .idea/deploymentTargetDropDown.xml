@@ -11,11 +11,21 @@
       <entry key="HomePreview (tracksResource 0)">
         <State />
       </entry>
-      <entry key="PlayerPreview">
-        <State />
-      </entry>
       <entry key="app">
-        <State />
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="adb-49625be9-sJIsIp._adb-tls-connect._tcp" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-28T09:25:32.654129500Z" />
+        </State>
       </entry>
       <entry key="app.feature">
         <State />

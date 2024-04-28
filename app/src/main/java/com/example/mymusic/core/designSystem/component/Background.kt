@@ -49,6 +49,12 @@ fun MyMusicGradientBackground(
     }
 }
 
+/**
+ * [MyMusicHomeBackground] is used in [HomeScreen]
+ *
+ * @param modifier Modifier to be applied to the background.
+ * @param content The background content.
+ */
 @Composable
 fun MyMusicHomeBackground(
     modifier: Modifier = Modifier,
@@ -64,35 +70,36 @@ fun MyMusicHomeBackground(
                     .darker(0.9f)
                     .saturation(1f)
             )
-            /*.linearGradientScrim(
-                color = MaterialTheme.colorScheme.secondary
-                    .saturation(2f)
-                    .copy(alpha = 0.3f),
-                startYPercentage = 0f,
-                endYPercentage = 1f,
-                start = Offset(1000f, 1000f),
-                end = Offset(0f, 500f),
-                decay = 1f
-            )
-            .linearGradientScrim(
-                color = MaterialTheme.colorScheme.primary
+    ) {
+        content()
+    }
+}
+
+/**
+ * [MyMusicLoginBackground] is used in [LoginScreen]
+ *
+ * @param modifier Modifier to be applied to the background.
+ * @param content The background content.
+ */
+@Composable
+fun MyMusicLoginBackground(
+    modifier: Modifier = Modifier,
+    contentAlignment: Alignment = Alignment.BottomCenter,
+    content: @Composable () -> Unit
+) {
+    Box(
+        contentAlignment = contentAlignment,
+        modifier = modifier
+            .fillMaxSize()
+            .background(
+                MaterialTheme.colorScheme.primary
                     .saturation(6f)
-                    .copy(alpha = 0.3f),
-                startYPercentage = 1f,
-                endYPercentage = 0f,
-                start = Offset(0f, 0f),
-                end = Offset(500f, 500f),
-                decay = 3f
             )
             .linearGradientScrim(
-                color = Color.Black
-                    .copy(alpha = 0.6f),
-                startYPercentage = 0f,
-                endYPercentage = 1f,
-                start = Offset(0f, 0f),
-                end = Offset(0f, 700f),
-                decay = 3f
-            )*/
+                color = Color.Black,
+                end = Offset(0f, 2800f),
+                decay = 0.6f
+            )
     ) {
         content()
     }
@@ -113,6 +120,16 @@ fun MyMusicGradientBackgroundPreview() {
 fun MyMusicHomeBackgroundPreview() {
     MyMusicTheme {
         MyMusicHomeBackground {
+
+        }
+    }
+}
+
+@Preview
+@Composable
+fun MyMusicLoginBackgroundPreview() {
+    MyMusicTheme {
+        MyMusicLoginBackground {
 
         }
     }
