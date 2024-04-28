@@ -1,4 +1,4 @@
-# My Music app  
+# My Music 
 
 **My Music** is a music player app based on Spotify API.
 
