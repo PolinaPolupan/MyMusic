@@ -5,9 +5,7 @@
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:statusBarColor">@color/black</item>
-        <item name="android:windowBackground">@drawable/splash_logo</item>
-        <item name="android:windowSharedElementEnterTransition">@android:transition/fade</item>
-        <item name="android:windowSharedElementExitTransition">@android:transition/fade</item>
+        <item name="android:windowBackground">@color/black</item>
     </style>
 
 </resources>

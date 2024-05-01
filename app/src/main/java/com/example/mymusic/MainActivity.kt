@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.SubcomposeSlotReusePolicy
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.feature.home.MyMusicApp
 
