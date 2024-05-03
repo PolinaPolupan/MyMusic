@@ -8,11 +8,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
+const val PLAYLIST_ROUTE = "playlist_route"
+
 @VisibleForTesting
 internal const val PLAYLIST_ID_ARG = "playlistId"
 
 fun NavController.navigateToPlaylist(playlistId: String) {
-    navigate("playlist_route/$playlistId") {
+    navigate("$PLAYLIST_ROUTE/$playlistId") {
         launchSingleTop = true
     }
 }
@@ -22,7 +24,7 @@ fun NavGraphBuilder.playlistScreen(
 ) {
     composable(
         enterTransition = { fadeIn() },
-        route = "playlist_route/{$PLAYLIST_ID_ARG}",
+        route = "$PLAYLIST_ROUTE/{$PLAYLIST_ID_ARG}",
         arguments = listOf(
             navArgument(PLAYLIST_ID_ARG) { type = NavType.StringType },
         )

@@ -53,7 +53,7 @@ fun MyMusicApp(
             )
         }
         AnimatedVisibility(
-            visible = destination != null,
+            visible = appState.shouldShowBottomBar,
             enter = fadeIn(initialAlpha = 0.0f),
             exit = fadeOut()
         ) {
@@ -116,11 +116,6 @@ fun BottomNavigationBar(
         }
     }
 }
-
-fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
-    this?.hierarchy?.any {
-        it.route?.contains(destination.name, true) ?: false
-    } ?: false
 
 @Preview
 @Composable

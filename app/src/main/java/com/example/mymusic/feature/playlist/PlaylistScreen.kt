@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -40,6 +41,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -129,7 +131,6 @@ fun PlaylistScreenContent(
                 lazyListState = lazyListState,
                 scrollState = scrollState
             )
-
             TopAppBar(
                 name = name,
                 onBackClick = onBackClick,
@@ -161,6 +162,9 @@ fun PlaylistContent(
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         state = lazyListState,
+        contentPadding = PaddingValues(
+            bottom = dimensionResource(id = R.dimen.player_with_bottom_app_bar_height)
+        ),
         modifier = modifier
             .fillMaxHeight()
             .background(

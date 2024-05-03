@@ -6,17 +6,19 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
+const val ADD_TO_PLAYLIST_ROUTE = "add_to_playlist_route"
+
 internal const val TRACK_ID_ARG = "trackId"
 
 fun NavController.navigateToAddToPlaylist(trackId: String) {
-    navigate("add_to_playlist_route/$trackId") {
+    navigate("$ADD_TO_PLAYLIST_ROUTE/$trackId") {
         launchSingleTop = true
     }
 }
 
 fun NavGraphBuilder.addToPlaylistScreen(onBackClick: () -> Unit) {
     composable(
-        route = "add_to_playlist_route/{${TRACK_ID_ARG}}",
+        route = "$ADD_TO_PLAYLIST_ROUTE/{${TRACK_ID_ARG}}",
         arguments = listOf(
             navArgument(TRACK_ID_ARG) { type = NavType.StringType }
         )

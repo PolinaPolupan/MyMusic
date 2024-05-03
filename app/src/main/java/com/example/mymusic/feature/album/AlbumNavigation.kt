@@ -8,11 +8,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
+const val ALBUM_ROUTE = "album_route"
+
 @VisibleForTesting
 internal const val ALBUM_ID_ARG = "albumId"
 
 fun NavController.navigateToAlbum(albumId: String) {
-    navigate("album_route/$albumId") {
+    navigate("$ALBUM_ROUTE/$albumId") {
         launchSingleTop = true
     }
 }
@@ -22,7 +24,7 @@ fun NavGraphBuilder.albumScreen(
 ) {
     composable(
         enterTransition = {fadeIn()},
-        route = "album_route/{$ALBUM_ID_ARG}",
+        route = "$ALBUM_ROUTE/{$ALBUM_ID_ARG}",
         arguments = listOf(
             navArgument(ALBUM_ID_ARG) { type = NavType.StringType },
         )

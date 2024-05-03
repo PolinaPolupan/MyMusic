@@ -11,6 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -43,6 +44,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -122,7 +124,6 @@ fun AlbumScreenContent(
         LaunchedEffect(imageUrl) {
             dominantColorState.updateColorsFromImageUrl(imageUrl)
         }
-        
         Box(
             contentAlignment = Alignment.TopCenter,
             modifier = modifier
@@ -135,7 +136,6 @@ fun AlbumScreenContent(
                 lazyListState = lazyListState,
                 scrollState = scrollState
             )
-
             TopAppBar(
                 name = name,
                 onBackPress = onBackClick,
@@ -167,6 +167,9 @@ fun AlbumContent(
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         state = lazyListState,
+        contentPadding = PaddingValues(
+            bottom = dimensionResource(id = R.dimen.player_with_bottom_app_bar_height)
+        ),
         modifier = modifier
             .fillMaxHeight()
             .background(
@@ -214,11 +217,7 @@ fun AlbumContent(
                 onTrackClick = { /*TODO*/ },
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
-
             )
-        }
-        item {
-            Spacer(Modifier.height(100.dp))
         }
     }
 }
@@ -230,57 +229,57 @@ fun AlbumHeaderWithContent(
     artists: String,
     modifier: Modifier = Modifier
 ) {
-        Column(
-            modifier = modifier
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .height(400.dp)
+    ) {
+        Spacer(modifier = Modifier
+            .fillMaxHeight()
+            .weight(4f)
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
                 .fillMaxSize()
-                .height(400.dp)
+                .weight(1f)
         ) {
-            Spacer(modifier = Modifier
-                .fillMaxHeight()
-                .weight(4f)
-            )
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f)
-            ) {
-                Column {
-                    Text(
-                        text = name,
-                        style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.SemiBold),
-                        maxLines = 1,
-                        modifier = Modifier.basicMarquee()
-                    )
-                    Text(
-                        text = artists,
-                        style = MaterialTheme.typography.labelSmall,
-                        maxLines = 1,
-                        modifier = Modifier
-                            .alpha(0.5f)
-                            .basicMarquee()
+            Column {
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.SemiBold),
+                    maxLines = 1,
+                    modifier = Modifier.basicMarquee()
+                )
+                Text(
+                    text = artists,
+                    style = MaterialTheme.typography.labelSmall,
+                    maxLines = 1,
+                    modifier = Modifier
+                        .alpha(0.5f)
+                        .basicMarquee()
+                )
+            }
+            Row {
+                IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(60.dp)) {
+                    Icon(
+                        imageVector = MyMusicIcons.Play,
+                        contentDescription = stringResource(id = R.string.play),
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
-                Row {
-                    IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(60.dp)) {
-                        Icon(
-                            imageVector = MyMusicIcons.Play,
-                            contentDescription = stringResource(id = R.string.play),
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                    IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(60.dp)) {
-                        Icon(
-                            imageVector = MyMusicIcons.Add,
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
+                IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(60.dp)) {
+                    Icon(
+                        imageVector = MyMusicIcons.Add,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
             }
-            Spacer(modifier = Modifier.height(24.dp))
         }
+        Spacer(modifier = Modifier.height(24.dp))
+    }
 }
 
 /* TODO: Write tests */

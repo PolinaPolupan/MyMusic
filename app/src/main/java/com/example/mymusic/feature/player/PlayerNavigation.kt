@@ -9,11 +9,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
+const val PLAYER_ROUTE = "player_route"
+
 @VisibleForTesting
 internal const val TRACK_ID_ARG = "trackId"
 
 fun NavController.navigateToPlayer(trackId: String) {
-    navigate("player_route/$trackId") {
+    navigate("$PLAYER_ROUTE/$trackId") {
         launchSingleTop = true
     }
 }
@@ -25,7 +27,7 @@ fun NavGraphBuilder.playerScreen(
     onBackClick: () -> Unit,
 ) {
     composable(
-        route = "player_route/{$TRACK_ID_ARG}",
+        route = "$PLAYER_ROUTE/{$TRACK_ID_ARG}",
         arguments = listOf(
             navArgument(TRACK_ID_ARG) { type = NavType.StringType },
         ),
