@@ -1,9 +1,10 @@
 [versions]
 kotlin = "1.9.23"
 androidGradlePlugin = "8.4.0"
-androidxComposeBom = "2024.04.01"
+androidxComposeBom = "2024.05.00"
+androidxHiltNavigationCompose = "1.2.0"
 activity-compose = "1.9.0"
-ktx = "1.13.0"
+ktx = "1.13.1"
 coil = "2.6.0"
 palette = "1.0.0"
 navigation-compose = "2.7.7"
@@ -14,6 +15,7 @@ spotify-auth = "1.2.5"
 junit = "4.13.2"
 junit-test = "1.1.5"
 espresso = "3.5.1"
+hilt = "2.51.1"
 
 [libraries]
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
@@ -28,6 +30,7 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-activity-compose = { group = "androidx.activity", name =  "activity-compose", version.ref = "activity-compose" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayout-compose" }
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
@@ -35,6 +38,8 @@ androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navig
 androidx-junit-test-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junit-test" }
 androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 androidx-palette = { group = "androidx.palette", name = "palette-ktx", version.ref = "palette" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 coil-kt = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 spotify-android-auth = { group = "com.spotify.android", name = "auth", version.ref = "spotify-auth" }
@@ -44,3 +49,5 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }

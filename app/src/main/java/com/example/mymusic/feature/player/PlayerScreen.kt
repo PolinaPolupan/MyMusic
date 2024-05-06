@@ -42,6 +42,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.CroppedShape
 import com.example.mymusic.core.designSystem.component.NetworkImage
@@ -63,7 +64,7 @@ fun PlayerScreen(
     onAddToPlaylistClick: (String) -> Unit,
     onNavigateToAlbum: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: PlayerViewModel = PlayerViewModel()
+    viewModel: PlayerViewModel = hiltViewModel()
 ) {
     PlayerContent(
         track = viewModel.playingTrack,
@@ -259,7 +260,9 @@ private fun TrackDescription(
             text = trackName,
             style = MaterialTheme.typography.headlineSmall,
             maxLines = 1,
-            modifier = Modifier.basicMarquee().clickable { onNavigateToAlbum(trackId) }
+            modifier = Modifier
+                .basicMarquee()
+                .clickable { onNavigateToAlbum(trackId) }
         )
         Text(
             text = artists,

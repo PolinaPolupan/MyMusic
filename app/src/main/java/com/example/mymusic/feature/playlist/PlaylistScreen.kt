@@ -47,6 +47,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
@@ -68,7 +69,7 @@ import com.example.mymusic.core.designSystem.util.rememberScrollState
 fun PlaylistScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    viewModel: PlaylistViewModel = PlaylistViewModel()
+    viewModel: PlaylistViewModel = hiltViewModel()
 ) {
     PlaylistScreenContent(
         name = viewModel.playlist.name,

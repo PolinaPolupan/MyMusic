@@ -46,6 +46,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
@@ -71,11 +72,9 @@ import com.example.mymusic.core.designSystem.util.viewModelProviderFactoryOf
 fun AddToPlayListScreen(
     trackId: String,
     onBackPress: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AddToPlaylistViewModel = hiltViewModel()
 ) {
-    val viewModel: AddToPlaylistViewModel = viewModel(
-        factory = viewModelProviderFactoryOf { AddToPlaylistViewModel(trackId) }
-    )
     AddToPlayListContent(
         track = viewModel.currentTrack,
         playlists = viewModel.usersPlaylists,
