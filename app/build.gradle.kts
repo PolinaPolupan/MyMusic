@@ -69,6 +69,9 @@ dependencies {
     implementation(libs.spotify.android.auth)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.datastore.preferences.core.jvm)
+    implementation(libs.androidx.datastore.preferences.core)
+    implementation(libs.androidx.datastore.preferences)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)

@@ -36,4 +36,11 @@
     <string name="login_text">Explore millions of songs</string>
     <string name="login_description">Log in to your Spotify to use My Music</string>
     <string name="login">Log in</string>
+
+    <string name="spotify_is_not_installed">Spotify is not installed</string>
+    <string name="spotify_is_not_installed_text">
+        Spotify is not installed on your device. Please, install Spotify to proceed using the app.
+    </string>
+    <string name="dismiss">Dismiss</string>
+    <string name="install">Install</string>
 </resources>

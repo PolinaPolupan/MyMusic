@@ -1,7 +1,7 @@
 package com.example.mymusic.feature.login
 
-import android.app.Activity
-import android.content.Intent
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,45 +12,70 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerHoverIcon
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mymusic.MainActivity
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mymusic.LoginActivityViewModel
 import com.example.mymusic.R
-import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
 import com.example.mymusic.core.designSystem.component.MyMusicLoginBackground
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
+import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.saturation
+import com.example.mymusic.core.ui.SpotifyIsNotInstalledDialog
 
 @Composable
 fun LoginScreen(
-    onLoginClick: () -> Unit
+    onLoginClick: () -> Unit,
+    loginViewModel: LoginActivityViewModel = hiltViewModel()
 ) {
-    LoginContent(onLoginClick = onLoginClick)
+    val uiState by loginViewModel.uiState.collectAsState()
+    LoginContent(
+        onLoginClick = onLoginClick,
+        onDismissClick = { loginViewModel.setShowDialog(false) },
+        showAlertDialog = uiState.showDialog,
+        isSpotifyInstalled = uiState.isSpotifyInstalled
+    )
 }
 
 @Composable
 fun LoginContent(
-    onLoginClick: () -> Unit
+    onLoginClick: () -> Unit,
+    onDismissClick: () -> Unit,
+    showAlertDialog: Boolean,
+    isSpotifyInstalled: Boolean
 ) {
-    val context = LocalContext.current
+    // Show alert dialog only once
+    var wasDialogShown: Boolean by rememberSaveable {
+        mutableStateOf(false)
+    }
+    val transition = updateTransition(isSpotifyInstalled, label = "color state")
+
+    val primaryColor by transition.animateColor( label = "color animation"
+    ) { isSpotifyInstalled ->
+        if (isSpotifyInstalled) MaterialTheme.colorScheme.primary
+        .saturation(6f) else Color.DarkGray
+    }
 
     MyMusicLoginBackground(
+        color = primaryColor,
         contentAlignment = Alignment.TopCenter
     ) {
         Column(
@@ -86,8 +111,9 @@ fun LoginContent(
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
                     onClick = onLoginClick,
+                    enabled = isSpotifyInstalled,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary.saturation(5f)
+                        containerColor = primaryColor
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -96,12 +122,22 @@ fun LoginContent(
                 ) {
                     Text(
                         text = stringResource(id = R.string.login),
+                        color = primaryColor.darker(0.9f),
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                     )
                 }
                 Spacer(modifier = Modifier.weight(4f))
             }
         }
+    }
+
+    if (showAlertDialog && !wasDialogShown)
+    {
+        SpotifyIsNotInstalledDialog(onDismissClick =  {
+            onDismissClick()
+            // Show alert dialog only once
+            wasDialogShown = true
+        })
     }
 }
 
@@ -130,6 +166,14 @@ fun SpotifyLogoPreview() {
 @Composable
 fun AuthorizationScreenPreview() {
     MyMusicTheme {
-        LoginContent(onLoginClick = {})
+        LoginContent(onLoginClick = {}, onDismissClick = {}, showAlertDialog = false, isSpotifyInstalled = false)
+    }
+}
+
+@Preview
+@Composable
+fun AuthorizationScreenAlertPreview() {
+    MyMusicTheme {
+        LoginContent(onLoginClick = {}, onDismissClick = {}, showAlertDialog = true, isSpotifyInstalled = true)
     }
 }

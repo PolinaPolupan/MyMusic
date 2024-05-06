@@ -1,6 +1,5 @@
 package com.example.mymusic
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.WindowManager
@@ -14,8 +13,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.feature.home.MyMusicApp
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

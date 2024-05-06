@@ -83,6 +83,7 @@ fun MyMusicHomeBackground(
  */
 @Composable
 fun MyMusicLoginBackground(
+    color: Color,
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.BottomCenter,
     content: @Composable () -> Unit
@@ -92,8 +93,7 @@ fun MyMusicLoginBackground(
         modifier = modifier
             .fillMaxSize()
             .background(
-                MaterialTheme.colorScheme.primary
-                    .saturation(6f)
+                color = color
             )
             .linearGradientScrim(
                 color = Color.Black,
@@ -129,7 +129,8 @@ fun MyMusicHomeBackgroundPreview() {
 @Composable
 fun MyMusicLoginBackgroundPreview() {
     MyMusicTheme {
-        MyMusicLoginBackground {
+        MyMusicLoginBackground(color = MaterialTheme.colorScheme.primary
+            .saturation(6f)) {
 
         }
     }

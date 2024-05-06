@@ -2,6 +2,7 @@ package com.example.mymusic.core.designSystem.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Pause
@@ -22,7 +23,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 
 /**
- * My Music icons. Material icons are [ImageVector]s, custom icons are drawable resource IDs.
+ * [MyMusicIcons]. Material icons are [ImageVector]s, custom icons are drawable resource IDs.
  */
 object MyMusicIcons {
     val Home = Icons.Rounded.Home
@@ -42,5 +43,6 @@ object MyMusicIcons {
     val Add = Icons.Filled.Add
     val More = Icons.Filled.MoreVert
     val ArrowDropDown = Icons.Filled.KeyboardArrowDown
+    val ErrorBorder = Icons.Filled.ErrorOutline
 }
 
