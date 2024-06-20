@@ -1,5 +1,8 @@
 package com.example.mymusic.core.ui
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.material3.AlertDialog
@@ -12,15 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.window.DialogProperties
 import com.example.mymusic.R
-import com.example.mymusic.core.data.network.SpotifyAPIServiceConstants
-import com.example.mymusic.core.data.network.getActivity
 import com.example.mymusic.core.designSystem.component.MyMusicIcons
-import com.spotify.sdk.android.auth.AuthorizationClient
-import com.spotify.sdk.android.auth.AuthorizationRequest
-import com.spotify.sdk.android.auth.AuthorizationResponse
-import okhttp3.internal.cookieToString
 
 @Composable
 fun SpotifyIsNotInstalledDialog(
@@ -42,7 +38,7 @@ fun SpotifyIsNotInstalledDialog(
         },
         onDismissRequest = onDismissClick,
         confirmButton = { 
-            TextButton(onClick = { AuthorizationClient.openDownloadSpotifyActivity(context.getActivity()) }) {
+            TextButton(onClick = { /*TODO*/ }) {
                 Text(text = stringResource(id = R.string.install))
             }
         },
@@ -58,4 +54,9 @@ fun SpotifyIsNotInstalledDialog(
 @Composable
 fun SpotifyIsNotInstalledDialogPreview() {
     SpotifyIsNotInstalledDialog(onDismissClick = {})
+}
+
+tailrec fun Context.activity(): Activity? = when {
+    this is Activity -> this
+    else -> (this as? ContextWrapper)?.baseContext?.activity()
 }

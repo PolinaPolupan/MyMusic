@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.compose.rememberNavController
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
-import com.example.mymusic.feature.home.isTopLevelDestinationInHierarchy
+import com.example.mymusic.isTopLevelDestinationInHierarchy
 import com.example.mymusic.navigation.TopLevelDestination
 
 @Composable

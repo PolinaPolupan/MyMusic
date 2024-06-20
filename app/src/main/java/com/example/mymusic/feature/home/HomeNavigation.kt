@@ -7,12 +7,12 @@ import androidx.navigation.compose.composable
 
 const val HOME_ROUTE = "home_route"
 
-fun NavController.navigateToHome(navOptions: NavOptions) = navigate(HOME_ROUTE, navOptions)
+fun NavController.navigateToHome() = navigate(HOME_ROUTE)
 
-fun NavGraphBuilder.homeScreen(onTrackClick: (String) -> Unit) {
+fun NavGraphBuilder.homeScreen(onTrackClick: (String) -> Unit, navController: NavController) {
     composable(
         route = HOME_ROUTE
     ) {
-        HomeScreen(onTrackClick = onTrackClick)
+        HomeScreen(onTrackClick = onTrackClick, navController = navController)
     }
 }

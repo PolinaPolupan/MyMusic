@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +35,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
 import com.example.mymusic.core.designSystem.component.NetworkImage
@@ -49,6 +52,7 @@ import com.example.mymusic.core.model.Track
 import com.example.mymusic.core.ui.FeaturedTrack
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.TrackCard
+import com.example.mymusic.feature.login.navigateToLogin
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
@@ -56,6 +60,7 @@ import kotlin.math.max
 internal fun HomeScreen(
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier,
+    navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     HomeContent(

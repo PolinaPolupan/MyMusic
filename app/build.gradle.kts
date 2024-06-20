@@ -20,6 +20,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.example.mymusic"
     }
 
     buildTypes {
@@ -66,12 +68,15 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
     implementation (libs.gson)
     implementation(files("libs/spotify-app-remote-release-0.8.0.aar"))
-    implementation(libs.spotify.android.auth)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.datastore.preferences.core.jvm)
     implementation(libs.androidx.datastore.preferences.core)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.lifecycle.runtime.compose.android)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.appauth)
+
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)

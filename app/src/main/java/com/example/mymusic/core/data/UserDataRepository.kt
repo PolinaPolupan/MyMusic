@@ -2,27 +2,25 @@ package com.example.mymusic.core.data
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.stringPreferencesKey
+import com.example.mymusic.Constants
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
 data class UserPreferences (
-    val isSpotifyInstalled: Boolean
+    val authState: String?
 )
 
 class UserDataRepository @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
-
     private object PreferencesKeys {
-        val IS_SPOTIFY_INSTALLED = booleanPreferencesKey("is_Spotify_installed")
+        val AUTH_STATE = stringPreferencesKey(Constants.AUTH_STATE)
     }
 
     val userPreferencesFlow: Flow<UserPreferences> = dataStore.data
@@ -35,14 +33,13 @@ class UserDataRepository @Inject constructor(
             }
         }
         .map { preferences ->
-            // Get our show completed value, defaulting to false if not set:
-            val isInstalled = preferences[PreferencesKeys.IS_SPOTIFY_INSTALLED]?: false
-            UserPreferences(isInstalled)
+            val authState = preferences[PreferencesKeys.AUTH_STATE]
+            UserPreferences(authState)
         }
 
-    suspend fun updateIsSpotifyInstalled(isInstalled: Boolean) {
+    suspend fun updateAuthState(authState: String) {
         dataStore.edit { preferences ->
-            preferences[PreferencesKeys.IS_SPOTIFY_INSTALLED] = isInstalled
+            preferences[PreferencesKeys.AUTH_STATE] = authState
         }
     }
 }

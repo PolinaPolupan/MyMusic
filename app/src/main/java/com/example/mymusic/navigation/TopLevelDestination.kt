@@ -28,25 +28,21 @@ import com.example.mymusic.core.designSystem.component.MyMusicIcons
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
-    val iconTextId: Int,
     val titleTextId: Int,
 ) {
     HOME(
         selectedIcon = MyMusicIcons.Home,
         unselectedIcon = MyMusicIcons.HomeBorder,
-        iconTextId = R.string.home,
         titleTextId = R.string.app_name,
     ),
     SEARCH(
         selectedIcon = MyMusicIcons.Search,
         unselectedIcon = MyMusicIcons.SearchBorder,
-        iconTextId = R.string.search,
         titleTextId = R.string.search,
     ),
     LIBRARY(
         selectedIcon = MyMusicIcons.Library,
         unselectedIcon = MyMusicIcons.LibraryBorder,
-        iconTextId = R.string.library,
         titleTextId = R.string.library,
     )
 }

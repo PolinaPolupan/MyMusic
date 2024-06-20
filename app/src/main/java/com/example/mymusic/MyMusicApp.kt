@@ -1,4 +1,4 @@
-package com.example.mymusic.feature.home
+package com.example.mymusic
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
@@ -21,9 +21,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.rememberNavController
-import com.example.mymusic.R
+import com.example.mymusic.core.data.UserDataRepository
 import com.example.mymusic.core.ui.BottomNavigationBarItem
 import com.example.mymusic.core.ui.PlayerCard
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
@@ -36,10 +35,7 @@ import com.example.mymusic.navigation.TopLevelDestination
 fun MyMusicApp(
     appState: MyMusicAppState = rememberMyMusicAppState()
 ) {
-    val destination = appState.currentTopLevelDestination
-
     val currentTrack = appState.currentTrack
-    val user = appState.user
 
     Box(
         contentAlignment = Alignment.BottomCenter,

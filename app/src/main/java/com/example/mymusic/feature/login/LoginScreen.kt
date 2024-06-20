@@ -1,5 +1,8 @@
 package com.example.mymusic.feature.login
 
+import android.app.Activity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
@@ -17,7 +20,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -33,25 +37,36 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.mymusic.LoginActivityViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.MyMusicLoginBackground
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.saturation
 import com.example.mymusic.core.ui.SpotifyIsNotInstalledDialog
+import com.example.mymusic.feature.home.navigateToHome
 
 @Composable
 fun LoginScreen(
-    onLoginClick: () -> Unit,
-    loginViewModel: LoginActivityViewModel = hiltViewModel()
+    navController: NavController,
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-    val uiState by loginViewModel.uiState.collectAsState()
+    val startForResult =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult()) { result ->
+            run {
+                if (result.resultCode == Activity.RESULT_OK) {
+                    loginViewModel.handleAuthorizationResponse(result.data!!)
+                    navController.navigateToHome()
+                }
+            }
+        }
+
     LoginContent(
-        onLoginClick = onLoginClick,
-        onDismissClick = { loginViewModel.setShowDialog(false) },
-        showAlertDialog = uiState.showDialog,
-        isSpotifyInstalled = uiState.isSpotifyInstalled
+        onLoginClick = { startForResult.launch(loginViewModel.attemptAuthorization()) },
+        onDismissClick = { /*TODO*/ },
+        isSpotifyInstalled = true
     )
 }
 
@@ -59,7 +74,6 @@ fun LoginScreen(
 fun LoginContent(
     onLoginClick: () -> Unit,
     onDismissClick: () -> Unit,
-    showAlertDialog: Boolean,
     isSpotifyInstalled: Boolean
 ) {
     // Show alert dialog only once
@@ -131,7 +145,7 @@ fun LoginContent(
         }
     }
 
-    if (showAlertDialog && !wasDialogShown)
+    if (!isSpotifyInstalled && !wasDialogShown)
     {
         SpotifyIsNotInstalledDialog(onDismissClick =  {
             onDismissClick()
@@ -166,7 +180,7 @@ fun SpotifyLogoPreview() {
 @Composable
 fun AuthorizationScreenPreview() {
     MyMusicTheme {
-        LoginContent(onLoginClick = {}, onDismissClick = {}, showAlertDialog = false, isSpotifyInstalled = false)
+        LoginContent(onLoginClick = {}, onDismissClick = {} , isSpotifyInstalled = false)
     }
 }
 
@@ -174,6 +188,6 @@ fun AuthorizationScreenPreview() {
 @Composable
 fun AuthorizationScreenAlertPreview() {
     MyMusicTheme {
-        LoginContent(onLoginClick = {}, onDismissClick = {}, showAlertDialog = true, isSpotifyInstalled = true)
+        LoginContent(onLoginClick = {}, onDismissClick = {}, isSpotifyInstalled = true)
     }
 }
