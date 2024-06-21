@@ -49,7 +49,7 @@ import com.example.mymusic.feature.home.navigateToHome
 
 @Composable
 fun LoginScreen(
-    navController: NavController,
+    onNavigateToHome: () -> Unit,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val startForResult =
@@ -58,7 +58,7 @@ fun LoginScreen(
             run {
                 if (result.resultCode == Activity.RESULT_OK) {
                     loginViewModel.handleAuthorizationResponse(result.data!!)
-                    navController.navigateToHome()
+                    onNavigateToHome()
                 }
             }
         }

@@ -9,10 +9,10 @@ const val HOME_ROUTE = "home_route"
 
 fun NavController.navigateToHome() = navigate(HOME_ROUTE)
 
-fun NavGraphBuilder.homeScreen(onTrackClick: (String) -> Unit, navController: NavController) {
+fun NavGraphBuilder.homeScreen(onTrackClick: (String) -> Unit, onNavigateToLogin: () -> Unit) {
     composable(
         route = HOME_ROUTE
     ) {
-        HomeScreen(onTrackClick = onTrackClick, navController = navController)
+        HomeScreen(onTrackClick = onTrackClick, onNavigateToLogin = onNavigateToLogin)
     }
 }

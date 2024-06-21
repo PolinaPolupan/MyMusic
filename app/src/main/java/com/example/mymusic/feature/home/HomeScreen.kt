@@ -60,16 +60,38 @@ import kotlin.math.max
 internal fun HomeScreen(
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    navController: NavController,
+    onNavigateToLogin: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    HomeContent(
-        topPicks = viewModel.topPicks,
-        recentlyPlayed = viewModel.recentlyPlayed,
-        moreLikeArtists = viewModel.moreLikeArtists,
-        onTrackClick = onTrackClick,
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    when (uiState) {
+        HomeUiState.Loading -> Loading()
+        is HomeUiState.Success -> HomeContent(
+            topPicks = viewModel.topPicks,
+            recentlyPlayed = viewModel.recentlyPlayed,
+            moreLikeArtists = viewModel.moreLikeArtists,
+            onTrackClick = onTrackClick,
+            modifier = modifier
+        )
+        HomeUiState.Error -> LaunchedEffect(key1 = uiState) {
+            onNavigateToLogin()
+        }
+    }
+}
+
+@Composable
+internal fun Loading(
+    modifier: Modifier = Modifier
+) {
+    Box(
         modifier = modifier
-    )
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary.darker(0.95f)),
+        contentAlignment = Alignment.Center
+    ) {
+        /*TODO*/
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -355,6 +377,15 @@ fun HomePreview() {
             topPicks = tracks,
             recentlyPlayed = tracks,
             moreLikeArtists = PreviewParameterData.moreLikeArtists
+        )
+    }
+}
+
+@Preview
+@Composable
+fun LoadingPreview() {
+    MyMusicTheme {
+        Loading(
         )
     }
 }
