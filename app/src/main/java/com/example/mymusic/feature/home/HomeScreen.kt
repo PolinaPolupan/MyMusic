@@ -24,9 +24,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,12 +46,11 @@ import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
-import com.example.mymusic.core.model.Artist
-import com.example.mymusic.core.model.Track
+import com.example.mymusic.model.Artist
+import com.example.mymusic.model.Track
 import com.example.mymusic.core.ui.FeaturedTrack
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.TrackCard
-import com.example.mymusic.feature.account.AccountDialog
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
@@ -69,13 +65,14 @@ internal fun HomeScreen(
 
     when (uiState) {
         HomeUiState.Loading -> Loading()
-        is HomeUiState.Success -> HomeContent(
-            topPicks = viewModel.topPicks,
-            recentlyPlayed = viewModel.recentlyPlayed,
-            moreLikeArtists = viewModel.moreLikeArtists,
+        is HomeUiState.Success -> {
+            HomeContent(
+            topPicks = (uiState as HomeUiState.Success).topPicks,
+            recentlyPlayed = (uiState as HomeUiState.Success).recentlyPlayed,
+            moreLikeArtists = (uiState as HomeUiState.Success).moreLikeArtists,
             onTrackClick = onTrackClick,
-            modifier = modifier
-        )
+            modifier = modifier)
+        }
         HomeUiState.Error -> LaunchedEffect(key1 = uiState) {
             onNavigateToLogin()
         }
@@ -105,12 +102,6 @@ internal fun HomeContent(
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var showAccountDialog by rememberSaveable { mutableStateOf(false) }
-
-    if (showAccountDialog) {
-        AccountDialog(onDismiss = { showAccountDialog = false }, onSignOut = { /*TODO*/ })
-    }
-
     val scrollState = rememberScrollState()
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->
@@ -146,8 +137,7 @@ internal fun HomeContent(
             ) {
                 ScreenHeader(
                     titleRes = R.string.listen_now,
-                    onPictureClick = { showAccountDialog = true },
-                    avatarImageRes = R.drawable.ic_launcher_background,
+                    imageUrl = "",
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))

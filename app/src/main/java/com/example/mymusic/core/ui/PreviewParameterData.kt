@@ -1,12 +1,12 @@
 package com.example.mymusic.core.ui
 
-import com.example.mymusic.core.model.Album
-import com.example.mymusic.core.model.AlbumType
-import com.example.mymusic.core.model.Artist
-import com.example.mymusic.core.model.Playlist
-import com.example.mymusic.core.model.SimplifiedArtist
-import com.example.mymusic.core.model.SimplifiedTrack
-import com.example.mymusic.core.model.Track
+import com.example.mymusic.model.Album
+import com.example.mymusic.model.AlbumType
+import com.example.mymusic.model.Artist
+import com.example.mymusic.model.Playlist
+import com.example.mymusic.model.SimplifiedArtist
+import com.example.mymusic.model.SimplifiedTrack
+import com.example.mymusic.model.Track
 
 object PreviewParameterData {
 

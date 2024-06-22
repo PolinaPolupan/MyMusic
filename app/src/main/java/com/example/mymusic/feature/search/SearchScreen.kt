@@ -15,11 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -40,7 +36,6 @@ import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
 import com.example.mymusic.core.ui.ScreenHeader
 import com.example.mymusic.core.designSystem.component.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
-import com.example.mymusic.feature.account.AccountDialog
 
 @Composable
 fun SearchScreen(
@@ -65,12 +60,6 @@ fun SearchContent(
     onSearchQueryChanged: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var showAccountDialog by rememberSaveable { mutableStateOf(false) }
-
-    if (showAccountDialog) {
-        AccountDialog(onDismiss = { showAccountDialog = false }, onSignOut = { /*TODO*/ })
-    }
-
     MyMusicGradientBackground(modifier = modifier) {
         Column(
             modifier = Modifier
@@ -78,8 +67,7 @@ fun SearchContent(
         ) {
             ScreenHeader(
                 titleRes = R.string.search,
-                onPictureClick = { showAccountDialog = true },
-                avatarImageRes = R.drawable.images,
+                imageUrl = "",
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
             SearchToolbar(

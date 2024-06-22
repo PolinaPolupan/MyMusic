@@ -2,11 +2,9 @@ package com.example.mymusic.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.MainActivityUiState
-import com.example.mymusic.UserData
 import com.example.mymusic.core.data.UserDataRepository
-import com.example.mymusic.core.model.Artist
-import com.example.mymusic.core.model.Track
+import com.example.mymusic.model.Artist
+import com.example.mymusic.model.Track
 import com.example.mymusic.core.ui.PreviewParameterData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,22 +23,19 @@ class HomeViewModel @Inject constructor(
 
     val uiState: StateFlow<HomeUiState> =
         _userDataFlow.map {
-            if (it.authState != null) HomeUiState.Success(HomeUiData(it.authState))
+            if (it.authState != null) HomeUiState.Success(it.authState)
             else HomeUiState.Error
         }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), HomeUiState.Loading)
-
-    val topPicks: List<Track> = PreviewParameterData.tracks
-    val moreLikeArtists: Map<Artist, List<Track>> = PreviewParameterData.moreLikeArtists
-    val recentlyPlayed: List<Track> = PreviewParameterData.tracks
 }
-
-data class HomeUiData(
-    val authState: String
-)
 
 sealed interface HomeUiState {
     data object Loading: HomeUiState
-    data class Success(val data: HomeUiData): HomeUiState
+    data class Success(
+        val authState: String,
+        val topPicks: List<Track> = PreviewParameterData.tracks,
+        val moreLikeArtists: Map<Artist, List<Track>> = PreviewParameterData.moreLikeArtists,
+        val recentlyPlayed: List<Track> = PreviewParameterData.tracks
+    ): HomeUiState
     data object Error: HomeUiState
 }

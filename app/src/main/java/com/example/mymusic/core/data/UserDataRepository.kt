@@ -15,7 +15,8 @@ import javax.inject.Inject
 data class UserPreferences (
     val authState: String?,
     val displayName: String?,
-    val email: String?
+    val email: String?,
+    val imageUrl: String?
 )
 
 class UserDataRepository @Inject constructor(
@@ -24,7 +25,8 @@ class UserDataRepository @Inject constructor(
     private object PreferencesKeys {
         val AUTH_STATE = stringPreferencesKey(Constants.AUTH_STATE)
         val DISPLAY_NAME = stringPreferencesKey(Constants.DATA_DISPLAY_NAME)
-        val EMAIL = stringPreferencesKey(Constants.SCOPE_EMAIL)
+        val EMAIL = stringPreferencesKey(Constants.DATA_EMAIL)
+        val IMAGE_URL = stringPreferencesKey(Constants.IMAGE_URL)
     }
 
     val userPreferencesFlow: Flow<UserPreferences> = dataStore.data
@@ -40,7 +42,8 @@ class UserDataRepository @Inject constructor(
             UserPreferences(
                 authState = preferences[PreferencesKeys.AUTH_STATE],
                 email = preferences[PreferencesKeys.EMAIL],
-                displayName = preferences[PreferencesKeys.DISPLAY_NAME]
+                displayName = preferences[PreferencesKeys.DISPLAY_NAME],
+                imageUrl = preferences[PreferencesKeys.IMAGE_URL]
             )
         }
 
@@ -50,10 +53,24 @@ class UserDataRepository @Inject constructor(
         }
     }
 
+    /**
+     * [updateUserData] updates user's display name and email
+     */
     suspend fun updateUserData(displayName: String, email: String) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.DISPLAY_NAME] = displayName
             preferences[PreferencesKeys.EMAIL] = email
+        }
+    }
+
+    /**
+     * [updatePicture] updates user's picture. This function is separate from [updateUserData]
+     * because images array from Spotify API can be empty
+     * https://developer.spotify.com/documentation/web-api/reference/get-current-users-profile
+     */
+    suspend fun updateImageUrl(imageUrl: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.IMAGE_URL] = imageUrl
         }
     }
 }

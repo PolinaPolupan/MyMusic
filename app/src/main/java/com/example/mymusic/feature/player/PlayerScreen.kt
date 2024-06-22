@@ -53,7 +53,7 @@ import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.core.designSystem.util.saturation
-import com.example.mymusic.core.model.Track
+import com.example.mymusic.model.Track
 import com.example.mymusic.core.ui.PreviewParameterData
 import java.time.Duration
 

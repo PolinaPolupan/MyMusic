@@ -17,7 +17,7 @@ class Constants {
         val SCOPE_PLAYLIST_MODIFY_PUBLIC = "playlist-modify-public"
         val SCOPE_USER_READ_PRIVATE = "user-read-private"
 
-        val DATA_PICTURE = "picture"
+        val IMAGE_URL = "picture"
         val DATA_DISPLAY_NAME = "display_name"
         val DATA_EMAIL = "email"
 

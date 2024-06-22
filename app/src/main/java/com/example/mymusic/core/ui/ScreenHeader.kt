@@ -1,8 +1,6 @@
 package com.example.mymusic.core.ui
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,22 +13,33 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
+import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
+import com.example.mymusic.feature.account.AccountDialog
 
 @Composable
 fun ScreenHeader(
     @StringRes titleRes: Int,
-    onPictureClick: () -> Unit,
-    @DrawableRes avatarImageRes: Int,
+    imageUrl: String?,
     modifier: Modifier = Modifier
 ) {
+    /* Show account when the picture is clicked. */
+    var showAccountDialog by rememberSaveable { mutableStateOf(false) }
+
+    if (showAccountDialog) {
+        AccountDialog(onDismiss = { showAccountDialog = false })
+    }
+
     Column(modifier = modifier) {
         Spacer(modifier = Modifier.height(42.dp))
         Row(
@@ -47,11 +56,11 @@ fun ScreenHeader(
             )
             IconButton(
                 modifier = Modifier.clip(RoundedCornerShape(100)),
-                onClick = onPictureClick
+                onClick = { showAccountDialog = true }
             ) {
-                Image(
-                    painter = painterResource(id = avatarImageRes),
-                    contentDescription = null
+                NetworkImage(
+                    imageUrl = imageUrl ?: "",
+                    defaultImageRes = R.drawable.spotify_logo_white_on_green
                 )
             }
         }
@@ -64,8 +73,7 @@ fun ScreenHeaderPreview() {
     MyMusicTheme {
         ScreenHeader(
             titleRes = R.string.listen_now,
-            onPictureClick = {},
-            avatarImageRes = R.drawable.images
+            imageUrl = ""
         )
     }
 }

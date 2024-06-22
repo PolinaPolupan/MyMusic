@@ -1,7 +1,9 @@
 package com.example.mymusic.feature.account
 
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mymusic.core.AuthorizationManager
 import com.example.mymusic.core.data.UserDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -12,27 +14,50 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    userDataRepository: UserDataRepository,
+    private val authorizationManager: AuthorizationManager,
+    userDataRepository: UserDataRepository
 ): ViewModel() {
 
-    private val _userDataFlow = userDataRepository.userPreferencesFlow
+    private val _authState: StateFlow<String?> =
+        userDataRepository.userPreferencesFlow
+            .map {
+                it.authState
+            }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), null)
 
     val uiState: StateFlow<AccountUiState> =
-        _userDataFlow
+        userDataRepository.userPreferencesFlow
             .map {
-                AccountUiState(
-                    it.displayName ?: "",
-                    it.email ?: ""
+                AccountUiState.Success(
+                    data = UserAccountData(
+                        displayName = it.displayName,
+                        email = it.email,
+                        imageUrl = it.imageUrl
+                    )
                 )
             }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), AccountUiState("", ""))
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), AccountUiState.Loading)
 
-    fun signOut() {
-        /*TODO*/
+    init {
+        authorizationManager.restoreState(_authState.value)
+    }
+
+    fun signIn(): Intent {
+        return authorizationManager.signIn()
+    }
+
+    fun handleAuthorizationResponse(intent: Intent) {
+        authorizationManager.handleAuthorizationResponse(intent, viewModelScope)
     }
 }
 
-data class AccountUiState(
-    val name: String,
-    val email: String
+data class UserAccountData(
+    val displayName: String?,
+    val email: String?,
+    val imageUrl: String?
 )
+
+sealed interface AccountUiState {
+    data object Loading: AccountUiState
+    data class Success(val data: UserAccountData): AccountUiState
+}

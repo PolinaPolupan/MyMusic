@@ -40,9 +40,9 @@ fun BlurredImageHeader(
             ) {
                 NetworkImage(
                     imageUrl = it,
-                    alpha = alpha,
                     modifier = Modifier
-                        .height(250.dp)
+                        .height(250.dp),
+                    alpha = alpha
 
                 )
             }

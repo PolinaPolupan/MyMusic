@@ -1,7 +1,7 @@
 package com.example.mymusic.core.designSystem.util
 
-import com.example.mymusic.core.model.Artist
-import com.example.mymusic.core.model.SimplifiedArtist
+import com.example.mymusic.model.Artist
+import com.example.mymusic.model.SimplifiedArtist
 
 @JvmName("artistsListMethod")
 fun artistsString(artists: List<SimplifiedArtist>) : String {

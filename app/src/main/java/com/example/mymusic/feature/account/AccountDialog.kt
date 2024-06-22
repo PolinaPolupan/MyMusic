@@ -1,5 +1,8 @@
 package com.example.mymusic.feature.account
 
+import android.app.Activity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,6 +16,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,26 +40,44 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 @Composable
 fun AccountDialog(
     onDismiss: () -> Unit,
-    onSignOut: () -> Unit,
     accountViewModel: AccountViewModel = hiltViewModel()
 ) {
+    val startForResult =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult()) { result ->
+            run {
+                if (result.resultCode == Activity.RESULT_OK) {
+                    accountViewModel.handleAuthorizationResponse(result.data!!)
+                }
+            }
+        }
+
     val uiState by accountViewModel.uiState.collectAsStateWithLifecycle()
-    /*TODO: Pass an image uri*/
-    AccountDialogContent(
-        name = uiState.name,
-        email = uiState.email,
-        imageUrl = "",
-        onDismiss = onDismiss,
-        onSignOut = { onSignOut()
-            accountViewModel.signOut() }
-    )
+
+    when (uiState) {
+        AccountUiState.Loading -> {
+            Text(
+                text = stringResource(R.string.loading),
+                modifier = Modifier.padding(vertical = 16.dp),
+            )
+        }
+        is AccountUiState.Success -> {
+            AccountDialogContent(
+                name = (uiState as AccountUiState.Success).data.displayName,
+                email = (uiState as AccountUiState.Success).data.email,
+                imageUrl = (uiState as AccountUiState.Success).data.imageUrl,
+                onDismiss = onDismiss,
+                onSignOut = { startForResult.launch(accountViewModel.signIn()) }
+            )
+        }
+    }
 }
 
 @Composable
 fun AccountDialogContent(
-    name: String,
-    email: String,
-    imageUrl: String,
+    name: String?,
+    email: String?,
+    imageUrl: String?,
     onDismiss: () -> Unit,
     onSignOut: () -> Unit
 ) {
@@ -73,7 +95,8 @@ fun AccountDialogContent(
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))
             ) {
                 NetworkImage(
-                    imageUrl = imageUrl,
+                    imageUrl = imageUrl ?: "",
+                    defaultImageRes = R.drawable.spotify_logo_white_on_green,
                     modifier = Modifier
                         .size(70.dp)
                         .padding(dimensionResource(id = R.dimen.padding_small))
@@ -82,12 +105,14 @@ fun AccountDialogContent(
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
                 Column {
                     Text(
-                        text = name,
+                        text = name ?: "Not loaded",
                         style = MaterialTheme.typography.headlineSmall
                     )
-                    Text(text = email)
-                    Divider(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small)),
-                        color = MaterialTheme.colorScheme.primary)
+                    Text(text = email ?: "Not loaded")
+                    HorizontalDivider(
+                        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small)),
+                        color = MaterialTheme.colorScheme.primary
+                    )
                     OutlinedButton(
                         onClick = onSignOut,
                         contentPadding = PaddingValues(horizontal = dimensionResource(id = R.dimen.padding_medium))

@@ -1,4 +1,4 @@
-package com.example.mymusic.core.model
+package com.example.mymusic.model
 
 import androidx.annotation.DrawableRes
 

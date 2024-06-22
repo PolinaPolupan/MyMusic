@@ -28,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,12 +47,11 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.designSystem.util.rememberScrollState
-import com.example.mymusic.core.model.Album
-import com.example.mymusic.core.model.Playlist
+import com.example.mymusic.model.Album
+import com.example.mymusic.model.Playlist
 import com.example.mymusic.core.ui.AlbumCard
 import com.example.mymusic.core.ui.PlaylistCard
 import com.example.mymusic.core.ui.PreviewParameterData
-import com.example.mymusic.feature.account.AccountDialog
 import kotlin.math.max
 
 @Composable
@@ -85,12 +83,6 @@ fun LibraryContent(
     currentSortOption: SortOption,
     modifier: Modifier = Modifier
 ) {
-    var showAccountDialog by rememberSaveable { mutableStateOf(false) }
-
-    if (showAccountDialog) {
-        AccountDialog(onDismiss = { showAccountDialog = false }, onSignOut = { /*TODO*/ })
-    }
-
     val lazyListState = rememberLazyListState()
     val scrollState = rememberScrollState(state = lazyListState)
 
@@ -141,8 +133,7 @@ fun LibraryContent(
                     )) {
                         ScreenHeader(
                             titleRes = R.string.your_library,
-                            onPictureClick = { showAccountDialog = true },
-                            avatarImageRes = R.drawable.images
+                            imageUrl = ""
                         )
 
                         Sort(

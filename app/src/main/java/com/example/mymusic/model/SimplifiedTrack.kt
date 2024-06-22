@@ -1,4 +1,4 @@
-package com.example.mymusic.core.model
+package com.example.mymusic.model
 
 data class SimplifiedTrack(
     val id: String,

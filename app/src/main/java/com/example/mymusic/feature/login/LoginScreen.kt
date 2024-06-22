@@ -20,8 +20,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -37,15 +35,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.MyMusicLoginBackground
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.saturation
 import com.example.mymusic.core.ui.SpotifyIsNotInstalledDialog
-import com.example.mymusic.feature.home.navigateToHome
 
 @Composable
 fun LoginScreen(
@@ -64,7 +59,7 @@ fun LoginScreen(
         }
 
     LoginContent(
-        onLoginClick = { startForResult.launch(loginViewModel.attemptAuthorization()) },
+        onLoginClick = { startForResult.launch(loginViewModel.signIn()) },
         onDismissClick = { /*TODO*/ },
         isSpotifyInstalled = true
     )

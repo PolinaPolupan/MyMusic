@@ -62,8 +62,8 @@ import com.example.mymusic.core.designSystem.util.artistsString
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
-import com.example.mymusic.core.model.SimplifiedArtist
-import com.example.mymusic.core.model.SimplifiedTrack
+import com.example.mymusic.model.SimplifiedArtist
+import com.example.mymusic.model.SimplifiedTrack
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.PreviewWithBackground
 import com.example.mymusic.core.designSystem.util.rememberScrollState

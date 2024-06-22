@@ -22,7 +22,7 @@ import com.example.mymusic.core.designSystem.component.ClippedShadowCard
 import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.artistsString
-import com.example.mymusic.core.model.SimplifiedArtist
+import com.example.mymusic.model.SimplifiedArtist
 
 @Composable
 fun AlbumCard(

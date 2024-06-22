@@ -37,34 +37,9 @@ class MainActivity : ComponentActivity() {
 
     var spotifyAppRemote: SpotifyAppRemote? = null
 
-    val viewModel: MainActivityViewModel by viewModels()
-
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
-
         super.onCreate(savedInstanceState)
-
-        var uiState: MainActivityUiState by mutableStateOf(MainActivityUiState.Loading)
-
-        // Update the uiState
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState
-                    .onEach { uiState = it }
-                    .collect()
-            }
-        }
-
-        // Keep the splash screen on-screen until the UI state is loaded. This condition is
-        // evaluated each time the app needs to be redrawn so it should be fast to avoid blocking
-        // the UI.
-        splashScreen.setKeepOnScreenCondition {
-            when (uiState) {
-                MainActivityUiState.Loading -> true
-                is MainActivityUiState.Success -> false
-            }
-        }
 
         enableEdgeToEdge(
             // This app is only ever in dark mode, so hard code detectDarkMode to true.
@@ -116,14 +91,14 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun connected() {
-        // Then we will write some more code here.
-        // Play a playlist
-        spotifyAppRemote?.playerApi?.play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL")
-        // Subscribe to PlayerState
-        spotifyAppRemote?.playerApi?.subscribeToPlayerState()?.setEventCallback {
-            val track: Track = it.track
-            Log.d("MainActivity", track.name + " by " + track.artist.name)
-        }
+//        // Then we will write some more code here.
+//        // Play a playlist
+//        spotifyAppRemote?.playerApi?.play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL")
+//        // Subscribe to PlayerState
+//        spotifyAppRemote?.playerApi?.subscribeToPlayerState()?.setEventCallback {
+//            val track: Track = it.track
+//            Log.d("MainActivity", track.name + " by " + track.artist.name)
+//        }
     }
 
     override fun onStop() {

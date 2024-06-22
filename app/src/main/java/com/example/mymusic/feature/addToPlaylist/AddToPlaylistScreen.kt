@@ -62,8 +62,8 @@ import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.designSystem.util.rememberScrollState
-import com.example.mymusic.core.model.Playlist
-import com.example.mymusic.core.model.Track
+import com.example.mymusic.model.Playlist
+import com.example.mymusic.model.Track
 import com.example.mymusic.core.ui.PlaylistCard
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.designSystem.util.viewModelProviderFactoryOf

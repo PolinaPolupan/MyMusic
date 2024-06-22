@@ -26,7 +26,8 @@ fun NetworkImage(
     imageUrl: String,
     modifier: Modifier = Modifier,
     contentScale: ContentScale = ContentScale.Crop,
-    alpha: Float = 1f
+    alpha: Float = 1f,
+    defaultImageRes: Int = R.drawable.jimmy_chang_unsplash_hero
 ) {
     var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
@@ -59,7 +60,7 @@ fun NetworkImage(
             painter = if (isError.not() && !isLocalInspection) {
                 imageLoader
             } else {
-                painterResource(R.drawable.jimmy_chang_unsplash_hero)
+                painterResource(defaultImageRes)
             },
             contentDescription = null,
         )
