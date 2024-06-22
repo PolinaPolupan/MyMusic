@@ -13,7 +13,9 @@ import java.io.IOException
 import javax.inject.Inject
 
 data class UserPreferences (
-    val authState: String?
+    val authState: String?,
+    val displayName: String?,
+    val email: String?
 )
 
 class UserDataRepository @Inject constructor(
@@ -21,6 +23,8 @@ class UserDataRepository @Inject constructor(
 ) {
     private object PreferencesKeys {
         val AUTH_STATE = stringPreferencesKey(Constants.AUTH_STATE)
+        val DISPLAY_NAME = stringPreferencesKey(Constants.DATA_DISPLAY_NAME)
+        val EMAIL = stringPreferencesKey(Constants.SCOPE_EMAIL)
     }
 
     val userPreferencesFlow: Flow<UserPreferences> = dataStore.data
@@ -33,13 +37,23 @@ class UserDataRepository @Inject constructor(
             }
         }
         .map { preferences ->
-            val authState = preferences[PreferencesKeys.AUTH_STATE]
-            UserPreferences(authState)
+            UserPreferences(
+                authState = preferences[PreferencesKeys.AUTH_STATE],
+                email = preferences[PreferencesKeys.EMAIL],
+                displayName = preferences[PreferencesKeys.DISPLAY_NAME]
+            )
         }
 
     suspend fun updateAuthState(authState: String) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.AUTH_STATE] = authState
+        }
+    }
+
+    suspend fun updateUserData(displayName: String, email: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.DISPLAY_NAME] = displayName
+            preferences[PreferencesKeys.EMAIL] = email
         }
     }
 }

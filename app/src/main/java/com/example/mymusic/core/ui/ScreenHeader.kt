@@ -27,7 +27,7 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 @Composable
 fun ScreenHeader(
     @StringRes titleRes: Int,
-    onAvatarClick: () -> Unit,
+    onPictureClick: () -> Unit,
     @DrawableRes avatarImageRes: Int,
     modifier: Modifier = Modifier
 ) {
@@ -47,7 +47,7 @@ fun ScreenHeader(
             )
             IconButton(
                 modifier = Modifier.clip(RoundedCornerShape(100)),
-                onClick = onAvatarClick
+                onClick = onPictureClick
             ) {
                 Image(
                     painter = painterResource(id = avatarImageRes),
@@ -64,7 +64,7 @@ fun ScreenHeaderPreview() {
     MyMusicTheme {
         ScreenHeader(
             titleRes = R.string.listen_now,
-            onAvatarClick = {},
+            onPictureClick = {},
             avatarImageRes = R.drawable.images
         )
     }

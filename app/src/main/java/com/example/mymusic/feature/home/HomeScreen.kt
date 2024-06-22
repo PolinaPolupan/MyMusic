@@ -24,6 +24,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
 import com.example.mymusic.core.designSystem.component.NetworkImage
@@ -52,7 +54,7 @@ import com.example.mymusic.core.model.Track
 import com.example.mymusic.core.ui.FeaturedTrack
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.TrackCard
-import com.example.mymusic.feature.login.navigateToLogin
+import com.example.mymusic.feature.account.AccountDialog
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
@@ -103,6 +105,12 @@ internal fun HomeContent(
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var showAccountDialog by rememberSaveable { mutableStateOf(false) }
+
+    if (showAccountDialog) {
+        AccountDialog(onDismiss = { showAccountDialog = false }, onSignOut = { /*TODO*/ })
+    }
+
     val scrollState = rememberScrollState()
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->
@@ -138,7 +146,7 @@ internal fun HomeContent(
             ) {
                 ScreenHeader(
                     titleRes = R.string.listen_now,
-                    onAvatarClick = { /*TODO*/ },
+                    onPictureClick = { showAccountDialog = true },
                     avatarImageRes = R.drawable.ic_launcher_background,
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )

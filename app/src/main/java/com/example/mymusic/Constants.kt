@@ -18,8 +18,7 @@ class Constants {
         val SCOPE_USER_READ_PRIVATE = "user-read-private"
 
         val DATA_PICTURE = "picture"
-        val DATA_FIRST_NAME = "given_name"
-        val DATA_LAST_NAME = "family_name"
+        val DATA_DISPLAY_NAME = "display_name"
         val DATA_EMAIL = "email"
 
         val CLIENT_ID = "964f3c103fd64e478848b059f9240d73"
