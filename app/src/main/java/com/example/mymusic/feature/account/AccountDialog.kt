@@ -15,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -55,12 +54,7 @@ fun AccountDialog(
     val uiState by accountViewModel.uiState.collectAsStateWithLifecycle()
 
     when (uiState) {
-        AccountUiState.Loading -> {
-            Text(
-                text = stringResource(R.string.loading),
-                modifier = Modifier.padding(vertical = 16.dp),
-            )
-        }
+        AccountUiState.Loading -> Unit
         is AccountUiState.Success -> {
             AccountDialogContent(
                 name = (uiState as AccountUiState.Success).data.displayName,
