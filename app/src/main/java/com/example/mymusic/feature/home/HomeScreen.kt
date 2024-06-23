@@ -67,11 +67,12 @@ internal fun HomeScreen(
         HomeUiState.Loading -> Loading()
         is HomeUiState.Success -> {
             HomeContent(
-            topPicks = (uiState as HomeUiState.Success).topPicks,
-            recentlyPlayed = (uiState as HomeUiState.Success).recentlyPlayed,
-            moreLikeArtists = (uiState as HomeUiState.Success).moreLikeArtists,
-            onTrackClick = onTrackClick,
-            modifier = modifier)
+                userImageUrl = (uiState as HomeUiState.Success).userImageUrl,
+                topPicks = (uiState as HomeUiState.Success).topPicks,
+                recentlyPlayed = (uiState as HomeUiState.Success).recentlyPlayed,
+                moreLikeArtists = (uiState as HomeUiState.Success).moreLikeArtists,
+                onTrackClick = onTrackClick,
+                modifier = modifier)
         }
         HomeUiState.Error -> LaunchedEffect(key1 = uiState) {
             onNavigateToLogin()
@@ -96,6 +97,7 @@ internal fun Loading(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun HomeContent(
+    userImageUrl: String?,
     topPicks: List<Track>,
     moreLikeArtists: Map<Artist, List<Track>>,
     recentlyPlayed: List<Track>,
@@ -137,7 +139,7 @@ internal fun HomeContent(
             ) {
                 ScreenHeader(
                     titleRes = R.string.listen_now,
-                    imageUrl = "",
+                    imageUrl = userImageUrl,
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -371,6 +373,7 @@ fun HomePreview() {
     val tracks = PreviewParameterData.tracks
     MyMusicTheme {
         HomeContent(
+            userImageUrl = "",
             onTrackClick = {},
             topPicks = tracks,
             recentlyPlayed = tracks,

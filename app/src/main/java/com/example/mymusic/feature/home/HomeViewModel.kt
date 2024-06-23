@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
 
     val uiState: StateFlow<HomeUiState> =
         _userDataFlow.map {
-            if (it.authState != null) HomeUiState.Success(it.authState)
+            if (it.authState != null) HomeUiState.Success(it.imageUrl)
             else HomeUiState.Error
         }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), HomeUiState.Loading)
@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
 sealed interface HomeUiState {
     data object Loading: HomeUiState
     data class Success(
-        val authState: String,
+        val userImageUrl: String?,
         val topPicks: List<Track> = PreviewParameterData.tracks,
         val moreLikeArtists: Map<Artist, List<Track>> = PreviewParameterData.moreLikeArtists,
         val recentlyPlayed: List<Track> = PreviewParameterData.tracks

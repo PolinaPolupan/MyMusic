@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.appauth)
+    implementation(libs.retrofit)
 
     kapt(libs.hilt.compiler)
 
