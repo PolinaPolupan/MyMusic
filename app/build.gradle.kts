@@ -79,6 +79,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.appauth)
     implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
 
     kapt(libs.hilt.compiler)
 

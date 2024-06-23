@@ -3,7 +3,7 @@ package com.example.mymusic.feature.account
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.core.AuthorizationManager
+import com.example.mymusic.core.data.AuthorizationManager
 import com.example.mymusic.core.data.UserDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted

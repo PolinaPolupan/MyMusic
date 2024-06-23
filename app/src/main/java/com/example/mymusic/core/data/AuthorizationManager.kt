@@ -1,4 +1,4 @@
-package com.example.mymusic.core
+package com.example.mymusic.core.data
 
 import android.content.Context
 import android.content.Intent
@@ -6,9 +6,8 @@ import android.net.Uri
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
+import androidx.hilt.navigation.compose.R
 import com.example.mymusic.Constants
-import com.example.mymusic.core.data.User
-import com.example.mymusic.core.data.UserDataRepository
 import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
@@ -137,12 +136,22 @@ class AuthorizationManager @Inject constructor(
         }
     }
 
+    fun performActionWithFreshTokens(request: Request): Request {
+        var newRequest: Request = request
+        _authState.performActionWithFreshTokens(_authorizationService
+        ) { _, _, _ ->
+            newRequest = request.newBuilder()
+                .header("Authorization", "Bearer " + _authState.accessToken)
+                .build()
+        }
+        return newRequest
+    }
+
     private fun makeApiCall(coroutineScope: CoroutineScope) {
         _authState.performActionWithFreshTokens(_authorizationService
         ) { _, _, _ ->
             coroutineScope.launch {
                 async(Dispatchers.IO) {
-
                     val client = OkHttpClient()
                     val request = Request.Builder()
                         .url("https://api.spotify.com/v1/me")

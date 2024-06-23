@@ -1,5 +1,6 @@
 [versions]
 appauth = "0.9.1"
+converterGson = "2.11.0"
 coreSplashscreen = "1.0.1"
 kotlin = "1.9.23"
 androidGradlePlugin = "8.4.0"
@@ -49,6 +50,7 @@ androidx-junit-test-ext = { group = "androidx.test.ext", name = "junit", version
 androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 androidx-palette = { group = "androidx.palette", name = "palette-ktx", version.ref = "palette" }
 appauth = { module = "net.openid:appauth", version.ref = "appauth" }
+converter-gson = { group = "com.squareup.retrofit2", name= "converter-gson", version.ref = "converterGson" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 coil-kt = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
