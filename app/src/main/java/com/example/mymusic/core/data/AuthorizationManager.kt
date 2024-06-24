@@ -74,6 +74,7 @@ class AuthorizationManager @Inject constructor(
         if(jsonString != null && !TextUtils.isEmpty(jsonString) ) {
             try {
                 _authState = AuthState.jsonDeserialize(jsonString)
+                Log.i("MainActivity", "Access token: " + _authState.accessToken.toString())
             } catch(jsonException: JSONException) {
                 Log.d("MainActivity", "Failed to load auth state")
             }
@@ -129,20 +130,23 @@ class AuthorizationManager @Inject constructor(
                     if (response != null) {
                         _authState.update(response, exception)
                         makeApiCall(coroutineScope)
+                        persistState(_authState.jsonSerializeString(), coroutineScope)
                     }
                 }
             }
-            persistState(_authState.jsonSerializeString(), coroutineScope)
         }
     }
 
     fun performActionWithFreshTokens(request: Request): Request {
         var newRequest: Request = request
         _authState.performActionWithFreshTokens(_authorizationService
-        ) { _, _, _ ->
-            newRequest = request.newBuilder()
-                .header("Authorization", "Bearer " + _authState.accessToken)
-                .build()
+        ) { _, _, ex ->
+            Log.i("MainActivity", "Access token:" + _authState.accessToken)
+            if (ex == null) {
+                newRequest = request.newBuilder()
+                    .header("Authorization", "Bearer " + _authState.accessToken)
+                    .build()
+            }
         }
         return newRequest
     }

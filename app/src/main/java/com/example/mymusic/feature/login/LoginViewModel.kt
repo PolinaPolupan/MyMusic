@@ -14,20 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authorizationManager: AuthorizationManager,
-    userDataRepository: UserDataRepository
+    private val authorizationManager: AuthorizationManager
 ): ViewModel() {
-
-    private val _authState: StateFlow<String?> =
-        userDataRepository.userPreferencesFlow
-            .map {
-                it.authState
-            }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), null)
-
-    init {
-        authorizationManager.restoreState(_authState.value)
-    }
 
     fun signIn(): Intent {
         return authorizationManager.signIn()

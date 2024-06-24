@@ -1,5 +1,6 @@
 package com.example.mymusic.feature.home
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -62,7 +63,6 @@ internal fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
     when (uiState) {
         HomeUiState.Loading -> Loading()
         is HomeUiState.Success -> {
@@ -104,6 +104,7 @@ internal fun HomeContent(
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     val scrollState = rememberScrollState()
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->

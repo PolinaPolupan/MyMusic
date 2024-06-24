@@ -1,21 +1,30 @@
 package com.example.mymusic.feature.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mymusic.core.data.AuthorizationManager
 import com.example.mymusic.core.data.UserDataRepository
+import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.model.Artist
 import com.example.mymusic.model.Track
 import com.example.mymusic.core.ui.PreviewParameterData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import net.openid.appauth.AuthState
+import org.json.JSONObject
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val musicAPIService: MyMusicAPIService,
     userDataRepository: UserDataRepository
 ): ViewModel()
 {
@@ -23,10 +32,15 @@ class HomeViewModel @Inject constructor(
 
     val uiState: StateFlow<HomeUiState> =
         _userDataFlow.map {
-            if (it.authState != null) HomeUiState.Success(it.imageUrl)
-            else HomeUiState.Error
+            HomeUiState.Success(it.imageUrl)
         }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), HomeUiState.Loading)
+
+    fun getRecommendations() {
+        viewModelScope.launch {
+            val response = musicAPIService.getRecommendations()
+        }
+    }
 }
 
 sealed interface HomeUiState {

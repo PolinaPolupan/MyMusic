@@ -18,13 +18,6 @@ class AccountViewModel @Inject constructor(
     userDataRepository: UserDataRepository
 ): ViewModel() {
 
-    private val _authState: StateFlow<String?> =
-        userDataRepository.userPreferencesFlow
-            .map {
-                it.authState
-            }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), null)
-
     val uiState: StateFlow<AccountUiState> =
         userDataRepository.userPreferencesFlow
             .map {
@@ -37,10 +30,6 @@ class AccountViewModel @Inject constructor(
                 )
             }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), AccountUiState.Loading)
-
-    init {
-        authorizationManager.restoreState(_authState.value)
-    }
 
     fun signIn(): Intent {
         return authorizationManager.signIn()
