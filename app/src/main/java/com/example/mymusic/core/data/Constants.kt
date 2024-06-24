@@ -1,4 +1,4 @@
-package com.example.mymusic
+package com.example.mymusic.core.data
 
 class Constants {
     companion object {
