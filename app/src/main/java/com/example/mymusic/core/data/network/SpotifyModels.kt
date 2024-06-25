@@ -1,4 +1,4 @@
-package com.example.mymusic.core.data
+package com.example.mymusic.core.data.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

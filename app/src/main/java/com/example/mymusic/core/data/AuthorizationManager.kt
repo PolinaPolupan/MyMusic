@@ -6,6 +6,7 @@ import android.net.Uri
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
+import com.example.mymusic.core.data.network.User
 import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
