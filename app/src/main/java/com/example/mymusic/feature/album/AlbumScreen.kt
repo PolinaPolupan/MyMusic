@@ -78,7 +78,7 @@ fun AlbumScreen(
         name = viewModel.currentAlbum.name,
         imageUrl = viewModel.currentAlbum.imageUrl,
         artists = viewModel.currentAlbum.artists,
-        tracks = viewModel.currentAlbum.tracks,
+        tracks = viewModel.tracks,
         onBackClick = onBackClick,
         modifier = modifier
 
@@ -370,11 +370,12 @@ fun TopAppBarPreview() {
 fun AlbumScreenPreview() {
     MyMusicTheme {
         val mockAlbum = PreviewParameterData.albums[0]
+        val mockTracks = PreviewParameterData.simplifiedTracks
         AlbumScreenContent(
             name = mockAlbum.name,
             imageUrl = mockAlbum.imageUrl,
             artists = mockAlbum.artists,
-            tracks = mockAlbum.tracks,
+            tracks = mockTracks,
             onBackClick = {}
         )
     }

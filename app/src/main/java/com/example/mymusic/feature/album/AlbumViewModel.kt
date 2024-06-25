@@ -9,4 +9,5 @@ import javax.inject.Inject
 @HiltViewModel
 class AlbumViewModel @Inject constructor() : ViewModel() {
     val currentAlbum: Album = PreviewParameterData.albums[0]
+    val tracks = PreviewParameterData.simplifiedTracks
 }

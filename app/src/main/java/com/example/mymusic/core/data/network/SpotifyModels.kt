@@ -4,14 +4,14 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class User(
+data class SpotifyUser(
     @SerialName("display_name")
     val displayName: String,
     @SerialName("external_urls")
     val externalUrls: ExternalUrls,
     val href: String,
     val id: String,
-    val images: List<Image>,
+    val images: List<SpotifyImage>,
     val type: String,
     val uri: String,
     val followers: Followers,
@@ -42,7 +42,7 @@ data class Followers(
 )
 
 @Serializable
-data class Image(
+data class SpotifyImage(
     val url: String,
     val height: Int?,
     val width: Int?
@@ -54,7 +54,7 @@ data class Restrictions(
 )
 
 @Serializable
-data class SimplifiedArtist(
+data class SpotifySimplifiedArtist(
     @SerialName("external_urls")
     val externalUrls: ExternalUrls,
     val href: String,
@@ -65,14 +65,14 @@ data class SimplifiedArtist(
 )
 
 @Serializable
-data class Artist(
+data class SpotifyArtist(
     @SerialName("external_urls")
     val externalUrls: ExternalUrls,
     val followers: Followers? = null,
     val genres: List<String>? = null,
     val href: String,
     val id: String,
-    val images: List<Image>,
+    val images: List<SpotifyImage>,
     val name: String,
     val popularity: Int? = null,
     val type: String,
@@ -97,7 +97,7 @@ data class LinkedFrom(
 )
 
 @Serializable
-data class Album(
+data class SpotifyAlbum(
     @SerialName("album_type")
     val albumType: String,
     @SerialName("total_tracks")
@@ -108,7 +108,7 @@ data class Album(
     val externalUrls: ExternalUrls,
     val href: String,
     val id: String,
-    val images: List<Image>,
+    val images: List<SpotifyImage>,
     val name: String,
     @SerialName("release_date")
     val releaseDate: String,
@@ -117,13 +117,13 @@ data class Album(
     val restrictions: Restrictions? = null,
     val type: String,
     val uri: String,
-    val artists: List<SimplifiedArtist>
+    val artists: List<SpotifySimplifiedArtist>
 )
 
 @Serializable
-data class Track(
-    val album: Album,
-    val artists: List<Artist>,
+data class SpotifyTrack(
+    val album: SpotifyAlbum,
+    val artists: List<SpotifyArtist>,
     @SerialName("available_markets")
     val availableMarkets: List<String>,
     @SerialName("disc_number")

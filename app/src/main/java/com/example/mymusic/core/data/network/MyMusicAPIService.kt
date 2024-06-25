@@ -5,5 +5,5 @@ import retrofit2.http.GET
 interface MyMusicAPIService {
 
     @GET("https://api.spotify.com/v1/recommendations?limit=10&seed_genres=classical%2Ccountry")
-    suspend fun getRecommendations(): List<Track>
+    suspend fun getRecommendations(): List<SpotifyTrack>
 }

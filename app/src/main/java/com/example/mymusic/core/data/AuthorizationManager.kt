@@ -6,7 +6,7 @@ import android.net.Uri
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
-import com.example.mymusic.core.data.network.User
+import com.example.mymusic.core.data.network.SpotifyUser
 import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
@@ -165,7 +165,7 @@ class AuthorizationManager @Inject constructor(
                         val response = client.newCall(request).execute()
                         val jsonBody = response.body?.string() ?: ""
 
-                        val user: User = Json.decodeFromString(jsonBody)
+                        val user: SpotifyUser = Json.decodeFromString(jsonBody)
                         updateUserData(user, coroutineScope)
                         if (user.images.isNotEmpty()) updateUserImageUrl(user.images[0].url, coroutineScope) else updateUserImageUrl("", coroutineScope)
 
@@ -183,7 +183,7 @@ class AuthorizationManager @Inject constructor(
         }
     }
 
-    private fun updateUserData(user: User, coroutineScope: CoroutineScope) {
+    private fun updateUserData(user: SpotifyUser, coroutineScope: CoroutineScope) {
         coroutineScope.launch {
             userDataRepository.updateUserData(
                 displayName = user.displayName,

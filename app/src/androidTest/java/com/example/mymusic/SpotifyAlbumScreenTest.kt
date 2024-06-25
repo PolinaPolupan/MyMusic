@@ -8,7 +8,7 @@ import org.junit.Rule
 import org.junit.Test
 
 /* TODO: REWRITE!!! */
-class AlbumScreenTest {
+class SpotifyAlbumScreenTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()

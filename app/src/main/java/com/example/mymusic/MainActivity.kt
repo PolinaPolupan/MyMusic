@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
 //        spotifyAppRemote?.playerApi?.play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL")
 //        // Subscribe to PlayerState
 //        spotifyAppRemote?.playerApi?.subscribeToPlayerState()?.setEventCallback {
-//            val track: Track = it.track
+//            val track: SpotifyTrack = it.track
 //            Log.d("MainActivity", track.name + " by " + track.artist.name)
 //        }
     }
