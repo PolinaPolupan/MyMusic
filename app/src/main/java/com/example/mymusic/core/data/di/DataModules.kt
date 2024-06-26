@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.example.mymusic.core.data.AuthorizationManager
 import com.example.mymusic.core.data.Constants
-import com.example.mymusic.core.data.UserDataRepository
 import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.core.data.network.TokenInterceptor
 import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
@@ -21,18 +20,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
-@Module
-object AuthorizationManagerModule {
-    @Provides
-    @Singleton
-    fun provideAuthorizationManager(
-        @ApplicationContext context: Context,
-        userDataRepository: UserDataRepository
-    ) : AuthorizationManager {
-        return AuthorizationManager(userDataRepository, context)
-    }
-}
 
 @InstallIn(SingletonComponent::class)
 @Module

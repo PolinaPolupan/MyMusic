@@ -36,7 +36,7 @@ class AccountViewModel @Inject constructor(
     }
 
     fun handleAuthorizationResponse(intent: Intent) {
-        authorizationManager.handleAuthorizationResponse(intent, viewModelScope)
+        authorizationManager.handleAuthorizationResponse(intent)
     }
 }
 

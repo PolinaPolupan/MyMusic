@@ -6,13 +6,15 @@ import android.net.Uri
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
+import com.example.mymusic.core.data.di.ApplicationScope
+import com.example.mymusic.core.data.di.IoDispatcher
 import com.example.mymusic.core.data.network.SpotifyUser
 import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import net.openid.appauth.AppAuthConfiguration
 import net.openid.appauth.AuthState
@@ -36,6 +38,8 @@ import javax.inject.Singleton
 class AuthorizationManager @Inject constructor(
     private val userDataRepository: UserDataRepository,
     @ApplicationContext val context: Context,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
+    @ApplicationScope private val coroutineScope: CoroutineScope
 ) {
     // Variables which are used for managing the auth flow
     private lateinit var _authorizationService: AuthorizationService
@@ -113,7 +117,7 @@ class AuthorizationManager @Inject constructor(
         return _authorizationService.getAuthorizationRequestIntent(request)
     }
 
-    fun handleAuthorizationResponse(intent: Intent, coroutineScope: CoroutineScope) {
+    fun handleAuthorizationResponse(intent: Intent) {
         val authorizationResponse: AuthorizationResponse? = AuthorizationResponse.fromIntent(intent)
         val error = AuthorizationException.fromIntent(intent)
 
@@ -128,8 +132,8 @@ class AuthorizationManager @Inject constructor(
                 } else {
                     if (response != null) {
                         _authState.update(response, exception)
-                        makeApiCall(coroutineScope)
-                        persistState(_authState.jsonSerializeString(), coroutineScope)
+                        makeApiCall()
+                        persistState(_authState.jsonSerializeString())
                     }
                 }
             }
@@ -150,11 +154,11 @@ class AuthorizationManager @Inject constructor(
         return newRequest
     }
 
-    private fun makeApiCall(coroutineScope: CoroutineScope) {
+    private fun makeApiCall() {
         _authState.performActionWithFreshTokens(_authorizationService
         ) { _, _, _ ->
             coroutineScope.launch {
-                async(Dispatchers.IO) {
+                withContext(dispatcher) {
                     val client = OkHttpClient()
                     val request = Request.Builder()
                         .url("https://api.spotify.com/v1/me")
@@ -166,8 +170,8 @@ class AuthorizationManager @Inject constructor(
                         val jsonBody = response.body?.string() ?: ""
 
                         val user: SpotifyUser = Json.decodeFromString(jsonBody)
-                        updateUserData(user, coroutineScope)
-                        if (user.images.isNotEmpty()) updateUserImageUrl(user.images[0].url, coroutineScope) else updateUserImageUrl("", coroutineScope)
+                        updateUserData(user)
+                        if (user.images.isNotEmpty()) updateUserImageUrl(user.images[0].url) else updateUserImageUrl("")
 
                     } catch (e: Exception) {
                         Log.e("MainActivity", "API call error!")
@@ -177,26 +181,32 @@ class AuthorizationManager @Inject constructor(
         }
     }
 
-    private fun persistState(authState: String, coroutineScope: CoroutineScope) {
+    private fun persistState(authState: String) {
         coroutineScope.launch {
-            userDataRepository.updateAuthState(authState)
+            withContext(dispatcher) {
+                userDataRepository.updateAuthState(authState)
+            }
         }
     }
 
-    private fun updateUserData(user: SpotifyUser, coroutineScope: CoroutineScope) {
+    private fun updateUserData(user: SpotifyUser) {
         coroutineScope.launch {
-            userDataRepository.updateUserData(
-                displayName = user.displayName,
-                email = user.email
-            )
+            withContext(dispatcher) {
+                userDataRepository.updateUserData(
+                    displayName = user.displayName,
+                    email = user.email
+                )
+            }
         }
     }
 
-    private fun updateUserImageUrl(imageUrl: String, coroutineScope: CoroutineScope) {
+    private fun updateUserImageUrl(imageUrl: String) {
         coroutineScope.launch {
-            userDataRepository.updateImageUrl(
-                imageUrl = imageUrl
-            )
+            withContext(dispatcher) {
+                userDataRepository.updateImageUrl(
+                    imageUrl = imageUrl
+                )
+            }
         }
     }
 }
