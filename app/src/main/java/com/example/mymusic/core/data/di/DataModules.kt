@@ -1,10 +1,13 @@
-package com.example.mymusic.core.data
+package com.example.mymusic.core.data.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.example.mymusic.core.data.AuthorizationManager
+import com.example.mymusic.core.data.Constants
+import com.example.mymusic.core.data.UserDataRepository
 import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.core.data.network.TokenInterceptor
 import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
@@ -13,14 +16,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)

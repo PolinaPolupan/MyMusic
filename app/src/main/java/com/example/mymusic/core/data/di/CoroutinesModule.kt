@@ -1,4 +1,4 @@
-package com.example.mymusic.core.data
+package com.example.mymusic.core.data.di
 
 import dagger.Module
 import dagger.Provides
