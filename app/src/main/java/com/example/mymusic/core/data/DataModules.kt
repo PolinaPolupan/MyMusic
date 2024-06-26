@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.core.data.network.TokenInterceptor
+import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,6 +54,7 @@ object NetworkModule {
             .addInterceptor(TokenInterceptor(authorizationManager))
             .build()
         return Retrofit.Builder()
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .baseUrl("https://api.spotify.com")

@@ -72,7 +72,7 @@ data class SpotifyArtist(
     val genres: List<String>? = null,
     val href: String,
     val id: String,
-    val images: List<SpotifyImage>,
+    val images: List<SpotifyImage>? = null,
     val name: String,
     val popularity: Int? = null,
     val type: String,
@@ -153,3 +153,20 @@ data class SpotifyTrack(
     @SerialName("is_local")
     val isLocal: Boolean
 )
+
+@Serializable
+data class RecommendationSeed(
+    val afterFilteringSize: Int,
+    val afterRelinkingSize: Int,
+    val href: String,
+    val id: String,
+    val initialPoolSize: Int,
+    val type: String
+)
+
+@Serializable
+data class RecommendationsResponse(
+    val seeds: List<RecommendationSeed>,
+    val tracks: List<SpotifyTrack>
+)
+data class ErrorResponse(val message: String)

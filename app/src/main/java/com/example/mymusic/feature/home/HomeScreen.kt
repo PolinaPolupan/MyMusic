@@ -329,7 +329,7 @@ private fun MoreLikeArtist(
 @Composable
 private fun ArtistHeader(
     name: String,
-    pictureUrl: String,
+    pictureUrl: String?,
     modifier: Modifier = Modifier
 ) {
     Row(

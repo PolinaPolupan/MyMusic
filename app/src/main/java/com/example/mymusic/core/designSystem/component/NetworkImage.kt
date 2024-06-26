@@ -23,7 +23,7 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 
 @Composable
 fun NetworkImage(
-    imageUrl: String,
+    imageUrl: String?,
     modifier: Modifier = Modifier,
     contentScale: ContentScale = ContentScale.Crop,
     alpha: Float = 1f,

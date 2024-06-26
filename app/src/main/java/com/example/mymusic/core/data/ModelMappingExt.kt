@@ -1,5 +1,6 @@
 package com.example.mymusic.core.data
 
+import com.example.mymusic.core.data.network.RecommendationsResponse
 import com.example.mymusic.core.data.network.SpotifyAlbum
 import com.example.mymusic.core.data.network.SpotifyArtist
 import com.example.mymusic.core.data.network.SpotifySimplifiedArtist
@@ -37,7 +38,7 @@ fun SpotifyAlbum.toExternal() = Album(
 fun SpotifyArtist.toExternal() = Artist(
     id = id,
     name = name,
-    imageUrl = if (images.isNotEmpty()) images[0].url else ""
+    imageUrl = if (images?.isNotEmpty() == true) images[0].url else ""
 )
 
 fun SpotifyTrack.toExternal() = Track(
@@ -46,3 +47,5 @@ fun SpotifyTrack.toExternal() = Track(
     name = name,
     artists = artists.map { it.toExternal() }
 )
+
+fun RecommendationsResponse.toExternal(): List<Track> = this.tracks.map { it.toExternal() }

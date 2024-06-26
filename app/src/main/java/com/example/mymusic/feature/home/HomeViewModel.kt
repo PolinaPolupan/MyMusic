@@ -25,7 +25,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val musicAPIService: MyMusicAPIService,
     userDataRepository: UserDataRepository,
     private val musicRepository: MusicRepository
 ): ViewModel()
@@ -38,13 +37,9 @@ class HomeViewModel @Inject constructor(
         }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), HomeUiState.Loading)
 
-    init {
-        //getRecommendations()
-    }
-
     fun getRecommendations() {
         viewModelScope.launch {
-            //val tracks = musicRepository.getRecommendations()
+            val tracks = musicRepository.getRecommendations()
         }
     }
 }
