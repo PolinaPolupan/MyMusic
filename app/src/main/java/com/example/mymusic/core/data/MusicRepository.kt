@@ -4,6 +4,10 @@ import android.util.Log
 import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.model.Track
 import com.haroldadmin.cnradapter.NetworkResponse
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MusicRepository @Inject constructor(
@@ -11,8 +15,7 @@ class MusicRepository @Inject constructor(
 ) {
 
     suspend fun getRecommendations(): List<Track> {
-        val response = apiService.getRecommendations()
-        return when (response) {
+        return when (val response = apiService.getRecommendations()) {
             is  NetworkResponse.Success -> {
                 Log.d("MainActivity", response.body.toString())
                 response.body.toExternal()

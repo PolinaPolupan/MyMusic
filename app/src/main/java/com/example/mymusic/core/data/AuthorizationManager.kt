@@ -35,7 +35,7 @@ import javax.inject.Singleton
 @Singleton
 class AuthorizationManager @Inject constructor(
     private val userDataRepository: UserDataRepository,
-    @ApplicationContext val context: Context
+    @ApplicationContext val context: Context,
 ) {
     // Variables which are used for managing the auth flow
     private lateinit var _authorizationService: AuthorizationService

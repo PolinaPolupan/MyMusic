@@ -12,9 +12,12 @@ import com.example.mymusic.model.Track
 import com.example.mymusic.core.ui.PreviewParameterData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -36,12 +39,6 @@ class HomeViewModel @Inject constructor(
             HomeUiState.Success(it.imageUrl)
         }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), HomeUiState.Loading)
-
-    fun getRecommendations() {
-        viewModelScope.launch {
-            val tracks = musicRepository.getRecommendations()
-        }
-    }
 }
 
 sealed interface HomeUiState {
