@@ -66,6 +66,7 @@ internal fun HomeScreen(
     when (uiState) {
         HomeUiState.Loading -> Loading()
         is HomeUiState.Success -> {
+            viewModel.getRecommendations()
             HomeContent(
                 userImageUrl = (uiState as HomeUiState.Success).userImageUrl,
                 topPicks = (uiState as HomeUiState.Success).topPicks,

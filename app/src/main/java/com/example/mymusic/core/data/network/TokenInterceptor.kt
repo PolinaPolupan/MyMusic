@@ -15,7 +15,8 @@ class TokenInterceptor @Inject constructor(
         // Create a new request with the updated access token
         val newRequest = authorizationManager.performActionWithFreshTokens(chain.request())
         // Retry the request with the new access token
-        val  response = chain.proceed(newRequest)
+        val response: Response = chain.proceed(newRequest)
+
         if (response.code == HttpURLConnection.HTTP_OK) {
             //response success
             Log.d("MainActivity", response.body!!.string())

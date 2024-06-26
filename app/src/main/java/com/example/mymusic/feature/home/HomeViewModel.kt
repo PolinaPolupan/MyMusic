@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymusic.core.data.AuthorizationManager
+import com.example.mymusic.core.data.MusicRepository
 import com.example.mymusic.core.data.UserDataRepository
 import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.model.Artist
@@ -25,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val musicAPIService: MyMusicAPIService,
-    userDataRepository: UserDataRepository
+    userDataRepository: UserDataRepository,
+    private val musicRepository: MusicRepository
 ): ViewModel()
 {
     private val _userDataFlow = userDataRepository.userPreferencesFlow
@@ -36,9 +38,13 @@ class HomeViewModel @Inject constructor(
         }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), HomeUiState.Loading)
 
+    init {
+        //getRecommendations()
+    }
+
     fun getRecommendations() {
         viewModelScope.launch {
-            val response = musicAPIService.getRecommendations()
+            //val tracks = musicRepository.getRecommendations()
         }
     }
 }

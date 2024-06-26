@@ -80,7 +80,7 @@ dependencies {
     implementation(libs.appauth)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-
+    implementation(libs.network.response.adapter)
 
     kapt(libs.hilt.compiler)
 
