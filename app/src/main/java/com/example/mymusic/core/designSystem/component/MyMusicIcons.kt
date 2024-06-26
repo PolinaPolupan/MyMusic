@@ -1,6 +1,8 @@
 package com.example.mymusic.core.designSystem.component
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.Sort
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -32,9 +34,9 @@ object MyMusicIcons {
     val SearchBorder = Icons.Outlined.Search
     val Library = Icons.Rounded.LibraryMusic
     val LibraryBorder = Icons.Outlined.LibraryMusic
-    val ArrowBack = Icons.Rounded.ArrowBack
+    val ArrowBack = Icons.AutoMirrored.Rounded.ArrowBack
     val Close = Icons.Rounded.Close
-    val Sort = Icons.Rounded.Sort
+    val Sort = Icons.AutoMirrored.Rounded.Sort
     val Check = Icons.Rounded.Check
     val SkipPrevious = Icons.Filled.SkipPrevious
     val SkipNext = Icons.Filled.SkipNext
@@ -42,7 +44,6 @@ object MyMusicIcons {
     val Pause = Icons.Filled.Pause
     val Add = Icons.Filled.Add
     val More = Icons.Filled.MoreVert
-    val ArrowDropDown = Icons.Filled.KeyboardArrowDown
     val ErrorBorder = Icons.Filled.ErrorOutline
 }
 

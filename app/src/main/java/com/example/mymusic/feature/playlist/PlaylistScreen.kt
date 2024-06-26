@@ -27,6 +27,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -347,7 +348,7 @@ private fun TopAppBar(
 
             )
         }
-        Divider(modifier = Modifier.alpha(dividerAlpha))
+        HorizontalDivider(modifier = Modifier.alpha(dividerAlpha))
     }
 }
 

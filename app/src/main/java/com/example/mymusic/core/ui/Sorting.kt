@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -91,7 +92,7 @@ private fun SortBottomSheetContent(
                 .align(Alignment.CenterHorizontally)
                 .padding(8.dp)
         )
-        Divider()
+        HorizontalDivider()
         Spacer(modifier = Modifier.height(8.dp))
         for (option in SortOption.entries) {
             SortOptionSelection(
