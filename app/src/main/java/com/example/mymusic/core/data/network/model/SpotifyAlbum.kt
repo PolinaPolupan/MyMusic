@@ -1,5 +1,8 @@
 package com.example.mymusic.core.data.network.model
 
+import com.example.mymusic.core.data.local.model.AlbumArtistCrossRef
+import com.example.mymusic.core.data.local.model.LocalAlbum
+import com.example.mymusic.core.data.local.model.LocalAlbumWithArtists
 import com.example.mymusic.model.Album
 import com.example.mymusic.model.AlbumType
 import kotlinx.serialization.SerialName
@@ -47,3 +50,15 @@ fun String.toAlbumType(): AlbumType {
         }
     }
 }
+
+fun SpotifyAlbum.toLocalAlbum() = LocalAlbum(
+    id = id,
+    type = type,
+    imageUrl = if (images.isNotEmpty()) images[0].url else "",
+    name = name
+)
+
+fun SpotifyAlbum.toLocalAlbumWithArtists() = LocalAlbumWithArtists(
+    album = this.toLocalAlbum(),
+    simplifiedArtists = artists.map { it.toLocal() }
+)

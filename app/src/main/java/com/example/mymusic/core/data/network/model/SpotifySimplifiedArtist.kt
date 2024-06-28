@@ -1,5 +1,6 @@
 package com.example.mymusic.core.data.network.model
 
+import com.example.mymusic.core.data.local.model.LocalSimplifiedArtist
 import com.example.mymusic.model.SimplifiedArtist
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -16,6 +17,11 @@ data class SpotifySimplifiedArtist(
 )
 
 fun SpotifySimplifiedArtist.toExternal() = SimplifiedArtist(
+    id = id,
+    name = name
+)
+
+fun SpotifySimplifiedArtist.toLocal() = LocalSimplifiedArtist(
     id = id,
     name = name
 )

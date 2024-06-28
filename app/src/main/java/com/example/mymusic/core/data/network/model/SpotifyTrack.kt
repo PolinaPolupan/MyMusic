@@ -1,5 +1,7 @@
 package com.example.mymusic.core.data.network.model
 
+import com.example.mymusic.core.data.local.model.LocalTrack
+import com.example.mymusic.core.data.local.model.LocalTrackWithArtists
 import com.example.mymusic.model.Track
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -43,4 +45,16 @@ fun SpotifyTrack.toExternal() = Track(
     album = album.toExternal(),
     name = name,
     artists = artists.map { it.toExternal() }
+)
+
+fun SpotifyTrack.toLocalTrack() = LocalTrack(
+    id = id,
+    album = album.toLocalAlbum(),
+    name = name
+)
+
+fun SpotifyTrack.toLocalTrackWithArtists() = LocalTrackWithArtists(
+    track = this.toLocalTrack(),
+    artists = artists.map { it.toLocal() },
+    albumArtists = album.artists.map { it.toLocal() }
 )
