@@ -1,13 +1,11 @@
 package com.example.mymusic.core.data
 
 import android.util.Log
+import com.example.mymusic.core.data.local.model.toExternal
 import com.example.mymusic.core.data.network.MyMusicAPIService
+import com.example.mymusic.core.data.network.model.toExternal
 import com.example.mymusic.model.Track
 import com.haroldadmin.cnradapter.NetworkResponse
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MusicRepository @Inject constructor(

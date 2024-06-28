@@ -1,7 +1,8 @@
 package com.example.mymusic.core.data.network
 
+import com.example.mymusic.core.data.network.model.ErrorResponse
+import com.example.mymusic.core.data.network.model.RecommendationsResponse
 import com.haroldadmin.cnradapter.NetworkResponse
-import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 
 interface MyMusicAPIService {

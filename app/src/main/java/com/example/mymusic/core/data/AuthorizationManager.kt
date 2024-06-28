@@ -8,7 +8,7 @@ import android.util.Base64
 import android.util.Log
 import com.example.mymusic.core.data.di.ApplicationScope
 import com.example.mymusic.core.data.di.IoDispatcher
-import com.example.mymusic.core.data.network.SpotifyUser
+import com.example.mymusic.core.data.network.model.SpotifyUser
 import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher

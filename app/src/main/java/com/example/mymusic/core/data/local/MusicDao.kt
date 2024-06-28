@@ -4,6 +4,14 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
+import com.example.mymusic.core.data.local.model.AlbumArtistCrossRef
+import com.example.mymusic.core.data.local.model.LocalAlbum
+import com.example.mymusic.core.data.local.model.LocalAlbumWithArtists
+import com.example.mymusic.core.data.local.model.LocalArtist
+import com.example.mymusic.core.data.local.model.LocalSimplifiedArtist
+import com.example.mymusic.core.data.local.model.LocalTrack
+import com.example.mymusic.core.data.local.model.LocalTrackWithArtists
+import com.example.mymusic.core.data.local.model.TrackArtistCrossRef
 import kotlinx.coroutines.flow.Flow
 
 @Dao
