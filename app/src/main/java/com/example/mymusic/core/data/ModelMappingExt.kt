@@ -1,5 +1,9 @@
 package com.example.mymusic.core.data
 
+import com.example.mymusic.core.data.local.LocalAlbum
+import com.example.mymusic.core.data.local.LocalArtist
+import com.example.mymusic.core.data.local.LocalSimplifiedArtist
+import com.example.mymusic.core.data.local.LocalTrack
 import com.example.mymusic.core.data.network.RecommendationsResponse
 import com.example.mymusic.core.data.network.SpotifyAlbum
 import com.example.mymusic.core.data.network.SpotifyArtist
@@ -49,3 +53,29 @@ fun SpotifyTrack.toExternal() = Track(
 )
 
 fun RecommendationsResponse.toExternal(): List<Track> = this.tracks.map { it.toExternal() }
+
+fun LocalArtist.toExternal() = Artist(
+    id = id,
+    name = name,
+    imageUrl = imageUrl
+)
+
+fun LocalSimplifiedArtist.toExternal() = SimplifiedArtist(
+    id = id,
+    name = name
+)
+
+fun LocalAlbum.toExternal(artists: List<SimplifiedArtist>) = Album(
+    id = id,
+    type = type.toAlbumType(),
+    imageUrl = imageUrl,
+    name = name,
+    artists = artists
+)
+
+fun LocalTrack.toExternal(albumArtists: List<SimplifiedArtist>, artists: List<Artist>) = Track(
+    id = id,
+    album = album.toExternal(albumArtists),
+    name = name,
+    artists = artists
+)

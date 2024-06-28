@@ -5,8 +5,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import androidx.room.Room
 import com.example.mymusic.core.data.AuthorizationManager
 import com.example.mymusic.core.data.Constants
+import com.example.mymusic.core.data.local.MusicDatabase
 import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.core.data.network.TokenInterceptor
 import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
@@ -19,7 +21,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -50,5 +51,20 @@ object NetworkModule {
             .baseUrl("https://api.spotify.com")
             .build()
             .create(MyMusicAPIService::class.java)
+    }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+
+    @Singleton
+    @Provides
+    fun provideDataBase(@ApplicationContext context: Context): MusicDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            MusicDatabase::class.java,
+            "Music.db"
+        ).build()
     }
 }
