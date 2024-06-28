@@ -5,10 +5,16 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import androidx.room.RoomWarnings
 import com.example.mymusic.model.Artist
 import com.example.mymusic.model.SimplifiedArtist
 import com.example.mymusic.model.Track
 
+/**
+ * [LocalTrack] defines a track.
+ * It has many-to-many relationships with [LocalArtist]
+ */
+@SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED) // Is used to suppress warnings because of embedded album field
 @Entity(
     tableName = "tracks",
     foreignKeys = [ForeignKey(

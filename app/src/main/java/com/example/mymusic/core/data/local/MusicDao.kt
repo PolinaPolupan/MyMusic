@@ -2,6 +2,7 @@ package com.example.mymusic.core.data.local
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.RoomWarnings
 import androidx.room.Transaction
 import androidx.room.Upsert
 import com.example.mymusic.core.data.local.model.AlbumArtistCrossRef
@@ -31,6 +32,8 @@ interface MusicDao {
     @Query("SELECT * from albums")
     fun observeAllAlbums(): Flow<List<LocalAlbumWithArtists>>
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH) // Is used to supress compiler warnings,
+    // because we can access the other fields (e.g. trackId, trackName) via album and list of artists
     @Transaction
     @Query("SELECT * FROM tracks WHERE trackId = :id")
     suspend fun getTrack(id: String): LocalAlbumWithArtists
