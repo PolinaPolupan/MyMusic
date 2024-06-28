@@ -83,6 +83,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.network.response.adapter)
     implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
     annotationProcessor(libs.room.compiler)
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler)
