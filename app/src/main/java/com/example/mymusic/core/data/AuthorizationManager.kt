@@ -77,7 +77,7 @@ class AuthorizationManager @Inject constructor(
         if(jsonString != null && !TextUtils.isEmpty(jsonString) ) {
             try {
                 _authState = AuthState.jsonDeserialize(jsonString)
-                Log.i("MainActivity", "Access token: " + _authState.accessToken.toString())
+                Log.i("MainActivity", "Access token: " + _authState.accessToken)
             } catch(jsonException: JSONException) {
                 Log.d("MainActivity", "Failed to load auth state")
             }
@@ -146,6 +146,7 @@ class AuthorizationManager @Inject constructor(
         ) { _, _, ex ->
             Log.i("MainActivity", "Access token:" + _authState.accessToken)
             if (ex == null) {
+                persistState(_authState.jsonSerializeString())
                 newRequest = request.newBuilder()
                     .header("Authorization", "Bearer " + _authState.accessToken)
                     .build()
