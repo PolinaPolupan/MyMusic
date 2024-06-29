@@ -46,7 +46,7 @@ interface MusicDao {
     suspend fun upsertTracks(tracks: List<LocalTrack>)
 
     @Upsert
-    suspend fun upsertArtist(artist: List<LocalArtist>)
+    suspend fun upsertArtists(artists: List<LocalArtist>)
 
     @Upsert
     suspend fun upsertSimplifiedArtists(simplifiedArtist: List<LocalSimplifiedArtist>)
@@ -55,8 +55,14 @@ interface MusicDao {
     suspend fun upsertAlbums(albums: List<LocalAlbum>)
 
     @Upsert
+    suspend fun upsertAlbum(album: LocalAlbum)
+
+    @Upsert
     suspend fun upsertTrackArtistCrossRef(ref: TrackArtistCrossRef)
 
     @Upsert
     suspend fun upsertAlbumArtistCrossRef(ref: AlbumArtistCrossRef)
+
+    @Query("DELETE FROM tracks")
+    suspend fun deleteAll()
 }

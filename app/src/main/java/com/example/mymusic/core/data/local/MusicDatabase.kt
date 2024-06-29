@@ -16,7 +16,7 @@ import com.example.mymusic.core.data.local.model.TrackArtistCrossRef
     LocalTrack::class,
     TrackArtistCrossRef::class,
     AlbumArtistCrossRef::class],
-    version = 1,
+    version = 24,
     exportSchema = false)
 abstract class MusicDatabase : RoomDatabase() {
 
