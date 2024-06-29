@@ -8,6 +8,7 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.example.mymusic.core.data.AuthorizationManager
 import com.example.mymusic.core.data.Constants
+import com.example.mymusic.core.data.local.MusicDao
 import com.example.mymusic.core.data.local.MusicDatabase
 import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.core.data.network.TokenInterceptor
@@ -21,6 +22,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -65,6 +67,11 @@ object DatabaseModule {
             context.applicationContext,
             MusicDatabase::class.java,
             "Music.db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
+
+    @Provides
+    fun provideMusicDao(database: MusicDatabase): MusicDao = database.musicDao()
 }
