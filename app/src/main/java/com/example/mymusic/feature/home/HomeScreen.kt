@@ -1,6 +1,5 @@
 package com.example.mymusic.feature.home
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -104,13 +103,13 @@ internal fun HomeContent(
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     val scrollState = rememberScrollState()
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->
         // We want a color which has sufficient contrast against the surface color
         color.contrastAgainst(surfaceColor) >= 3f
     }
+
     DynamicThemePrimaryColorsFromImage(dominantColorState) {
         val pageCount = topPicks.size * 100
         val pagerState = rememberPagerState(
@@ -131,7 +130,15 @@ internal fun HomeContent(
             /* TODO: Bad behavior in case the image changes too fast */
             BlurredImageHeader(
                 imageUrl = topPicks[pagerState.currentPage % topPicks.size].album.imageUrl,
-                alpha = max(0.0f, lerpScrollOffset(scrollState = scrollState, valueMin = 100f, valueMax = 300f, reverse = true) - 0.3f)
+                alpha = max(
+                    0.0f,
+                    lerpScrollOffset(
+                        scrollState = scrollState,
+                        valueMin = 100f,
+                        valueMax = 300f,
+                        reverse = true
+                    ) - 0.3f
+                )
             )
             Column(
                 modifier = Modifier
