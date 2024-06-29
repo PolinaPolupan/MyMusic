@@ -11,17 +11,19 @@ import androidx.room.Index
  */
 @Entity(
     primaryKeys = ["artistId", "trackId"],
-    foreignKeys = [
-        ForeignKey(
-            entity = LocalTrack::class,
-            parentColumns = arrayOf("trackId"),
-            childColumns = arrayOf("trackId"),
-            onUpdate = ForeignKey.CASCADE),
-        ForeignKey(
-            entity = LocalArtist::class,
-            parentColumns = arrayOf("artistId"),
-            childColumns = arrayOf("artistId"),
-            onUpdate = ForeignKey.CASCADE)],
+//    foreignKeys = [
+//        ForeignKey(
+//            entity = LocalTrack::class,
+//            parentColumns = arrayOf("trackId"),
+//            childColumns = arrayOf("trackId"),
+//            onUpdate = ForeignKey.CASCADE,
+//        ),
+//        ForeignKey(
+//            entity = LocalArtist::class,
+//            parentColumns = arrayOf("artistId"),
+//            childColumns = arrayOf("artistId"),
+//            onUpdate = ForeignKey.CASCADE,
+//        )],
     indices = [
         Index(value = ["artistId"]),
         Index(value = ["trackId"])

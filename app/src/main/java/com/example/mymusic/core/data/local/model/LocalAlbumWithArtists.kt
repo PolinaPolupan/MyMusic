@@ -26,3 +26,5 @@ fun LocalAlbumWithArtists.toExternal() = Album(
     name = album.name,
     artists = simplifiedArtists.map { it.toExternal() }
 )
+
+fun List<LocalAlbumWithArtists>.toExternal() = map(LocalAlbumWithArtists::toExternal)

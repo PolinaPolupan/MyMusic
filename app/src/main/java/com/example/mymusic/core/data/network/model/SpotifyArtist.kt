@@ -1,6 +1,7 @@
 package com.example.mymusic.core.data.network.model
 
 import com.example.mymusic.core.data.local.model.LocalArtist
+import com.example.mymusic.core.data.local.model.LocalSimplifiedArtist
 import com.example.mymusic.model.Artist
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -31,3 +32,12 @@ fun SpotifyArtist.toLocal() = LocalArtist(
     name = name,
     imageUrl = if (images?.isNotEmpty() == true) images[0].url else ""
 )
+
+fun List<SpotifyArtist>.toLocal() = map(SpotifyArtist::toLocal)
+
+fun SpotifyArtist.toLocalSimplified() = LocalSimplifiedArtist(
+    id = id,
+    name = name
+)
+
+fun List<SpotifyArtist>.toLocalSimplified() = map(SpotifyArtist::toLocalSimplified)

@@ -16,12 +16,16 @@ import androidx.room.Index
             entity = LocalSimplifiedArtist::class,
             parentColumns = arrayOf("simplifiedArtistId"),
             childColumns = arrayOf("simplifiedArtistId"),
-            onUpdate = ForeignKey.CASCADE),
+            onUpdate = ForeignKey.CASCADE,
+            onDelete = ForeignKey.CASCADE
+        ),
         ForeignKey(
             entity = LocalAlbum::class,
             parentColumns = arrayOf("albumId"),
             childColumns = arrayOf("albumId"),
-            onUpdate = ForeignKey.CASCADE)],
+            onUpdate = ForeignKey.CASCADE,
+            onDelete = ForeignKey.CASCADE
+        )],
     indices = [
         Index(value = ["simplifiedArtistId"]),
         Index(value = ["albumId"])

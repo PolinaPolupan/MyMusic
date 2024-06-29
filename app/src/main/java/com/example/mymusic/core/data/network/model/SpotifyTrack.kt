@@ -58,3 +58,5 @@ fun SpotifyTrack.toLocalTrackWithArtists() = LocalTrackWithArtists(
     artists = artists.map { it.toLocal() },
     albumArtists = album.artists.map { it.toLocal() }
 )
+
+fun List<SpotifyTrack>.toLocal() = map(SpotifyTrack::toLocalTrack)

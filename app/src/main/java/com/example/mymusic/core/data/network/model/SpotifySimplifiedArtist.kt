@@ -25,3 +25,5 @@ fun SpotifySimplifiedArtist.toLocal() = LocalSimplifiedArtist(
     id = id,
     name = name
 )
+
+fun List<SpotifySimplifiedArtist>.toLocal() = map(SpotifySimplifiedArtist::toLocal)

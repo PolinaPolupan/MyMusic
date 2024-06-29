@@ -17,12 +17,12 @@ import com.example.mymusic.model.Track
 @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED) // Is used to suppress warnings because of embedded album field
 @Entity(
     tableName = "tracks",
-    foreignKeys = [ForeignKey(
-        entity = LocalAlbum::class,
-        parentColumns = arrayOf("albumId"),
-        childColumns = arrayOf("trackId"),
-        onUpdate = ForeignKey.CASCADE
-    )]
+//    foreignKeys = [ForeignKey(
+//        entity = LocalAlbum::class,
+//        parentColumns = arrayOf("albumId"),
+//        childColumns = arrayOf("trackId"),
+//        onUpdate = ForeignKey.CASCADE,
+//    )]
 )
 data class LocalTrack(
     @ColumnInfo(name = "trackId")

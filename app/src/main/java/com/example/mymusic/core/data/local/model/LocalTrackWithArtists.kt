@@ -27,3 +27,5 @@ fun LocalTrackWithArtists.toExternal() = Track(
     name = track.name,
     artists = artists.map { it.toExternal() }
 )
+
+fun List<LocalTrackWithArtists>.toExternal() = map(LocalTrackWithArtists::toExternal)
