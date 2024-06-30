@@ -10,6 +10,7 @@ import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.core.data.network.model.SpotifyTrack
 import com.example.mymusic.core.data.network.model.toLocal
 import com.example.mymusic.core.data.network.model.toLocalAlbum
+import com.example.mymusic.core.data.network.model.toLocalRecommendations
 import com.example.mymusic.core.data.network.model.toLocalSimplified
 import com.example.mymusic.model.Track
 import com.haroldadmin.cnradapter.NetworkResponse
@@ -37,7 +38,10 @@ class MusicRepository @Inject constructor(
         withContext(dispatcher) {
             val remoteMusic = getRecommendations()
             if (remoteMusic.isNotEmpty()) {
+
                 musicDao.deleteAll()
+                musicDao.upsertTracks(remoteMusic.toLocal())
+                musicDao.upsertRecommendations(remoteMusic.toLocalRecommendations())
 
                 for (track in remoteMusic) {
                     for (artist in track.artists)
@@ -50,8 +54,6 @@ class MusicRepository @Inject constructor(
                     for (artist in album.artists)
                         musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(artist.id, album.id))
                 }
-
-                musicDao.upsertTracks(remoteMusic.toLocal())
             }
         }
     }

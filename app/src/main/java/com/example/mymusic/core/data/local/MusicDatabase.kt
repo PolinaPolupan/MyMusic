@@ -7,6 +7,7 @@ import com.example.mymusic.core.data.local.model.LocalAlbum
 import com.example.mymusic.core.data.local.model.LocalArtist
 import com.example.mymusic.core.data.local.model.LocalSimplifiedArtist
 import com.example.mymusic.core.data.local.model.LocalTrack
+import com.example.mymusic.core.data.local.model.LocalRecommendation
 import com.example.mymusic.core.data.local.model.TrackArtistCrossRef
 
 @Database(entities = [
@@ -15,8 +16,9 @@ import com.example.mymusic.core.data.local.model.TrackArtistCrossRef
     LocalAlbum::class,
     LocalTrack::class,
     TrackArtistCrossRef::class,
-    AlbumArtistCrossRef::class],
-    version = 24,
+    AlbumArtistCrossRef::class,
+    LocalRecommendation::class],
+    version = 30,
     exportSchema = false)
 abstract class MusicDatabase : RoomDatabase() {
 

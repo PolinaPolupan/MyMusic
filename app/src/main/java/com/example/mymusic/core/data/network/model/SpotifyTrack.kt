@@ -2,6 +2,7 @@ package com.example.mymusic.core.data.network.model
 
 import com.example.mymusic.core.data.local.model.LocalTrack
 import com.example.mymusic.core.data.local.model.LocalTrackWithArtists
+import com.example.mymusic.core.data.local.model.LocalRecommendation
 import com.example.mymusic.model.Track
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -60,3 +61,9 @@ fun SpotifyTrack.toLocalTrackWithArtists() = LocalTrackWithArtists(
 )
 
 fun List<SpotifyTrack>.toLocal() = map(SpotifyTrack::toLocalTrack)
+
+fun SpotifyTrack.toLocalRecommendation() = LocalRecommendation(
+    id = id
+)
+
+fun List<SpotifyTrack>.toLocalRecommendations() = map(SpotifyTrack::toLocalRecommendation)

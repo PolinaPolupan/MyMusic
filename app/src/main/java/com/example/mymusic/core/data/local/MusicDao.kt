@@ -12,6 +12,7 @@ import com.example.mymusic.core.data.local.model.LocalArtist
 import com.example.mymusic.core.data.local.model.LocalSimplifiedArtist
 import com.example.mymusic.core.data.local.model.LocalTrack
 import com.example.mymusic.core.data.local.model.LocalTrackWithArtists
+import com.example.mymusic.core.data.local.model.LocalRecommendation
 import com.example.mymusic.core.data.local.model.TrackArtistCrossRef
 import kotlinx.coroutines.flow.Flow
 
@@ -31,6 +32,10 @@ interface MusicDao {
     @Transaction
     @Query("SELECT * from albums")
     fun observeAllAlbums(): Flow<List<LocalAlbumWithArtists>>
+
+    @Transaction
+    @Query("SELECT * from tracks WHERE trackId IN (SELECT recommendationId FROM recommendations)")
+    fun observeRecommendations(): Flow<List<LocalTrack>>
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH) // Is used to supress compiler warnings,
     // because we can access the other fields (e.g. trackId, trackName) via album and list of artists
@@ -62,6 +67,9 @@ interface MusicDao {
 
     @Upsert
     suspend fun upsertAlbumArtistCrossRef(ref: AlbumArtistCrossRef)
+
+    @Upsert
+    suspend fun upsertRecommendations(recommendations: List<LocalRecommendation>)
 
     @Query("DELETE FROM tracks")
     suspend fun deleteAll()
