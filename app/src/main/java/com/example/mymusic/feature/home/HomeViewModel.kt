@@ -22,18 +22,21 @@ class HomeViewModel @Inject constructor(
 {
     private val _userDataFlow = userDataRepository.userPreferencesFlow
     private val _recommendationsFlow = musicRepository.getRecommendationsStream()
+    private val _recentlyPlayedFlow = musicRepository.getRecentlyPlayedStream()
 
     val uiState: StateFlow<HomeUiState> =
         combine(
            _userDataFlow,
-            _recommendationsFlow
+            _recommendationsFlow,
+            _recentlyPlayedFlow
         ) {
-            userData, recommendations ->
-            when (recommendations.isEmpty() || userData.authState.isNullOrBlank()) {
+            userData, recommendations, recentlyPlayed ->
+            when (recentlyPlayed.isEmpty() || recommendations.isEmpty() || userData.authState.isNullOrBlank()) {
                 true -> HomeUiState.Loading
                 false ->  HomeUiState.Success(
                     userImageUrl = userData.imageUrl,
-                    topPicks = recommendations
+                    topPicks = recommendations,
+                    recentlyPlayed = recentlyPlayed
                 )
             }
         }
@@ -45,8 +48,8 @@ sealed interface HomeUiState {
     data class Success(
         val userImageUrl: String?,
         val topPicks: List<Track>,
-        val moreLikeArtists: Map<Artist, List<Track>> = PreviewParameterData.moreLikeArtists,
-        val recentlyPlayed: List<Track> = PreviewParameterData.tracks
+        val recentlyPlayed: List<Track>,
+        val moreLikeArtists: Map<Artist, List<Track>> = PreviewParameterData.moreLikeArtists
     ): HomeUiState
     data object Error: HomeUiState
 }
