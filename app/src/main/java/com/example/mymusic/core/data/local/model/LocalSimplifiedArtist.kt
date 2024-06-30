@@ -25,3 +25,5 @@ fun LocalSimplifiedArtist.toExternal() = SimplifiedArtist(
     id = id,
     name = name
 )
+
+fun List<LocalSimplifiedArtist>.toExternal() = map(LocalSimplifiedArtist::toExternal)
