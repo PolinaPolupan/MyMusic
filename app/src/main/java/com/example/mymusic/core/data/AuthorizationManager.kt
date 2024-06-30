@@ -110,7 +110,8 @@ class AuthorizationManager @Inject constructor(
             Constants.SCOPE_EMAIL,
             Constants.SCOPE_APP_REMOTE_CONTROL,
             Constants.SCOPE_USER_MODIFY_PLAYBACK_STATE,
-            Constants.SCOPE_USER_READ_PRIVATE)
+            Constants.SCOPE_USER_READ_PRIVATE,
+            Constants.SCOPE_USER_READ_RECENTLY_PLAYED)
 
         val request = builder.build()
 
