@@ -23,9 +23,9 @@ data class LocalTrackWithArtists(
 
 fun LocalTrackWithArtists.toExternal() = Track(
     id = track.id,
-    album = track.album.toExternal(albumArtists.map { it.toExternal() }),
+    album = track.album.toExternal(albumArtists.toExternal()),
     name = track.name,
-    artists = artists.map { it.toExternal() }
+    artists = artists.toExternal()
 )
 
 fun List<LocalTrackWithArtists>.toExternal() = map(LocalTrackWithArtists::toExternal)
