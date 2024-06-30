@@ -7,6 +7,7 @@ import com.example.mymusic.core.data.local.model.AlbumArtistCrossRef
 import com.example.mymusic.core.data.local.model.TrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.toExternal
 import com.example.mymusic.core.data.network.MyMusicAPIService
+import com.example.mymusic.core.data.network.model.SpotifyPlayHistoryObject
 import com.example.mymusic.core.data.network.model.SpotifyTrack
 import com.example.mymusic.core.data.network.model.toLocal
 import com.example.mymusic.core.data.network.model.toLocalAlbum
@@ -27,10 +28,14 @@ class MusicRepository @Inject constructor(
 ) {
 
     fun getRecommendationsStream(): Flow<List<Track>> {
-         return musicDao.observeAllTracks().map { tracks ->
-            withContext(dispatcher) {
-                tracks.toExternal()
-            }
+         return musicDao.observeRecommendations().map { tracks ->
+             tracks.toExternal()
+        }
+    }
+
+    fun getRecentlyPlayedStream(): Flow<List<Track>> {
+        return musicDao.observeRecentlyPlayed().map {tracks ->
+            tracks.toExternal()
         }
     }
 
@@ -39,7 +44,7 @@ class MusicRepository @Inject constructor(
             val remoteMusic = getRecommendations()
             if (remoteMusic.isNotEmpty()) {
 
-                musicDao.deleteAll()
+                musicDao.deleteRecommendations()
                 musicDao.upsertTracks(remoteMusic.toLocal())
                 musicDao.upsertRecommendations(remoteMusic.toLocalRecommendations())
 
@@ -54,6 +59,53 @@ class MusicRepository @Inject constructor(
                     for (artist in album.artists)
                         musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(artist.id, album.id))
                 }
+            }
+
+            val recentlyPlayed = getRecentlyPlayed()
+
+            if (recentlyPlayed.isNotEmpty()) {
+
+                musicDao.deleteRecentlyPlayed()
+                musicDao.upsertTracks(remoteMusic.toLocal())
+                musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
+
+                for (track in remoteMusic) {
+                    for (artist in track.artists)
+                        musicDao.upsertTrackArtistCrossRef(TrackArtistCrossRef(artist.id, track.id))
+                    val album = track.album
+                    musicDao.upsertAlbum(album.toLocalAlbum())
+                    musicDao.upsertArtists(track.artists.toLocal())
+                    musicDao.upsertSimplifiedArtists(track.artists.toLocalSimplified())
+                    musicDao.upsertSimplifiedArtists(album.artists.toLocal())
+                    for (artist in album.artists)
+                        musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(artist.id, album.id))
+                }
+            }
+        }
+    }
+
+    suspend fun getRecentlyPlayed(): List<SpotifyPlayHistoryObject> {
+        return when (val response = apiService.getRecentlyPlayed()) {
+            is  NetworkResponse.Success -> {
+                Log.d("MainActivity", response.body.toString())
+                response.body.items
+            }
+
+            is NetworkResponse.NetworkError -> {
+                Log.e("MainActivity", response.error.message ?: "Network Error")
+                emptyList()
+            }
+
+            is NetworkResponse.ServerError -> {
+                Log.e("MainActivity", ("Code: " + response.code.toString()))
+                Log.e("MainActivity", response.error?.message ?: "Server Error")
+                emptyList()
+            }
+
+            is NetworkResponse.UnknownError -> {
+                Log.e("MainActivity", ("Code: " + response.code.toString()))
+                Log.e("MainActivity", response.error.message ?: "Unknown Error")
+                emptyList()
             }
         }
     }
