@@ -11,13 +11,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SpotifyAlbum(
     @SerialName("album_type")
-    val albumType: String,
+    val albumType: String?,
     @SerialName("total_tracks")
     val totalTracks: Int,
     @SerialName("available_markets")
-    val availableMarkets: List<String>,
+    val availableMarkets: List<String>?,
     @SerialName("external_urls")
-    val externalUrls: ExternalUrls,
+    val externalUrls: ExternalUrls?,
     val href: String,
     val id: String,
     val images: List<SpotifyImage>,
@@ -25,7 +25,7 @@ data class SpotifyAlbum(
     @SerialName("release_date")
     val releaseDate: String,
     @SerialName("release_date_precision")
-    val releaseDatePrecision: String,
+    val releaseDatePrecision: String?,
     val restrictions: Restrictions? = null,
     val type: String,
     val uri: String,
