@@ -18,3 +18,5 @@ fun LocalArtist.toExternal() = Artist(
     name = name,
     imageUrl = imageUrl
 )
+
+fun List<LocalArtist>.toExternal() = map(LocalArtist::toExternal)
