@@ -87,6 +87,21 @@ data class RecommendationsResponse(
     val tracks: List<SpotifyTrack>
 )
 
+@Serializable
+data class Cursors(
+    val after: String,
+    val before: String
+)
+
+@Serializable
+data class Context(
+    val type: String,
+    val href: String,
+    @SerialName("external_urls")
+    val externalUrls: ExternalUrls,
+    val uri: String
+)
+
 fun RecommendationsResponse.toExternal(): List<Track> = this.tracks.map { it.toExternal() }
 
 data class ErrorResponse(val message: String)
