@@ -151,6 +151,8 @@ class AuthorizationManager @Inject constructor(
                 newRequest = request.newBuilder()
                     .header("Authorization", "Bearer " + _authState.accessToken)
                     .build()
+            } else {
+                Log.e("MainActivity", "Error token response: ${ex.error} ${ex.errorDescription}, message: ${ex.message}")
             }
         }
         return newRequest
