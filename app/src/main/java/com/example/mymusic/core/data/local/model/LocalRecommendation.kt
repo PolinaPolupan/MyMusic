@@ -16,6 +16,5 @@ import androidx.room.PrimaryKey
     )]
 )
 data class LocalRecommendation(
-    @ColumnInfo(name = "recommendationId")
-    @PrimaryKey val id: String
+    @ColumnInfo(name = "recommendationId") @PrimaryKey val id: String
 )

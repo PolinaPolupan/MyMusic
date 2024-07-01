@@ -1,6 +1,8 @@
 package com.example.mymusic.core.data.local
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RoomWarnings
 import androidx.room.Transaction
@@ -40,7 +42,7 @@ interface MusicDao {
     fun observeRecommendations(): Flow<List<LocalTrackWithArtists>>
 
     @Transaction
-    @Query("SELECT * from playHistory ORDER BY strftime('${LocalPlayHistory.SQLITE_STRFTIME_FORMAT}', playedAt) DESC")
+    @Query("SELECT * from playHistory")
     fun observeRecentlyPlayed(): Flow<List<LocalPlayHistoryWithArtists>>
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH) // Is used to supress compiler warnings,
@@ -78,7 +80,7 @@ interface MusicDao {
     suspend fun upsertRecommendations(recommendations: List<LocalRecommendation>)
 
     @Upsert
-    suspend fun upsertLocalPlayHistory(history: List<LocalPlayHistory>)
+    suspend fun upsertLocalPlayHistory(history: LocalPlayHistory)
 
     @Query("DELETE FROM tracks")
     suspend fun deleteAll()
