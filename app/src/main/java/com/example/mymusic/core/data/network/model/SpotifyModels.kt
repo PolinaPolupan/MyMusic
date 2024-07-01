@@ -1,6 +1,5 @@
 package com.example.mymusic.core.data.network.model
 
-import com.example.mymusic.model.Track
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -101,7 +100,5 @@ data class Context(
     val externalUrls: ExternalUrls,
     val uri: String
 )
-
-fun RecommendationsResponse.toExternal(): List<Track> = this.tracks.map { it.toExternal() }
 
 data class ErrorResponse(val message: String)

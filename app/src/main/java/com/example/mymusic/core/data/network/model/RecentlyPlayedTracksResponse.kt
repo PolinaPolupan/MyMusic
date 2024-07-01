@@ -29,7 +29,7 @@ fun SpotifyPlayHistoryObject.toLocal() = LocalRecentlyPlayed(
 
 fun SpotifyPlayHistoryObject.toLocalTrack() = LocalTrack(
     id = track.id,
-    album = track.album.toLocalAlbum(),
+    album = track.album.toLocal(),
     name = track.name
 )
 

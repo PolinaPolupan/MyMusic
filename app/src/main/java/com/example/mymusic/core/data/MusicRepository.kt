@@ -13,7 +13,6 @@ import com.example.mymusic.core.data.network.model.RecommendationsResponse
 import com.example.mymusic.core.data.network.model.SpotifyPlayHistoryObject
 import com.example.mymusic.core.data.network.model.SpotifyTrack
 import com.example.mymusic.core.data.network.model.toLocal
-import com.example.mymusic.core.data.network.model.toLocalAlbum
 import com.example.mymusic.core.data.network.model.toLocalRecommendations
 import com.example.mymusic.core.data.network.model.toLocalSimplified
 import com.example.mymusic.core.data.network.model.toLocalTracks
@@ -56,7 +55,7 @@ class MusicRepository @Inject constructor(
                     for (artist in track.artists)
                         musicDao.upsertTrackArtistCrossRef(TrackArtistCrossRef(artist.id, track.id))
                     val album = track.album
-                    musicDao.upsertAlbum(album.toLocalAlbum())
+                    musicDao.upsertAlbum(album.toLocal())
                     musicDao.upsertArtists(track.artists.toLocal())
                     musicDao.upsertSimplifiedArtists(track.artists.toLocalSimplified())
                     musicDao.upsertSimplifiedArtists(album.artists.toLocal())
@@ -77,7 +76,7 @@ class MusicRepository @Inject constructor(
                     for (artist in track.track.artists)
                         musicDao.upsertTrackArtistCrossRef(TrackArtistCrossRef(artist.id, track.track.id))
                     val album = track.track.album
-                    musicDao.upsertAlbum(album.toLocalAlbum())
+                    musicDao.upsertAlbum(album.toLocal())
                     musicDao.upsertArtists(track.track.artists.toLocal())
                     musicDao.upsertSimplifiedArtists(track.track.artists.toLocalSimplified())
                     musicDao.upsertSimplifiedArtists(album.artists.toLocal())
