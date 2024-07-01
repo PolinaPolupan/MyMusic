@@ -10,6 +10,7 @@ import androidx.room.Index
  * because there can be other dependencies (like playlists, singles, etc.)
  */
 @Entity(
+    tableName = "track_artist",
     primaryKeys = ["artistId", "trackId"],
 //    foreignKeys = [
 //        ForeignKey(
@@ -17,12 +18,14 @@ import androidx.room.Index
 //            parentColumns = arrayOf("trackId"),
 //            childColumns = arrayOf("trackId"),
 //            onUpdate = ForeignKey.CASCADE,
+//            onDelete = ForeignKey.CASCADE
 //        ),
 //        ForeignKey(
 //            entity = LocalArtist::class,
 //            parentColumns = arrayOf("artistId"),
 //            childColumns = arrayOf("artistId"),
 //            onUpdate = ForeignKey.CASCADE,
+//            onDelete = ForeignKey.CASCADE
 //        )],
     indices = [
         Index(value = ["artistId"]),

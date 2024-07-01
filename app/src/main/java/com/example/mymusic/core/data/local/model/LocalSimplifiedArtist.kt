@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.example.mymusic.model.SimplifiedArtist
 
 @Entity(
-    tableName = "simplifiedArtists",
+    tableName = "simplified_artists",
     foreignKeys = [ForeignKey(
         entity = LocalArtist::class,
         parentColumns = arrayOf("artistId"),

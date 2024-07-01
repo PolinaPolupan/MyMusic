@@ -5,8 +5,8 @@ import androidx.room.Junction
 import androidx.room.Relation
 import com.example.mymusic.model.Track
 
-data class LocalPlayHistoryWithArtists(
-    @Embedded val trackHistory: LocalPlayHistory,
+data class LocalRecentlyPlayedWithArtists(
+    @Embedded val trackHistory: LocalRecentlyPlayed,
     @Relation(
         parentColumn = "trackId",
         entityColumn = "artistId",
@@ -21,11 +21,11 @@ data class LocalPlayHistoryWithArtists(
     val albumArtists: List<LocalSimplifiedArtist>
 )
 
-fun LocalPlayHistoryWithArtists.toExternal() = Track(
+fun LocalRecentlyPlayedWithArtists.toExternal() = Track(
     id = trackHistory.track.id,
     album = trackHistory.track.album.toExternal(albumArtists.toExternal()),
     name = trackHistory.track.name,
     artists = artists.toExternal()
 )
 
-fun List<LocalPlayHistoryWithArtists>.toExternal() = map(LocalPlayHistoryWithArtists::toExternal)
+fun List<LocalRecentlyPlayedWithArtists>.toExternal() = map(LocalRecentlyPlayedWithArtists::toExternal)

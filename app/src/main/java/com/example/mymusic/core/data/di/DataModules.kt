@@ -66,7 +66,7 @@ object DatabaseModule {
         return Room.databaseBuilder(
             context.applicationContext,
             MusicDatabase::class.java,
-            "Music.db"
+            "music.db"
         )
             .fallbackToDestructiveMigration()
             .build()

@@ -10,6 +10,7 @@ import androidx.room.Index
  * because there can be other dependencies (like playlists, singles, etc.)
  */
 @Entity(
+    tableName = "album_artist",
     primaryKeys = ["simplifiedArtistId", "albumId"],
 //    foreignKeys = [
 //        ForeignKey(

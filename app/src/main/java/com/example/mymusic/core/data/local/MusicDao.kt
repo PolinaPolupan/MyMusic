@@ -1,8 +1,6 @@
 package com.example.mymusic.core.data.local
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RoomWarnings
 import androidx.room.Transaction
@@ -11,8 +9,8 @@ import com.example.mymusic.core.data.local.model.AlbumArtistCrossRef
 import com.example.mymusic.core.data.local.model.LocalAlbum
 import com.example.mymusic.core.data.local.model.LocalAlbumWithArtists
 import com.example.mymusic.core.data.local.model.LocalArtist
-import com.example.mymusic.core.data.local.model.LocalPlayHistory
-import com.example.mymusic.core.data.local.model.LocalPlayHistoryWithArtists
+import com.example.mymusic.core.data.local.model.LocalRecentlyPlayed
+import com.example.mymusic.core.data.local.model.LocalRecentlyPlayedWithArtists
 import com.example.mymusic.core.data.local.model.LocalSimplifiedArtist
 import com.example.mymusic.core.data.local.model.LocalTrack
 import com.example.mymusic.core.data.local.model.LocalTrackWithArtists
@@ -30,7 +28,7 @@ interface MusicDao {
     @Query("SELECT * from artists")
     fun observeAllArtists(): Flow<List<LocalArtist>>
 
-    @Query("SELECT * from simplifiedArtists")
+    @Query("SELECT * from simplified_artists")
     fun observeAllSimplifiedArtists(): Flow<List<LocalSimplifiedArtist>>
 
     @Transaction
@@ -42,8 +40,8 @@ interface MusicDao {
     fun observeRecommendations(): Flow<List<LocalTrackWithArtists>>
 
     @Transaction
-    @Query("SELECT * from playHistory")
-    fun observeRecentlyPlayed(): Flow<List<LocalPlayHistoryWithArtists>>
+    @Query("SELECT * from recently_played")
+    fun observeRecentlyPlayed(): Flow<List<LocalRecentlyPlayedWithArtists>>
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH) // Is used to supress compiler warnings,
     // because we can access the other fields (e.g. trackId, trackName) via album and list of artists
@@ -80,7 +78,7 @@ interface MusicDao {
     suspend fun upsertRecommendations(recommendations: List<LocalRecommendation>)
 
     @Upsert
-    suspend fun upsertLocalPlayHistory(history: List<LocalPlayHistory>)
+    suspend fun upsertLocalPlayHistory(history: List<LocalRecentlyPlayed>)
 
     @Query("DELETE FROM tracks")
     suspend fun deleteAll()
@@ -88,6 +86,6 @@ interface MusicDao {
     @Query("DELETE FROM recommendations")
     suspend fun deleteRecommendations()
 
-    @Query("DELETE FROM playHistory")
+    @Query("DELETE FROM recently_played")
     suspend fun deleteRecentlyPlayed()
 }

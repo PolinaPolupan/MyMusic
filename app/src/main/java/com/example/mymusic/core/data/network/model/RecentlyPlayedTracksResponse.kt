@@ -1,6 +1,6 @@
 package com.example.mymusic.core.data.network.model
 
-import com.example.mymusic.core.data.local.model.LocalPlayHistory
+import com.example.mymusic.core.data.local.model.LocalRecentlyPlayed
 import com.example.mymusic.core.data.local.model.LocalTrack
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -22,7 +22,7 @@ data class RecentlyPlayedTracksResponse(
     val items: List<SpotifyPlayHistoryObject>
 )
 
-fun SpotifyPlayHistoryObject.toLocal() = LocalPlayHistory(
+fun SpotifyPlayHistoryObject.toLocal() = LocalRecentlyPlayed(
     id = track.id,
     track = track.toLocalTrack()
 )
