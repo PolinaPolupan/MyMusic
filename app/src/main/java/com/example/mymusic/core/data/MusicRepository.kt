@@ -13,6 +13,7 @@ import com.example.mymusic.core.data.network.model.toLocal
 import com.example.mymusic.core.data.network.model.toLocalAlbum
 import com.example.mymusic.core.data.network.model.toLocalRecommendations
 import com.example.mymusic.core.data.network.model.toLocalSimplified
+import com.example.mymusic.core.data.network.model.toLocalTracks
 import com.example.mymusic.model.Track
 import com.haroldadmin.cnradapter.NetworkResponse
 import kotlinx.coroutines.CoroutineDispatcher
@@ -66,16 +67,16 @@ class MusicRepository @Inject constructor(
             if (recentlyPlayed.isNotEmpty()) {
 
                 musicDao.deleteRecentlyPlayed()
-                musicDao.upsertTracks(remoteMusic.toLocal())
-                musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
+                musicDao.upsertTracks(recentlyPlayed.toLocalTracks())
 
-                for (track in remoteMusic) {
-                    for (artist in track.artists)
-                        musicDao.upsertTrackArtistCrossRef(TrackArtistCrossRef(artist.id, track.id))
-                    val album = track.album
+                for (track in recentlyPlayed) {
+                    musicDao.upsertLocalPlayHistory(track.toLocal())
+                    for (artist in track.track.artists)
+                        musicDao.upsertTrackArtistCrossRef(TrackArtistCrossRef(artist.id, track.track.id))
+                    val album = track.track.album
                     musicDao.upsertAlbum(album.toLocalAlbum())
-                    musicDao.upsertArtists(track.artists.toLocal())
-                    musicDao.upsertSimplifiedArtists(track.artists.toLocalSimplified())
+                    musicDao.upsertArtists(track.track.artists.toLocal())
+                    musicDao.upsertSimplifiedArtists(track.track.artists.toLocalSimplified())
                     musicDao.upsertSimplifiedArtists(album.artists.toLocal())
                     for (artist in album.artists)
                         musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(artist.id, album.id))
