@@ -90,14 +90,14 @@ class MusicRepository @Inject constructor(
 
     private suspend fun getRecentlyPlayed(): List<SpotifyPlayHistoryObject> {
         val response = apiService.getRecentlyPlayed()
-        val data = (response as NetworkResponse.Success<RecentlyPlayedTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
+        val data = (response as? NetworkResponse.Success<RecentlyPlayedTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
 
         return processResponse(response, data, emptyList())
     }
 
     private suspend fun getRecommendations(): List<SpotifyTrack> {
         val response = apiService.getRecommendations()
-        val data = (response as NetworkResponse.Success<RecommendationsResponse, ErrorResponse>?)?.body?.tracks ?: emptyList()
+        val data = (response as? NetworkResponse.Success<RecommendationsResponse, ErrorResponse>?)?.body?.tracks ?: emptyList()
 
         return processResponse(response, data, emptyList())
     }
