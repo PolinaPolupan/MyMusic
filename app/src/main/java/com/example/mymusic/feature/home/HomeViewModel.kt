@@ -21,8 +21,8 @@ class HomeViewModel @Inject constructor(
 ): ViewModel()
 {
     private val _userDataFlow = userDataRepository.userPreferencesFlow
-    private val _recommendationsFlow = musicRepository.getRecommendationsStream()
-    private val _recentlyPlayedFlow = musicRepository.getRecentlyPlayedStream()
+    private val _recommendationsFlow = musicRepository.observeRecommendations()
+    private val _recentlyPlayedFlow = musicRepository.observeRecentlyPlayed()
 
     val uiState: StateFlow<HomeUiState> =
         combine(

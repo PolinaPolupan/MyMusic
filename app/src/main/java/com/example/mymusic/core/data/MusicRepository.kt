@@ -7,6 +7,9 @@ import com.example.mymusic.core.data.local.model.AlbumArtistCrossRef
 import com.example.mymusic.core.data.local.model.TrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.toExternal
 import com.example.mymusic.core.data.network.MyMusicAPIService
+import com.example.mymusic.core.data.network.model.ErrorResponse
+import com.example.mymusic.core.data.network.model.RecentlyPlayedTracksResponse
+import com.example.mymusic.core.data.network.model.RecommendationsResponse
 import com.example.mymusic.core.data.network.model.SpotifyPlayHistoryObject
 import com.example.mymusic.core.data.network.model.SpotifyTrack
 import com.example.mymusic.core.data.network.model.toLocal
@@ -28,13 +31,13 @@ class MusicRepository @Inject constructor(
     private val apiService: MyMusicAPIService
 ) {
 
-    fun getRecommendationsStream(): Flow<List<Track>> {
+    fun observeRecommendations(): Flow<List<Track>> {
          return musicDao.observeRecommendations().map { tracks ->
              tracks.toExternal()
         }
     }
 
-    fun getRecentlyPlayedStream(): Flow<List<Track>> {
+    fun observeRecentlyPlayed(): Flow<List<Track>> {
         return musicDao.observeRecentlyPlayed().map {tracks ->
             tracks.toExternal()
         }
@@ -68,9 +71,9 @@ class MusicRepository @Inject constructor(
 
                 musicDao.deleteRecentlyPlayed()
                 musicDao.upsertTracks(recentlyPlayed.toLocalTracks())
+                musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
 
                 for (track in recentlyPlayed) {
-                    musicDao.upsertLocalPlayHistory(track.toLocal())
                     for (artist in track.track.artists)
                         musicDao.upsertTrackArtistCrossRef(TrackArtistCrossRef(artist.id, track.track.id))
                     val album = track.track.album
@@ -85,54 +88,42 @@ class MusicRepository @Inject constructor(
         }
     }
 
-    suspend fun getRecentlyPlayed(): List<SpotifyPlayHistoryObject> {
-        return when (val response = apiService.getRecentlyPlayed()) {
-            is  NetworkResponse.Success -> {
-                Log.d("MainActivity", response.body.toString())
-                response.body.items
-            }
+    private suspend fun getRecentlyPlayed(): List<SpotifyPlayHistoryObject> {
+        val response = apiService.getRecentlyPlayed()
+        val data = (response as NetworkResponse.Success<RecentlyPlayedTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
 
-            is NetworkResponse.NetworkError -> {
-                Log.e("MainActivity", response.error.message ?: "Network Error")
-                emptyList()
-            }
-
-            is NetworkResponse.ServerError -> {
-                Log.e("MainActivity", ("Code: " + response.code.toString()))
-                Log.e("MainActivity", response.error?.message ?: "Server Error")
-                emptyList()
-            }
-
-            is NetworkResponse.UnknownError -> {
-                Log.e("MainActivity", ("Code: " + response.code.toString()))
-                Log.e("MainActivity", response.error.message ?: "Unknown Error")
-                emptyList()
-            }
-        }
+        return processResponse(response, data, emptyList())
     }
 
-    suspend fun getRecommendations(): List<SpotifyTrack> {
-        return when (val response = apiService.getRecommendations()) {
+    private suspend fun getRecommendations(): List<SpotifyTrack> {
+        val response = apiService.getRecommendations()
+        val data = (response as NetworkResponse.Success<RecommendationsResponse, ErrorResponse>?)?.body?.tracks ?: emptyList()
+
+        return processResponse(response, data, emptyList())
+    }
+
+    private fun <S, E, T> processResponse(response: NetworkResponse<S, E>, successData: T, errorData: T): T {
+        return when (response) {
             is  NetworkResponse.Success -> {
                 Log.d("MainActivity", response.body.toString())
-                response.body.tracks
+                successData
             }
 
             is NetworkResponse.NetworkError -> {
                 Log.e("MainActivity", response.error.message ?: "Network Error")
-                emptyList()
+                errorData
             }
 
             is NetworkResponse.ServerError -> {
                 Log.e("MainActivity", ("Code: " + response.code.toString()))
                 Log.e("MainActivity", response.error?.message ?: "Server Error")
-                emptyList()
+                errorData
             }
 
             is NetworkResponse.UnknownError -> {
                 Log.e("MainActivity", ("Code: " + response.code.toString()))
                 Log.e("MainActivity", response.error.message ?: "Unknown Error")
-                emptyList()
+                errorData
             }
         }
     }

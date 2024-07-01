@@ -80,7 +80,7 @@ interface MusicDao {
     suspend fun upsertRecommendations(recommendations: List<LocalRecommendation>)
 
     @Upsert
-    suspend fun upsertLocalPlayHistory(history: LocalPlayHistory)
+    suspend fun upsertLocalPlayHistory(history: List<LocalPlayHistory>)
 
     @Query("DELETE FROM tracks")
     suspend fun deleteAll()

@@ -34,3 +34,5 @@ fun SpotifyPlayHistoryObject.toLocalTrack() = LocalTrack(
 )
 
 fun List<SpotifyPlayHistoryObject>.toLocalTracks() = map(SpotifyPlayHistoryObject::toLocalTrack)
+
+fun List<SpotifyPlayHistoryObject>.toLocal() = map(SpotifyPlayHistoryObject::toLocal)
