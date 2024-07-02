@@ -9,7 +9,9 @@ fun artistsString(artists: List<SimplifiedArtist>) : String {
     for (artist in artists) {
         artistsString += artist.name + ", "
     }
-    artistsString = artistsString.substring(0, artistsString.length - 2)
+    if (artistsString.length > 2) {
+        artistsString = artistsString.substring(0, artistsString.length - 2)
+    }
     return artistsString
 }
 
