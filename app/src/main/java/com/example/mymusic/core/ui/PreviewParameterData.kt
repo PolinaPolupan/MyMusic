@@ -4,14 +4,15 @@ import com.example.mymusic.model.Album
 import com.example.mymusic.model.AlbumType
 import com.example.mymusic.model.Artist
 import com.example.mymusic.model.Playlist
+import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedArtist
 import com.example.mymusic.model.SimplifiedTrack
 import com.example.mymusic.model.Track
 
 object PreviewParameterData {
 
-    val albums = listOf<Album>(
-        Album(
+    val albums = listOf<SimplifiedAlbum>(
+        SimplifiedAlbum(
             id = "6nxDQi0FeEwccEPJeNySoS",
             type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273407bd04707c463bbb3410737",
@@ -21,26 +22,26 @@ object PreviewParameterData {
                     id = "53XhwfbYqKCa1cC15pYq2q",
                     name = "Imagine Dragons"
                 )
-            )
+            ),
         ),
-        Album(
+        SimplifiedAlbum(
             id = "01sfgrNbnnPUEyz6GZYlt9",
             type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273838698485511bd9108fadadc",
             name = "Dua Lipa (Deluxe)",
-            artists = listOf(SimplifiedArtist(id = "fgyu", name = "Dau Lipa"))
+            artists = listOf(SimplifiedArtist(id = "fgyu", name = "Dau Lipa")),
         ),
-        Album(
+        SimplifiedAlbum(
             id = "5fy0X0JmZRZnVa2UEicIOl",
             type = AlbumType.Album,
-            name = "1989",
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273b7e976d2b35c767f9012cb72",
+            name = "1989",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
-            )
+            ),
         )
     )
     val simplifiedTracks = listOf(
