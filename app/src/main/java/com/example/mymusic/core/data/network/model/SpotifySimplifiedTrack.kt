@@ -1,35 +1,29 @@
 package com.example.mymusic.core.data.network.model
 
-import com.example.mymusic.core.data.local.model.LocalTrack
-import com.example.mymusic.core.data.local.model.LocalRecommendation
 import com.example.mymusic.core.data.local.model.LocalSimplifiedTrack
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SpotifyTrack(
-    val album: SpotifyAlbum,
-    val artists: List<SpotifyArtist>,
+data class SpotifySimplifiedTrack(
+    val artists: List<SpotifySimplifiedArtist>,
     @SerialName("available_markets")
-    val availableMarkets: List<String>,
+    val availableMarkets: List<String>? = null,
     @SerialName("disc_number")
     val discNumber: Int,
     @SerialName("duration_ms")
     val durationMs: Int,
     val explicit: Boolean,
-    @SerialName("external_ids")
-    val externalIds: ExternalIds,
     @SerialName("external_urls")
     val externalUrls: ExternalUrls,
     val href: String,
     val id: String,
     @SerialName("is_playable")
-    val isPlayable: Boolean? = null,
+    val isPlayable: Boolean,
     @SerialName("linked_from")
     val linkedFrom: LinkedFrom? = null,
     val restrictions: Restrictions? = null,
     val name: String,
-    val popularity: Int,
     @SerialName("preview_url")
     val previewUrl: String?,
     @SerialName("track_number")
@@ -39,24 +33,9 @@ data class SpotifyTrack(
     @SerialName("is_local")
     val isLocal: Boolean
 )
-
-fun SpotifyTrack.toLocalTrack() = LocalTrack(
-    id = id,
-    album = album.toLocal(),
-    name = name
-)
-
-fun SpotifyTrack.toLocalSimplifiedTrack() = LocalSimplifiedTrack(
+fun SpotifySimplifiedTrack.toLocal() = LocalSimplifiedTrack(
     id = id,
     name = name
 )
 
-fun List<SpotifyTrack>.toLocalSimplifiedTracks() = map(SpotifyTrack::toLocalSimplifiedTrack)
-
-fun List<SpotifyTrack>.toLocal() = map(SpotifyTrack::toLocalTrack)
-
-fun SpotifyTrack.toLocalRecommendation() = LocalRecommendation(
-    id = id
-)
-
-fun List<SpotifyTrack>.toLocalRecommendations() = map(SpotifyTrack::toLocalRecommendation)
+fun List<SpotifySimplifiedTrack>.toLocal() = map(SpotifySimplifiedTrack::toLocal)
