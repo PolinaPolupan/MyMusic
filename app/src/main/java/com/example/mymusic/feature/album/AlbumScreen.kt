@@ -29,7 +29,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -52,6 +51,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
@@ -75,15 +75,21 @@ fun AlbumScreen(
     onBackClick: () -> Unit,
     viewModel: AlbumViewModel = hiltViewModel()
 ) {
-    AlbumScreenContent(
-        name = viewModel.currentAlbum.name,
-        imageUrl = viewModel.currentAlbum.imageUrl,
-        artists = viewModel.currentAlbum.artists,
-        tracks = viewModel.tracks,
-        onBackClick = onBackClick,
-        modifier = modifier
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    )
+    when (uiState) {
+        /*TODO: Create loading screen*/
+        AlbumUiState.Loading -> Unit
+        is AlbumUiState.Success ->
+            AlbumScreenContent(
+                name = (uiState as AlbumUiState.Success).album.name,
+                imageUrl = (uiState as AlbumUiState.Success).album.imageUrl,
+                artists = (uiState as AlbumUiState.Success).album.artists,
+                tracks = (uiState as AlbumUiState.Success).album.tracks,
+                onBackClick = onBackClick,
+                modifier = modifier
+            )
+    }
 }
 
 @SuppressLint("RestrictedApi")
