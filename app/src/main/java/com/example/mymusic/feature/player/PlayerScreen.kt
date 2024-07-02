@@ -79,8 +79,9 @@ fun PlayerScreen(
                 onBackClick = onBackClick,
                 onAddToPlaylistClick = onAddToPlaylistClick,
                 onNavigateToAlbum = onNavigateToAlbum,
+                onAlbumClick = viewModel::onAlbumClick,
                 modifier = modifier
-                    .fillMaxSize()
+                    .fillMaxSize(),
             )
     }
 }
@@ -92,7 +93,8 @@ fun PlayerContent(
     onBackClick: () -> Unit,
     onAddToPlaylistClick: (String) -> Unit,
     onNavigateToAlbum: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onAlbumClick: (String) -> Unit
 ) {
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->
@@ -162,7 +164,7 @@ fun PlayerContent(
                 artistsString = artistsString.substring(0, artistsString.length - 2)
                 Column {
                     TrackPlayer(
-                        trackId = track.id,
+                        albumId = track.album.id,
                         trackName = track.name,
                         artistName = artistsString,
                         trackDuration = Duration.ZERO,
@@ -171,7 +173,8 @@ fun PlayerContent(
                         onSkipNextClick = { /*TODO*/ },
                         onAddToPlaylistClick = { onAddToPlaylistClick(track.id) },
                         onNavigateToAlbum = onNavigateToAlbum,
-                        modifier = Modifier.padding(32.dp)
+                        onAlbumClick = onAlbumClick,
+                        modifier = Modifier.padding(32.dp),
                     )
 
                     Spacer(modifier = Modifier.height(64.dp))
@@ -258,11 +261,12 @@ private fun PlayerSlider(trackDuration: Duration?) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun TrackDescription(
-    trackId: String,
+    albumId: String,
     trackName: String,
     artists: String,
     onNavigateToAlbum: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onAlbumClick: (String) -> Unit
 ) {
     Column(modifier = modifier) {
         Text(
@@ -271,7 +275,10 @@ private fun TrackDescription(
             maxLines = 1,
             modifier = Modifier
                 .basicMarquee()
-                .clickable { onNavigateToAlbum(trackId) }
+                .clickable {
+                    onAlbumClick(albumId)
+                    onNavigateToAlbum(albumId)
+                }
         )
         Text(
             text = artists,
@@ -284,7 +291,7 @@ private fun TrackDescription(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TrackPlayer(
-    trackId: String,
+    albumId: String,
     trackName: String,
     artistName: String,
     trackDuration: Duration,
@@ -293,14 +300,21 @@ fun TrackPlayer(
     onSkipNextClick: () -> Unit,
     onAddToPlaylistClick: () -> Unit,
     onNavigateToAlbum: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onAlbumClick: (String) -> Unit
 ) {
     Column(modifier = modifier) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            TrackDescription(trackId = trackId, trackName = trackName, artists = artistName, onNavigateToAlbum = onNavigateToAlbum)
+            TrackDescription(
+                albumId = albumId,
+                trackName = trackName,
+                artists = artistName,
+                onNavigateToAlbum = onNavigateToAlbum,
+                onAlbumClick = onAlbumClick
+            )
             IconButton(
                 onClick = onAddToPlaylistClick,
                 modifier = Modifier.size(50.dp)
@@ -364,7 +378,7 @@ private fun TopAppBar(
 fun TrackPlayerPreview() {
     MyMusicTheme {
         TrackPlayer(
-            trackId = "0",
+            albumId = "0",
             trackName = "New Rules",
             artistName = "Dua Lipa",
             trackDuration = Duration.ZERO,
@@ -372,7 +386,8 @@ fun TrackPlayerPreview() {
             onSkipPreviousClick = {},
             onSkipNextClick = {},
             onAddToPlaylistClick = {},
-            onNavigateToAlbum = {}
+            onNavigateToAlbum = {},
+            onAlbumClick = {}
         )
     }
 }
@@ -390,7 +405,13 @@ fun TopAppBarPreview() {
 @Composable
 fun PlayerPreview() {
     MyMusicTheme {
-        PlayerContent(onAddToPlaylistClick = {},onBackClick = {}, track = PreviewParameterData.tracks[0], onNavigateToAlbum = {})
+        PlayerContent(
+            track = PreviewParameterData.tracks[0],
+            onBackClick = {},
+            onAddToPlaylistClick = {},
+            onNavigateToAlbum = {},
+            onAlbumClick = {}
+        )
     }
 }
 
@@ -398,7 +419,13 @@ fun PlayerPreview() {
 @Composable
 fun TrackDescriptionPreview() {
     MyMusicTheme {
-        TrackDescription(trackName = "Name", artists = "artist", trackId = "0", onNavigateToAlbum = {})
+        TrackDescription(
+            albumId ="0",
+            trackName = "Name",
+            artists = "artist",
+            onNavigateToAlbum = {},
+            onAlbumClick = {}
+        )
     }
 }
 

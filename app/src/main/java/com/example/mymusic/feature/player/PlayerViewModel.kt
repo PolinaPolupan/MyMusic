@@ -4,9 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymusic.core.data.MusicRepository
-import com.example.mymusic.core.ui.PreviewParameterData
-import com.example.mymusic.feature.home.HomeUiState
-import com.example.mymusic.model.Artist
 import com.example.mymusic.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -14,12 +11,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    musicRepository: MusicRepository
+    private val musicRepository: MusicRepository
 ): ViewModel() {
 
     private val _trackId: String = checkNotNull(savedStateHandle[TRACK_ID_ARG])
@@ -31,6 +29,12 @@ class PlayerViewModel @Inject constructor(
             PlayerUiState.Success(track = track)
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), PlayerUiState.Loading)
+
+    fun onAlbumClick(id: String) {
+        viewModelScope.launch {
+            musicRepository.loadAlbumTracks(id)
+        }
+    }
 }
 
 sealed interface PlayerUiState {
