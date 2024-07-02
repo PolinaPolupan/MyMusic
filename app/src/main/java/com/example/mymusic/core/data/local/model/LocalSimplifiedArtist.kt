@@ -2,19 +2,10 @@ package com.example.mymusic.core.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.mymusic.model.SimplifiedArtist
 
-@Entity(
-    tableName = "simplified_artists",
-    foreignKeys = [ForeignKey(
-        entity = LocalArtist::class,
-        parentColumns = arrayOf("artistId"),
-        childColumns = arrayOf("simplifiedArtistId"),
-        onUpdate = ForeignKey.CASCADE
-    )]
-)
+@Entity(tableName = "simplified_artists")
 data class LocalSimplifiedArtist(
     @ColumnInfo(name = "simplifiedArtistId")
     @PrimaryKey val id: String,
