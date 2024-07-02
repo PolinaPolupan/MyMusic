@@ -23,7 +23,7 @@ data class LocalRecentlyPlayedWithArtists(
 
 fun LocalRecentlyPlayedWithArtists.toExternal() = Track(
     id = trackHistory.track.id,
-    album = trackHistory.track.album.toExternal(albumArtists.toExternal()),
+    album = trackHistory.track.album.toExternalSimplified(albumArtists.toExternal()),
     name = trackHistory.track.name,
     artists = artists.toExternal()
 )

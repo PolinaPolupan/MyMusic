@@ -23,7 +23,7 @@ data class LocalTrackWithArtists(
 
 fun LocalTrackWithArtists.toExternal() = Track(
     id = track.id,
-    album = track.album.toExternal(albumArtists.toExternal()),
+    album = track.album.toExternalSimplified(albumArtists.toExternal()),
     name = track.name,
     artists = artists.toExternal()
 )

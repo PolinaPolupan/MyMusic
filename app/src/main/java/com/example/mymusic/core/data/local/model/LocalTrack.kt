@@ -3,7 +3,6 @@ package com.example.mymusic.core.data.local.model
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.RoomWarnings
 import com.example.mymusic.model.Artist
@@ -25,7 +24,7 @@ data class LocalTrack(
 
 fun LocalTrack.toExternal(albumArtists: List<SimplifiedArtist>, artists: List<Artist>) = Track(
     id = id,
-    album = album.toExternal(albumArtists),
+    album = album.toExternalSimplified(albumArtists),
     name = name,
     artists = artists
 )

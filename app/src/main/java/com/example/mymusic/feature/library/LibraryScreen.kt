@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -48,11 +47,11 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.designSystem.util.rememberScrollState
-import com.example.mymusic.model.Album
 import com.example.mymusic.model.Playlist
 import com.example.mymusic.core.ui.AlbumCard
 import com.example.mymusic.core.ui.PlaylistCard
 import com.example.mymusic.core.ui.PreviewParameterData
+import com.example.mymusic.model.SimplifiedAlbum
 import kotlin.math.max
 
 @Composable
@@ -76,7 +75,7 @@ fun LibraryScreen(
 
 @Composable
 fun LibraryContent(
-    albums: List<Album>,
+    albums: List<SimplifiedAlbum>,
     playlists: List<Playlist>,
     onSortOptionChanged: (SortOption) -> Unit,
     onPlaylistClick: (String) -> Unit,
