@@ -27,6 +27,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -43,6 +44,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.CroppedShape
 import com.example.mymusic.core.designSystem.component.NetworkImage
@@ -66,14 +68,21 @@ fun PlayerScreen(
     modifier: Modifier = Modifier,
     viewModel: PlayerViewModel = hiltViewModel()
 ) {
-    PlayerContent(
-        track = viewModel.playingTrack,
-        onBackClick = onBackClick,
-        onAddToPlaylistClick = onAddToPlaylistClick,
-        onNavigateToAlbum = onNavigateToAlbum,
-        modifier = modifier
-            .fillMaxSize()
-    )
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    when (uiState) {
+        /*TODO: Create loading screen*/
+        PlayerUiState.Loading -> Unit
+        is PlayerUiState.Success ->
+            PlayerContent(
+                track = (uiState as PlayerUiState.Success).track,
+                onBackClick = onBackClick,
+                onAddToPlaylistClick = onAddToPlaylistClick,
+                onNavigateToAlbum = onNavigateToAlbum,
+                modifier = modifier
+                    .fillMaxSize()
+            )
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

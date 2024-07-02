@@ -42,6 +42,12 @@ class MusicRepository @Inject constructor(
         }
     }
 
+    fun observeTrack(id: String): Flow<Track> {
+        return musicDao.observeTrack(id).map { track ->
+            track.toExternal()
+        }
+    }
+
     suspend fun refresh() {
         withContext(dispatcher) {
             val remoteMusic = getRecommendations()

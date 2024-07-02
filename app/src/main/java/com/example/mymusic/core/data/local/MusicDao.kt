@@ -47,7 +47,13 @@ interface MusicDao {
     // because we can access the other fields (e.g. trackId, trackName) via album and list of artists
     @Transaction
     @Query("SELECT * FROM tracks WHERE trackId = :id")
-    suspend fun getTrack(id: String): LocalAlbumWithArtists
+    suspend fun getTrack(id: String): LocalTrackWithArtists
+
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH) // Is used to supress compiler warnings,
+    // because we can access the other fields (e.g. trackId, trackName) via album and list of artists
+    @Transaction
+    @Query("SELECT * FROM tracks WHERE trackId = :id")
+    fun observeTrack(id: String): Flow<LocalTrackWithArtists>
 
     @Transaction
     @Query("SELECT * FROM albums WHERE albumId = :id")
