@@ -1,11 +1,11 @@
 package com.example.mymusic.core.ui
 
-import com.example.mymusic.model.Album
 import com.example.mymusic.model.AlbumType
 import com.example.mymusic.model.Artist
 import com.example.mymusic.model.Playlist
 import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedArtist
+import com.example.mymusic.model.SimplifiedPlaylist
 import com.example.mymusic.model.SimplifiedTrack
 import com.example.mymusic.model.Track
 
@@ -541,6 +541,15 @@ object PreviewParameterData {
             ownerName = "Spotify",
             imageUrl = "https://i.scdn.co/image/ab67706f00000003ba77a2166a7b66e9a300ffaa",
             tracks = tracks
+        )
+    }
+
+    val simplifiedPlaylists = List(10) {
+        SimplifiedPlaylist(
+            id = "37i9dQZF1DXaMu9xyX1HzK",
+            name = "Best of the Decade For You",
+            ownerName = "Spotify",
+            imageUrl = "https://i.scdn.co/image/ab67706f00000003ba77a2166a7b66e9a300ffaa"
         )
     }
 }
