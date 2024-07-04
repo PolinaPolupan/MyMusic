@@ -37,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
 import com.example.mymusic.core.ui.ScreenHeader
@@ -47,41 +48,50 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.designSystem.util.rememberScrollState
-import com.example.mymusic.model.Playlist
 import com.example.mymusic.core.ui.AlbumCard
 import com.example.mymusic.core.ui.PlaylistCard
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.model.SimplifiedAlbum
+import com.example.mymusic.model.SimplifiedPlaylist
 import kotlin.math.max
 
 @Composable
 fun LibraryScreen(
     modifier: Modifier = Modifier,
     onPlaylistClick: (String) -> Unit,
-    onAlbumClick: (String) -> Unit,
+    onNavigateToAlbum: (String) -> Unit,
     viewModel: LibraryViewModel = hiltViewModel()
 ) {
-    LibraryContent(
-        albums = viewModel.albums,
-        playlists = viewModel.usersPlaylists,
-        onSortOptionChanged =  { viewModel.currentSortOption.value = it },
-        onPlaylistClick = onPlaylistClick,
-        onAlbumClick = onAlbumClick,
-        currentSortOption = viewModel.currentSortOption.value,
-        modifier = modifier
-            .fillMaxSize(),
-    )
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    when (uiState) {
+        LibraryUiState.Loading -> Unit
+        is LibraryUiState.Success -> {
+            LibraryContent(
+                albums = (uiState as LibraryUiState.Success).savedAlbums,
+                playlists = (uiState as LibraryUiState.Success).savedPlaylists,
+                onSortOptionChanged =  { (uiState as LibraryUiState.Success).currentSortOption.value = it },
+                onPlaylistClick = onPlaylistClick,
+                onNavigateToAlbumClick = onNavigateToAlbum,
+                onAlbumClick = viewModel::onAlbumClick,
+                currentSortOption = (uiState as LibraryUiState.Success).currentSortOption.value,
+                modifier = modifier
+                    .fillMaxSize()
+            )
+        }
+    }
 }
 
 @Composable
 fun LibraryContent(
     albums: List<SimplifiedAlbum>,
-    playlists: List<Playlist>,
+    playlists: List<SimplifiedPlaylist>,
     onSortOptionChanged: (SortOption) -> Unit,
     onPlaylistClick: (String) -> Unit,
-    onAlbumClick: (String) -> Unit,
+    onNavigateToAlbumClick: (String) -> Unit,
     currentSortOption: SortOption,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onAlbumClick: (String) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
     val scrollState = rememberScrollState(state = lazyListState)
@@ -160,7 +170,9 @@ fun LibraryContent(
                         name = album.name,
                         artists = album.artists,
                         imageUrl = album.imageUrl,
-                        onClick = { onAlbumClick(album.id) },
+                        onClick = {
+                            onAlbumClick(album.id)
+                            onNavigateToAlbumClick(album.id) },
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -214,11 +226,12 @@ fun LibraryPreview() {
     MyMusicTheme {
         LibraryContent(
             albums = PreviewParameterData.albums,
-            playlists = PreviewParameterData.playlists,
+            playlists = PreviewParameterData.simplifiedPlaylists,
             onSortOptionChanged = {},
-            currentSortOption = SortOption.RECENTLY_ADDED,
             onPlaylistClick = {},
-            onAlbumClick = {},
+            onNavigateToAlbumClick = {},
+            currentSortOption = SortOption.RECENTLY_ADDED,
+            onAlbumClick = {}
         )
     }
 }
