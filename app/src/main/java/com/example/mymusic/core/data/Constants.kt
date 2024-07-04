@@ -17,6 +17,7 @@ class Constants {
         const val SCOPE_PLAYLIST_MODIFY_PUBLIC = "playlist-modify-public"
         const val SCOPE_USER_READ_PRIVATE = "user-read-private"
         const val SCOPE_USER_READ_RECENTLY_PLAYED = "user-read-recently-played"
+        const val SCOPE_USER_LIBRARY_READ = "user-library-read"
 
         const val IMAGE_URL = "picture"
         const val DATA_DISPLAY_NAME = "display_name"
