@@ -111,7 +111,10 @@ class AuthorizationManager @Inject constructor(
             Constants.SCOPE_APP_REMOTE_CONTROL,
             Constants.SCOPE_USER_MODIFY_PLAYBACK_STATE,
             Constants.SCOPE_USER_READ_PRIVATE,
-            Constants.SCOPE_USER_READ_RECENTLY_PLAYED)
+            Constants.SCOPE_USER_READ_RECENTLY_PLAYED,
+            Constants.SCOPE_USER_LIBRARY_READ,
+            Constants.SCOPE_PLAYLIST_READ_PRIVATE
+        )
 
         val request = builder.build()
 
