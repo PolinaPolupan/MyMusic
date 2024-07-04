@@ -14,15 +14,21 @@ import com.example.mymusic.core.data.network.model.AlbumTracksResponse
 import com.example.mymusic.core.data.network.model.ErrorResponse
 import com.example.mymusic.core.data.network.model.RecentlyPlayedTracksResponse
 import com.example.mymusic.core.data.network.model.RecommendationsResponse
+import com.example.mymusic.core.data.network.model.SavedAlbum
+import com.example.mymusic.core.data.network.model.SavedAlbumsResponse
+import com.example.mymusic.core.data.network.model.SavedPlaylistResponse
 import com.example.mymusic.core.data.network.model.SpotifyPlayHistoryObject
+import com.example.mymusic.core.data.network.model.SpotifySimplifiedPlaylist
 import com.example.mymusic.core.data.network.model.SpotifySimplifiedTrack
 import com.example.mymusic.core.data.network.model.SpotifyTrack
 import com.example.mymusic.core.data.network.model.toLocal
+import com.example.mymusic.core.data.network.model.toLocalAlbum
 import com.example.mymusic.core.data.network.model.toLocalRecommendations
 import com.example.mymusic.core.data.network.model.toLocalSimplified
 import com.example.mymusic.core.data.network.model.toLocalSimplifiedTracks
 import com.example.mymusic.core.data.network.model.toLocalTracks
 import com.example.mymusic.model.SimplifiedAlbum
+import com.example.mymusic.model.SimplifiedPlaylist
 import com.example.mymusic.model.SimplifiedTrack
 import com.example.mymusic.model.Track
 import com.haroldadmin.cnradapter.NetworkResponse
@@ -68,25 +74,42 @@ class MusicRepository @Inject constructor(
         }
     }
 
+    fun observeSavedAlbums(): Flow<List<SimplifiedAlbum>> {
+        return musicDao.observeSavedAlbums().map { album ->
+            album.toExternal()
+        }
+    }
+
+    fun observeSavedPlaylists(): Flow<List<SimplifiedPlaylist>> {
+        return musicDao.observeSavedPlaylists().map { playlist ->
+            playlist.toExternal()
+        }
+    }
+
     suspend fun loadAlbumTracks(id: String) {
         withContext(dispatcher) {
             val tracks = getAlbumTracks(id)
 
-            musicDao.upsertSimplifiedTracks(tracks.toLocal())
+            if (tracks.isNotEmpty()) {
+                musicDao.upsertSimplifiedTracks(tracks.toLocal())
 
-            for (track in tracks) {
-                musicDao.upsertSimplifiedArtists(track.artists.toLocal())
-                musicDao.upsertAlbumTrackCrossRef(AlbumTrackCrossRef(track.id, id))
-                for (artist in track.artists)
-                    musicDao.upsertSimplifiedTrackArtistCrossRef(SimplifiedTrackArtistCrossRef(track.id, artist.id))
+                for (track in tracks) {
+                    musicDao.upsertSimplifiedArtists(track.artists.toLocal())
+                    musicDao.upsertAlbumTrackCrossRef(AlbumTrackCrossRef(track.id, id))
+                    for (artist in track.artists)
+                        musicDao.upsertSimplifiedTrackArtistCrossRef(SimplifiedTrackArtistCrossRef(track.id, artist.id))
+                }
             }
         }
     }
 
     suspend fun refresh() {
         withContext(dispatcher) {
+
             musicDao.deleteSimplifiedTracks()
+
             val remoteMusic = getRecommendations()
+
             if (remoteMusic.isNotEmpty()) {
 
                 musicDao.deleteRecommendations()
@@ -133,6 +156,28 @@ class MusicRepository @Inject constructor(
                         musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(artist.id, album.id))
                 }
             }
+
+            val savedAlbums = getSavedAlbums()
+
+            if (savedAlbums.isNotEmpty()) {
+
+                musicDao.deleteSavedAlbums()
+                musicDao.upsertSavedAlbums(savedAlbums.toLocal())
+                musicDao.upsertAlbums(savedAlbums.toLocalAlbum())
+                for (album in savedAlbums) {
+                    val album = album.album
+                    musicDao.upsertSimplifiedArtists(album.artists.toLocal())
+                    for (artist in album.artists)
+                        musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(albumId = album.id, simplifiedArtistId = artist.id))
+                }
+            }
+
+            val savedPlaylists = getSavedPlaylists()
+
+            if (savedPlaylists.isNotEmpty()) {
+                musicDao.deleteSavedPlaylists()
+                musicDao.upsertSavedPlaylists(savedPlaylists.toLocal())
+            }
         }
     }
 
@@ -153,6 +198,20 @@ class MusicRepository @Inject constructor(
     private suspend fun getAlbumTracks(id: String): List<SpotifySimplifiedTrack> {
         val response = apiService.getAlbumTracks(id)
         val data = (response as? NetworkResponse.Success<AlbumTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
+
+        return processResponse(response, data, emptyList())
+    }
+
+    private suspend fun getSavedAlbums(): List<SavedAlbum> {
+        val response = apiService.getSavedAlbums()
+        val data = (response as? NetworkResponse.Success<SavedAlbumsResponse, ErrorResponse>?)?.body?.items ?: emptyList()
+
+        return processResponse(response, data, emptyList())
+    }
+
+    private suspend fun getSavedPlaylists(): List<SpotifySimplifiedPlaylist> {
+        val response = apiService.getSavedPlaylists()
+        val data = (response as? NetworkResponse.Success<SavedPlaylistResponse, ErrorResponse>?)?.body?.items ?: emptyList()
 
         return processResponse(response, data, emptyList())
     }

@@ -16,6 +16,8 @@ import com.example.mymusic.core.data.local.model.LocalSimplifiedArtist
 import com.example.mymusic.core.data.local.model.LocalTrack
 import com.example.mymusic.core.data.local.model.LocalTrackWithArtists
 import com.example.mymusic.core.data.local.model.LocalRecommendation
+import com.example.mymusic.core.data.local.model.LocalSavedAlbum
+import com.example.mymusic.core.data.local.model.LocalSavedPlaylist
 import com.example.mymusic.core.data.local.model.LocalSimplifiedTrack
 import com.example.mymusic.core.data.local.model.LocalSimplifiedTrackWithArtists
 import com.example.mymusic.core.data.local.model.SimplifiedTrackArtistCrossRef
@@ -61,6 +63,13 @@ interface MusicDao {
             "IN (SELECT simplifiedTrackId FROM album_track WHERE albumId == :id)")
     fun observeAlbumTracks(id: String): Flow<List<LocalSimplifiedTrackWithArtists>>
 
+    @Transaction
+    @Query("SELECT * FROM albums WHERE albumId IN (SELECT savedALbumId FROM saved_albums)")
+    fun observeSavedAlbums(): Flow<List<LocalAlbumWithArtists>>
+
+    @Query("SELECT * FROM saved_playlists")
+    fun observeSavedPlaylists(): Flow<List<LocalSavedPlaylist>>
+
     @Upsert
     suspend fun upsertTracks(tracks: List<LocalTrack>)
 
@@ -75,6 +84,9 @@ interface MusicDao {
 
     @Upsert
     suspend fun upsertAlbum(album: LocalAlbum)
+
+    @Upsert
+    suspend fun upsertAlbums(album: List<LocalAlbum>)
 
     @Upsert
     suspend fun upsertTrackArtistCrossRef(ref: TrackArtistCrossRef)
@@ -94,6 +106,12 @@ interface MusicDao {
     @Upsert
     suspend fun upsertLocalPlayHistory(history: List<LocalRecentlyPlayed>)
 
+    @Upsert
+    suspend fun upsertSavedAlbums(albums: List<LocalSavedAlbum>)
+
+    @Upsert
+    suspend fun upsertSavedPlaylists(playlist: List<LocalSavedPlaylist>)
+
     @Query("DELETE FROM recommendations")
     suspend fun deleteRecommendations()
 
@@ -102,4 +120,10 @@ interface MusicDao {
 
     @Query("DELETE FROM simplified_tracks")
     suspend fun deleteSimplifiedTracks()
+
+    @Query("DELETE FROM saved_albums")
+    suspend fun deleteSavedAlbums()
+
+    @Query("DELETE FROM saved_playlists")
+    suspend fun deleteSavedPlaylists()
 }

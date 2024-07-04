@@ -6,10 +6,12 @@ import com.example.mymusic.core.data.local.model.AlbumArtistCrossRef
 import com.example.mymusic.core.data.local.model.AlbumTrackCrossRef
 import com.example.mymusic.core.data.local.model.LocalAlbum
 import com.example.mymusic.core.data.local.model.LocalArtist
+import com.example.mymusic.core.data.local.model.LocalSavedPlaylist
 import com.example.mymusic.core.data.local.model.LocalRecentlyPlayed
 import com.example.mymusic.core.data.local.model.LocalSimplifiedArtist
 import com.example.mymusic.core.data.local.model.LocalTrack
 import com.example.mymusic.core.data.local.model.LocalRecommendation
+import com.example.mymusic.core.data.local.model.LocalSavedAlbum
 import com.example.mymusic.core.data.local.model.LocalSimplifiedTrack
 import com.example.mymusic.core.data.local.model.SimplifiedTrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.TrackArtistCrossRef
@@ -25,7 +27,9 @@ import com.example.mymusic.core.data.local.model.TrackArtistCrossRef
     SimplifiedTrackArtistCrossRef::class,
     LocalRecommendation::class,
     LocalRecentlyPlayed::class,
-    LocalSimplifiedTrack::class],
+    LocalSimplifiedTrack::class,
+    LocalSavedAlbum::class,
+    LocalSavedPlaylist::class],
     version = 1,
     exportSchema = false)
 abstract class MusicDatabase : RoomDatabase() {

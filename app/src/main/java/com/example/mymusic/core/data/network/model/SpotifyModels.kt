@@ -1,5 +1,6 @@
 package com.example.mymusic.core.data.network.model
 
+import androidx.room.ColumnInfo
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -99,6 +100,25 @@ data class Context(
     @SerialName("external_urls")
     val externalUrls: ExternalUrls,
     val uri: String
+)
+
+@Serializable
+data class SpotifyOwner(
+    @SerialName("external_urls")
+    val externalUrls: ExternalUrls?,
+    val followers: Followers? = null,
+    val href: String,
+    val id: String,
+    val type: String,
+    val uri: String,
+    @ColumnInfo("display_name")
+    val displayName: String?
+)
+
+@Serializable
+data class SpotifyTracks(
+    val href: String,
+    val total: Int
 )
 
 data class ErrorResponse(val message: String)
