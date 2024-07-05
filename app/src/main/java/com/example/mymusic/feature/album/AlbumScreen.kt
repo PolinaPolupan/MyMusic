@@ -187,7 +187,9 @@ fun AlbumContent(
             .testTag("album:lazyColumn")
     ) {
         item {
-            Box(modifier = Modifier
+            Box(
+                contentAlignment = Alignment.BottomCenter,
+                modifier = Modifier
                 .graphicsLayer(alpha = lerpScrollOffset(scrollState, 400f, 800f, reverse = true))
             ) {
                 NetworkImage(
@@ -239,8 +241,7 @@ fun AlbumHeaderWithContent(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .height(400.dp)
+            .height(400.dp) // Add height to add space for the image
     ) {
         Spacer(modifier = Modifier
             .fillMaxHeight()
@@ -253,7 +254,7 @@ fun AlbumHeaderWithContent(
                 .fillMaxSize()
                 .weight(1f)
         ) {
-            Column {
+            Column(modifier = Modifier.fillMaxWidth((.65f))) {
                 Text(
                     text = name,
                     style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.SemiBold),
@@ -271,8 +272,12 @@ fun AlbumHeaderWithContent(
                         .basicMarquee()
                 )
             }
-            Row {
-                IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(60.dp)) {
+            Spacer(modifier = Modifier.weight(1f))
+            Row(modifier = Modifier) {
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier.size(60.dp)
+                ) {
                     Icon(
                         imageVector = MyMusicIcons.Play,
                         tint = MaterialTheme.colorScheme.onSurface,
@@ -280,7 +285,10 @@ fun AlbumHeaderWithContent(
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(60.dp)) {
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier.size(60.dp)
+                ) {
                     Icon(
                         imageVector = MyMusicIcons.Add,
                         tint = MaterialTheme.colorScheme.onSurface,
@@ -352,21 +360,28 @@ private fun TrackItem(
             .fillMaxWidth()
             .clickable { onTrackClick() }
     ) {
-        Column {
+        Column(modifier = Modifier.fillMaxWidth(0.9f)) {
             Text(
                 text = name,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
             Text(
                 text = artistsString(artists),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .alpha(0.5f)
             )
         }
-        IconButton(onClick = onSettingsClick) {
+        Spacer(modifier = Modifier.weight(1f))
+        IconButton(
+            onClick = onSettingsClick
+        ) {
             Icon(
                 imageVector = MyMusicIcons.More,
                 tint = MaterialTheme.colorScheme.onSurface,
@@ -396,6 +411,31 @@ fun AlbumScreenPreview() {
             artists = mockAlbum.artists,
             tracks = mockTracks,
             onBackClick = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+fun AlbumHeaderPreview() {
+    MyMusicTheme {
+        AlbumHeaderWithContent(
+            name = "Long long long long long long long name",
+            artists = "Long long long long long long long name"
+        )
+    }
+}
+
+@Preview
+@Composable
+fun TrackItemPreview() {
+    MyMusicTheme {
+        val artists = PreviewParameterData.simplifiedArtists
+        TrackItem(
+            name = "Long long long long long long long long long long long name",
+            artists = artists,
+            onSettingsClick = {},
+            onTrackClick = {}
         )
     }
 }
