@@ -47,6 +47,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mymusic.R
@@ -245,12 +246,13 @@ fun PlaylistHeaderWithContent(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(
                 verticalArrangement = Arrangement.Bottom,
-                modifier = Modifier.weight(6f)
+                modifier = Modifier.fillMaxWidth(0.8f)
             ) {
                 Text(
                     text = name,
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.SemiBold),
-                    maxLines = 2,
+                    maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier
                 )
@@ -263,10 +265,12 @@ fun PlaylistHeaderWithContent(
                         .alpha(0.5f)
                 )
             }
-            Row(modifier = Modifier.weight(1f)) {
+            Spacer(modifier = Modifier.weight(1f))
+            Row {
                 IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(60.dp)) {
                     Icon(
                         imageVector = MyMusicIcons.Play,
+                        tint = MaterialTheme.colorScheme.onSurface,
                         contentDescription = stringResource(id = R.string.play),
                         modifier = Modifier.fillMaxSize()
                     )
@@ -298,19 +302,30 @@ private fun TrackItem(
                 modifier = Modifier.size(50.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Column {
-                Text(text = name, style = MaterialTheme.typography.titleMedium)
+            Column(modifier = Modifier.fillMaxWidth(0.9f)) {
+                Text(
+                    text = name,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
                 Text(
                     text = artistsString(artists),
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodySmall,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     modifier = Modifier
                         .alpha(0.5f)
                 )
             }
         }
+        Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = onSettingsClick) {
             Icon(
                 imageVector = MyMusicIcons.More,
+                tint = MaterialTheme.colorScheme.onSurface,
                 contentDescription = stringResource(R.string.more)
             )
         }
@@ -336,9 +351,13 @@ private fun TopAppBar(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            IconButton(onClick = onBackClick, modifier = Modifier.size(30.dp)) {
+            IconButton(
+                onClick = onBackClick,
+                modifier = Modifier.size(30.dp)
+            ) {
                 Icon(
                     imageVector = MyMusicIcons.ArrowBack,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     contentDescription = stringResource(id = R.string.back),
                     modifier = Modifier.fillMaxSize()
                 )
@@ -346,6 +365,7 @@ private fun TopAppBar(
             Spacer(modifier = Modifier.width(16.dp))
             Text(
                 text = name,
+                color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.headlineSmall,
@@ -363,11 +383,11 @@ private fun TopAppBar(
 @Composable
 fun TrackItemPreview() {
     MyMusicTheme {
-        val track = PreviewParameterData.tracks[0]
+        val artists = PreviewParameterData.artists
         TrackItem(
-            name = track.name,
-            imageUrl = track.album.imageUrl,
-            artists = track.artists,
+            name = "Long long long long long long long long long name",
+            imageUrl = "",
+            artists = artists,
             onSettingsClick = { /*TODO*/ },
             onTrackClick = { /*TODO*/ })
     }
