@@ -44,6 +44,12 @@ class LibraryViewModel @Inject constructor(
             musicRepository.loadAlbumTracks(id)
         }
     }
+
+    fun onPlaylistClick(id: String) {
+        viewModelScope.launch {
+            musicRepository.loadPlaylistTracks(id)
+        }
+    }
 }
 
 sealed interface LibraryUiState {

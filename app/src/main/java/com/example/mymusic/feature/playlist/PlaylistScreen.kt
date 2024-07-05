@@ -26,7 +26,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -49,6 +48,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
@@ -72,14 +72,21 @@ fun PlaylistScreen(
     onBackClick: () -> Unit,
     viewModel: PlaylistViewModel = hiltViewModel()
 ) {
-    PlaylistScreenContent(
-        name = viewModel.playlist.name,
-        imageUrl = viewModel.playlist.imageUrl,
-        ownerName = viewModel.playlist.ownerName,
-        tracks = viewModel.playlist.tracks,
-        onBackClick = onBackClick,
-        modifier = modifier
-    )
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    when (uiState) {
+        PlaylistUiState.Loading -> Unit
+        is PlaylistUiState.Success -> {
+            PlaylistScreenContent(
+                name = (uiState as PlaylistUiState.Success).playlist.name,
+                imageUrl = (uiState as PlaylistUiState.Success).playlist.imageUrl,
+                ownerName = (uiState as PlaylistUiState.Success).playlist.ownerName,
+                tracks = (uiState as PlaylistUiState.Success).playlist.tracks,
+                onBackClick = onBackClick,
+                modifier = modifier
+            )
+        }
+    }
 }
 
 @Composable

@@ -16,6 +16,6 @@ fun NavGraphBuilder.libraryScreen(
     composable(
         route = LIBRARY_ROUTE
     ) {
-        LibraryScreen(onPlaylistClick = onPlaylistClick, onNavigateToAlbum = onAlbumClick)
+        LibraryScreen(onNavigateToPlaylist = onPlaylistClick, onNavigateToAlbum = onAlbumClick)
     }
 }

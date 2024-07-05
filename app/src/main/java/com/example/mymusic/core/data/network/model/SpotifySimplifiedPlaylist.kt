@@ -1,5 +1,6 @@
 package com.example.mymusic.core.data.network.model
 
+import com.example.mymusic.core.data.local.model.LocalPlaylist
 import com.example.mymusic.core.data.local.model.LocalSavedPlaylist
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -23,7 +24,7 @@ data class SpotifySimplifiedPlaylist(
     val uri: String
 )
 
-fun SpotifySimplifiedPlaylist.toLocal() = LocalSavedPlaylist(
+fun SpotifySimplifiedPlaylist.toLocal() = LocalPlaylist(
     id = id,
     imageUrl = if (!images.isNullOrEmpty()) images[0].url else "",
     name = name,
@@ -31,3 +32,7 @@ fun SpotifySimplifiedPlaylist.toLocal() = LocalSavedPlaylist(
 )
 
 fun List<SpotifySimplifiedPlaylist>.toLocal() = map(SpotifySimplifiedPlaylist::toLocal)
+
+fun SpotifySimplifiedPlaylist.toLocalSaved() = LocalSavedPlaylist(id = id)
+
+fun List<SpotifySimplifiedPlaylist>.toLocalSaved() = map(SpotifySimplifiedPlaylist::toLocalSaved)

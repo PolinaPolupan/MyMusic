@@ -10,6 +10,7 @@ import com.example.mymusic.core.data.local.model.AlbumTrackCrossRef
 import com.example.mymusic.core.data.local.model.LocalAlbum
 import com.example.mymusic.core.data.local.model.LocalAlbumWithArtists
 import com.example.mymusic.core.data.local.model.LocalArtist
+import com.example.mymusic.core.data.local.model.LocalPlaylist
 import com.example.mymusic.core.data.local.model.LocalRecentlyPlayed
 import com.example.mymusic.core.data.local.model.LocalRecentlyPlayedWithArtists
 import com.example.mymusic.core.data.local.model.LocalSimplifiedArtist
@@ -20,6 +21,7 @@ import com.example.mymusic.core.data.local.model.LocalSavedAlbum
 import com.example.mymusic.core.data.local.model.LocalSavedPlaylist
 import com.example.mymusic.core.data.local.model.LocalSimplifiedTrack
 import com.example.mymusic.core.data.local.model.LocalSimplifiedTrackWithArtists
+import com.example.mymusic.core.data.local.model.PlaylistTrackCrossRef
 import com.example.mymusic.core.data.local.model.SimplifiedTrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.TrackArtistCrossRef
 import kotlinx.coroutines.flow.Flow
@@ -59,19 +61,32 @@ interface MusicDao {
     @Query("SELECT * FROM albums WHERE albumId = :id")
     fun observeAlbum(id: String): Flow<LocalAlbumWithArtists>
 
+    @Query("SELECT * FROM playlists WHERE playlistId = :id")
+    fun observePlaylist(id: String): Flow<LocalPlaylist>
+
     @Query("SELECT * FROM simplified_tracks WHERE simplifiedTrackId " +
             "IN (SELECT simplifiedTrackId FROM album_track WHERE albumId == :id)")
     fun observeAlbumTracks(id: String): Flow<List<LocalSimplifiedTrackWithArtists>>
+
+    @Query("SELECT * FROM tracks WHERE trackId " +
+            "IN (SELECT trackId FROM playlist_track WHERE playlistId == :id)")
+    fun observePlaylistTracks(id: String): Flow<List<LocalTrackWithArtists>>
 
     @Transaction
     @Query("SELECT * FROM albums WHERE albumId IN (SELECT savedALbumId FROM saved_albums)")
     fun observeSavedAlbums(): Flow<List<LocalAlbumWithArtists>>
 
-    @Query("SELECT * FROM saved_playlists")
-    fun observeSavedPlaylists(): Flow<List<LocalSavedPlaylist>>
+    @Query("SELECT * FROM playlists WHERE playlistId IN (SELECT savedPlaylistId FROM saved_playlists)")
+    fun observeSavedPlaylists(): Flow<List<LocalPlaylist>>
+
+    @Upsert
+    suspend fun upsertTrack(track: LocalTrack)
 
     @Upsert
     suspend fun upsertTracks(tracks: List<LocalTrack>)
+
+    @Upsert
+    suspend fun upsertSimplifiedTrack(track: LocalSimplifiedTrack)
 
     @Upsert
     suspend fun upsertSimplifiedTracks(tracks: List<LocalSimplifiedTrack>)
@@ -101,6 +116,9 @@ interface MusicDao {
     suspend fun upsertSimplifiedTrackArtistCrossRef(ref: SimplifiedTrackArtistCrossRef)
 
     @Upsert
+    suspend fun upsertPlaylistTrackCrossRef(ref: PlaylistTrackCrossRef)
+
+    @Upsert
     suspend fun upsertRecommendations(recommendations: List<LocalRecommendation>)
 
     @Upsert
@@ -111,6 +129,9 @@ interface MusicDao {
 
     @Upsert
     suspend fun upsertSavedPlaylists(playlist: List<LocalSavedPlaylist>)
+
+    @Upsert
+    suspend fun upsertPlaylists(playlist: List<LocalPlaylist>)
 
     @Query("DELETE FROM recommendations")
     suspend fun deleteRecommendations()

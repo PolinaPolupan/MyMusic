@@ -58,7 +58,7 @@ import kotlin.math.max
 @Composable
 fun LibraryScreen(
     modifier: Modifier = Modifier,
-    onPlaylistClick: (String) -> Unit,
+    onNavigateToPlaylist: (String) -> Unit,
     onNavigateToAlbum: (String) -> Unit,
     viewModel: LibraryViewModel = hiltViewModel()
 ) {
@@ -71,12 +71,13 @@ fun LibraryScreen(
                 albums = (uiState as LibraryUiState.Success).savedAlbums,
                 playlists = (uiState as LibraryUiState.Success).savedPlaylists,
                 onSortOptionChanged =  { (uiState as LibraryUiState.Success).currentSortOption.value = it },
-                onPlaylistClick = onPlaylistClick,
+                onNavigateToPlaylist = onNavigateToPlaylist,
                 onNavigateToAlbumClick = onNavigateToAlbum,
-                onAlbumClick = viewModel::onAlbumClick,
                 currentSortOption = (uiState as LibraryUiState.Success).currentSortOption.value,
+                onAlbumClick = viewModel::onAlbumClick,
+                onPlaylistClick = viewModel::onPlaylistClick,
                 modifier = modifier
-                    .fillMaxSize()
+                    .fillMaxSize(),
             )
         }
     }
@@ -87,11 +88,12 @@ fun LibraryContent(
     albums: List<SimplifiedAlbum>,
     playlists: List<SimplifiedPlaylist>,
     onSortOptionChanged: (SortOption) -> Unit,
-    onPlaylistClick: (String) -> Unit,
+    onNavigateToPlaylist: (String) -> Unit,
     onNavigateToAlbumClick: (String) -> Unit,
     currentSortOption: SortOption,
     modifier: Modifier = Modifier,
-    onAlbumClick: (String) -> Unit
+    onAlbumClick: (String) -> Unit,
+    onPlaylistClick: (String) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
     val scrollState = rememberScrollState(state = lazyListState)
@@ -161,7 +163,9 @@ fun LibraryContent(
                         name = playlist.name,
                         ownerName = playlist.ownerName,
                         imageUrl = playlist.imageUrl,
-                        onClick = { onPlaylistClick(playlist.id) },
+                        onClick = {
+                            onPlaylistClick(playlist.id)
+                            onNavigateToPlaylist(playlist.id) },
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -228,10 +232,11 @@ fun LibraryPreview() {
             albums = PreviewParameterData.albums,
             playlists = PreviewParameterData.simplifiedPlaylists,
             onSortOptionChanged = {},
-            onPlaylistClick = {},
+            onNavigateToPlaylist = {},
             onNavigateToAlbumClick = {},
             currentSortOption = SortOption.RECENTLY_ADDED,
-            onAlbumClick = {}
+            onAlbumClick = {},
+            onPlaylistClick = {}
         )
     }
 }

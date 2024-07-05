@@ -5,6 +5,7 @@ import com.example.mymusic.core.data.di.DefaultDispatcher
 import com.example.mymusic.core.data.local.MusicDao
 import com.example.mymusic.core.data.local.model.AlbumArtistCrossRef
 import com.example.mymusic.core.data.local.model.AlbumTrackCrossRef
+import com.example.mymusic.core.data.local.model.PlaylistTrackCrossRef
 import com.example.mymusic.core.data.local.model.SimplifiedTrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.TrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.toExternal
@@ -12,6 +13,8 @@ import com.example.mymusic.core.data.local.model.toExternalSimplified
 import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.core.data.network.model.AlbumTracksResponse
 import com.example.mymusic.core.data.network.model.ErrorResponse
+import com.example.mymusic.core.data.network.model.PlaylistTrack
+import com.example.mymusic.core.data.network.model.PlaylistsTracksResponse
 import com.example.mymusic.core.data.network.model.RecentlyPlayedTracksResponse
 import com.example.mymusic.core.data.network.model.RecommendationsResponse
 import com.example.mymusic.core.data.network.model.SavedAlbum
@@ -24,9 +27,10 @@ import com.example.mymusic.core.data.network.model.SpotifyTrack
 import com.example.mymusic.core.data.network.model.toLocal
 import com.example.mymusic.core.data.network.model.toLocalAlbum
 import com.example.mymusic.core.data.network.model.toLocalRecommendations
+import com.example.mymusic.core.data.network.model.toLocalSaved
 import com.example.mymusic.core.data.network.model.toLocalSimplified
-import com.example.mymusic.core.data.network.model.toLocalSimplifiedTracks
-import com.example.mymusic.core.data.network.model.toLocalTracks
+import com.example.mymusic.core.data.network.model.toLocalSimplifiedTrack
+import com.example.mymusic.core.data.network.model.toLocalTrack
 import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedPlaylist
 import com.example.mymusic.model.SimplifiedTrack
@@ -74,6 +78,18 @@ class MusicRepository @Inject constructor(
         }
     }
 
+    fun observePlaylist(id: String): Flow<SimplifiedPlaylist> {
+        return musicDao.observePlaylist(id).map { playlist ->
+            playlist.toExternal()
+        }
+    }
+
+    fun observePlaylistTracks(id: String): Flow<List<Track>> {
+        return musicDao.observePlaylistTracks(id).map { tracks ->
+            tracks.toExternal()
+        }
+    }
+
     fun observeSavedAlbums(): Flow<List<SimplifiedAlbum>> {
         return musicDao.observeSavedAlbums().map { album ->
             album.toExternal()
@@ -103,6 +119,20 @@ class MusicRepository @Inject constructor(
         }
     }
 
+    suspend fun loadPlaylistTracks(id: String) {
+        withContext(dispatcher) {
+            val tracks = getPlaylistTracks(id)
+
+            if (tracks.isNotEmpty()) {
+
+                for (track in tracks) {
+                    musicDao.upsertPlaylistTrackCrossRef(PlaylistTrackCrossRef(id, track.track.id))
+                    upsertTrack(track.track)
+                }
+            }
+        }
+    }
+
     suspend fun refresh() {
         withContext(dispatcher) {
 
@@ -113,24 +143,12 @@ class MusicRepository @Inject constructor(
             if (remoteMusic.isNotEmpty()) {
 
                 musicDao.deleteRecommendations()
-                musicDao.upsertTracks(remoteMusic.toLocal())
-                musicDao.upsertSimplifiedTracks(remoteMusic.toLocalSimplifiedTracks())
-                musicDao.upsertRecommendations(remoteMusic.toLocalRecommendations())
 
                 for (track in remoteMusic) {
-                    for (artist in track.artists) {
-                        musicDao.upsertTrackArtistCrossRef(TrackArtistCrossRef(artist.id, track.id))
-                        musicDao.upsertSimplifiedTrackArtistCrossRef(SimplifiedTrackArtistCrossRef(artist.id, track.id))
-                    }
-
-                    val album = track.album
-                    musicDao.upsertAlbum(album.toLocal())
-                    musicDao.upsertArtists(track.artists.toLocal())
-                    musicDao.upsertSimplifiedArtists(track.artists.toLocalSimplified())
-                    musicDao.upsertSimplifiedArtists(album.artists.toLocal())
-                    for (artist in album.artists)
-                        musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(artist.id, album.id))
+                    upsertTrack(track)
                 }
+
+                musicDao.upsertRecommendations(remoteMusic.toLocalRecommendations())
             }
 
             val recentlyPlayed = getRecentlyPlayed()
@@ -138,23 +156,12 @@ class MusicRepository @Inject constructor(
             if (recentlyPlayed.isNotEmpty()) {
 
                 musicDao.deleteRecentlyPlayed()
-                musicDao.upsertTracks(recentlyPlayed.toLocalTracks())
-                musicDao.upsertSimplifiedTracks(recentlyPlayed.toLocalSimplifiedTracks())
-                musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
 
                 for (track in recentlyPlayed) {
-                    for (artist in track.track.artists) {
-                        musicDao.upsertTrackArtistCrossRef(TrackArtistCrossRef(artist.id, track.track.id))
-                        musicDao.upsertSimplifiedTrackArtistCrossRef(SimplifiedTrackArtistCrossRef(artist.id, track.track.id))
-                    }
-                    val album = track.track.album
-                    musicDao.upsertAlbum(album.toLocal())
-                    musicDao.upsertArtists(track.track.artists.toLocal())
-                    musicDao.upsertSimplifiedArtists(track.track.artists.toLocalSimplified())
-                    musicDao.upsertSimplifiedArtists(album.artists.toLocal())
-                    for (artist in album.artists)
-                        musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(artist.id, album.id))
+                    upsertTrack(track.track)
                 }
+
+                musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
             }
 
             val savedAlbums = getSavedAlbums()
@@ -176,9 +183,27 @@ class MusicRepository @Inject constructor(
 
             if (savedPlaylists.isNotEmpty()) {
                 musicDao.deleteSavedPlaylists()
-                musicDao.upsertSavedPlaylists(savedPlaylists.toLocal())
+                musicDao.upsertPlaylists(savedPlaylists.toLocal())
+                musicDao.upsertSavedPlaylists(savedPlaylists.toLocalSaved())
             }
         }
+    }
+
+    private suspend fun upsertTrack(track: SpotifyTrack) {
+        musicDao.upsertTrack(track.toLocalTrack())
+        musicDao.upsertSimplifiedTrack(track.toLocalSimplifiedTrack())
+        for (artist in track.artists) {
+            musicDao.upsertTrackArtistCrossRef(TrackArtistCrossRef(artist.id, track.id))
+            musicDao.upsertSimplifiedTrackArtistCrossRef(SimplifiedTrackArtistCrossRef(artist.id, track.id))
+        }
+
+        val album = track.album
+        musicDao.upsertAlbum(album.toLocal())
+        musicDao.upsertArtists(track.artists.toLocal())
+        musicDao.upsertSimplifiedArtists(track.artists.toLocalSimplified())
+        musicDao.upsertSimplifiedArtists(album.artists.toLocal())
+        for (artist in album.artists)
+            musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(artist.id, album.id))
     }
 
     private suspend fun getRecentlyPlayed(): List<SpotifyPlayHistoryObject> {
@@ -198,6 +223,13 @@ class MusicRepository @Inject constructor(
     private suspend fun getAlbumTracks(id: String): List<SpotifySimplifiedTrack> {
         val response = apiService.getAlbumTracks(id)
         val data = (response as? NetworkResponse.Success<AlbumTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
+
+        return processResponse(response, data, emptyList())
+    }
+
+    private suspend fun getPlaylistTracks(id: String): List<PlaylistTrack> {
+        val response = apiService.getPlaylistTracks(id)
+        val data = (response as? NetworkResponse.Success<PlaylistsTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
 
         return processResponse(response, data, emptyList())
     }
