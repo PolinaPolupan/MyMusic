@@ -23,8 +23,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -48,7 +46,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
 import com.example.mymusic.core.ui.Sort
@@ -63,35 +61,40 @@ import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.designSystem.util.rememberScrollState
-import com.example.mymusic.model.Playlist
 import com.example.mymusic.model.Track
 import com.example.mymusic.core.ui.PlaylistCard
 import com.example.mymusic.core.ui.PreviewParameterData
-import com.example.mymusic.core.designSystem.util.viewModelProviderFactoryOf
+import com.example.mymusic.model.SimplifiedPlaylist
 
 @Composable
 fun AddToPlayListScreen(
-    trackId: String,
     onBackPress: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddToPlaylistViewModel = hiltViewModel()
 ) {
-    AddToPlayListContent(
-        track = viewModel.currentTrack,
-        playlists = viewModel.usersPlaylists,
-        onSortOptionChanged = viewModel::setSortOption,
-        currentSortOption = viewModel.currentSortOption.value,
-        onBackPress = onBackPress,
-        modifier = modifier
-            .fillMaxSize()
-    )
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    when (uiState) {
+        AddToPlaylistUiState.Loading -> Unit
+        is AddToPlaylistUiState.Success -> {
+            AddToPlayListContent(
+                track = (uiState as AddToPlaylistUiState.Success).track,
+                playlists = (uiState as AddToPlaylistUiState.Success).playlists,
+                onSortOptionChanged = viewModel::setSortOption,
+                currentSortOption = viewModel.currentSortOption.value,
+                onBackPress = onBackPress,
+                modifier = modifier
+                    .fillMaxSize()
+            )
+        }
+    }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AddToPlayListContent(
     track: Track,
-    playlists: List<Playlist>,
+    playlists: List<SimplifiedPlaylist>,
     onBackPress: () -> Unit,
     onSortOptionChanged: (SortOption) -> Unit,
     currentSortOption: SortOption,
@@ -254,11 +257,10 @@ private fun TopAppBar(
 fun AddToPlayListPreview() {
     MyMusicTheme {
         val playlists = List(10) {
-            Playlist(
+            SimplifiedPlaylist(
                 id = "",
                 name = "Dua Lipa",
                 ownerName = "Polina Polupan",
-                tracks = listOf(),
                 imageUrl = ""
             )
         }

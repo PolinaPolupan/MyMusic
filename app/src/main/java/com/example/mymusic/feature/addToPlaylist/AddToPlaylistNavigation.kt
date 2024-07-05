@@ -25,6 +25,6 @@ fun NavGraphBuilder.addToPlaylistScreen(onBackClick: () -> Unit) {
     ) {backStackEntry ->
         val id = backStackEntry.arguments?.getString(TRACK_ID_ARG)
         /*TODO: NULL CHECK */
-        AddToPlayListScreen(trackId = id ?: "0", onBackPress = onBackClick)
+        AddToPlayListScreen(onBackPress = onBackClick)
     }
 }
