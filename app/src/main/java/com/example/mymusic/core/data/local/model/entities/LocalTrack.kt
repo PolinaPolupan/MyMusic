@@ -1,4 +1,4 @@
-package com.example.mymusic.core.data.local.model
+package com.example.mymusic.core.data.local.model.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded

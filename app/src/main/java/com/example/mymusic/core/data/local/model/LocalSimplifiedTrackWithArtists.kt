@@ -3,6 +3,10 @@ package com.example.mymusic.core.data.local.model
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
+import com.example.mymusic.core.data.local.model.crossRef.SimplifiedTrackArtistCrossRef
+import com.example.mymusic.core.data.local.model.entities.LocalSimplifiedArtist
+import com.example.mymusic.core.data.local.model.entities.LocalSimplifiedTrack
+import com.example.mymusic.core.data.local.model.entities.toExternal
 import com.example.mymusic.model.SimplifiedTrack
 
 data class LocalSimplifiedTrackWithArtists(

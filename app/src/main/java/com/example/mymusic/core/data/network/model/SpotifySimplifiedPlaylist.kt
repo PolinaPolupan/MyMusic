@@ -1,7 +1,7 @@
 package com.example.mymusic.core.data.network.model
 
-import com.example.mymusic.core.data.local.model.LocalPlaylist
-import com.example.mymusic.core.data.local.model.LocalSavedPlaylist
+import com.example.mymusic.core.data.local.model.entities.LocalPlaylist
+import com.example.mymusic.core.data.local.model.entities.LocalSavedPlaylist
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

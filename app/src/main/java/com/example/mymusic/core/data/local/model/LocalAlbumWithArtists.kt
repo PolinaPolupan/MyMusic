@@ -3,8 +3,11 @@ package com.example.mymusic.core.data.local.model
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
+import com.example.mymusic.core.data.local.model.crossRef.AlbumArtistCrossRef
+import com.example.mymusic.core.data.local.model.entities.LocalAlbum
+import com.example.mymusic.core.data.local.model.entities.LocalSimplifiedArtist
+import com.example.mymusic.core.data.local.model.entities.toExternal
 import com.example.mymusic.core.data.network.model.toAlbumType
-import com.example.mymusic.model.Album
 import com.example.mymusic.model.SimplifiedAlbum
 
 /**

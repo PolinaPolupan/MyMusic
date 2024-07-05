@@ -1,10 +1,9 @@
-package com.example.mymusic.core.data.local.model
+package com.example.mymusic.core.data.local.model.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.mymusic.core.data.network.model.toAlbumType
-import com.example.mymusic.model.Album
 import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedArtist
 

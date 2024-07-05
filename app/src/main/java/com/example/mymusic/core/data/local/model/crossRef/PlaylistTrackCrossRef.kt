@@ -1,4 +1,4 @@
-package com.example.mymusic.core.data.local.model
+package com.example.mymusic.core.data.local.model.crossRef
 
 import androidx.room.Entity
 import androidx.room.Index

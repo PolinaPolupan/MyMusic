@@ -1,8 +1,8 @@
 package com.example.mymusic.core.data.network.model
 
-import com.example.mymusic.core.data.local.model.LocalTrack
-import com.example.mymusic.core.data.local.model.LocalRecommendation
-import com.example.mymusic.core.data.local.model.LocalSimplifiedTrack
+import com.example.mymusic.core.data.local.model.entities.LocalTrack
+import com.example.mymusic.core.data.local.model.entities.LocalRecommendation
+import com.example.mymusic.core.data.local.model.entities.LocalSimplifiedTrack
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

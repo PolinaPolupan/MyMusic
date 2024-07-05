@@ -1,6 +1,6 @@
 package com.example.mymusic.core.data.network.model
 
-import com.example.mymusic.core.data.local.model.LocalSimplifiedArtist
+import com.example.mymusic.core.data.local.model.entities.LocalSimplifiedArtist
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

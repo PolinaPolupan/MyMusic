@@ -1,6 +1,6 @@
 package com.example.mymusic.core.data.network.model
 
-import com.example.mymusic.core.data.local.model.LocalTrack
+import com.example.mymusic.core.data.local.model.entities.LocalTrack
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
