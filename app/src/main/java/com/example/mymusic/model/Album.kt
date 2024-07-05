@@ -1,11 +1,9 @@
 package com.example.mymusic.model
 
-import com.example.mymusic.R
-
-enum class AlbumType(typeName: Int) {
-    Album(R.string.album_type_name),
-    Single(R.string.single_type_name),
-    Compilation(R.string.compilation_type_name)
+enum class AlbumType {
+    Album,
+    Single,
+    Compilation
 }
 
 /**
