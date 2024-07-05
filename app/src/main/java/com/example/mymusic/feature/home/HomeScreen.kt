@@ -46,7 +46,6 @@ import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
-import com.example.mymusic.model.Artist
 import com.example.mymusic.model.Track
 import com.example.mymusic.core.ui.FeaturedTrack
 import com.example.mymusic.core.ui.PreviewParameterData
@@ -69,9 +68,10 @@ internal fun HomeScreen(
                 userImageUrl = (uiState as HomeUiState.Success).userImageUrl,
                 topPicks = (uiState as HomeUiState.Success).topPicks,
                 recentlyPlayed = (uiState as HomeUiState.Success).recentlyPlayed,
-                moreLikeArtists = (uiState as HomeUiState.Success).moreLikeArtists,
                 onTrackClick = onTrackClick,
-                modifier = modifier)
+                modifier = modifier
+                    .fillMaxSize()
+            )
         }
         HomeUiState.Error -> LaunchedEffect(key1 = uiState) {
             onNavigateToLogin()
@@ -98,7 +98,6 @@ internal fun Loading(
 internal fun HomeContent(
     userImageUrl: String?,
     topPicks: List<Track>,
-    moreLikeArtists: Map<Artist, List<Track>>,
     recentlyPlayed: List<Track>,
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -143,7 +142,6 @@ internal fun HomeContent(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-
             ) {
                 ScreenHeader(
                     titleRes = R.string.listen_now,
@@ -161,13 +159,6 @@ internal fun HomeContent(
                     recentlyPlayed = recentlyPlayed,
                     onTrackClick = onTrackClick
                 )
-                for (artist in moreLikeArtists) {
-                    MoreLikeArtist(
-                        artist = artist.key,
-                        tracks = artist.value,
-                        onTrackClick = onTrackClick
-                    )
-                }
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.player_with_bottom_app_bar_height)))
             }
         }
@@ -316,23 +307,6 @@ internal fun TrackCarousel(
 }
 
 @Composable
-private fun MoreLikeArtist(
-    artist: Artist,
-    tracks: List<Track>,
-    onTrackClick: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(modifier = modifier.padding(vertical = 16.dp)) {
-        ArtistHeader(
-            name = artist.name,
-            pictureUrl = artist.imageUrl,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-        )
-        TrackCarousel(tracks = tracks, onTrackClick = onTrackClick)
-    }
-}
-
-@Composable
 private fun ArtistHeader(
     name: String,
     pictureUrl: String?,
@@ -384,8 +358,7 @@ fun HomePreview() {
             userImageUrl = "",
             onTrackClick = {},
             topPicks = tracks,
-            recentlyPlayed = tracks,
-            moreLikeArtists = PreviewParameterData.moreLikeArtists
+            recentlyPlayed = tracks
         )
     }
 }

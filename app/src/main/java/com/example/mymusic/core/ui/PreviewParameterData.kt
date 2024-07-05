@@ -497,20 +497,7 @@ object PreviewParameterData {
            album = albums[0]
         )
     )
-    val moreLikeArtists = mapOf<Artist, List<Track>>(
-        Pair(
-            Artist(
-            id = "0",
-            name = "BLACKPINK",
-            imageUrl = "https://i.scdn.co/image/ab6761610000f178c9690bc711d04b3d4fd4b87c"),
-            tracks),
-        Pair(
-            Artist(
-                id = "1",
-                name = "Major Lazer",
-                imageUrl = "https://i.scdn.co/image/ab6761610000f178133f44ab343b35c715a4ac97"),
-            tracks),
-    )
+
     val artists = listOf(
         Artist(
             id = "0",

@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymusic.core.data.MusicRepository
 import com.example.mymusic.core.data.UserDataRepository
-import com.example.mymusic.model.Artist
 import com.example.mymusic.model.Track
-import com.example.mymusic.core.ui.PreviewParameterData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -49,7 +47,6 @@ sealed interface HomeUiState {
         val userImageUrl: String?,
         val topPicks: List<Track>,
         val recentlyPlayed: List<Track>,
-        val moreLikeArtists: Map<Artist, List<Track>> = PreviewParameterData.moreLikeArtists
     ): HomeUiState
     data object Error: HomeUiState
 }
