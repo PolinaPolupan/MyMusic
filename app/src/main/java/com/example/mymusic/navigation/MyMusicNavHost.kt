@@ -13,7 +13,6 @@ import com.example.mymusic.MyMusicAppState
 import com.example.mymusic.feature.home.homeScreen
 import com.example.mymusic.feature.home.navigateToHome
 import com.example.mymusic.feature.library.libraryScreen
-import com.example.mymusic.feature.login.LOGIN_ROUTE
 import com.example.mymusic.feature.login.loginScreen
 import com.example.mymusic.feature.login.navigateToLogin
 import com.example.mymusic.feature.player.navigateToPlayer
