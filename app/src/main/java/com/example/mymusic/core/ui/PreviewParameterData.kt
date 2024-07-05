@@ -521,6 +521,25 @@ object PreviewParameterData {
         )
     )
 
+    val simplifiedArtists = listOf(
+        SimplifiedArtist(
+            id = "0",
+            name = "BLACKPINK"
+        ),
+        SimplifiedArtist(
+            id = "1",
+            name = "Adele"
+        ),
+        SimplifiedArtist(
+            id = "04gDigrS5kc9YWfZHwBETP",
+            name = "Maroon 5"
+        ),
+        SimplifiedArtist(
+            id = "53XhwfbYqKCa1cC15pYq2q",
+            name = "Imagine Dragons"
+        )
+    )
+
     val playlists = List(10) {
         Playlist(
             id = "37i9dQZF1DXaMu9xyX1HzK",
