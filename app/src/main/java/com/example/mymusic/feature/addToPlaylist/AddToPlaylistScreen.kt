@@ -75,6 +75,7 @@ fun AddToPlayListScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     when (uiState) {
+        /*TODO: Add loading screen*/
         AddToPlaylistUiState.Loading -> Unit
         is AddToPlaylistUiState.Success -> {
             AddToPlayListContent(
@@ -233,12 +234,14 @@ private fun TopAppBar(
                 IconButton(onClick = onBackPress, modifier = Modifier.size(30.dp)) {
                     Icon(
                         imageVector = MyMusicIcons.ArrowBack,
+                        tint = MaterialTheme.colorScheme.onSurface,
                         contentDescription = stringResource(id = R.string.back),
                         modifier = Modifier.fillMaxSize()
                     )
                 }
                 Text(
                     text = stringResource(id = R.string.add_to_playlist),
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier
                         .wrapContentSize()

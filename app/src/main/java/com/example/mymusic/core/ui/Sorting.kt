@@ -47,9 +47,17 @@ fun Sort(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
-        Icon(imageVector = MyMusicIcons.Sort, contentDescription = stringResource(id = R.string.sort))
+        Icon(
+            imageVector = MyMusicIcons.Sort,
+            tint = MaterialTheme.colorScheme.onSurface,
+            contentDescription = stringResource(id = R.string.sort)
+        )
         Spacer(modifier = Modifier.width(8.dp))
-        Text(text = stringResource(id = sortOption.optionRes), style = MaterialTheme.typography.titleSmall)
+        Text(
+            text = stringResource(id = sortOption.optionRes),
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.titleSmall
+        )
     }
 }
 
@@ -68,12 +76,11 @@ fun SortBottomSheet(
         containerColor = containerColor,
         modifier = modifier
     ) {
-            SortBottomSheetContent(
-                currentOption = currentOption,
-                onSelection = onSelection
-            )
-        }
-
+        SortBottomSheetContent(
+            currentOption = currentOption,
+            onSelection = onSelection
+        )
+    }
 }
 
 @Composable
@@ -87,6 +94,7 @@ private fun SortBottomSheetContent(
     ) {
         Text(
             text = stringResource(id = R.string.sort_by),
+            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
@@ -121,12 +129,16 @@ private fun SortOptionSelection(
             if (isSelected) {
                 Icon(
                     imageVector = MyMusicIcons.Check,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     contentDescription = stringResource(id = R.string.sort_option_selection_desc)
                 )
             }
         }
         Spacer(modifier = Modifier.width(16.dp))
-        Text(text = stringResource(id = labelRes))
+        Text(
+            text = stringResource(id = labelRes),
+            color = MaterialTheme.colorScheme.onSurface,
+        )
     }
 }
 

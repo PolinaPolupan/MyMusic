@@ -195,11 +195,13 @@ private fun RecentSearches(
     Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.recent_searches),
+            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.titleMedium
         )
         for (search in recentSearches) {
             Text(
                 text = search,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )

@@ -83,6 +83,7 @@ fun FeaturedTrack(
             ) {
                 Text(
                     text = name,
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.headlineSmall.copy(lineHeight = 24.sp),
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis

@@ -49,9 +49,8 @@ fun ScreenHeader(
                 .fillMaxWidth()
         ) {
             Text(
-                stringResource(
-                    id = titleRes
-                ),
+                text = stringResource(id = titleRes),
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.displaySmall,
             )
             IconButton(

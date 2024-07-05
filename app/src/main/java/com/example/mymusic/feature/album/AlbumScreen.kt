@@ -125,7 +125,7 @@ fun AlbumScreenContent(
         ), label = "album:dividerAlpha"
     )
 
-    DynamicThemePrimaryColorsFromImage {
+    DynamicThemePrimaryColorsFromImage(dominantColorState) {
         // When the selected image url changes, call updateColorsFromImageUrl() or reset()
 
         /* TODO: Check if the updated color is correct */
@@ -257,12 +257,14 @@ fun AlbumHeaderWithContent(
                 Text(
                     text = name,
                     style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.SemiBold),
+                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                     modifier = Modifier.basicMarquee()
                 )
                 Text(
                     text = artists,
                     style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                     modifier = Modifier
                         .alpha(0.5f)
@@ -273,6 +275,7 @@ fun AlbumHeaderWithContent(
                 IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(60.dp)) {
                     Icon(
                         imageVector = MyMusicIcons.Play,
+                        tint = MaterialTheme.colorScheme.onSurface,
                         contentDescription = stringResource(id = R.string.play),
                         modifier = Modifier.fillMaxSize()
                     )
@@ -280,6 +283,7 @@ fun AlbumHeaderWithContent(
                 IconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(60.dp)) {
                     Icon(
                         imageVector = MyMusicIcons.Add,
+                        tint = MaterialTheme.colorScheme.onSurface,
                         contentDescription = null,
                         modifier = Modifier.fillMaxSize()
                     )
@@ -312,6 +316,7 @@ private fun TopAppBar(
             IconButton(onClick = onBackPress, modifier = Modifier.size(30.dp)) {
                 Icon(
                     imageVector = MyMusicIcons.ArrowBack,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     contentDescription = stringResource(id = R.string.back),
                     modifier = Modifier.fillMaxSize()
                 )
@@ -321,6 +326,7 @@ private fun TopAppBar(
                 text = name,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier
                     .wrapContentSize()
@@ -347,10 +353,15 @@ private fun TrackItem(
             .clickable { onTrackClick() }
     ) {
         Column {
-            Text(text = name, style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = name,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
             Text(
                 text = artistsString(artists),
                 style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .alpha(0.5f)
             )
@@ -358,6 +369,7 @@ private fun TrackItem(
         IconButton(onClick = onSettingsClick) {
             Icon(
                 imageVector = MyMusicIcons.More,
+                tint = MaterialTheme.colorScheme.onSurface,
                 contentDescription = stringResource(R.string.more)
             )
         }

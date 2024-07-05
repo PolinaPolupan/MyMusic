@@ -208,11 +208,10 @@ private fun PlayerButtons(
             onClick = onSkipPreviousClick,
             modifier = buttonsModifier
         ) {
-            Image(
+            Icon(
                 imageVector = MyMusicIcons.SkipPrevious,
                 contentDescription = stringResource(R.string.skip_previous),
-                contentScale = ContentScale.Fit,
-                colorFilter = ColorFilter.tint(LocalContentColor.current),
+                tint = MaterialTheme.colorScheme.onSurface,
                 modifier = buttonsModifier
             )
         }
@@ -220,11 +219,10 @@ private fun PlayerButtons(
             onClick = onPlayClick,
             modifier = playerButtonModifier
         ) {
-            Image(
+            Icon(
                 imageVector = MyMusicIcons.Play,
                 contentDescription = stringResource(R.string.play),
-                contentScale = ContentScale.Fit,
-                colorFilter = ColorFilter.tint(LocalContentColor.current),
+                tint = MaterialTheme.colorScheme.onSurface,
                 modifier = playerButtonModifier
             )
         }
@@ -232,11 +230,10 @@ private fun PlayerButtons(
             onClick = onSkipNextClick,
             modifier = buttonsModifier
         ) {
-            Image(
+            Icon(
                 imageVector = MyMusicIcons.SkipNext,
                 contentDescription = stringResource(R.string.skip_next),
-                contentScale = ContentScale.Fit,
-                colorFilter = ColorFilter.tint(LocalContentColor.current),
+                tint = MaterialTheme.colorScheme.onSurface,
                 modifier = buttonsModifier
             )
         }
@@ -271,6 +268,7 @@ private fun TrackDescription(
     Column(modifier = modifier) {
         Text(
             text = trackName,
+            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.headlineSmall,
             maxLines = 1,
             modifier = Modifier
@@ -282,6 +280,7 @@ private fun TrackDescription(
         )
         Text(
             text = artists,
+            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
             modifier = Modifier.basicMarquee()
@@ -321,6 +320,7 @@ fun TrackPlayer(
             ) {
                 Icon(
                     imageVector = MyMusicIcons.Add,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     contentDescription = stringResource(id = R.string.add_to_playlist),
                     modifier = Modifier.size(50.dp)
                 )
@@ -353,6 +353,7 @@ private fun TopAppBar(
             ) {
                 Icon(
                     imageVector = MyMusicIcons.ArrowBack,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     contentDescription = stringResource(R.string.back),
                     modifier = Modifier.fillMaxSize()
                 )
@@ -364,6 +365,7 @@ private fun TopAppBar(
             ) {
                 Icon(
                     imageVector = MyMusicIcons.More,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     contentDescription = stringResource(R.string.more),
                     modifier = Modifier.fillMaxSize()
                 )

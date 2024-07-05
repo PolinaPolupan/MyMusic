@@ -110,7 +110,7 @@ class DominantColorState(
             ?.let { swatch ->
                 DominantColors(
                     color = Color(swatch.rgb),
-                    onColor = Color(swatch.bodyTextColor).copy(alpha = 1f)
+                    onColor = Color(swatch.bodyTextColor)
                 )
             }
             // Cache the resulting [DominantColors]

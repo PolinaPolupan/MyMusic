@@ -109,11 +109,13 @@ fun LoginContent(
             ) {
                 Text(
                     text = stringResource(id = R.string.login_text),
+                    color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.SemiBold)
                 )
                 Text(
                     text = stringResource(id = R.string.login_description),
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
                     modifier = Modifier.alpha(0.5f)
                 )

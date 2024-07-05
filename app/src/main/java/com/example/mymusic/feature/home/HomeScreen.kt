@@ -176,6 +176,7 @@ internal fun TopPicks(
     Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.top_picks),
+            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .padding(
@@ -263,6 +264,7 @@ internal fun RecentlyPlayed(
     Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.recently_played),
+            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .padding(
@@ -331,6 +333,7 @@ private fun ArtistHeader(
             Text(
                 text = name,
                 style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

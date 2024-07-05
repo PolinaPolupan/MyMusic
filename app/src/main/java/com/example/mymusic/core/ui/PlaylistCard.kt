@@ -59,6 +59,7 @@ fun PlaylistCard(
             ) {
                 Text(
                     text = name,
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -67,6 +68,7 @@ fun PlaylistCard(
                 )
                 Text(
                     text = stringResource(id = R.string.playlist_label, ownerName),
+                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.titleSmall
@@ -75,6 +77,7 @@ fun PlaylistCard(
             if (isSelected && isSelectable) {
                 Icon(
                     imageVector = MyMusicIcons.Check,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     contentDescription = stringResource(id = R.string.is_checked),
                     modifier = Modifier.padding(16.dp)
                 )

@@ -27,7 +27,7 @@ fun NetworkImage(
     modifier: Modifier = Modifier,
     contentScale: ContentScale = ContentScale.Crop,
     alpha: Float = 1f,
-    defaultImageRes: Int = R.drawable.jimmy_chang_unsplash_hero
+    defaultImageRes: Int = R.drawable.spotify_logo_white_on_green
 ) {
     var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
