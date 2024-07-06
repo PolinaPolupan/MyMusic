@@ -7,7 +7,7 @@ import com.example.mymusic.model.SimplifiedArtist
 fun artistsString(artists: List<SimplifiedArtist>) : String {
     var artistsString = ""
     for (artist in artists) {
-        artistsString += artist.name + ", "
+        if (artist.name.isNotBlank()) artistsString += artist.name + ", "
     }
     if (artistsString.length > 2) {
         artistsString = artistsString.substring(0, artistsString.length - 2)
@@ -19,7 +19,7 @@ fun artistsString(artists: List<SimplifiedArtist>) : String {
 fun artistsString(artists: List<Artist>) : String {
     var artistsString = ""
     for (artist in artists) {
-        artistsString += artist.name + ", "
+        if (artist.name.isNotBlank()) artistsString += artist.name + ", "
     }
     if (artistsString.length > 2) {
         artistsString = artistsString.substring(0, artistsString.length - 2)
