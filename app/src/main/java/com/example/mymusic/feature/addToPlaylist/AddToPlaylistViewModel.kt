@@ -24,7 +24,7 @@ class AddToPlaylistViewModel @Inject constructor(
 
     private val _trackId: String = checkNotNull(savedStateHandle[com.example.mymusic.feature.player.TRACK_ID_ARG])
 
-    private val _trackFlow: Flow<Track> = musicRepository.observeTrack(_trackId)
+    private val _trackFlow: Flow<Track?> = musicRepository.observeTrack(_trackId)
 
     private val _playlistsFlow: Flow<List<SimplifiedPlaylist>> = musicRepository.observeSavedPlaylists()
 
@@ -32,11 +32,15 @@ class AddToPlaylistViewModel @Inject constructor(
         _trackFlow,
         _playlistsFlow
     ) { track, playlists ->
+        if (track != null) {
             AddToPlaylistUiState.Success(
                 track = track,
                 playlists = playlists
             )
+        } else {
+            AddToPlaylistUiState.Loading
         }
+    }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), AddToPlaylistUiState.Loading)
 
     var currentSortOption = mutableStateOf(SortOption.RECENTLY_ADDED)

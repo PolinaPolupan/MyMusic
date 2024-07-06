@@ -3,7 +3,6 @@ package com.example.mymusic.feature.player
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +20,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -34,8 +32,6 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
@@ -44,7 +40,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.CroppedShape
 import com.example.mymusic.core.designSystem.component.NetworkImage
@@ -54,9 +53,11 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
+import com.example.mymusic.core.designSystem.util.artistsString
 import com.example.mymusic.core.designSystem.util.saturation
 import com.example.mymusic.model.Track
 import com.example.mymusic.core.ui.PreviewParameterData
+import kotlinx.coroutines.launch
 import java.time.Duration
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -69,6 +70,15 @@ fun PlayerScreen(
     viewModel: PlayerViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(true) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            launch {
+                viewModel.loadTrack(viewModel.trackId)
+            }
+        }
+    }
 
     when (uiState) {
         /*TODO: Create loading screen*/
@@ -157,16 +167,11 @@ fun PlayerContent(
                     ),
                 contentAlignment = Alignment.BottomCenter
             ) {
-                var artistsString = ""
-                for (artist in track.artists) {
-                    artistsString += artist.name + ", "
-                }
-                artistsString = artistsString.substring(0, artistsString.length - 2)
                 Column {
                     TrackPlayer(
                         albumId = track.album.id,
                         trackName = track.name,
-                        artistName = artistsString,
+                        artistName = artistsString(track.artists),
                         trackDuration = Duration.ZERO,
                         onPlayClick = { /*TODO*/ },
                         onSkipPreviousClick = { /*TODO*/ },

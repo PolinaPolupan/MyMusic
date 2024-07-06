@@ -7,6 +7,7 @@ import com.example.mymusic.core.data.network.model.RecommendationsResponse
 import com.example.mymusic.core.data.network.model.RecentlyPlayedTracksResponse
 import com.example.mymusic.core.data.network.model.SavedAlbumsResponse
 import com.example.mymusic.core.data.network.model.SavedPlaylistResponse
+import com.example.mymusic.core.data.network.model.SpotifyTrack
 import com.haroldadmin.cnradapter.NetworkResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -34,4 +35,7 @@ interface MyMusicAPIService {
         @Path("id") id: String,
         @Query("fields") fields: String = "href, limit, next, offset, previous, total, items(added_at, added_by, is_local, track)"
     ): NetworkResponse<PlaylistsTracksResponse, ErrorResponse>
+
+    @GET("https://api.spotify.com/v1/tracks/{id}")
+    suspend fun getTrack(@Path("id") id: String): NetworkResponse<SpotifyTrack, ErrorResponse>
 }

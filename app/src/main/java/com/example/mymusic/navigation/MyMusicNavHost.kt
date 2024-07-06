@@ -39,7 +39,7 @@ fun MyMusicNavHost(
         libraryScreen(onPlaylistClick = navController::navigateToPlaylist, onAlbumClick = navController::navigateToAlbum)
         playerScreen(onBackClick = navController::popBackStack, onAddToPlaylistClick = navController::navigateToAddToPlaylist, onNavigateToAlbum = navController::navigateToAlbum)
         addToPlaylistScreen(onBackClick = navController::popBackStack)
-        albumScreen(onBackClick = navController::popBackStack)
+        albumScreen(onBackClick = navController::popBackStack, onNavigateToPlayer = navController::navigateToPlayer)
         playlistScreen(onBackClick = navController::popBackStack)
     }
 }

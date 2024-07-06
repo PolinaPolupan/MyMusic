@@ -13,12 +13,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AlbumViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    musicRepository: MusicRepository
+    private val musicRepository: MusicRepository
 ) : ViewModel() {
 
     private val _albumId: String = checkNotNull(savedStateHandle[ALBUM_ID_ARG])
@@ -31,7 +32,7 @@ class AlbumViewModel @Inject constructor(
         combine(_albumFlow, _albumTracksFlow) { album, tracks ->
             AlbumUiState.Success(
                 Album(
-                id = album.id,
+                    id = album.id,
                     type = album.type,
                     imageUrl = album.imageUrl,
                     name = album.name,
@@ -40,6 +41,12 @@ class AlbumViewModel @Inject constructor(
             )
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), AlbumUiState.Loading)
+
+    fun loadTrack(id: String) {
+        viewModelScope.launch {
+            musicRepository.loadTrack(id)
+        }
+    }
 }
 
 sealed interface AlbumUiState {

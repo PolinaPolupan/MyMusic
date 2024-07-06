@@ -71,8 +71,9 @@ import com.example.mymusic.core.designSystem.util.rememberScrollState
 
 @Composable
 fun AlbumScreen(
-    modifier: Modifier = Modifier,
+    onNavigateToPlayer: (String) -> Unit,
     onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: AlbumViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -86,8 +87,10 @@ fun AlbumScreen(
                 imageUrl = (uiState as AlbumUiState.Success).album.imageUrl,
                 artists = (uiState as AlbumUiState.Success).album.artists,
                 tracks = (uiState as AlbumUiState.Success).album.tracks,
+                onNavigateToPlayer = onNavigateToPlayer,
+                onTrackClick = viewModel::loadTrack,
                 onBackClick = onBackClick,
-                modifier = modifier
+                modifier = modifier,
             )
     }
 }
@@ -99,8 +102,10 @@ fun AlbumScreenContent(
     imageUrl: String,
     artists: List<SimplifiedArtist>,
     tracks: List<SimplifiedTrack>,
+    onNavigateToPlayer: (String) -> Unit,
+    onTrackClick: (String) -> Unit,
     onBackClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val lazyListState = rememberLazyListState()
     val scrollState = rememberScrollState(state = lazyListState)
@@ -142,7 +147,9 @@ fun AlbumScreenContent(
                 artists = artists,
                 tracks = tracks,
                 lazyListState = lazyListState,
-                scrollState = scrollState
+                scrollState = scrollState,
+                onNavigateToPlayer = onNavigateToPlayer,
+                onTrackClick = onTrackClick
             )
             TopAppBar(
                 name = name,
@@ -170,6 +177,8 @@ fun AlbumContent(
     tracks: List<SimplifiedTrack>,
     lazyListState: LazyListState,
     scrollState: MutableState<Int>,
+    onNavigateToPlayer: (String) -> Unit,
+    onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -224,9 +233,12 @@ fun AlbumContent(
                 name = track.name,
                 artists = track.artists,
                 onSettingsClick = { /*TODO*/ },
-                onTrackClick = { /*TODO*/ },
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
+                    .clickable {
+                        onTrackClick(track.id)
+                        onNavigateToPlayer(track.id)
+                    }
             )
         }
     }
@@ -351,14 +363,12 @@ private fun TrackItem(
     name: String,
     artists: List<SimplifiedArtist>,
     onSettingsClick: () -> Unit,
-    onTrackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onTrackClick() }
     ) {
         Column(modifier = Modifier.fillMaxWidth(0.9f)) {
             Text(
@@ -410,7 +420,9 @@ fun AlbumScreenPreview() {
             imageUrl = mockAlbum.imageUrl,
             artists = mockAlbum.artists,
             tracks = mockTracks,
-            onBackClick = {}
+            onNavigateToPlayer = {},
+            onBackClick = {},
+            onTrackClick = {}
         )
     }
 }
@@ -434,8 +446,7 @@ fun TrackItemPreview() {
         TrackItem(
             name = "Long long long long long long long long long long long name",
             artists = artists,
-            onSettingsClick = {},
-            onTrackClick = {}
+            onSettingsClick = {}
         )
     }
 }

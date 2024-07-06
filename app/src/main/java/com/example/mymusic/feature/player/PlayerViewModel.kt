@@ -20,15 +20,21 @@ class PlayerViewModel @Inject constructor(
     private val musicRepository: MusicRepository
 ): ViewModel() {
 
-    private val _trackId: String = checkNotNull(savedStateHandle[TRACK_ID_ARG])
+    val trackId: String = checkNotNull(savedStateHandle[TRACK_ID_ARG])
 
-    private val _trackFlow: Flow<Track> = musicRepository.observeTrack(_trackId)
+    private val _trackFlow: Flow<Track> = musicRepository.observeTrack(trackId)
 
     val uiState: StateFlow<PlayerUiState> = _trackFlow
         .map { track ->
             PlayerUiState.Success(track = track)
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), PlayerUiState.Loading)
+
+    fun loadTrack(id: String) {
+        viewModelScope.launch {
+            musicRepository.loadTrack(id)
+        }
+    }
 
     fun onAlbumClick(id: String) {
         viewModelScope.launch {

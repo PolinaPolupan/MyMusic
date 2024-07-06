@@ -104,6 +104,16 @@ class MusicRepository @Inject constructor(
         }
     }
 
+    suspend fun loadTrack(id: String) {
+        withContext(dispatcher) {
+            val track = getTrack(id)
+
+            if (track != null) {
+                upsertTrack(track)
+            }
+        }
+    }
+
     suspend fun loadAlbumTracks(id: String) {
         withContext(dispatcher) {
             val tracks = getAlbumTracks(id)
@@ -248,6 +258,13 @@ class MusicRepository @Inject constructor(
         val data = (response as? NetworkResponse.Success<SavedPlaylistResponse, ErrorResponse>?)?.body?.items ?: emptyList()
 
         return processResponse(response, data, emptyList())
+    }
+
+    private suspend fun getTrack(id: String): SpotifyTrack? {
+        val response = apiService.getTrack(id)
+        val data = (response as? NetworkResponse.Success<SpotifyTrack, ErrorResponse>?)?.body
+
+        return processResponse(response, data, null)
     }
 
     private fun <S, E, T> processResponse(response: NetworkResponse<S, E>, successData: T, errorData: T): T {

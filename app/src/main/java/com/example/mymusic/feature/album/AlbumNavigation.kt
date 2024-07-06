@@ -20,6 +20,7 @@ fun NavController.navigateToAlbum(albumId: String) {
 }
 
 fun NavGraphBuilder.albumScreen(
+    onNavigateToPlayer: (String) -> Unit,
     onBackClick: () -> Unit
 ) {
     composable(
@@ -29,6 +30,6 @@ fun NavGraphBuilder.albumScreen(
             navArgument(ALBUM_ID_ARG) { type = NavType.StringType },
         )
     ) {
-        AlbumScreen(onBackClick = onBackClick)
+        AlbumScreen(onBackClick = onBackClick, onNavigateToPlayer = onNavigateToPlayer)
     }
 }
