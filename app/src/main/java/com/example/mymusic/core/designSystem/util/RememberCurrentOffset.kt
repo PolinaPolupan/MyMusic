@@ -5,9 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import com.example.mymusic.core.designSystem.util.rememberPrevious
 
 /**
  * Returns the scroll Y position value in LazyColumn
@@ -21,18 +20,18 @@ fun rememberScrollState(state: LazyListState): MutableState<Int> {
     val previousItemIndex = rememberPrevious(itemIndex.value)
     val previousItemOffset = rememberPrevious(itemOffset.value)
     // The resulting offset
-    val offset = remember { mutableStateOf(0) }
+    val offset = remember { mutableIntStateOf(0) }
 
     LaunchedEffect(itemIndex.value, itemOffset.value) {
         // When we haven`t started scrolling yet
         if (previousItemIndex  == null || itemIndex.value == 0) {
-            offset.value = itemOffset.value
+            offset.intValue = itemOffset.value
         } else if (previousItemIndex  == itemIndex.value) {
-            offset.value += (itemOffset.value - (previousItemOffset ?: 0))
+            offset.intValue += (itemOffset.value - (previousItemOffset ?: 0))
         } else if (previousItemIndex  > itemIndex.value) {
-            offset.value -= (previousItemOffset ?: 0)
+            offset.intValue -= (previousItemOffset ?: 0)
         } else { // lastPosition.value < position.value
-            offset.value += itemOffset.value
+            offset.intValue += itemOffset.value
         }
     }
 

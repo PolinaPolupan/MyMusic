@@ -7,9 +7,9 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.unit.fontscaling.MathUtils
 import kotlin.math.min
 
-/*
-* Interpolates a given scroll offset between 0.0f and 1.0f
-*/
+/**
+ * Interpolates a given scroll offset between 0.0f and 1.0f
+ */
 @SuppressLint("RestrictedApi")
 fun lerpScrollOffset(
     scrollState: State<Int>,
