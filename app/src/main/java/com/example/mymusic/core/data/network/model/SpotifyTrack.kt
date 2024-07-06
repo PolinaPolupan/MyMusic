@@ -11,16 +11,16 @@ data class SpotifyTrack(
     val album: SpotifyAlbum,
     val artists: List<SpotifyArtist>,
     @SerialName("available_markets")
-    val availableMarkets: List<String>,
+    val availableMarkets: List<String>?,
     @SerialName("disc_number")
     val discNumber: Int,
     @SerialName("duration_ms")
     val durationMs: Int,
     val explicit: Boolean,
     @SerialName("external_ids")
-    val externalIds: ExternalIds,
+    val externalIds: ExternalIds?,
     @SerialName("external_urls")
-    val externalUrls: ExternalUrls,
+    val externalUrls: ExternalUrls?,
     val href: String,
     val id: String,
     @SerialName("is_playable")

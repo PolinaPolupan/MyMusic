@@ -20,7 +20,7 @@ data class SpotifyAlbum(
     val images: List<SpotifyImage>,
     val name: String,
     @SerialName("release_date")
-    val releaseDate: String,
+    val releaseDate: String?,
     @SerialName("release_date_precision")
     val releaseDatePrecision: String?,
     val restrictions: Restrictions? = null,
