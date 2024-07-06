@@ -1,6 +1,7 @@
 [versions]
 appauth = "0.9.1"
 converterGson = "2.11.0"
+core = "1.6.1"
 coreSplashscreen = "1.0.1"
 kotlin = "2.0.0"
 androidGradlePlugin = "8.4.0"
@@ -39,6 +40,7 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-activity-compose = { group = "androidx.activity", name =  "activity-compose", version.ref = "activity-compose" }
+androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
