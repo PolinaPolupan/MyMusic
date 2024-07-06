@@ -12,5 +12,4 @@ This is the repository for the My Music app. It is a work in progress 🚧.
 
 ## Issues to be resolved
 * Add check whether or not a user has Spotify installed on the device and is logged in
-* Write tests
 * Improve UI performance
