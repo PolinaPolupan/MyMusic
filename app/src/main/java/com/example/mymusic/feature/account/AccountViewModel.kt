@@ -35,8 +35,8 @@ class AccountViewModel @Inject constructor(
         return authorizationManager.signIn()
     }
 
-    fun handleAuthorizationResponse(intent: Intent) {
-        authorizationManager.handleAuthorizationResponse(intent)
+    fun handleAuthorizationResponse(intent: Intent, onSuccess: () -> Unit) {
+        authorizationManager.handleAuthorizationResponse(intent, onSuccess)
     }
 }
 

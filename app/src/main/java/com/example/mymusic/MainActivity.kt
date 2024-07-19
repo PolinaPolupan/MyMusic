@@ -64,6 +64,8 @@ class MainActivity : ComponentActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
+        // Debug line
+        //applicationContext.deleteDatabase("music.db")
         setContent {
             MyMusicTheme(dynamicColor = true) {
                 // A surface container using the 'background' color from the theme

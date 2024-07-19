@@ -29,13 +29,16 @@ class HomeViewModel @Inject constructor(
             _recentlyPlayedFlow
         ) {
             userData, recommendations, recentlyPlayed ->
-            when (recentlyPlayed.isEmpty() || recommendations.isEmpty() || userData.authState.isNullOrBlank()) {
-                true -> HomeUiState.Loading
-                false ->  HomeUiState.Success(
-                    userImageUrl = userData.imageUrl,
-                    topPicks = recommendations,
-                    recentlyPlayed = recentlyPlayed
-                )
+            if (userData.authState == null) HomeUiState.Error
+            else {
+                when (recentlyPlayed.isEmpty() || recommendations.isEmpty()) {
+                    true -> HomeUiState.Loading
+                    false -> HomeUiState.Success(
+                        userImageUrl = userData.imageUrl,
+                        topPicks = recommendations,
+                        recentlyPlayed = recentlyPlayed
+                    )
+                }
             }
         }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), HomeUiState.Loading)

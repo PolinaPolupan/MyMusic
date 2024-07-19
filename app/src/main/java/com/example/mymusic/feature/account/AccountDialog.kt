@@ -46,7 +46,9 @@ fun AccountDialog(
             contract = ActivityResultContracts.StartActivityForResult()) { result ->
             run {
                 if (result.resultCode == Activity.RESULT_OK) {
-                    accountViewModel.handleAuthorizationResponse(result.data!!)
+                    accountViewModel.handleAuthorizationResponse(result.data!!) {
+                        /*TODO*/
+                    }
                 }
             }
         }

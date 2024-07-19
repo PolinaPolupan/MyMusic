@@ -52,8 +52,10 @@ fun LoginScreen(
             contract = ActivityResultContracts.StartActivityForResult()) { result ->
             run {
                 if (result.resultCode == Activity.RESULT_OK) {
-                    loginViewModel.handleAuthorizationResponse(result.data!!)
-                    onNavigateToHome()
+                    loginViewModel.handleAuthorizationResponse(result.data!!) {
+                        loginViewModel.refresh() // Load user's music
+                        onNavigateToHome()
+                    }
                 }
             }
         }

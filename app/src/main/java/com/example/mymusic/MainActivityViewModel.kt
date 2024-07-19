@@ -27,9 +27,8 @@ class MainActivityViewModel @Inject constructor(
             }
 
     suspend fun restoreState() {
-        Log.i("MainActivity", authState.toString())
+        Log.i("MainActivity", authState.first()?.toString() ?: "Auth state can't be loaded")
         authorizationManager.restoreState(authState.first())
-
     }
 
     suspend fun refresh() {

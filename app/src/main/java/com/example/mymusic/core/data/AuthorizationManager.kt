@@ -74,13 +74,17 @@ class AuthorizationManager @Inject constructor(
     }
 
     fun restoreState(jsonString: String?) {
-        if(jsonString != null && !TextUtils.isEmpty(jsonString) ) {
+        if (jsonString != null && !TextUtils.isEmpty(jsonString) ) {
             try {
                 _authState = AuthState.jsonDeserialize(jsonString)
                 Log.i("MainActivity", "Access token: " + _authState.accessToken)
             } catch(jsonException: JSONException) {
-                Log.d("MainActivity", "Failed to load auth state")
+                Log.d("MainActivity", "JSON exception: Init empty auth state")
+                _authState = AuthState()
             }
+        } else {
+            Log.d("MainActivity", "Auth state is null: Init empty auth state")
+            _authState = AuthState()
         }
     }
 
@@ -121,7 +125,7 @@ class AuthorizationManager @Inject constructor(
         return _authorizationService.getAuthorizationRequestIntent(request)
     }
 
-    fun handleAuthorizationResponse(intent: Intent) {
+    fun handleAuthorizationResponse(intent: Intent, onSuccess: () -> Unit) {
         val authorizationResponse: AuthorizationResponse? = AuthorizationResponse.fromIntent(intent)
         val error = AuthorizationException.fromIntent(intent)
 
@@ -132,12 +136,14 @@ class AuthorizationManager @Inject constructor(
         if (tokenExchangeRequest != null) {
             _authorizationService.performTokenRequest(tokenExchangeRequest) { response, exception ->
                 if (exception != null) {
+                    Log.e("MainActivity", exception.errorDescription.toString())
                     _authState = AuthState()
                 } else {
                     if (response != null) {
                         _authState.update(response, exception)
                         makeApiCall()
                         persistState(_authState.jsonSerializeString())
+                        onSuccess()
                     }
                 }
             }
@@ -178,6 +184,7 @@ class AuthorizationManager @Inject constructor(
 
                         val user: SpotifyUser = Json.decodeFromString(jsonBody)
                         updateUserData(user)
+                        persistState(_authState.jsonSerializeString())
                         if (user.images.isNotEmpty()) updateUserImageUrl(user.images[0].url) else updateUserImageUrl("")
 
                     } catch (e: Exception) {
