@@ -84,9 +84,14 @@ dependencies {
     implementation(libs.network.response.adapter)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.hilt.common)
+    implementation(libs.androidx.hilt.work)
+
     annotationProcessor(libs.room.compiler)
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
     testImplementation(libs.androidx.core)

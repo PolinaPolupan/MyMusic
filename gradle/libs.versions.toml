@@ -27,6 +27,10 @@ lifecycleRuntimeComposeAndroid = "2.8.3"
 plugin-serailization = "2.0.0"
 retrofit = "2.11.0"
 room = "2.6.1"
+workRuntimeKtx = "2.9.0"
+hiltCommon = "1.2.0"
+hiltWork = "1.2.0"
+androidxHiltCompiler = "1.2.0"
 
 [libraries]
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
@@ -54,7 +58,9 @@ androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navig
 androidx-junit-test-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junit-test" }
 androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 androidx-palette = { group = "androidx.palette", name = "palette-ktx", version.ref = "palette" }
-appauth = { module = "net.openid:appauth", version.ref = "appauth" }
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "androidxHiltCompiler" }
+appauth = { group = "net.openid", name = "appauth", version.ref = "appauth" }
 converter-gson = { group = "com.squareup.retrofit2", name= "converter-gson", version.ref = "converterGson" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
@@ -68,6 +74,8 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-hilt-common = { group = "androidx.hilt", name = "hilt-common", version.ref = "hiltCommon" }
+androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltWork" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
