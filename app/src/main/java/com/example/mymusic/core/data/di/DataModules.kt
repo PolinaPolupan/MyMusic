@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
+import com.example.mymusic.core.data.sync.SyncManager
 import com.example.mymusic.core.data.AuthorizationManager
 import com.example.mymusic.core.data.Constants
 import com.example.mymusic.core.data.local.MusicDao
@@ -74,4 +75,11 @@ object DatabaseModule {
 
     @Provides
     fun provideMusicDao(database: MusicDatabase): MusicDao = database.musicDao()
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object SyncModule {
+
+    fun provideSyncManager(@ApplicationContext context: Context): SyncManager = SyncManager(context)
 }

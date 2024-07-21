@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymusic.core.data.AuthorizationManager
-import com.example.mymusic.core.data.MusicRepository
+import com.example.mymusic.core.data.sync.SyncManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -12,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authorizationManager: AuthorizationManager,
-    private val musicRepository: MusicRepository
+    private val syncManager: SyncManager
 ): ViewModel() {
 
     fun signIn(): Intent {
@@ -25,7 +25,7 @@ class LoginViewModel @Inject constructor(
 
     fun refresh() {
         viewModelScope.launch {
-            musicRepository.refresh()
+            syncManager.refresh()
         }
     }
 }
