@@ -9,6 +9,7 @@ import android.util.Log
 import com.example.mymusic.core.data.di.ApplicationScope
 import com.example.mymusic.core.data.di.IoDispatcher
 import com.example.mymusic.core.data.network.model.SpotifyUser
+import com.example.mymusic.core.data.repository.UserDataRepository
 import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
@@ -78,13 +79,21 @@ class AuthorizationManager @Inject constructor(
             try {
                 _authState = AuthState.jsonDeserialize(jsonString)
                 Log.i("MainActivity", "Access token: " + _authState.accessToken)
+                makeApiCall()
+                if (_authState.accessToken.isNullOrEmpty()) {
+                    Log.e("MainActivity", "Access token is null: Init empty auth state")
+                    _authState = AuthState()
+                    persistState("") // Init to the empty auth state. User will be redirected to the login screen
+                }
             } catch(jsonException: JSONException) {
                 Log.d("MainActivity", "JSON exception: Init empty auth state")
                 _authState = AuthState()
+                persistState("") // Init to the empty auth state. User will be redirected to the login screen
             }
         } else {
             Log.d("MainActivity", "Auth state is null: Init empty auth state")
             _authState = AuthState()
+            persistState("") // Init to the empty auth state. User will be redirected to the login screen
         }
     }
 
@@ -189,6 +198,8 @@ class AuthorizationManager @Inject constructor(
 
                     } catch (e: Exception) {
                         Log.e("MainActivity", "API call error!")
+                        _authState = AuthState()
+                        persistState("") // Init to the empty auth state. User will be redirected to the login screen
                     }
                 }
             }
@@ -222,5 +233,12 @@ class AuthorizationManager @Inject constructor(
                 )
             }
         }
+    }
+
+    /**
+     * [resetAuthState] sets auth state to the empty state. Primarily is used for testing auth flow
+     */
+    fun resetAuthState() {
+        _authState = AuthState()
     }
 }
