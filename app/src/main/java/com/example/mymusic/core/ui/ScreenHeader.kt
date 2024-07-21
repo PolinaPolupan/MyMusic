@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
+import com.example.mymusic.core.designSystem.component.CirclePlaceholder
 import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.feature.account.AccountDialog
@@ -31,7 +33,8 @@ import com.example.mymusic.feature.account.AccountDialog
 fun ScreenHeader(
     @StringRes titleRes: Int,
     imageUrl: String?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isLoading: Boolean = false
 ) {
     /* Show account when the picture is clicked. */
     var showAccountDialog by rememberSaveable { mutableStateOf(false) }
@@ -55,12 +58,17 @@ fun ScreenHeader(
             )
             IconButton(
                 modifier = Modifier.clip(RoundedCornerShape(100)),
-                onClick = { showAccountDialog = true }
+                onClick = { showAccountDialog = true },
+                enabled = !isLoading
             ) {
-                NetworkImage(
-                    imageUrl = imageUrl ?: "",
-                    defaultImageRes = R.drawable.spotify_logo_white_on_green
-                )
+                if (isLoading) {
+                    CirclePlaceholder(radius = 32.dp, modifier = Modifier.fillMaxSize())
+                } else {
+                    NetworkImage(
+                        imageUrl = imageUrl ?: "",
+                        defaultImageRes = R.drawable.spotify_logo_white_on_green
+                    )
+                }
             }
         }
     }
@@ -72,7 +80,20 @@ fun ScreenHeaderPreview() {
     MyMusicTheme {
         ScreenHeader(
             titleRes = R.string.listen_now,
-            imageUrl = ""
+            imageUrl = "",
+            isLoading = false
+        )
+    }
+}
+
+@Preview
+@Composable
+fun ScreenHeaderLoadingPreview() {
+    MyMusicTheme {
+        ScreenHeader(
+            titleRes = R.string.listen_now,
+            imageUrl = "",
+            isLoading = true
         )
     }
 }

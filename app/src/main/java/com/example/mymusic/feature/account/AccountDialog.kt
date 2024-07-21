@@ -47,7 +47,7 @@ fun AccountDialog(
             run {
                 if (result.resultCode == Activity.RESULT_OK) {
                     accountViewModel.handleAuthorizationResponse(result.data!!) {
-                        /*TODO*/
+                        accountViewModel.refresh()
                     }
                 }
             }
