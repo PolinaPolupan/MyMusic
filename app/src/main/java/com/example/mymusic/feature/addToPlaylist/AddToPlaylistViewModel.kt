@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.core.data.MusicRepository
+import com.example.mymusic.core.data.repository.MusicRepository
 import com.example.mymusic.core.ui.SortOption
 import com.example.mymusic.model.SimplifiedPlaylist
 import com.example.mymusic.model.Track

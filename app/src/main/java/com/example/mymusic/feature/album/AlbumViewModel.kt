@@ -3,7 +3,7 @@ package com.example.mymusic.feature.album
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.core.data.MusicRepository
+import com.example.mymusic.core.data.repository.MusicRepository
 import com.example.mymusic.model.Album
 import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedTrack

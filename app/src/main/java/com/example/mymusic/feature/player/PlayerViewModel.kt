@@ -3,7 +3,7 @@ package com.example.mymusic.feature.player
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.core.data.MusicRepository
+import com.example.mymusic.core.data.repository.MusicRepository
 import com.example.mymusic.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow

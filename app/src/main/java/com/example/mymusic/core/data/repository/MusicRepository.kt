@@ -1,4 +1,4 @@
-package com.example.mymusic.core.data
+package com.example.mymusic.core.data.repository
 
 import android.util.Log
 import com.example.mymusic.core.data.di.DefaultDispatcher
@@ -9,7 +9,6 @@ import com.example.mymusic.core.data.local.model.crossRef.PlaylistTrackCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.SimplifiedTrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.TrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.entities.toExternal
-import com.example.mymusic.core.data.local.model.entities.toExternalSimplified
 import com.example.mymusic.core.data.local.model.toExternal
 import com.example.mymusic.core.data.local.model.toExternalSimplified
 import com.example.mymusic.core.data.network.MyMusicAPIService
