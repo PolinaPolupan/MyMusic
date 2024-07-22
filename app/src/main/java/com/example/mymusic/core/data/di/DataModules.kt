@@ -20,6 +20,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -44,7 +45,11 @@ object NetworkModule {
     fun provideAPIService(
         authorizationManager: AuthorizationManager
     ): MyMusicAPIService  {
+        val logger = HttpLoggingInterceptor()
+        logger.level = HttpLoggingInterceptor.Level.BASIC
+
         val client = OkHttpClient.Builder()
+            .addInterceptor(logger)
             .addInterceptor(TokenInterceptor(authorizationManager))
             .build()
         return Retrofit.Builder()
