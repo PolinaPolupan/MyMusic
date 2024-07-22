@@ -1,5 +1,6 @@
 package com.example.mymusic.core.data.local
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.RoomWarnings
@@ -50,6 +51,10 @@ interface MusicDao {
     @Transaction
     @Query("SELECT * from recently_played")
     fun observeRecentlyPlayed(): Flow<List<LocalRecentlyPlayedWithArtists>>
+
+    @Transaction
+    @Query("SELECT * from recently_played")
+    fun getRecentlyPlayed(): PagingSource<Int, LocalRecentlyPlayedWithArtists>
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH) // Is used to supress compiler warnings,
     // because we can access the other fields (e.g. trackId, trackName) via album and list of artists

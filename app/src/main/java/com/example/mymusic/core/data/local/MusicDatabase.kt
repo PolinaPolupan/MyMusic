@@ -17,6 +17,7 @@ import com.example.mymusic.core.data.local.model.entities.LocalSimplifiedTrack
 import com.example.mymusic.core.data.local.model.crossRef.PlaylistTrackCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.SimplifiedTrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.TrackArtistCrossRef
+import com.example.mymusic.core.data.local.model.entities.RemoteKeys
 
 @Database(entities = [
     LocalArtist::class,
@@ -33,10 +34,13 @@ import com.example.mymusic.core.data.local.model.crossRef.TrackArtistCrossRef
     LocalSavedAlbum::class,
     LocalPlaylist::class,
     LocalSavedPlaylist::class,
-    PlaylistTrackCrossRef::class],
+    PlaylistTrackCrossRef::class,
+    RemoteKeys::class],
     version = 1,
     exportSchema = false)
 abstract class MusicDatabase : RoomDatabase() {
 
     abstract fun musicDao(): MusicDao
+
+    abstract fun remoteKeysDao(): RemoteKeysDao
 }

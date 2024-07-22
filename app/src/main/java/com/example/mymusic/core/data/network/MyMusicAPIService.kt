@@ -19,7 +19,9 @@ interface MyMusicAPIService {
     suspend fun getRecommendations(): NetworkResponse<RecommendationsResponse, ErrorResponse>
 
     @GET("https://api.spotify.com/v1/me/player/recently-played")
-    suspend fun getRecentlyPlayed(): NetworkResponse<RecentlyPlayedTracksResponse, ErrorResponse>
+    suspend fun getRecentlyPlayed(
+        @Query("before") before: String
+    ): NetworkResponse<RecentlyPlayedTracksResponse, ErrorResponse>
 
     @GET("https://api.spotify.com/v1/albums/{id}/tracks")
     suspend fun getAlbumTracks(@Path("id") id: String): NetworkResponse<AlbumTracksResponse, ErrorResponse>

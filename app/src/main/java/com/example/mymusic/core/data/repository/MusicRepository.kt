@@ -1,8 +1,14 @@
 package com.example.mymusic.core.data.repository
 
 import android.util.Log
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.example.mymusic.core.data.di.DefaultDispatcher
 import com.example.mymusic.core.data.local.MusicDao
+import com.example.mymusic.core.data.local.MusicDatabase
 import com.example.mymusic.core.data.local.model.crossRef.AlbumArtistCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.AlbumTrackCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.PlaylistTrackCrossRef
@@ -21,7 +27,6 @@ import com.example.mymusic.core.data.network.model.RecommendationsResponse
 import com.example.mymusic.core.data.network.model.SavedAlbum
 import com.example.mymusic.core.data.network.model.SavedAlbumsResponse
 import com.example.mymusic.core.data.network.model.SavedPlaylistResponse
-import com.example.mymusic.core.data.network.model.SpotifyPlayHistoryObject
 import com.example.mymusic.core.data.network.model.SpotifySimplifiedPlaylist
 import com.example.mymusic.core.data.network.model.SpotifySimplifiedTrack
 import com.example.mymusic.core.data.network.model.SpotifyTrack
@@ -46,18 +51,13 @@ import javax.inject.Inject
 class MusicRepository @Inject constructor(
     private val musicDao: MusicDao,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
-    private val apiService: MyMusicAPIService
+    private val apiService: MyMusicAPIService,
+    private val database: MusicDatabase
 ) {
 
     fun observeRecommendations(): Flow<List<Track>> {
          return musicDao.observeRecommendations().map { tracks ->
              tracks.toExternal()
-        }
-    }
-
-    fun observeRecentlyPlayed(): Flow<List<Track>> {
-        return musicDao.observeRecentlyPlayed().map {tracks ->
-            tracks.toExternal()
         }
     }
 
@@ -144,6 +144,24 @@ class MusicRepository @Inject constructor(
         }
     }
 
+    @OptIn(ExperimentalPagingApi::class)
+    fun observeRecentlyPlayed(): Flow<PagingData<Track>> {
+
+        val pagingSourceFactory = { database.musicDao().getRecentlyPlayed() }
+
+        return Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            remoteMediator = RecentlyPlayedRemoteMediator(
+                apiService,
+                database
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+            .map { it ->
+                it.map { it.toExternal() }
+            }
+    }
+
     suspend fun refresh() {
         withContext(dispatcher) {
 
@@ -162,17 +180,20 @@ class MusicRepository @Inject constructor(
                 musicDao.upsertRecommendations(remoteMusic.toLocalRecommendations())
             }
 
-            val recentlyPlayed = getRecentlyPlayed()
+            val time = System.currentTimeMillis()
+            val recentlyPlayed = getRecentlyPlayed(time.toString())?.items
 
-            if (recentlyPlayed.isNotEmpty()) {
+            if (recentlyPlayed != null) {
+                if (recentlyPlayed.isNotEmpty()) {
 
-                musicDao.deleteRecentlyPlayed()
+                    musicDao.deleteRecentlyPlayed()
 
-                for (track in recentlyPlayed) {
-                    upsertTrack(track.track)
+                    for (track in recentlyPlayed) {
+                        upsertTrack(track.track)
+                    }
+
+                    musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
                 }
-
-                musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
             }
 
             val savedAlbums = getSavedAlbums()
@@ -217,11 +238,11 @@ class MusicRepository @Inject constructor(
             musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(artist.id, album.id))
     }
 
-    private suspend fun getRecentlyPlayed(): List<SpotifyPlayHistoryObject> {
-        val response = apiService.getRecentlyPlayed()
-        val data = (response as? NetworkResponse.Success<RecentlyPlayedTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
+    private suspend fun getRecentlyPlayed(before: String): RecentlyPlayedTracksResponse? {
+        val response = apiService.getRecentlyPlayed(before = before)
+        val data = (response as? NetworkResponse.Success<RecentlyPlayedTracksResponse, ErrorResponse>?)?.body
 
-        return processResponse(response, data, emptyList())
+        return processResponse(response, data, null, request = "Get recently played")
     }
 
     private suspend fun getRecommendations(): List<SpotifyTrack> {
@@ -265,30 +286,30 @@ class MusicRepository @Inject constructor(
 
         return processResponse(response, data, null)
     }
+}
 
-    private fun <S, E, T> processResponse(response: NetworkResponse<S, E>, successData: T, errorData: T): T {
-        return when (response) {
-            is  NetworkResponse.Success -> {
-                Log.d("MainActivity", response.body.toString())
-                successData
-            }
+fun <S, E, T> processResponse(response: NetworkResponse<S, E>, successData: T, errorData: T, request: String? = null): T {
+    return when (response) {
+        is  NetworkResponse.Success -> {
+            Log.d("MainActivity", "Request: $request is successful: ${response.body.toString()}")
+            successData
+        }
 
-            is NetworkResponse.NetworkError -> {
-                Log.e("MainActivity", response.error.message ?: "Network Error")
-                errorData
-            }
+        is NetworkResponse.NetworkError -> {
+            Log.e("MainActivity", "Request: $request failed ${response.error.message ?: "Network Error"}")
+            errorData
+        }
 
-            is NetworkResponse.ServerError -> {
-                Log.e("MainActivity", ("Code: " + response.code.toString()))
-                Log.e("MainActivity", response.error?.message ?: "Server Error")
-                errorData
-            }
+        is NetworkResponse.ServerError -> {
+            Log.e("MainActivity", ("Code: " + response.code.toString()))
+            Log.e("MainActivity", "Request: $request failed ${response.error?.message ?: "Server Error"}")
+            errorData
+        }
 
-            is NetworkResponse.UnknownError -> {
-                Log.e("MainActivity", ("Code: " + response.code.toString()))
-                Log.e("MainActivity", response.error.message ?: "Unknown Error")
-                errorData
-            }
+        is NetworkResponse.UnknownError -> {
+            Log.e("MainActivity", ("Code: " + response.code.toString()))
+            Log.e("MainActivity", "Request: $request failed ${response.error.message ?: "Unknown Error"}")
+            errorData
         }
     }
 }
