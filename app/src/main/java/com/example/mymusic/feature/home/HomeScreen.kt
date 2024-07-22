@@ -11,12 +11,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -35,6 +40,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
 import com.example.mymusic.core.designSystem.component.SquarePlaceholder
@@ -50,6 +58,7 @@ import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.ui.FeaturedTrack
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.TrackCard
+import com.example.mymusic.model.Track
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
@@ -73,12 +82,16 @@ internal fun HomeScreen(
     }
     // Show ui if the data is ready and user is authorized
     else if (authenticatedUiState is AuthenticatedUiState.Success && !isSyncing) {
+
+        val recentlyPlayed = viewModel.recentlyPlayed.collectAsLazyPagingItems()
+
         HomeContent(
             uiState = uiState,
             userImageUrl = (authenticatedUiState as AuthenticatedUiState.Success).userImageUrl,
             onTrackClick = onTrackClick,
+            recentlyPlayed = recentlyPlayed,
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         )
     }
     // If the data is not ready - show placeholders instead of ui
@@ -87,8 +100,9 @@ internal fun HomeScreen(
             uiState = HomeUiState.Loading,
             userImageUrl = "",
             onTrackClick = {},
+            recentlyPlayed = null,
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         )
     }
 }
@@ -99,7 +113,8 @@ internal fun HomeContent(
     uiState: HomeUiState,
     userImageUrl: String?,
     onTrackClick: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    recentlyPlayed: LazyPagingItems<Track>?
 ) {
     val scrollState = rememberScrollState()
 
@@ -122,11 +137,12 @@ internal fun HomeContent(
         pageCount = { pageCount }
     )
 
+
     DynamicThemePrimaryColorsFromImage(dominantColorState) {
         Box(
             contentAlignment = Alignment.TopCenter,
             modifier = modifier
-                .verticalScroll(scrollState)
+
                 .background(MaterialTheme.colorScheme.primary.darker(0.95f))
         ) {
             /* TODO: Bad behavior in case the image changes too fast */
@@ -155,7 +171,8 @@ internal fun HomeContent(
                 Spacer(modifier = Modifier.height(16.dp))
                 RecentlyPlayed(
                     uiState = uiState,
-                    onTrackClick = onTrackClick
+                    onTrackClick = onTrackClick,
+                    recentlyPlayed = recentlyPlayed
                 )
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.player_with_bottom_app_bar_height)))
             }
@@ -200,7 +217,6 @@ internal fun TopPicks(
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.top_picks),
@@ -286,12 +302,10 @@ internal fun TopPicks(
     }
 }
 
-
-
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun RecentlyPlayed(
     uiState: HomeUiState,
+    recentlyPlayed: LazyPagingItems<Track>?,
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -309,48 +323,40 @@ internal fun RecentlyPlayed(
         when (uiState) {
             HomeUiState.Loading -> {
 
-                val pageCount = 5
-                val pagerState = rememberPagerState(
-                    pageCount = { pageCount }
-                )
-
-                HorizontalPager(
-                    state = pagerState,
-                    pageSize = PageSize.Fixed(dimensionResource(id = R.dimen.track_card_size)),
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(dimensionResource(id = R.dimen.track_card_size))
-                        .padding(start = 8.dp)
-                ) {
-                    SquarePlaceholder(
-                        size = dimensionResource(id = R.dimen.track_card_size),
-                        modifier = modifier
-                            .padding(start = 8.dp)
-                    )
+                LazyRow {
+                    items(count = 5) {
+                        SquarePlaceholder(
+                            size = dimensionResource(id = R.dimen.track_card_size),
+                            modifier = modifier
+                                .padding(start = 8.dp)
+                        )
+                    }
                 }
             }
             is HomeUiState.Success -> {
 
-                val pageCount = uiState.recentlyPlayed.size
-                val pagerState = rememberPagerState(
-                    pageCount = { pageCount }
-                )
+                LazyRow {
+                    items(items = recentlyPlayed!!.itemSnapshotList) { track ->
+                        TrackCard(
+                            name = track!!.name,
+                            artists = track.artists,
+                            imageUrl = track.album.imageUrl,
+                            onClick = { onTrackClick(track.id) },
+                            modifier = Modifier.padding(4.dp)
+                        )
+                    }
 
-                HorizontalPager(
-                    state = pagerState,
-                    pageSize = PageSize.Fixed(dimensionResource(id = R.dimen.track_card_size)),
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(dimensionResource(id = R.dimen.track_card_size))
-                        .padding(start = 8.dp)
-                ) { page ->
-                    TrackCard(
-                        name = uiState.recentlyPlayed[page].name,
-                        artists = uiState.recentlyPlayed[page].artists,
-                        imageUrl = uiState.recentlyPlayed[page].album.imageUrl,
-                        onClick = { onTrackClick(uiState.recentlyPlayed[page].id) },
-                        modifier = Modifier.padding(4.dp)
-                    )
+                    when (recentlyPlayed.loadState.append) {
+                        is LoadState.Error -> {}
+                        LoadState.Loading -> {
+                            item {
+                            CircularProgressIndicator(
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(4.dp)
+                            ) }
+                        }
+                        is LoadState.NotLoading -> {}
+                    }
                 }
             }
         }
@@ -365,9 +371,10 @@ fun HomePreview() {
     val tracks = PreviewParameterData.tracks
     MyMusicTheme {
         HomeContent(
-            uiState = HomeUiState.Success(tracks, tracks),
+            uiState = HomeUiState.Success(tracks),
             userImageUrl = null,
             onTrackClick = {},
+            recentlyPlayed = null
         )
     }
 }
@@ -380,6 +387,7 @@ fun HomeLoadingPreview() {
             uiState = HomeUiState.Loading,
             userImageUrl = null,
             onTrackClick = {},
+            recentlyPlayed = null
         )
     }
 }
