@@ -238,7 +238,7 @@ class AuthorizationManager @Inject constructor(
     /**
      * [resetAuthState] sets auth state to the empty state. Primarily is used for testing auth flow
      */
-    fun resetAuthState() {
+    private fun resetAuthState() {
         _authState = AuthState()
     }
 }
