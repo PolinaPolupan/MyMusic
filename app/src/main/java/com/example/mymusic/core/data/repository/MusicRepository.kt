@@ -1,6 +1,5 @@
 package com.example.mymusic.core.data.repository
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -13,7 +12,6 @@ import com.example.mymusic.core.data.local.model.crossRef.AlbumArtistCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.AlbumTrackCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.PlaylistTrackCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.SimplifiedTrackArtistCrossRef
-import com.example.mymusic.core.data.local.model.crossRef.TrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.entities.toExternal
 import com.example.mymusic.core.data.local.model.toExternal
 import com.example.mymusic.core.data.local.model.toExternalSimplified
@@ -34,9 +32,6 @@ import com.example.mymusic.core.data.network.model.toLocal
 import com.example.mymusic.core.data.network.model.toLocalAlbum
 import com.example.mymusic.core.data.network.model.toLocalRecommendations
 import com.example.mymusic.core.data.network.model.toLocalSaved
-import com.example.mymusic.core.data.network.model.toLocalSimplified
-import com.example.mymusic.core.data.network.model.toLocalSimplifiedTrack
-import com.example.mymusic.core.data.network.model.toLocalTrack
 import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedPlaylist
 import com.example.mymusic.model.SimplifiedTrack
@@ -108,7 +103,7 @@ class MusicRepository @Inject constructor(
             val track = getTrack(id)
 
             if (track != null) {
-                upsertTrack(track)
+                upsertTrack(track, musicDao)
             }
         }
     }
@@ -138,7 +133,7 @@ class MusicRepository @Inject constructor(
 
                 for (track in tracks) {
                     musicDao.upsertPlaylistTrackCrossRef(PlaylistTrackCrossRef(id, track.track.id))
-                    upsertTrack(track.track)
+                    upsertTrack(track.track, musicDao)
                 }
             }
         }
@@ -174,7 +169,7 @@ class MusicRepository @Inject constructor(
                 musicDao.deleteRecommendations()
 
                 for (track in remoteMusic) {
-                    upsertTrack(track)
+                    upsertTrack(track, musicDao)
                 }
 
                 musicDao.upsertRecommendations(remoteMusic.toLocalRecommendations())
@@ -189,7 +184,7 @@ class MusicRepository @Inject constructor(
                     musicDao.deleteRecentlyPlayed()
 
                     for (track in recentlyPlayed) {
-                        upsertTrack(track.track)
+                        upsertTrack(track.track, musicDao)
                     }
 
                     musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
@@ -203,11 +198,10 @@ class MusicRepository @Inject constructor(
                 musicDao.deleteSavedAlbums()
                 musicDao.upsertSavedAlbums(savedAlbums.toLocal())
                 musicDao.upsertAlbums(savedAlbums.toLocalAlbum())
-                for (album in savedAlbums) {
-                    val album = album.album
-                    musicDao.upsertSimplifiedArtists(album.artists.toLocal())
-                    for (artist in album.artists)
-                        musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(albumId = album.id, simplifiedArtistId = artist.id))
+                for (savedAlbum in savedAlbums) {
+                    musicDao.upsertSimplifiedArtists(savedAlbum.album.artists.toLocal())
+                    for (artist in savedAlbum.album.artists)
+                        musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(albumId = savedAlbum.album.id, simplifiedArtistId = artist.id))
                 }
             }
 
@@ -219,23 +213,6 @@ class MusicRepository @Inject constructor(
                 musicDao.upsertSavedPlaylists(savedPlaylists.toLocalSaved())
             }
         }
-    }
-
-    private suspend fun upsertTrack(track: SpotifyTrack) {
-        musicDao.upsertTrack(track.toLocalTrack())
-        musicDao.upsertSimplifiedTrack(track.toLocalSimplifiedTrack())
-        for (artist in track.artists) {
-            musicDao.upsertTrackArtistCrossRef(TrackArtistCrossRef(artist.id, track.id))
-            musicDao.upsertSimplifiedTrackArtistCrossRef(SimplifiedTrackArtistCrossRef(artist.id, track.id))
-        }
-
-        val album = track.album
-        musicDao.upsertAlbum(album.toLocal())
-        musicDao.upsertArtists(track.artists.toLocal())
-        musicDao.upsertSimplifiedArtists(track.artists.toLocalSimplified())
-        musicDao.upsertSimplifiedArtists(album.artists.toLocal())
-        for (artist in album.artists)
-            musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(artist.id, album.id))
     }
 
     private suspend fun getRecentlyPlayed(before: String): RecentlyPlayedTracksResponse? {
@@ -285,29 +262,5 @@ class MusicRepository @Inject constructor(
         val data = (response as? NetworkResponse.Success<SpotifyTrack, ErrorResponse>?)?.body
 
         return processResponse(response, data, null)
-    }
-}
-
-fun <S, E, T> processResponse(response: NetworkResponse<S, E>, successData: T, errorData: T): T {
-    return when (response) {
-        is  NetworkResponse.Success -> {
-            Log.d("MainActivity", "Request is successful: ${response.body.toString()}")
-            successData
-        }
-
-        is NetworkResponse.NetworkError -> {
-            Log.e("MainActivity", "Request failed ${response.error.message ?: "Network Error"}")
-            errorData
-        }
-
-        is NetworkResponse.ServerError -> {
-            Log.e("MainActivity", "Request failed. Code: + ${response.code.toString()} ${response.error?.message ?: "Server Error"}")
-            errorData
-        }
-
-        is NetworkResponse.UnknownError -> {
-            Log.e("MainActivity", "Request failed. Code: + ${response.code.toString()} ${response.error.message ?: "Unknown Error"}")
-            errorData
-        }
     }
 }

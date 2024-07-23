@@ -10,18 +10,11 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.mymusic.core.data.local.MusicDatabase
 import com.example.mymusic.core.data.local.model.LocalRecentlyPlayedWithArtists
-import com.example.mymusic.core.data.local.model.crossRef.AlbumArtistCrossRef
-import com.example.mymusic.core.data.local.model.crossRef.SimplifiedTrackArtistCrossRef
-import com.example.mymusic.core.data.local.model.crossRef.TrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.entities.RemoteKeys
 import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.core.data.network.model.ErrorResponse
 import com.example.mymusic.core.data.network.model.RecentlyPlayedTracksResponse
-import com.example.mymusic.core.data.network.model.SpotifyTrack
 import com.example.mymusic.core.data.network.model.toLocal
-import com.example.mymusic.core.data.network.model.toLocalSimplified
-import com.example.mymusic.core.data.network.model.toLocalSimplifiedTrack
-import com.example.mymusic.core.data.network.model.toLocalTrack
 import com.haroldadmin.cnradapter.NetworkResponse
 import java.io.IOException
 import javax.inject.Inject
@@ -84,7 +77,7 @@ class RecentlyPlayedRemoteMediator @Inject constructor(
                 musicDatabase.remoteKeysDao().insertAll(keys)
 
                 for (track in recentlyPlayed) {
-                    upsertTrack(track.track)
+                    upsertTrack(track.track, musicDao)
                 }
 
                 musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
@@ -119,20 +112,4 @@ class RecentlyPlayedRemoteMediator @Inject constructor(
         }
     }
 
-    private suspend fun upsertTrack(track: SpotifyTrack) {
-        musicDao.upsertTrack(track.toLocalTrack())
-        musicDao.upsertSimplifiedTrack(track.toLocalSimplifiedTrack())
-        for (artist in track.artists) {
-            musicDao.upsertTrackArtistCrossRef(TrackArtistCrossRef(artist.id, track.id))
-            musicDao.upsertSimplifiedTrackArtistCrossRef(SimplifiedTrackArtistCrossRef(artist.id, track.id))
-        }
-
-        val album = track.album
-        musicDao.upsertAlbum(album.toLocal())
-        musicDao.upsertArtists(track.artists.toLocal())
-        musicDao.upsertSimplifiedArtists(track.artists.toLocalSimplified())
-        musicDao.upsertSimplifiedArtists(album.artists.toLocal())
-        for (artist in album.artists)
-            musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(artist.id, album.id))
-    }
 }
