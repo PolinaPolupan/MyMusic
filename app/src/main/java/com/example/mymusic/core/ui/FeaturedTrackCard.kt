@@ -1,6 +1,5 @@
 package com.example.mymusic.core.ui
 
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,23 +9,20 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mymusic.R
+import com.example.mymusic.core.designSystem.component.ClippedShadowCard
 import com.example.mymusic.core.designSystem.component.NetworkImage
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
@@ -35,7 +31,6 @@ import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.saturation
 import com.example.mymusic.model.Artist
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeaturedTrack(
     name: String,
@@ -46,15 +41,15 @@ fun FeaturedTrack(
     imageModifier: Modifier = Modifier,
     innerPadding: PaddingValues = PaddingValues(0.dp)
 ) {
-    Card(
-        interactionSource = remember { MutableInteractionSource() },
+    ClippedShadowCard(
+        elevation = 32.dp,
         onClick = onClick,
-        shape = RoundedCornerShape(15.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        modifier = modifier
-            .size(
-                dimensionResource(id = R.dimen.top_picks_card_min_size)
-            )
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.outlinedCardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.1f)),
+        modifier = modifier.size(
+            dimensionResource(id = R.dimen.top_picks_card_min_size)
+        )
     ) {
         Box(
             modifier = Modifier
