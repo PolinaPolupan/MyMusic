@@ -24,7 +24,8 @@ import com.example.mymusic.core.designSystem.util.saturation
 fun MyMusicGradientBackground(
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.BottomCenter,
-    content: @Composable () -> Unit,
+    darker: Float = 0.85f,
+    content: @Composable () -> Unit
 ) {
     Box(
         contentAlignment = contentAlignment,
@@ -32,7 +33,7 @@ fun MyMusicGradientBackground(
             .fillMaxSize()
             .background(
                 MaterialTheme.colorScheme.tertiary
-                    .darker(0.85f)
+                    .darker(darker)
                     .saturation(3f)
             )
             .linearGradientScrim(

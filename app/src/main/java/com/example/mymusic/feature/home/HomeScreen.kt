@@ -1,5 +1,9 @@
 package com.example.mymusic.feature.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -11,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
@@ -19,19 +22,20 @@ import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.asIntState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -55,10 +59,12 @@ import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
+import com.example.mymusic.core.designSystem.util.rememberPrevious
 import com.example.mymusic.core.ui.FeaturedTrack
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.TrackCard
 import com.example.mymusic.model.Track
+import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
@@ -142,7 +148,6 @@ internal fun HomeContent(
         Box(
             contentAlignment = Alignment.TopCenter,
             modifier = modifier
-
                 .background(MaterialTheme.colorScheme.primary.darker(0.95f))
         ) {
             /* TODO: Bad behavior in case the image changes too fast */
@@ -187,24 +192,42 @@ internal fun BlurredImageHeader(
     pagerState: PagerState,
     scrollState: ScrollState,
 ) {
-    when (uiState) {
-        HomeUiState.Loading -> {
-            Spacer(modifier = Modifier.height(250.dp))
+    if (uiState is HomeUiState.Loading) {
+        Spacer(modifier = Modifier.height(250.dp))
+    }
+    AnimatedVisibility(
+        visible = uiState is HomeUiState.Success,
+        enter = fadeIn(tween(delayMillis = 2000)),
+        exit = fadeOut(tween(delayMillis = 2000))
+    ) {
+        // Blurred image updates with a delay of 1.5 seconds
+        val page = pagerState.currentPage % (uiState as HomeUiState.Success).topPicks.size
+
+        var pageInd by remember {
+            mutableIntStateOf(page)
         }
-        is HomeUiState.Success -> {
-            BlurredImageHeader(
-                imageUrl = uiState.topPicks[pagerState.currentPage % uiState.topPicks.size].album.imageUrl,
-                alpha = max(
-                    0.0f,
-                    lerpScrollOffset(
-                        scrollState = scrollState,
-                        valueMin = 100f,
-                        valueMax = 300f,
-                        reverse = true
-                    ) - 0.3f
-                )
+
+        val onUpdate = { pageInd = page }
+
+        val launchChange by rememberUpdatedState(newValue = onUpdate)
+
+        LaunchedEffect(key1 = page) {
+            delay(1500)
+            launchChange()
+        }
+
+        BlurredImageHeader(
+            imageUrl = uiState.topPicks[pageInd].album.imageUrl,
+            alpha = max(
+                0.0f,
+                lerpScrollOffset(
+                    scrollState = scrollState,
+                    valueMin = 100f,
+                    valueMax = 300f,
+                    reverse = true
+                ) - 0.3f
             )
-        }
+        )
     }
 }
 
@@ -417,10 +440,8 @@ fun Modifier.carouselPageOffset(pagerState: PagerState, page: Int) = graphicsLay
         fraction = 1f - pageOffset.coerceIn(0f, 1.15f)
     )
     alpha = lerp(
-        start = 0.5f,
+        start = 0.95f,
         stop = 1.25f,
         fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1.25f)
     )
-    shadowElevation = 30f
-
 }

@@ -120,7 +120,16 @@ fun LibraryContent(
         ), label = "library:dividerAlpha"
     )
 
-    MyMusicGradientBackground(modifier = modifier) {
+    val dissolveBackground: Float by animateFloatAsState(
+        if (scrollState.value >= 100) 1f else 0.75f,
+        animationSpec = tween(1000, easing = LinearOutSlowInEasing
+        ), label = "library:dissolve"
+    )
+
+    MyMusicGradientBackground(
+        modifier = modifier,
+        darker = dissolveBackground
+    ) {
         Box {
             LazyColumn(
                 state = lazyListState,
