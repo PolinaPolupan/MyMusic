@@ -32,12 +32,12 @@ fun <S, E, T> processResponse(response: NetworkResponse<S, E>, successData: T, e
         }
 
         is NetworkResponse.ServerError -> {
-            Log.e("MainActivity", "Request failed. Code: + ${response.code.toString()} ${response.error?.message ?: "Server Error"}")
+            Log.e("MainActivity", "Request failed. Code: ${response.code.toString()} ${response.error?.message ?: "Server Error"}")
             errorData
         }
 
         is NetworkResponse.UnknownError -> {
-            Log.e("MainActivity", "Request failed. Code: + ${response.code.toString()} ${response.error.message ?: "Unknown Error"}")
+            Log.e("MainActivity", "Request failed. Code: ${response.code.toString()} ${response.error.message ?: "Unknown Error"}")
             errorData
         }
     }

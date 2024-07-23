@@ -20,7 +20,6 @@ import com.example.mymusic.core.data.network.model.AlbumTracksResponse
 import com.example.mymusic.core.data.network.model.ErrorResponse
 import com.example.mymusic.core.data.network.model.PlaylistTrack
 import com.example.mymusic.core.data.network.model.PlaylistsTracksResponse
-import com.example.mymusic.core.data.network.model.RecentlyPlayedTracksResponse
 import com.example.mymusic.core.data.network.model.RecommendationsResponse
 import com.example.mymusic.core.data.network.model.SavedAlbum
 import com.example.mymusic.core.data.network.model.SavedAlbumsResponse
@@ -175,22 +174,6 @@ class MusicRepository @Inject constructor(
                 musicDao.upsertRecommendations(remoteMusic.toLocalRecommendations())
             }
 
-            val time = System.currentTimeMillis()
-            val recentlyPlayed = getRecentlyPlayed(time.toString())?.items
-
-            if (recentlyPlayed != null) {
-                if (recentlyPlayed.isNotEmpty()) {
-
-                    musicDao.deleteRecentlyPlayed()
-
-                    for (track in recentlyPlayed) {
-                        upsertTrack(track.track, musicDao)
-                    }
-
-                    musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
-                }
-            }
-
             val savedAlbums = getSavedAlbums()
 
             if (savedAlbums.isNotEmpty()) {
@@ -213,13 +196,6 @@ class MusicRepository @Inject constructor(
                 musicDao.upsertSavedPlaylists(savedPlaylists.toLocalSaved())
             }
         }
-    }
-
-    private suspend fun getRecentlyPlayed(before: String): RecentlyPlayedTracksResponse? {
-        val response = apiService.getRecentlyPlayed(before = before)
-        val data = (response as? NetworkResponse.Success<RecentlyPlayedTracksResponse, ErrorResponse>?)?.body
-
-        return processResponse(response, data, null)
     }
 
     private suspend fun getRecommendations(): List<SpotifyTrack> {
