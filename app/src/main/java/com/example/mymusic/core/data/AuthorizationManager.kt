@@ -45,7 +45,7 @@ class AuthorizationManager @Inject constructor(
     // Variables which are used for managing the auth flow
     private lateinit var _authorizationService: AuthorizationService
     private lateinit var _authServiceConfig: AuthorizationServiceConfiguration
-    private lateinit var _authState: AuthState
+    private var _authState: AuthState = AuthState()
 
     init {
         initAuthServiceConfig()
@@ -82,17 +82,14 @@ class AuthorizationManager @Inject constructor(
                 makeApiCall()
                 if (_authState.accessToken.isNullOrEmpty()) {
                     Log.e("MainActivity", "Access token is null: Init empty auth state")
-                    _authState = AuthState()
                     persistState("") // Init to the empty auth state. User will be redirected to the login screen
                 }
             } catch(jsonException: JSONException) {
                 Log.d("MainActivity", "JSON exception: Init empty auth state")
-                _authState = AuthState()
                 persistState("") // Init to the empty auth state. User will be redirected to the login screen
             }
         } else {
             Log.d("MainActivity", "Auth state is null: Init empty auth state")
-            _authState = AuthState()
             persistState("") // Init to the empty auth state. User will be redirected to the login screen
         }
     }
