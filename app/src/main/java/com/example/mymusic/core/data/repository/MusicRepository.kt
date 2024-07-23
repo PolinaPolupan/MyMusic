@@ -242,7 +242,7 @@ class MusicRepository @Inject constructor(
         val response = apiService.getRecentlyPlayed(before = before)
         val data = (response as? NetworkResponse.Success<RecentlyPlayedTracksResponse, ErrorResponse>?)?.body
 
-        return processResponse(response, data, null, request = "Get recently played")
+        return processResponse(response, data, null)
     }
 
     private suspend fun getRecommendations(): List<SpotifyTrack> {
@@ -288,27 +288,25 @@ class MusicRepository @Inject constructor(
     }
 }
 
-fun <S, E, T> processResponse(response: NetworkResponse<S, E>, successData: T, errorData: T, request: String? = null): T {
+fun <S, E, T> processResponse(response: NetworkResponse<S, E>, successData: T, errorData: T): T {
     return when (response) {
         is  NetworkResponse.Success -> {
-            Log.d("MainActivity", "Request: $request is successful: ${response.body.toString()}")
+            Log.d("MainActivity", "Request is successful: ${response.body.toString()}")
             successData
         }
 
         is NetworkResponse.NetworkError -> {
-            Log.e("MainActivity", "Request: $request failed ${response.error.message ?: "Network Error"}")
+            Log.e("MainActivity", "Request failed ${response.error.message ?: "Network Error"}")
             errorData
         }
 
         is NetworkResponse.ServerError -> {
-            Log.e("MainActivity", ("Code: " + response.code.toString()))
-            Log.e("MainActivity", "Request: $request failed ${response.error?.message ?: "Server Error"}")
+            Log.e("MainActivity", "Request failed. Code: + ${response.code.toString()} ${response.error?.message ?: "Server Error"}")
             errorData
         }
 
         is NetworkResponse.UnknownError -> {
-            Log.e("MainActivity", ("Code: " + response.code.toString()))
-            Log.e("MainActivity", "Request: $request failed ${response.error.message ?: "Unknown Error"}")
+            Log.e("MainActivity", "Request failed. Code: + ${response.code.toString()} ${response.error.message ?: "Unknown Error"}")
             errorData
         }
     }
