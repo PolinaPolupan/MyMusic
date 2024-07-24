@@ -1,9 +1,5 @@
 package com.example.mymusic.feature.home
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -27,10 +23,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.asIntState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
@@ -59,7 +53,6 @@ import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
-import com.example.mymusic.core.designSystem.util.rememberPrevious
 import com.example.mymusic.core.ui.FeaturedTrack
 import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.TrackCard
@@ -195,11 +188,8 @@ internal fun BlurredImageHeader(
     if (uiState is HomeUiState.Loading) {
         Spacer(modifier = Modifier.height(250.dp))
     }
-    AnimatedVisibility(
-        visible = uiState is HomeUiState.Success,
-        enter = fadeIn(tween(delayMillis = 2000)),
-        exit = fadeOut(tween(delayMillis = 2000))
-    ) {
+
+    if (uiState is HomeUiState.Success) {
         // Blurred image updates with a delay of 1.5 seconds
         val page = pagerState.currentPage % (uiState as HomeUiState.Success).topPicks.size
 
