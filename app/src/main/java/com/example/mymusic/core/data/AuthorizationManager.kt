@@ -144,6 +144,7 @@ class AuthorizationManager @Inject constructor(
                 if (exception != null) {
                     Log.e("MainActivity", exception.errorDescription.toString())
                     _authState = AuthState()
+                    persistState("")
                 } else {
                     if (response != null) {
                         _authState.update(response, exception)
@@ -168,6 +169,7 @@ class AuthorizationManager @Inject constructor(
                     .build()
             } else {
                 Log.e("MainActivity", "Error token response: ${ex.error} ${ex.errorDescription}, message: ${ex.message}")
+                persistState("")
             }
         }
         return newRequest
