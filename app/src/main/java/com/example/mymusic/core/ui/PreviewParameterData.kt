@@ -11,7 +11,7 @@ import com.example.mymusic.model.Track
 
 object PreviewParameterData {
 
-    val albums = listOf<SimplifiedAlbum>(
+    val simplifiedAlbums = listOf<SimplifiedAlbum>(
         SimplifiedAlbum(
             id = "6nxDQi0FeEwccEPJeNySoS",
             type = AlbumType.Album,
@@ -90,7 +90,7 @@ object PreviewParameterData {
     val tracks = listOf(
         Track(
             id = "0",
-            album = albums[1],
+            album = simplifiedAlbums[1],
             name = "New Rules",
             artists = listOf(
                 Artist(
@@ -102,7 +102,7 @@ object PreviewParameterData {
         ),
         Track(
             id = "1",
-            album = albums[0],
+            album = simplifiedAlbums[0],
             name = "Sugar",
             artists = listOf(
                 Artist(
@@ -114,7 +114,7 @@ object PreviewParameterData {
         ),
         Track(
             id = "2",
-            album = albums[0],
+            album = simplifiedAlbums[0],
             name = "Happier",
             artists = listOf(
                 Artist(
@@ -126,7 +126,7 @@ object PreviewParameterData {
         ),
         Track(
             id = "3",
-            album = albums[2],
+            album = simplifiedAlbums[2],
             name = "Blank Space",
             artists = listOf(
                 Artist(
@@ -146,7 +146,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "7lBPn6LpIvbvAihTRvBMig",
@@ -158,7 +158,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "7MXlTgQeo3IVlMpLnZuhxc",
@@ -170,7 +170,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "5qaEfEh1AtSdrdrByCP7qR",
@@ -182,7 +182,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "213x4gsFDm04hSqIUkg88w",
@@ -194,7 +194,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "5gXdinVZqeuDIVxogWzRk0",
@@ -206,7 +206,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "62yJjFtgkhUrXktIoSjgP2",
@@ -218,7 +218,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "7lBPn6LpIvbvAihTRvBMig",
@@ -230,7 +230,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "7MXlTgQeo3IVlMpLnZuhxc",
@@ -242,7 +242,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "5qaEfEh1AtSdrdrByCP7qR",
@@ -254,7 +254,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "213x4gsFDm04hSqIUkg88w",
@@ -266,7 +266,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "5gXdinVZqeuDIVxogWzRk0",
@@ -278,7 +278,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "62yJjFtgkhUrXktIoSjgP2",
@@ -290,7 +290,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "7lBPn6LpIvbvAihTRvBMig",
@@ -302,7 +302,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "7MXlTgQeo3IVlMpLnZuhxc",
@@ -314,7 +314,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "5qaEfEh1AtSdrdrByCP7qR",
@@ -326,7 +326,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "213x4gsFDm04hSqIUkg88w",
@@ -338,7 +338,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "5gXdinVZqeuDIVxogWzRk0",
@@ -350,7 +350,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "4P76CEIXrrWT2cgS1YrTMr",
@@ -362,7 +362,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "2OWKDTonST8HNko3dBlPPp",
@@ -374,7 +374,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "5eTNdkstwKaNahHf41fJ9u",
@@ -386,7 +386,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "7FCfMXYTIiQ9b4hDYs4Iol",
@@ -398,7 +398,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "76cy1WJvNGJTj78UqeA5zr",
@@ -410,7 +410,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "2ekn2ttSfGqwhhate0LSR0",
@@ -422,7 +422,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "4wNQAG2BzbVkLhdajjxGpR",
@@ -434,7 +434,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "10nqz67NQWWa7XPq7ycihi",
@@ -446,7 +446,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "2ls70nUDfjzm1lSRDuKxmw",
@@ -458,7 +458,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "71PmZqBXH0RUETqxpwlV0w",
@@ -470,7 +470,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
         Track(
             id = "7EpVQjqtKygiwJIASxMWNg",
@@ -482,7 +482,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-            album = albums[0]
+            album = simplifiedAlbums[0]
         ),
        Track(
             id = "1kKlhuQE0HXp1IwBRpaH2P",
@@ -494,7 +494,7 @@ object PreviewParameterData {
                     imageUrl = ""
                 )
             ),
-           album = albums[0]
+           album = simplifiedAlbums[0]
         )
     )
 

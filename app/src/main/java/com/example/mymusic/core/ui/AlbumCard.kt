@@ -80,7 +80,7 @@ fun AlbumCard(
 @Composable
 fun AlbumCardPreview() {
     MyMusicTheme {
-        val mockAlbum = PreviewParameterData.albums[0]
+        val mockAlbum = PreviewParameterData.simplifiedAlbums[0]
         AlbumCard(
             name = mockAlbum.name,
             artists = mockAlbum.artists,
@@ -94,7 +94,7 @@ fun AlbumCardPreview() {
 @Composable
 fun AlbumCardLongNamePreview() {
     MyMusicTheme {
-        val mockAlbum = PreviewParameterData.albums[0]
+        val mockAlbum = PreviewParameterData.simplifiedAlbums[0]
         AlbumCard(
             name = "This is a very very very very long name",
             artists = mockAlbum.artists,
