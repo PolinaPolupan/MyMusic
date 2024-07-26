@@ -413,7 +413,7 @@ fun TopAppBarPreview() {
 @Composable
 fun AlbumScreenPreview() {
     MyMusicTheme {
-        val mockAlbum = PreviewParameterData.albums[0]
+        val mockAlbum = PreviewParameterData.simplifiedAlbums[0]
         val mockTracks = PreviewParameterData.simplifiedTracks
         AlbumScreenContent(
             name = mockAlbum.name,

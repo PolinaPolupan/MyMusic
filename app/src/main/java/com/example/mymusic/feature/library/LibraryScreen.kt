@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mymusic.R
@@ -55,8 +56,10 @@ import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.designSystem.util.rememberScrollState
 import com.example.mymusic.core.ui.AlbumCard
 import com.example.mymusic.core.ui.PlaylistCard
+import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedPlaylist
+import kotlinx.coroutines.flow.flowOf
 import kotlin.math.max
 
 @Composable
@@ -220,29 +223,6 @@ private fun LazyListScope.albumsList(
         }
     }
 
-    when (albums.loadState.refresh) {
-        is LoadState.Error -> {}
-        LoadState.Loading -> {
-            item {
-                Column(
-                    modifier = Modifier
-                        .fillParentMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(8.dp),
-                        text = "Refresh Loading"
-                    )
-
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                }
-            }
-        }
-        else -> {}
-    }
-
     when (albums.loadState.append) {
         is LoadState.Error -> {}
         LoadState.Loading -> {
@@ -296,15 +276,15 @@ private fun TopAppBar(
 @Composable
 fun LibraryPreview() {
     MyMusicTheme {
-//        LibraryContent(
-//            albums = PreviewParameterData.albums,
-//            playlists = PreviewParameterData.simplifiedPlaylists,
-//            onSortOptionChanged = {},
-//            onNavigateToPlaylist = {},
-//            onNavigateToAlbumClick = {},
-//            currentSortOption = SortOption.RECENTLY_ADDED,
-//            onAlbumClick = {},
-//            onPlaylistClick = {}
-//        )
+        LibraryContent(
+            albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
+            playlists = PreviewParameterData.simplifiedPlaylists,
+            onSortOptionChanged = {},
+            onNavigateToPlaylist = {},
+            onNavigateToAlbumClick = {},
+            currentSortOption = SortOption.RECENTLY_ADDED,
+            onAlbumClick = {},
+            onPlaylistClick = {}
+        )
     }
 }
