@@ -19,8 +19,10 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,6 +40,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
 import com.example.mymusic.core.ui.ScreenHeader
@@ -50,7 +55,6 @@ import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.designSystem.util.rememberScrollState
 import com.example.mymusic.core.ui.AlbumCard
 import com.example.mymusic.core.ui.PlaylistCard
-import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedPlaylist
 import kotlin.math.max
@@ -67,8 +71,10 @@ fun LibraryScreen(
     when (uiState) {
         LibraryUiState.Loading -> Unit
         is LibraryUiState.Success -> {
+
+            val savedAlbums = viewModel.savedAlbums.collectAsLazyPagingItems()
             LibraryContent(
-                albums = (uiState as LibraryUiState.Success).savedAlbums,
+                albums = savedAlbums,
                 playlists = (uiState as LibraryUiState.Success).savedPlaylists,
                 onSortOptionChanged =  { (uiState as LibraryUiState.Success).currentSortOption.value = it },
                 onNavigateToPlaylist = onNavigateToPlaylist,
@@ -85,7 +91,7 @@ fun LibraryScreen(
 
 @Composable
 fun LibraryContent(
-    albums: List<SimplifiedAlbum>,
+    albums: LazyPagingItems<SimplifiedAlbum>,
     playlists: List<SimplifiedPlaylist>,
     onSortOptionChanged: (SortOption) -> Unit,
     onNavigateToPlaylist: (String) -> Unit,
@@ -138,7 +144,8 @@ fun LibraryContent(
                     end = 16.dp,
                     start = 16.dp,
                     bottom = dimensionResource(id = R.dimen.player_with_bottom_app_bar_height)
-                )
+                ),
+                modifier = Modifier.fillMaxSize()
             ) {
                 item {
                     Column(modifier = Modifier.alpha(
@@ -167,6 +174,7 @@ fun LibraryContent(
                         )
                     }
                 }
+                albumsList(albums, onNavigateToAlbumClick, onAlbumClick)
                 items(items = playlists) { playlist ->
                     PlaylistCard(
                         name = playlist.name,
@@ -175,17 +183,6 @@ fun LibraryContent(
                         onClick = {
                             onPlaylistClick(playlist.id)
                             onNavigateToPlaylist(playlist.id) },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-                items(items = albums) { album ->
-                    AlbumCard(
-                        name = album.name,
-                        artists = album.artists,
-                        imageUrl = album.imageUrl,
-                        onClick = {
-                            onAlbumClick(album.id)
-                            onNavigateToAlbumClick(album.id) },
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -201,6 +198,68 @@ fun LibraryContent(
                     )
             )
         }
+    }
+}
+
+private fun LazyListScope.albumsList(
+    albums: LazyPagingItems<SimplifiedAlbum>,
+    onNavigateToAlbumClick: (String) -> Unit,
+    onAlbumClick: (String) -> Unit
+) {
+    items(items = albums.itemSnapshotList) { album ->
+        if (album != null) {
+            AlbumCard(
+                name = album.name,
+                artists = album.artists,
+                imageUrl = album.imageUrl,
+                onClick = {
+                    onAlbumClick(album.id)
+                    onNavigateToAlbumClick(album.id) },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+
+    when (albums.loadState.refresh) {
+        is LoadState.Error -> {}
+        LoadState.Loading -> {
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillParentMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .padding(8.dp),
+                        text = "Refresh Loading"
+                    )
+
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
+            }
+        }
+        else -> {}
+    }
+
+    when (albums.loadState.append) {
+        is LoadState.Error -> {}
+        LoadState.Loading -> {
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Text(text = "Pagination Loading")
+
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
+            }
+        }
+        is LoadState.NotLoading -> {}
     }
 }
 
@@ -237,15 +296,15 @@ private fun TopAppBar(
 @Composable
 fun LibraryPreview() {
     MyMusicTheme {
-        LibraryContent(
-            albums = PreviewParameterData.albums,
-            playlists = PreviewParameterData.simplifiedPlaylists,
-            onSortOptionChanged = {},
-            onNavigateToPlaylist = {},
-            onNavigateToAlbumClick = {},
-            currentSortOption = SortOption.RECENTLY_ADDED,
-            onAlbumClick = {},
-            onPlaylistClick = {}
-        )
+//        LibraryContent(
+//            albums = PreviewParameterData.albums,
+//            playlists = PreviewParameterData.simplifiedPlaylists,
+//            onSortOptionChanged = {},
+//            onNavigateToPlaylist = {},
+//            onNavigateToAlbumClick = {},
+//            currentSortOption = SortOption.RECENTLY_ADDED,
+//            onAlbumClick = {},
+//            onPlaylistClick = {}
+//        )
     }
 }

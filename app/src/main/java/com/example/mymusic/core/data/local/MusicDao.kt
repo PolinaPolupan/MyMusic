@@ -50,11 +50,11 @@ interface MusicDao {
 
     @Transaction
     @Query("SELECT * from recently_played")
-    fun observeRecentlyPlayed(): Flow<List<LocalRecentlyPlayedWithArtists>>
+    fun observeRecentlyPlayed(): PagingSource<Int, LocalRecentlyPlayedWithArtists>
 
     @Transaction
-    @Query("SELECT * from recently_played")
-    fun getRecentlyPlayed(): PagingSource<Int, LocalRecentlyPlayedWithArtists>
+    @Query("SELECT * FROM albums WHERE albumId IN (SELECT savedALbumId FROM saved_albums)")
+    fun observeSavedAlbums(): PagingSource<Int, LocalAlbumWithArtists>
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH) // Is used to supress compiler warnings,
     // because we can access the other fields (e.g. trackId, trackName) via album and list of artists
@@ -76,10 +76,6 @@ interface MusicDao {
     @Query("SELECT * FROM tracks WHERE trackId " +
             "IN (SELECT trackId FROM playlist_track WHERE playlistId == :id)")
     fun observePlaylistTracks(id: String): Flow<List<LocalTrackWithArtists>>
-
-    @Transaction
-    @Query("SELECT * FROM albums WHERE albumId IN (SELECT savedALbumId FROM saved_albums)")
-    fun observeSavedAlbums(): Flow<List<LocalAlbumWithArtists>>
 
     @Query("SELECT * FROM playlists WHERE playlistId IN (SELECT savedPlaylistId FROM saved_playlists)")
     fun observeSavedPlaylists(): Flow<List<LocalPlaylist>>

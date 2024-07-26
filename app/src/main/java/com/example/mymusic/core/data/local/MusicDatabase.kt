@@ -17,6 +17,7 @@ import com.example.mymusic.core.data.local.model.entities.LocalSimplifiedTrack
 import com.example.mymusic.core.data.local.model.crossRef.PlaylistTrackCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.SimplifiedTrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.TrackArtistCrossRef
+import com.example.mymusic.core.data.local.model.entities.CursorRemoteKeys
 import com.example.mymusic.core.data.local.model.entities.RemoteKeys
 
 @Database(entities = [
@@ -35,6 +36,7 @@ import com.example.mymusic.core.data.local.model.entities.RemoteKeys
     LocalPlaylist::class,
     LocalSavedPlaylist::class,
     PlaylistTrackCrossRef::class,
+    CursorRemoteKeys::class,
     RemoteKeys::class],
     version = 1,
     exportSchema = false)

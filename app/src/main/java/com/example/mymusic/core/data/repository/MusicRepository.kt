@@ -8,7 +8,6 @@ import androidx.paging.map
 import com.example.mymusic.core.data.di.DefaultDispatcher
 import com.example.mymusic.core.data.local.MusicDao
 import com.example.mymusic.core.data.local.MusicDatabase
-import com.example.mymusic.core.data.local.model.crossRef.AlbumArtistCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.AlbumTrackCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.PlaylistTrackCrossRef
 import com.example.mymusic.core.data.local.model.crossRef.SimplifiedTrackArtistCrossRef
@@ -21,14 +20,11 @@ import com.example.mymusic.core.data.network.model.ErrorResponse
 import com.example.mymusic.core.data.network.model.PlaylistTrack
 import com.example.mymusic.core.data.network.model.PlaylistsTracksResponse
 import com.example.mymusic.core.data.network.model.RecommendationsResponse
-import com.example.mymusic.core.data.network.model.SavedAlbum
-import com.example.mymusic.core.data.network.model.SavedAlbumsResponse
 import com.example.mymusic.core.data.network.model.SavedPlaylistResponse
 import com.example.mymusic.core.data.network.model.SpotifySimplifiedPlaylist
 import com.example.mymusic.core.data.network.model.SpotifySimplifiedTrack
 import com.example.mymusic.core.data.network.model.SpotifyTrack
 import com.example.mymusic.core.data.network.model.toLocal
-import com.example.mymusic.core.data.network.model.toLocalAlbum
 import com.example.mymusic.core.data.network.model.toLocalRecommendations
 import com.example.mymusic.core.data.network.model.toLocalSaved
 import com.example.mymusic.model.SimplifiedAlbum
@@ -85,12 +81,6 @@ class MusicRepository @Inject constructor(
         }
     }
 
-    fun observeSavedAlbums(): Flow<List<SimplifiedAlbum>> {
-        return musicDao.observeSavedAlbums().map { album ->
-            album.toExternal()
-        }
-    }
-
     fun observeSavedPlaylists(): Flow<List<SimplifiedPlaylist>> {
         return musicDao.observeSavedPlaylists().map { playlist ->
             playlist.toExternal()
@@ -141,10 +131,10 @@ class MusicRepository @Inject constructor(
     @OptIn(ExperimentalPagingApi::class)
     fun observeRecentlyPlayed(): Flow<PagingData<Track>> {
 
-        val pagingSourceFactory = { database.musicDao().getRecentlyPlayed() }
+        val pagingSourceFactory = { database.musicDao().observeRecentlyPlayed() }
 
         return Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            config = PagingConfig(pageSize = 10, enablePlaceholders = false),
             remoteMediator = RecentlyPlayedRemoteMediator(
                 apiService,
                 database
@@ -153,6 +143,24 @@ class MusicRepository @Inject constructor(
         ).flow
             .map { it ->
                 it.map { it.toExternal() }
+            }
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    fun observeSavedAlbums(): Flow<PagingData<SimplifiedAlbum>> {
+
+        val pagingSourceFactory = { database.musicDao().observeSavedAlbums() }
+
+        return Pager(
+            config = PagingConfig(pageSize = 5, enablePlaceholders = false),
+            remoteMediator = AlbumsRemoteMediator(
+                apiService,
+                database
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+            .map { it ->
+                it.map { it.toExternalSimplified() }
             }
     }
 
@@ -172,20 +180,6 @@ class MusicRepository @Inject constructor(
                 }
 
                 musicDao.upsertRecommendations(remoteMusic.toLocalRecommendations())
-            }
-
-            val savedAlbums = getSavedAlbums()
-
-            if (savedAlbums.isNotEmpty()) {
-
-                musicDao.deleteSavedAlbums()
-                musicDao.upsertSavedAlbums(savedAlbums.toLocal())
-                musicDao.upsertAlbums(savedAlbums.toLocalAlbum())
-                for (savedAlbum in savedAlbums) {
-                    musicDao.upsertSimplifiedArtists(savedAlbum.album.artists.toLocal())
-                    for (artist in savedAlbum.album.artists)
-                        musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(albumId = savedAlbum.album.id, simplifiedArtistId = artist.id))
-                }
             }
 
             val savedPlaylists = getSavedPlaylists()
@@ -215,13 +209,6 @@ class MusicRepository @Inject constructor(
     private suspend fun getPlaylistTracks(id: String): List<PlaylistTrack> {
         val response = apiService.getPlaylistTracks(id)
         val data = (response as? NetworkResponse.Success<PlaylistsTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
-
-        return processResponse(response, data, emptyList())
-    }
-
-    private suspend fun getSavedAlbums(): List<SavedAlbum> {
-        val response = apiService.getSavedAlbums()
-        val data = (response as? NetworkResponse.Success<SavedAlbumsResponse, ErrorResponse>?)?.body?.items ?: emptyList()
 
         return processResponse(response, data, emptyList())
     }
