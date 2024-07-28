@@ -1,5 +1,7 @@
 package com.example.mymusic.feature.home
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -18,7 +20,6 @@ import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,9 +40,11 @@ import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mymusic.R
+import com.example.mymusic.core.designSystem.component.AnimationBox
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
 import com.example.mymusic.core.designSystem.component.SquarePlaceholder
 import com.example.mymusic.core.designSystem.component.SquareRoundedCornerPlaceholder
@@ -58,6 +61,7 @@ import com.example.mymusic.core.ui.PreviewParameterData
 import com.example.mymusic.core.ui.TrackCard
 import com.example.mymusic.model.Track
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flowOf
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
@@ -99,7 +103,7 @@ internal fun HomeScreen(
             uiState = HomeUiState.Loading,
             userImageUrl = "",
             onTrackClick = {},
-            recentlyPlayed = null,
+            recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems(),
             modifier = modifier
                 .fillMaxSize(),
         )
@@ -113,7 +117,7 @@ internal fun HomeContent(
     userImageUrl: String?,
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    recentlyPlayed: LazyPagingItems<Track>?
+    recentlyPlayed: LazyPagingItems<Track>
 ) {
     val scrollState = rememberScrollState()
 
@@ -168,7 +172,6 @@ internal fun HomeContent(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 RecentlyPlayed(
-                    uiState = uiState,
                     onTrackClick = onTrackClick,
                     recentlyPlayed = recentlyPlayed
                 )
@@ -188,10 +191,9 @@ internal fun BlurredImageHeader(
     if (uiState is HomeUiState.Loading) {
         Spacer(modifier = Modifier.height(250.dp))
     }
+    if (uiState is HomeUiState.Success && uiState.topPicks.isNotEmpty()) {
 
-    if (uiState is HomeUiState.Success) {
-        // Blurred image updates with a delay of 1.5 seconds
-        val page = pagerState.currentPage % (uiState as HomeUiState.Success).topPicks.size
+        val page = pagerState.currentPage % uiState.topPicks.size
 
         var pageInd by remember {
             mutableIntStateOf(page)
@@ -205,7 +207,6 @@ internal fun BlurredImageHeader(
             delay(1500)
             launchChange()
         }
-
         BlurredImageHeader(
             imageUrl = uiState.topPicks[pageInd].album.imageUrl,
             alpha = max(
@@ -256,10 +257,15 @@ internal fun TopPicks(
                         .fillMaxWidth()
                         .height(dimensionResource(id = R.dimen.top_picks_card_max_size))
                 ) { page ->
-                    SquareRoundedCornerPlaceholder(
-                        size = dimensionResource(id = R.dimen.top_picks_card_min_size),
-                        modifier = Modifier.carouselPageOffset(pagerState, page)
-                    )
+                    AnimationBox(
+                        enter = fadeIn(),
+                        exit = fadeOut()
+                    ) {
+                        SquareRoundedCornerPlaceholder(
+                            size = dimensionResource(id = R.dimen.top_picks_card_min_size),
+                            modifier = Modifier.carouselPageOffset(pagerState, page)
+                        )
+                    }
                 }
             }
             is HomeUiState.Success -> {
@@ -281,34 +287,40 @@ internal fun TopPicks(
                         .fillMaxWidth()
                         .height(dimensionResource(id = R.dimen.top_picks_card_max_size))
                 ) { page ->
-                    FeaturedTrack(
-                        coverUrl = uiState.topPicks[page % uiState.topPicks.size].album.imageUrl,
-                        name = uiState.topPicks[page % uiState.topPicks.size].name,
-                        artists = uiState.topPicks[page % uiState.topPicks.size].artists,
-                        onClick = { onTrackClick(uiState.topPicks[page % uiState.topPicks.size].id) },
-                        modifier = Modifier.carouselPageOffset(pagerState, page),
-                        imageModifier = Modifier
-                            .graphicsLayer {
-                                // Calculate the absolute offset for the current page from the
-                                // scroll position. We use the absolute value which allows us to mirror
-                                // any effects for both directions
-                                val pageOffset = (
-                                        (pagerState.currentPage - page) + pagerState
-                                            .currentPageOffsetFraction
-                                        )
+                    AnimationBox(
+                        enter = fadeIn(),
+                        exit = fadeOut()
+                    ) {
+                        FeaturedTrack(
+                            coverUrl = uiState.topPicks[page % uiState.topPicks.size].album.imageUrl,
+                            name = uiState.topPicks[page % uiState.topPicks.size].name,
+                            artists = uiState.topPicks[page % uiState.topPicks.size].artists,
+                            onClick = { onTrackClick(uiState.topPicks[page % uiState.topPicks.size].id) },
+                            modifier = Modifier.carouselPageOffset(pagerState, page),
+                            imageModifier = Modifier
+                                .graphicsLayer {
+                                    // Calculate the absolute offset for the current page from the
+                                    // scroll position. We use the absolute value which allows us to mirror
+                                    // any effects for both directions
+                                    val pageOffset = (
+                                            (pagerState.currentPage - page) + pagerState
+                                                .currentPageOffsetFraction
+                                            )
 
-                                scaleX = lerp(
-                                    start = 1.2f,
-                                    stop = 1f,
-                                    fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1.2f)
-                                )
-                                scaleY = lerp(
-                                    start = 1.2f,
-                                    stop = 1f,
-                                    fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1.2f)
-                                )
-                            }
-                    )
+                                    scaleX = lerp(
+                                        start = 1.2f,
+                                        stop = 1f,
+                                        fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1.2f)
+                                    )
+                                    scaleY = lerp(
+                                        start = 1.2f,
+                                        stop = 1f,
+                                        fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1.2f)
+                                    )
+                                }
+                        )
+                    }
+
                 }
             }
         }
@@ -317,8 +329,7 @@ internal fun TopPicks(
 
 @Composable
 internal fun RecentlyPlayed(
-    uiState: HomeUiState,
-    recentlyPlayed: LazyPagingItems<Track>?,
+    recentlyPlayed: LazyPagingItems<Track>,
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -333,44 +344,36 @@ internal fun RecentlyPlayed(
                     vertical = dimensionResource(id = R.dimen.padding_small)
                 )
         )
-        when (uiState) {
-            HomeUiState.Loading -> {
-
-                LazyRow {
-                    items(count = 5) {
-                        SquarePlaceholder(
-                            size = dimensionResource(id = R.dimen.track_card_size),
-                            modifier = modifier
-                                .padding(start = 8.dp)
-                        )
-                    }
+        LazyRow {
+            items(items = recentlyPlayed.itemSnapshotList) { track ->
+                AnimationBox(
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    TrackCard(
+                        name = track!!.name,
+                        artists = track.artists,
+                        imageUrl = track.album.imageUrl,
+                        onClick = { onTrackClick(track.id) },
+                        modifier = Modifier.padding(4.dp)
+                    )
                 }
             }
-            is HomeUiState.Success -> {
 
-                LazyRow {
-                    items(items = recentlyPlayed!!.itemSnapshotList) { track ->
-                        TrackCard(
-                            name = track!!.name,
-                            artists = track.artists,
-                            imageUrl = track.album.imageUrl,
-                            onClick = { onTrackClick(track.id) },
-                            modifier = Modifier.padding(4.dp)
-                        )
-                    }
-
-                    when (recentlyPlayed.loadState.append) {
-                        is LoadState.Error -> {}
-                        LoadState.Loading -> {
-                            item {
-                            CircularProgressIndicator(
-                                color = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.padding(4.dp)
-                            ) }
+            when (recentlyPlayed.loadState.refresh) {
+                is LoadState.Error -> {}
+                LoadState.Loading -> {
+                    items(count = 3) {
+                        AnimationBox {
+                            SquarePlaceholder(
+                                size = dimensionResource(id = R.dimen.track_card_size),
+                                modifier = modifier
+                                    .padding(start = 8.dp)
+                            )
                         }
-                        is LoadState.NotLoading -> {}
                     }
                 }
+                is LoadState.NotLoading -> {}
             }
         }
     }
@@ -387,7 +390,7 @@ fun HomePreview() {
             uiState = HomeUiState.Success(tracks),
             userImageUrl = null,
             onTrackClick = {},
-            recentlyPlayed = null
+            recentlyPlayed = flowOf(PagingData.from(PreviewParameterData.tracks)).collectAsLazyPagingItems()
         )
     }
 }
@@ -400,7 +403,7 @@ fun HomeLoadingPreview() {
             uiState = HomeUiState.Loading,
             userImageUrl = null,
             onTrackClick = {},
-            recentlyPlayed = null
+            recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
         )
     }
 }
