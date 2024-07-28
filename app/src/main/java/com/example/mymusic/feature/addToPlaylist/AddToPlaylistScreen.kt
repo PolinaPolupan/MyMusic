@@ -38,6 +38,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -141,7 +142,8 @@ fun AddToPlayListContent(
 
             BlurredImageHeader(
                 imageUrl = track.album.imageUrl,
-                alpha = lerpScrollOffset(scrollState, 0f, 200f, reverse = true)
+                alpha = lerpScrollOffset(scrollState, 0f, 200f, reverse = true),
+                edgeTreatment = BlurredEdgeTreatment.Unbounded
             )
 
             LazyColumn(

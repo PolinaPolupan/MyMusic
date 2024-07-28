@@ -22,8 +22,9 @@ fun BlurredImageHeader(
     imageUrl: String,
     modifier: Modifier = Modifier,
     alpha: Float = 1f,
+    edgeTreatment: BlurredEdgeTreatment = BlurredEdgeTreatment.Rectangle
 ) {
-    Box(modifier = modifier.blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)) {
+    Box(modifier = modifier.blur(50.dp, edgeTreatment = edgeTreatment)) {
         AnimatedContent(
             targetState = imageUrl,
             label = "",
@@ -40,7 +41,7 @@ fun BlurredImageHeader(
                 NetworkImage(
                     imageUrl = it,
                     modifier = Modifier
-                        .height(250.dp),
+                        .height(280.dp),
                     alpha = alpha
 
                 )

@@ -31,6 +31,8 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -48,6 +50,7 @@ import com.example.mymusic.core.designSystem.component.AnimationBox
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
 import com.example.mymusic.core.designSystem.component.SquarePlaceholder
 import com.example.mymusic.core.designSystem.component.SquareRoundedCornerPlaceholder
+import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.core.designSystem.theme.DominantColorState
 import com.example.mymusic.core.ui.ScreenHeader
 import com.example.mymusic.core.designSystem.theme.DynamicThemePrimaryColorsFromImage
@@ -147,12 +150,24 @@ internal fun HomeContent(
             modifier = modifier
                 .background(MaterialTheme.colorScheme.primary.darker(0.95f))
         ) {
-            /* TODO: Bad behavior in case the image changes too fast */
-            BlurredImageHeader(
-                uiState = uiState,
-                pagerState = pagerState,
-                scrollState = scrollState
-            )
+
+            Box(modifier = Modifier) {
+                BlurredImageHeader(
+                    uiState = uiState,
+                    pagerState = pagerState,
+                    scrollState = scrollState,
+                    dominantColorState = dominantColorState,
+                )
+                Box(modifier = Modifier
+                    .linearGradientScrim(
+                        color = Color.Black,
+                        start = Offset(0f, 550f),
+                        end = Offset(0f, 800f),
+                    )
+                    .matchParentSize()
+                )
+            }
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -160,14 +175,12 @@ internal fun HomeContent(
                 ScreenHeader(
                     titleRes = R.string.listen_now,
                     imageUrl = userImageUrl,
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    isLoading = uiState is HomeUiState.Loading
-                )
+                    isLoading = uiState is HomeUiState.Loading,
+                    modifier = Modifier.padding(horizontal = 16.dp))
                 Spacer(modifier = Modifier.height(16.dp))
                 TopPicks(
                     uiState = uiState,
                     onTrackClick = onTrackClick,
-                    dominantColorState = dominantColorState,
                     pagerState = pagerState
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -185,11 +198,13 @@ internal fun HomeContent(
 @Composable
 internal fun BlurredImageHeader(
     uiState: HomeUiState,
+    dominantColorState: DominantColorState,
     pagerState: PagerState,
     scrollState: ScrollState,
+    modifier: Modifier = Modifier
 ) {
     if (uiState is HomeUiState.Loading) {
-        Spacer(modifier = Modifier.height(250.dp))
+        Spacer(modifier = Modifier.height(280.dp))
     }
     if (uiState is HomeUiState.Success && uiState.topPicks.isNotEmpty()) {
 
@@ -199,14 +214,18 @@ internal fun BlurredImageHeader(
             mutableIntStateOf(page)
         }
 
-        val onUpdate = { pageInd = page }
+        val onUpdate = {
+            pageInd = page
+        }
 
         val launchChange by rememberUpdatedState(newValue = onUpdate)
 
         LaunchedEffect(key1 = page) {
             delay(1500)
             launchChange()
+            dominantColorState.updateColorsFromImageUrl(uiState.topPicks[pageInd].album.imageUrl)
         }
+
         BlurredImageHeader(
             imageUrl = uiState.topPicks[pageInd].album.imageUrl,
             alpha = max(
@@ -217,7 +236,8 @@ internal fun BlurredImageHeader(
                     valueMax = 300f,
                     reverse = true
                 ) - 0.3f
-            )
+            ),
+            modifier = modifier
         )
     }
 }
@@ -227,7 +247,6 @@ internal fun BlurredImageHeader(
 internal fun TopPicks(
     uiState: HomeUiState,
     pagerState: PagerState,
-    dominantColorState: DominantColorState,
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -269,11 +288,6 @@ internal fun TopPicks(
                 }
             }
             is HomeUiState.Success -> {
-
-                // When the selected image url changes, call updateColorsFromImageUrl() or reset()
-                LaunchedEffect(pagerState.currentPage) {
-                    dominantColorState.updateColorsFromImageUrl(uiState.topPicks[pagerState.currentPage % uiState.topPicks.size].album.imageUrl)
-                }
 
                 HorizontalPager(
                     state = pagerState,
@@ -320,7 +334,6 @@ internal fun TopPicks(
                                 }
                         )
                     }
-
                 }
             }
         }
@@ -431,10 +444,5 @@ fun Modifier.carouselPageOffset(pagerState: PagerState, page: Int) = graphicsLay
         start = 1f,
         stop = 1.15f,
         fraction = 1f - pageOffset.coerceIn(0f, 1.15f)
-    )
-    alpha = lerp(
-        start = 0.95f,
-        stop = 1.25f,
-        fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1.25f)
     )
 }
