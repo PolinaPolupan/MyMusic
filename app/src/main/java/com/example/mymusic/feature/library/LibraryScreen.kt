@@ -22,7 +22,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,11 +39,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mymusic.R
+import com.example.mymusic.core.designSystem.component.AnimationBox
 import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
 import com.example.mymusic.core.ui.ScreenHeader
 import com.example.mymusic.core.ui.Sort
@@ -69,26 +68,26 @@ fun LibraryScreen(
     onNavigateToAlbum: (String) -> Unit,
     viewModel: LibraryViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val isSyncing by viewModel.isSyncing.collectAsStateWithLifecycle()
 
-    when (uiState) {
-        LibraryUiState.Loading -> Unit
-        is LibraryUiState.Success -> {
+    if (isSyncing) {
+        // Loading screen
+    } else {
+        val savedAlbums = viewModel.savedAlbums.collectAsLazyPagingItems()
+        val savedPlaylists by viewModel.savedPlaylists.collectAsStateWithLifecycle()
 
-            val savedAlbums = viewModel.savedAlbums.collectAsLazyPagingItems()
-            LibraryContent(
-                albums = savedAlbums,
-                playlists = (uiState as LibraryUiState.Success).savedPlaylists,
-                onSortOptionChanged =  { (uiState as LibraryUiState.Success).currentSortOption.value = it },
-                onNavigateToPlaylist = onNavigateToPlaylist,
-                onNavigateToAlbumClick = onNavigateToAlbum,
-                currentSortOption = (uiState as LibraryUiState.Success).currentSortOption.value,
-                onAlbumClick = viewModel::onAlbumClick,
-                onPlaylistClick = viewModel::onPlaylistClick,
-                modifier = modifier
-                    .fillMaxSize(),
-            )
-        }
+        LibraryContent(
+            albums = savedAlbums,
+            playlists = savedPlaylists,
+            onSortOptionChanged =  { viewModel.currentSortOption.value = it },
+            onNavigateToPlaylist = onNavigateToPlaylist,
+            onNavigateToAlbumClick = onNavigateToAlbum,
+            currentSortOption = viewModel.currentSortOption.value,
+            onAlbumClick = viewModel::onAlbumClick,
+            onPlaylistClick = viewModel::onPlaylistClick,
+            modifier = modifier
+                .fillMaxSize(),
+        )
     }
 }
 
@@ -204,42 +203,32 @@ fun LibraryContent(
     }
 }
 
+
+
+
 private fun LazyListScope.albumsList(
     albums: LazyPagingItems<SimplifiedAlbum>,
     onNavigateToAlbumClick: (String) -> Unit,
     onAlbumClick: (String) -> Unit
 ) {
-    items(items = albums.itemSnapshotList) { album ->
-        if (album != null) {
+
+    items(
+        items = albums.itemSnapshotList,
+        key = { it?.id ?: "0" }
+    ) {
+        album ->
+        AnimationBox {
             AlbumCard(
-                name = album.name,
+                name = album!!.name,
                 artists = album.artists,
                 imageUrl = album.imageUrl,
                 onClick = {
                     onAlbumClick(album.id)
                     onNavigateToAlbumClick(album.id) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             )
         }
-    }
-
-    when (albums.loadState.append) {
-        is LoadState.Error -> {}
-        LoadState.Loading -> {
-            item {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Text(text = "Pagination Loading")
-
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                }
-            }
-        }
-        is LoadState.NotLoading -> {}
     }
 }
 
