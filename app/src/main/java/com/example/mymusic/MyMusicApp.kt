@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.compose.rememberNavController
-import com.example.mymusic.core.ui.BottomNavigationBarItem
-import com.example.mymusic.core.ui.PlayerCard
+import com.example.mymusic.core.designSystem.component.BottomNavigationBarItem
+import com.example.mymusic.core.designSystem.component.PlayerCard
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.feature.player.navigateToPlayer
 import com.example.mymusic.navigation.MyMusicNavHost

@@ -1,4 +1,4 @@
-package com.example.mymusic.core.ui
+package com.example.mymusic.core.designSystem.component
 
 import com.example.mymusic.model.AlbumType
 import com.example.mymusic.model.Artist

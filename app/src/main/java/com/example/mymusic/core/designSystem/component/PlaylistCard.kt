@@ -1,4 +1,4 @@
-package com.example.mymusic.core.ui
+package com.example.mymusic.core.designSystem.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,9 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
-import com.example.mymusic.core.designSystem.component.ClippedShadowCard
-import com.example.mymusic.core.designSystem.component.NetworkImage
-import com.example.mymusic.core.designSystem.component.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 
 @Composable

@@ -65,8 +65,8 @@ import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.model.SimplifiedArtist
 import com.example.mymusic.model.SimplifiedTrack
-import com.example.mymusic.core.ui.PreviewParameterData
-import com.example.mymusic.core.ui.PreviewWithBackground
+import com.example.mymusic.core.designSystem.component.PreviewParameterData
+import com.example.mymusic.core.designSystem.component.PreviewWithBackground
 import com.example.mymusic.core.designSystem.util.rememberScrollState
 
 @Composable

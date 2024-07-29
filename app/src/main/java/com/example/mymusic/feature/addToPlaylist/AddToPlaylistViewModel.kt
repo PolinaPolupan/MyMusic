@@ -5,7 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymusic.core.data.repository.MusicRepository
-import com.example.mymusic.core.ui.SortOption
+import com.example.mymusic.core.designSystem.component.SortOption
 import com.example.mymusic.model.SimplifiedPlaylist
 import com.example.mymusic.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel

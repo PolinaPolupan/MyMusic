@@ -1,61 +1,69 @@
-package com.example.mymusic.core.ui
+package com.example.mymusic.core.designSystem.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mymusic.R
-import com.example.mymusic.core.designSystem.component.NetworkImage
-import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.artistsString
+import com.example.mymusic.core.designSystem.util.darker
+import com.example.mymusic.core.designSystem.util.saturation
 import com.example.mymusic.model.Artist
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TrackCard(
+fun FeaturedTrack(
     name: String,
     artists: List<Artist>,
-    imageUrl: String,
+    coverUrl: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    imageModifier: Modifier = Modifier,
+    innerPadding: PaddingValues = PaddingValues(0.dp)
 ) {
-    ElevatedCard(
+    ClippedShadowCard(
+        elevation = 32.dp,
         onClick = onClick,
-        shape = RoundedCornerShape(2.dp),
-        modifier = modifier
-            .size(dimensionResource(id = R.dimen.track_card_size))
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.outlinedCardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.1f)),
+        modifier = modifier.size(
+            dimensionResource(id = R.dimen.top_picks_card_min_size)
+        )
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(innerPadding)
         ) {
             NetworkImage(
-                imageUrl = imageUrl,
-                modifier = Modifier
-                    .fillMaxSize()
+                imageUrl = coverUrl,
+                modifier = imageModifier
             )
             Box(
                 modifier = Modifier
                     .matchParentSize()
                     .linearGradientScrim(
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.primary
+                            .saturation(2f)
+                            .darker(0.5f),
                         start = Offset(0f, 0f),
                         end = Offset(0f, 500f)
                     )
@@ -63,20 +71,23 @@ fun TrackCard(
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(8.dp)
+                    .padding(16.dp)
             ) {
                 Text(
                     text = name,
-                    style = MaterialTheme.typography.titleMedium.copy(lineHeight = 16.sp),
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.headlineSmall.copy(lineHeight = 24.sp),
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
+
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = artistsString(artists),
-                    style = MaterialTheme.typography.labelSmall,
+                    style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }
@@ -85,13 +96,13 @@ fun TrackCard(
 
 @Preview
 @Composable
-fun TrackCardPreview() {
+fun FeaturedTrackPreview() {
     MyMusicTheme {
         val mockTrack = PreviewParameterData.tracks[0]
-        TrackCard(
+        FeaturedTrack(
             name = mockTrack.name,
-            artists = mockTrack.artists,
-            imageUrl = mockTrack.album.imageUrl,
+            artists = PreviewParameterData.artists,
+            coverUrl = mockTrack.album.imageUrl,
             onClick = { /*TODO*/ }
         )
     }
@@ -99,13 +110,13 @@ fun TrackCardPreview() {
 
 @Preview
 @Composable
-fun TrackCardLongNamePreview() {
+fun FeaturedTrackLongNamePreview() {
     MyMusicTheme {
         val mockTrack = PreviewParameterData.tracks[0]
-        TrackCard(
+        FeaturedTrack(
             name = "This is a very very very very long name",
-            artists = mockTrack.artists,
-            imageUrl = mockTrack.album.imageUrl,
+            artists = PreviewParameterData.artists,
+            coverUrl = mockTrack.album.imageUrl,
             onClick = { /*TODO*/ }
         )
     }

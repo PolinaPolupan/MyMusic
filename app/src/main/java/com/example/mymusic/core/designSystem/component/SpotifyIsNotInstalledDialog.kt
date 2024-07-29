@@ -1,4 +1,4 @@
-package com.example.mymusic.core.ui
+package com.example.mymusic.core.designSystem.component
 
 import android.app.Activity
 import android.content.Context
@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mymusic.R
-import com.example.mymusic.core.designSystem.component.MyMusicIcons
 
 @Composable
 fun SpotifyIsNotInstalledDialog(

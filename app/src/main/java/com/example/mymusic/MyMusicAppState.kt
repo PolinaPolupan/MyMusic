@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.example.mymusic.core.ui.PreviewParameterData
+import com.example.mymusic.core.designSystem.component.PreviewParameterData
 import com.example.mymusic.feature.addToPlaylist.ADD_TO_PLAYLIST_ROUTE
 import com.example.mymusic.feature.home.navigateToHome
 import com.example.mymusic.feature.library.navigateToLibrary

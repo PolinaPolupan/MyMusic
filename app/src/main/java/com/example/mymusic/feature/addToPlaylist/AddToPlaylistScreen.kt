@@ -50,9 +50,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
-import com.example.mymusic.core.ui.Sort
-import com.example.mymusic.core.ui.SortBottomSheet
-import com.example.mymusic.core.ui.SortOption
+import com.example.mymusic.core.designSystem.component.Sort
+import com.example.mymusic.core.designSystem.component.SortBottomSheet
+import com.example.mymusic.core.designSystem.component.SortOption
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.core.designSystem.component.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.DynamicThemePrimaryColorsFromImage
@@ -63,8 +63,8 @@ import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.designSystem.util.rememberScrollState
 import com.example.mymusic.model.Track
-import com.example.mymusic.core.ui.PlaylistCard
-import com.example.mymusic.core.ui.PreviewParameterData
+import com.example.mymusic.core.designSystem.component.PlaylistCard
+import com.example.mymusic.core.designSystem.component.PreviewParameterData
 import com.example.mymusic.model.SimplifiedPlaylist
 
 @Composable

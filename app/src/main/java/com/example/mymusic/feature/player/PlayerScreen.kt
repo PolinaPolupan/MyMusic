@@ -56,7 +56,7 @@ import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.core.designSystem.util.artistsString
 import com.example.mymusic.core.designSystem.util.saturation
 import com.example.mymusic.model.Track
-import com.example.mymusic.core.ui.PreviewParameterData
+import com.example.mymusic.core.designSystem.component.PreviewParameterData
 import kotlinx.coroutines.launch
 import java.time.Duration
 

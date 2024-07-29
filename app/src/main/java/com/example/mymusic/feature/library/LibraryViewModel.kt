@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.mymusic.core.data.repository.MusicRepository
 import com.example.mymusic.core.data.sync.SyncManager
-import com.example.mymusic.core.ui.SortOption
+import com.example.mymusic.core.designSystem.component.SortOption
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn

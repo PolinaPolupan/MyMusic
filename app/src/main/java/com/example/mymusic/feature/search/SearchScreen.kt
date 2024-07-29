@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
-import com.example.mymusic.core.ui.ScreenHeader
+import com.example.mymusic.core.designSystem.component.ScreenHeader
 import com.example.mymusic.core.designSystem.component.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 
