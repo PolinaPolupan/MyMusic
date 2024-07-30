@@ -48,8 +48,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.AnimationBox
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
-import com.example.mymusic.core.designSystem.component.SquarePlaceholder
-import com.example.mymusic.core.designSystem.component.SquareRoundedCornerPlaceholder
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.core.designSystem.theme.DominantColorState
 import com.example.mymusic.core.designSystem.component.ScreenHeader
@@ -61,6 +59,8 @@ import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.designSystem.component.FeaturedTrack
 import com.example.mymusic.core.designSystem.component.PreviewParameterData
+import com.example.mymusic.core.designSystem.component.RectanglePlaceholder
+import com.example.mymusic.core.designSystem.component.RectangleRoundedCornerPlaceholder
 import com.example.mymusic.core.designSystem.component.TrackCard
 import com.example.mymusic.model.Track
 import kotlinx.coroutines.delay
@@ -280,7 +280,7 @@ internal fun TopPicks(
                         enter = fadeIn(),
                         exit = fadeOut()
                     ) {
-                        SquareRoundedCornerPlaceholder(
+                        RectangleRoundedCornerPlaceholder(
                             size = dimensionResource(id = R.dimen.top_picks_card_min_size),
                             modifier = Modifier.carouselPageOffset(pagerState, page)
                         )
@@ -378,7 +378,7 @@ internal fun RecentlyPlayed(
                 LoadState.Loading -> {
                     items(count = 3) {
                         AnimationBox {
-                            SquarePlaceholder(
+                            RectanglePlaceholder(
                                 size = dimensionResource(id = R.dimen.track_card_size),
                                 modifier = modifier
                                     .padding(start = 8.dp)

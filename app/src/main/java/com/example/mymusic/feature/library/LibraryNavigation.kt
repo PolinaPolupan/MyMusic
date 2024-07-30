@@ -11,11 +11,12 @@ fun NavController.navigateToLibrary(navOptions: NavOptions) = navigate(LIBRARY_R
 
 fun NavGraphBuilder.libraryScreen(
     onPlaylistClick: (String) -> Unit,
-    onAlbumClick: (String) -> Unit
+    onAlbumClick: (String) -> Unit,
+    onNavigateToLogin: () -> Unit
 ) {
     composable(
         route = LIBRARY_ROUTE
     ) {
-        LibraryScreen(onNavigateToPlaylist = onPlaylistClick, onNavigateToAlbum = onAlbumClick)
+        LibraryScreen(onNavigateToPlaylist = onPlaylistClick, onNavigateToAlbum = onAlbumClick, onNavigateToLogin = onNavigateToLogin)
     }
 }

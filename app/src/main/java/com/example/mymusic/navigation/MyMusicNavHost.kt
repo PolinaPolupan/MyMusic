@@ -3,6 +3,7 @@ package com.example.mymusic.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.example.mymusic.feature.addToPlaylist.addToPlaylistScreen
 import com.example.mymusic.feature.addToPlaylist.navigateToAddToPlaylist
@@ -25,21 +26,37 @@ import com.example.mymusic.feature.search.searchScreen
 @Composable
 fun MyMusicNavHost(
     appState: MyMusicAppState,
+    modifier: Modifier = Modifier,
     startDestination: String = HOME_ROUTE,
 ) {
     val navController = appState.navController
 
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
+        modifier = modifier
     ) {
-        homeScreen(onTrackClick = navController::navigateToPlayer, onNavigateToLogin = navController::navigateToLogin)
+        homeScreen(
+            onTrackClick = navController::navigateToPlayer,
+            onNavigateToLogin = navController::navigateToLogin
+        )
         loginScreen(onNavigateToHome = navController::navigateToHome)
         searchScreen()
-        libraryScreen(onPlaylistClick = navController::navigateToPlaylist, onAlbumClick = navController::navigateToAlbum)
-        playerScreen(onBackClick = navController::popBackStack, onAddToPlaylistClick = navController::navigateToAddToPlaylist, onNavigateToAlbum = navController::navigateToAlbum)
+        libraryScreen(
+            onPlaylistClick = navController::navigateToPlaylist,
+            onAlbumClick = navController::navigateToAlbum,
+            onNavigateToLogin = navController::navigateToLogin
+        )
+        playerScreen(
+            onBackClick = navController::popBackStack,
+            onAddToPlaylistClick = navController::navigateToAddToPlaylist,
+            onNavigateToAlbum = navController::navigateToAlbum)
+
         addToPlaylistScreen(onBackClick = navController::popBackStack)
-        albumScreen(onBackClick = navController::popBackStack, onNavigateToPlayer = navController::navigateToPlayer)
+        albumScreen(
+            onBackClick = navController::popBackStack,
+            onNavigateToPlayer = navController::navigateToPlayer
+        )
         playlistScreen(onBackClick = navController::popBackStack)
     }
 }

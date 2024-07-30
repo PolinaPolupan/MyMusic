@@ -26,6 +26,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,6 +57,8 @@ import com.example.mymusic.core.designSystem.util.rememberScrollState
 import com.example.mymusic.core.designSystem.component.AlbumCard
 import com.example.mymusic.core.designSystem.component.PlaylistCard
 import com.example.mymusic.core.designSystem.component.PreviewParameterData
+import com.example.mymusic.core.designSystem.component.RectangleRoundedCornerPlaceholder
+import com.example.mymusic.feature.home.AuthenticatedUiState
 import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedPlaylist
 import kotlinx.coroutines.flow.flowOf
@@ -66,19 +69,44 @@ fun LibraryScreen(
     modifier: Modifier = Modifier,
     onNavigateToPlaylist: (String) -> Unit,
     onNavigateToAlbum: (String) -> Unit,
+    onNavigateToLogin: () -> Unit,
     viewModel: LibraryViewModel = hiltViewModel()
 ) {
     val isSyncing by viewModel.isSyncing.collectAsStateWithLifecycle()
+    val authenticatedUiState by viewModel.authenticatedUiState.collectAsStateWithLifecycle()
 
-    if (isSyncing) {
-        // Loading screen
-    } else {
+    // If not authorized - navigate to login screen
+    if (authenticatedUiState is AuthenticatedUiState.NotAuthenticated) {
+        LaunchedEffect(key1 = authenticatedUiState) {
+            onNavigateToLogin()
+        }
+    }
+    // Show ui if the data is ready and user is authorized
+    else if (authenticatedUiState is AuthenticatedUiState.Success && !isSyncing) {
+
         val savedAlbums = viewModel.savedAlbums.collectAsLazyPagingItems()
         val savedPlaylists by viewModel.savedPlaylists.collectAsStateWithLifecycle()
 
         LibraryContent(
+            uiState = authenticatedUiState,
+            userImageUrl = (authenticatedUiState as AuthenticatedUiState.Success).userImageUrl,
             albums = savedAlbums,
             playlists = savedPlaylists,
+            onSortOptionChanged =  { viewModel.currentSortOption.value = it },
+            onNavigateToPlaylist = onNavigateToPlaylist,
+            onNavigateToAlbumClick = onNavigateToAlbum,
+            currentSortOption = viewModel.currentSortOption.value,
+            onAlbumClick = viewModel::onAlbumClick,
+            onPlaylistClick = viewModel::onPlaylistClick,
+            modifier = modifier
+                .fillMaxSize(),
+        )
+    } else {
+        LibraryContent(
+            uiState = AuthenticatedUiState.Loading,
+            userImageUrl = "",
+            albums = flowOf(PagingData.from(emptyList<SimplifiedAlbum>())).collectAsLazyPagingItems(),
+            playlists = listOf(),
             onSortOptionChanged =  { viewModel.currentSortOption.value = it },
             onNavigateToPlaylist = onNavigateToPlaylist,
             onNavigateToAlbumClick = onNavigateToAlbum,
@@ -93,6 +121,8 @@ fun LibraryScreen(
 
 @Composable
 fun LibraryContent(
+    uiState: AuthenticatedUiState,
+    userImageUrl: String?,
     albums: LazyPagingItems<SimplifiedAlbum>,
     playlists: List<SimplifiedPlaylist>,
     onSortOptionChanged: (SortOption) -> Unit,
@@ -163,7 +193,8 @@ fun LibraryContent(
                     )) {
                         ScreenHeader(
                             titleRes = R.string.your_library,
-                            imageUrl = ""
+                            imageUrl = userImageUrl,
+                            isLoading = uiState is AuthenticatedUiState.Loading
                         )
 
                         Sort(
@@ -176,17 +207,34 @@ fun LibraryContent(
                         )
                     }
                 }
-                albumsList(albums, onNavigateToAlbumClick, onAlbumClick)
-                items(items = playlists) { playlist ->
-                    PlaylistCard(
-                        name = playlist.name,
-                        ownerName = playlist.ownerName,
-                        imageUrl = playlist.imageUrl,
-                        onClick = {
-                            onPlaylistClick(playlist.id)
-                            onNavigateToPlaylist(playlist.id) },
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                when (uiState) {
+                    AuthenticatedUiState.Loading -> {
+                        items(count = 5) {
+                            AnimationBox(
+                            ) {
+                                RectangleRoundedCornerPlaceholder(
+                                    width = dimensionResource(id = R.dimen.player_card_width),
+                                    height = 70.dp,
+                                    cornerSize = 12.dp
+                                )
+                            }
+                        }
+                    }
+                    AuthenticatedUiState.NotAuthenticated -> {}
+                    is AuthenticatedUiState.Success -> {
+                        albumsList(albums, onNavigateToAlbumClick, onAlbumClick)
+                        items(items = playlists) { playlist ->
+                            PlaylistCard(
+                                name = playlist.name,
+                                ownerName = playlist.ownerName,
+                                imageUrl = playlist.imageUrl,
+                                onClick = {
+                                    onPlaylistClick(playlist.id)
+                                    onNavigateToPlaylist(playlist.id) },
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
                 }
             }
             TopAppBar(
@@ -266,6 +314,27 @@ private fun TopAppBar(
 fun LibraryPreview() {
     MyMusicTheme {
         LibraryContent(
+            uiState = AuthenticatedUiState.Success(""),
+            userImageUrl = "",
+            albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
+            playlists = PreviewParameterData.simplifiedPlaylists,
+            onSortOptionChanged = {},
+            onNavigateToPlaylist = {},
+            onNavigateToAlbumClick = {},
+            currentSortOption = SortOption.RECENTLY_ADDED,
+            onAlbumClick = {},
+            onPlaylistClick = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+fun LibraryLoadingPreview() {
+    MyMusicTheme {
+        LibraryContent(
+            uiState = AuthenticatedUiState.Loading,
+            userImageUrl = "",
             albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
             playlists = PreviewParameterData.simplifiedPlaylists,
             onSortOptionChanged = {},
