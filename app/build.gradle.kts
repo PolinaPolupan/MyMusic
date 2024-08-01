@@ -99,6 +99,7 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.androidx.core)
+    androidTestImplementation(libs.paging.testing)
     androidTestImplementation(libs.androidx.junit.test.ext)
     androidTestImplementation(libs.androidx.test.espresso)
     androidTestImplementation(platform(libs.androidx.compose.bom))

@@ -82,6 +82,7 @@ androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref 
 paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 paging-room = { group = "androidx.room", name = "room-paging", version.ref = "pagingRoom" }
+paging-testing = { group = "androidx.paging", name = "paging-testing", version.ref = "paging" }
 logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor"}
 
 [plugins]
