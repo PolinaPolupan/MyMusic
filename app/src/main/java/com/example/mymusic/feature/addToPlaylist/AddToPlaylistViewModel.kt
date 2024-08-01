@@ -4,15 +4,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.example.mymusic.core.data.repository.MusicRepository
 import com.example.mymusic.core.designSystem.component.SortOption
-import com.example.mymusic.model.SimplifiedPlaylist
 import com.example.mymusic.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -26,16 +26,13 @@ class AddToPlaylistViewModel @Inject constructor(
 
     private val _trackFlow: Flow<Track?> = musicRepository.observeTrack(_trackId)
 
-    private val _playlistsFlow: Flow<List<SimplifiedPlaylist>> = musicRepository.observeSavedPlaylists()
+    val savedPlaylists = musicRepository.observeSavedPlaylists().cachedIn(viewModelScope)
 
-    val uiState: StateFlow<AddToPlaylistUiState> = combine(
-        _trackFlow,
-        _playlistsFlow
-    ) { track, playlists ->
+    val uiState: StateFlow<AddToPlaylistUiState> =
+        _trackFlow.map { track ->
         if (track != null) {
             AddToPlaylistUiState.Success(
-                track = track,
-                playlists = playlists
+                track = track
             )
         } else {
             AddToPlaylistUiState.Loading
@@ -53,7 +50,6 @@ class AddToPlaylistViewModel @Inject constructor(
 sealed interface AddToPlaylistUiState {
     data object Loading: AddToPlaylistUiState
     data class Success(
-        val track: Track,
-        val playlists: List<SimplifiedPlaylist>
+        val track: Track
     ): AddToPlaylistUiState
 }

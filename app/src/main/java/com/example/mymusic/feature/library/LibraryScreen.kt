@@ -30,6 +30,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -85,7 +86,7 @@ fun LibraryScreen(
     else if (authenticatedUiState is AuthenticatedUiState.Success && !isSyncing) {
 
         val savedAlbums = viewModel.savedAlbums.collectAsLazyPagingItems()
-        val savedPlaylists by viewModel.savedPlaylists.collectAsStateWithLifecycle()
+        val savedPlaylists = viewModel.savedPlaylists.collectAsLazyPagingItems()
 
         LibraryContent(
             uiState = authenticatedUiState,
@@ -106,7 +107,7 @@ fun LibraryScreen(
             uiState = AuthenticatedUiState.Loading,
             userImageUrl = "",
             albums = flowOf(PagingData.from(emptyList<SimplifiedAlbum>())).collectAsLazyPagingItems(),
-            playlists = listOf(),
+            playlists = flowOf(PagingData.from(emptyList<SimplifiedPlaylist>())).collectAsLazyPagingItems(),
             onSortOptionChanged =  { viewModel.currentSortOption.value = it },
             onNavigateToPlaylist = onNavigateToPlaylist,
             onNavigateToAlbumClick = onNavigateToAlbum,
@@ -124,7 +125,7 @@ fun LibraryContent(
     uiState: AuthenticatedUiState,
     userImageUrl: String?,
     albums: LazyPagingItems<SimplifiedAlbum>,
-    playlists: List<SimplifiedPlaylist>,
+    playlists: LazyPagingItems<SimplifiedPlaylist>,
     onSortOptionChanged: (SortOption) -> Unit,
     onNavigateToPlaylist: (String) -> Unit,
     onNavigateToAlbumClick: (String) -> Unit,
@@ -223,17 +224,7 @@ fun LibraryContent(
                     AuthenticatedUiState.NotAuthenticated -> {}
                     is AuthenticatedUiState.Success -> {
                         albumsList(albums, onNavigateToAlbumClick, onAlbumClick)
-                        items(items = playlists) { playlist ->
-                            PlaylistCard(
-                                name = playlist.name,
-                                ownerName = playlist.ownerName,
-                                imageUrl = playlist.imageUrl,
-                                onClick = {
-                                    onPlaylistClick(playlist.id)
-                                    onNavigateToPlaylist(playlist.id) },
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+                        playlistsList(playlists, onNavigateToPlaylist, onPlaylistClick)
                     }
                 }
             }
@@ -254,7 +245,7 @@ fun LibraryContent(
 
 
 
-private fun LazyListScope.albumsList(
+fun LazyListScope.albumsList(
     albums: LazyPagingItems<SimplifiedAlbum>,
     onNavigateToAlbumClick: (String) -> Unit,
     onAlbumClick: (String) -> Unit
@@ -273,6 +264,41 @@ private fun LazyListScope.albumsList(
                 onClick = {
                     onAlbumClick(album.id)
                     onNavigateToAlbumClick(album.id) },
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+        }
+    }
+}
+
+fun LazyListScope.playlistsList(
+    playlists: LazyPagingItems<SimplifiedPlaylist>,
+    onNavigateToPlaylistClick: (String) -> Unit,
+    onPlaylistClick: (String) -> Unit,
+    isSelectable: Boolean = true,
+) {
+
+    items(
+        items = playlists.itemSnapshotList,
+        key = { it?.id ?: "0" }
+    ) {
+        playlist ->
+        // rememberSaveable is needed in order to save selection state during scrolling
+        var isSelected by rememberSaveable {
+            mutableStateOf(false)
+        }
+        AnimationBox {
+            PlaylistCard(
+                name = playlist!!.name,
+                ownerName = playlist.ownerName,
+                imageUrl = playlist.imageUrl,
+                isSelected = isSelected,
+                isSelectable = isSelectable,
+                onClick = {
+                    isSelected = !isSelected
+                    onPlaylistClick(playlist.id)
+                    onNavigateToPlaylistClick(playlist.id)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -317,7 +343,7 @@ fun LibraryPreview() {
             uiState = AuthenticatedUiState.Success(""),
             userImageUrl = "",
             albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
-            playlists = PreviewParameterData.simplifiedPlaylists,
+            playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),
             onSortOptionChanged = {},
             onNavigateToPlaylist = {},
             onNavigateToAlbumClick = {},
@@ -336,7 +362,7 @@ fun LibraryLoadingPreview() {
             uiState = AuthenticatedUiState.Loading,
             userImageUrl = "",
             albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
-            playlists = PreviewParameterData.simplifiedPlaylists,
+            playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),
             onSortOptionChanged = {},
             onNavigateToPlaylist = {},
             onNavigateToAlbumClick = {},

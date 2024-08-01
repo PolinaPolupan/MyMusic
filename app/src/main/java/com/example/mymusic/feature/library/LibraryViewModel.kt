@@ -35,8 +35,7 @@ class LibraryViewModel @Inject constructor(
             }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), AuthenticatedUiState.Loading)
 
-    val savedPlaylists = musicRepository.observeSavedPlaylists()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), emptyList())
+    val savedPlaylists = musicRepository.observeSavedPlaylists().cachedIn(viewModelScope)
 
     val savedAlbums = musicRepository.observeSavedAlbums().cachedIn(viewModelScope)
 

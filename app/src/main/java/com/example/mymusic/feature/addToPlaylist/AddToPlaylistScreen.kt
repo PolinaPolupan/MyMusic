@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -21,7 +22,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -34,7 +34,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,6 +47,9 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
 import com.example.mymusic.core.designSystem.component.Sort
@@ -63,9 +65,10 @@ import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
 import com.example.mymusic.core.designSystem.util.rememberScrollState
 import com.example.mymusic.model.Track
-import com.example.mymusic.core.designSystem.component.PlaylistCard
 import com.example.mymusic.core.designSystem.component.PreviewParameterData
+import com.example.mymusic.feature.library.playlistsList
 import com.example.mymusic.model.SimplifiedPlaylist
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun AddToPlayListScreen(
@@ -79,9 +82,12 @@ fun AddToPlayListScreen(
         /*TODO: Add loading screen*/
         AddToPlaylistUiState.Loading -> Unit
         is AddToPlaylistUiState.Success -> {
+
+            val playlists = viewModel.savedPlaylists.collectAsLazyPagingItems()
+
             AddToPlayListContent(
                 track = (uiState as AddToPlaylistUiState.Success).track,
-                playlists = (uiState as AddToPlaylistUiState.Success).playlists,
+                playlists = playlists,
                 onSortOptionChanged = viewModel::setSortOption,
                 currentSortOption = viewModel.currentSortOption.value,
                 onBackPress = onBackPress,
@@ -96,7 +102,7 @@ fun AddToPlayListScreen(
 @Composable
 fun AddToPlayListContent(
     track: Track,
-    playlists: List<SimplifiedPlaylist>,
+    playlists: LazyPagingItems<SimplifiedPlaylist>,
     onBackPress: () -> Unit,
     onSortOptionChanged: (SortOption) -> Unit,
     currentSortOption: SortOption,
@@ -148,7 +154,11 @@ fun AddToPlayListContent(
 
             LazyColumn(
                 state = lazyListState,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(
+                    end = 16.dp,
+                    start = 16.dp
+                )
             ) {
                 stickyHeader {
                     TopAppBar(
@@ -165,29 +175,13 @@ fun AddToPlayListContent(
                     Sort(
                         sortOption = currentSortOption,
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(vertical = 16.dp)
                             .clickable {
                                 showBottomSheet = true
                             }
                     )
                 }
-                items(playlists) {playlist ->
-                    // rememberSaveable is needed in order to save selection state during scrolling
-                    var isSelected by rememberSaveable {
-                        mutableStateOf(false)
-                    }
-                    PlaylistCard(
-                        name = playlist.name,
-                        ownerName = playlist.ownerName,
-                        imageUrl = playlist.imageUrl,
-                        onClick = { isSelected = !isSelected },
-                        isSelectable = true,
-                        isSelected = isSelected,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    )
-                }
+                playlistsList(playlists = playlists, onPlaylistClick = {}, onNavigateToPlaylistClick = {})
                 item {
                     Spacer(modifier = Modifier.height(200.dp))
                 }
@@ -261,17 +255,9 @@ private fun TopAppBar(
 @Composable
 fun AddToPlayListPreview() {
     MyMusicTheme {
-        val playlists = List(10) {
-            SimplifiedPlaylist(
-                id = "",
-                name = "Dua Lipa",
-                ownerName = "Polina Polupan",
-                imageUrl = ""
-            )
-        }
         AddToPlayListContent(
             track = PreviewParameterData.tracks[0],
-            playlists = playlists,
+            playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),
             currentSortOption = SortOption.RECENTLY_ADDED,
             onSortOptionChanged = {},
             onBackPress = {}

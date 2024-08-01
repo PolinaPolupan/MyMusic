@@ -20,13 +20,10 @@ import com.example.mymusic.core.data.network.model.ErrorResponse
 import com.example.mymusic.core.data.network.model.PlaylistTrack
 import com.example.mymusic.core.data.network.model.PlaylistsTracksResponse
 import com.example.mymusic.core.data.network.model.RecommendationsResponse
-import com.example.mymusic.core.data.network.model.SavedPlaylistResponse
-import com.example.mymusic.core.data.network.model.SpotifySimplifiedPlaylist
 import com.example.mymusic.core.data.network.model.SpotifySimplifiedTrack
 import com.example.mymusic.core.data.network.model.SpotifyTrack
 import com.example.mymusic.core.data.network.model.toLocal
 import com.example.mymusic.core.data.network.model.toLocalRecommendations
-import com.example.mymusic.core.data.network.model.toLocalSaved
 import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedPlaylist
 import com.example.mymusic.model.SimplifiedTrack
@@ -78,12 +75,6 @@ class MusicRepository @Inject constructor(
     fun observePlaylistTracks(id: String): Flow<List<Track>> {
         return musicDao.observePlaylistTracks(id).map { tracks ->
             tracks.toExternal()
-        }
-    }
-
-    fun observeSavedPlaylists(): Flow<List<SimplifiedPlaylist>> {
-        return musicDao.observeSavedPlaylists().map { playlist ->
-            playlist.toExternal()
         }
     }
 
@@ -164,10 +155,23 @@ class MusicRepository @Inject constructor(
             }
     }
 
+    @OptIn(ExperimentalPagingApi::class)
+    fun observeSavedPlaylists(): Flow<PagingData<SimplifiedPlaylist>> {
+        val pagingSourceFactory = { database.musicDao().observeSavedPlaylists() }
+
+        return Pager(
+            config = PagingConfig(pageSize = 5, enablePlaceholders = false),
+            remoteMediator = PlaylistsRemoteMediator(
+                apiService,
+                database
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+            .map { it.map { it.toExternal() } }
+    }
+
     suspend fun refresh() {
         withContext(dispatcher) {
-
-            musicDao.deleteSimplifiedTracks()
 
             val remoteMusic = getRecommendations()
 
@@ -180,14 +184,6 @@ class MusicRepository @Inject constructor(
                 }
 
                 musicDao.upsertRecommendations(remoteMusic.toLocalRecommendations())
-            }
-
-            val savedPlaylists = getSavedPlaylists()
-
-            if (savedPlaylists.isNotEmpty()) {
-                musicDao.deleteSavedPlaylists()
-                musicDao.upsertPlaylists(savedPlaylists.toLocal())
-                musicDao.upsertSavedPlaylists(savedPlaylists.toLocalSaved())
             }
         }
     }
@@ -209,13 +205,6 @@ class MusicRepository @Inject constructor(
     private suspend fun getPlaylistTracks(id: String): List<PlaylistTrack> {
         val response = apiService.getPlaylistTracks(id)
         val data = (response as? NetworkResponse.Success<PlaylistsTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
-
-        return processResponse(response, data, emptyList())
-    }
-
-    private suspend fun getSavedPlaylists(): List<SpotifySimplifiedPlaylist> {
-        val response = apiService.getSavedPlaylists()
-        val data = (response as? NetworkResponse.Success<SavedPlaylistResponse, ErrorResponse>?)?.body?.items ?: emptyList()
 
         return processResponse(response, data, emptyList())
     }

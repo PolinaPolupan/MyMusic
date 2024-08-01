@@ -33,7 +33,10 @@ interface MyMusicAPIService {
     ): NetworkResponse<SavedAlbumsResponse, ErrorResponse>
 
     @GET("https://api.spotify.com/v1/me/playlists")
-    suspend fun getSavedPlaylists(): NetworkResponse<SavedPlaylistResponse, ErrorResponse>
+    suspend fun getSavedPlaylists(
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
+    ): NetworkResponse<SavedPlaylistResponse, ErrorResponse>
 
     @GET("https://api.spotify.com/v1/playlists/{id}/tracks")
     suspend fun getPlaylistTracks(

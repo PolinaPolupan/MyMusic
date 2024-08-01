@@ -78,7 +78,7 @@ interface MusicDao {
     fun observePlaylistTracks(id: String): Flow<List<LocalTrackWithArtists>>
 
     @Query("SELECT * FROM playlists WHERE playlistId IN (SELECT savedPlaylistId FROM saved_playlists)")
-    fun observeSavedPlaylists(): Flow<List<LocalPlaylist>>
+    fun observeSavedPlaylists(): PagingSource<Int, LocalPlaylist>
 
     @Upsert
     suspend fun upsertTrack(track: LocalTrack)
