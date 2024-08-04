@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,7 +42,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -183,6 +183,7 @@ internal fun HomeContent(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 RecentlyPlayed(
+                    uiState = uiState,
                     onTrackClick = onTrackClick,
                     recentlyPlayed = recentlyPlayed
                 )
@@ -202,7 +203,11 @@ internal fun BlurredImageHeader(
     modifier: Modifier = Modifier
 ) {
     if (uiState is HomeUiState.Loading) {
-        Spacer(modifier = Modifier.height(280.dp))
+        Spacer(
+            modifier = Modifier
+                .height(280.dp)
+                .testTag("home:blurredImageHeaderLoading")
+        )
     }
     if (uiState is HomeUiState.Success && uiState.topPicks.isNotEmpty()) {
 
@@ -273,6 +278,7 @@ internal fun TopPicks(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(dimensionResource(id = R.dimen.top_picks_card_max_size))
+                        .testTag("home:topPicksLoading")
                 ) { page ->
                     AnimationBox(
                         enter = fadeIn(),
@@ -340,6 +346,7 @@ internal fun TopPicks(
 
 @Composable
 internal fun RecentlyPlayed(
+    uiState: HomeUiState,
     recentlyPlayed: LazyPagingItems<Track>,
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -355,25 +362,10 @@ internal fun RecentlyPlayed(
                     vertical = dimensionResource(id = R.dimen.padding_small)
                 )
         )
-        LazyRow {
-            items(items = recentlyPlayed.itemSnapshotList) { track ->
-                AnimationBox(
-                    enter = fadeIn(),
-                    exit = fadeOut()
-                ) {
-                    TrackCard(
-                        name = track!!.name,
-                        artists = track.artists,
-                        imageUrl = track.album.imageUrl,
-                        onClick = { onTrackClick(track.id) },
-                        modifier = Modifier.padding(4.dp)
-                    )
-                }
-            }
+        when (uiState) {
+            HomeUiState.Loading -> {
 
-            when (recentlyPlayed.loadState.refresh) {
-                is LoadState.Error -> {}
-                LoadState.Loading -> {
+                LazyRow(modifier = Modifier.testTag("home:recentlyPlayedLoading")) {
                     items(count = 3) {
                         AnimationBox {
                             RectanglePlaceholder(
@@ -384,7 +376,25 @@ internal fun RecentlyPlayed(
                         }
                     }
                 }
-                is LoadState.NotLoading -> {}
+            }
+            is HomeUiState.Success -> {
+
+                LazyRow {
+                    items(items = recentlyPlayed.itemSnapshotList) { track ->
+                        AnimationBox(
+                            enter = fadeIn(),
+                            exit = fadeOut()
+                        ) {
+                            TrackCard(
+                                name = track!!.name,
+                                artists = track.artists,
+                                imageUrl = track.album.imageUrl,
+                                onClick = { onTrackClick(track.id) },
+                                modifier = Modifier.padding(4.dp)
+                            )
+                        }
+                    }
+                }
             }
         }
     }
