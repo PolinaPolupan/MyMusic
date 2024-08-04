@@ -72,8 +72,8 @@ import kotlin.math.max
 @Composable
 internal fun HomeScreen(
     onTrackClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
     onNavigateToLogin: () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -97,7 +97,6 @@ internal fun HomeScreen(
             onTrackClick = onTrackClick,
             recentlyPlayed = recentlyPlayed,
             modifier = modifier
-                .fillMaxSize(),
         )
     }
     // If the data is not ready - show placeholders instead of ui
@@ -108,7 +107,6 @@ internal fun HomeScreen(
             onTrackClick = {},
             recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems(),
             modifier = modifier
-                .fillMaxSize(),
         )
     }
 }
@@ -119,8 +117,8 @@ internal fun HomeContent(
     uiState: HomeUiState,
     userImageUrl: String?,
     onTrackClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    recentlyPlayed: LazyPagingItems<Track>
+    recentlyPlayed: LazyPagingItems<Track>,
+    modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
 
