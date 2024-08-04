@@ -48,7 +48,6 @@ fun SearchScreen(
         searchQuery = viewModel.searchQuery,
         recentSearches = viewModel.recentSearches,
         modifier = modifier
-            .fillMaxSize()
     )
 }
 

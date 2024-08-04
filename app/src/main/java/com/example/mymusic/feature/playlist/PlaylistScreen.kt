@@ -68,8 +68,8 @@ import com.example.mymusic.core.designSystem.util.rememberScrollState
 
 @Composable
 fun PlaylistScreen(
-    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: PlaylistViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

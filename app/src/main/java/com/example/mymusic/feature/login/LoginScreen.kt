@@ -45,15 +45,16 @@ import com.example.mymusic.core.designSystem.component.SpotifyIsNotInstalledDial
 @Composable
 fun LoginScreen(
     onNavigateToHome: () -> Unit,
-    loginViewModel: LoginViewModel = hiltViewModel()
+    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     val startForResult =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.StartActivityForResult()) { result ->
             run {
                 if (result.resultCode == Activity.RESULT_OK) {
-                    loginViewModel.handleAuthorizationResponse(result.data!!) {
-                        loginViewModel.refresh() // Load user's music
+                    viewModel.handleAuthorizationResponse(result.data!!) {
+                        viewModel.refresh() // Load user's music
                         onNavigateToHome()
                     }
                 }
@@ -61,9 +62,10 @@ fun LoginScreen(
         }
 
     LoginContent(
-        onLoginClick = { startForResult.launch(loginViewModel.signIn()) },
+        onLoginClick = { startForResult.launch(viewModel.signIn()) },
         onDismissClick = { /*TODO*/ },
-        isSpotifyInstalled = true
+        isSpotifyInstalled = true,
+        modifier = modifier
     )
 }
 
@@ -71,7 +73,8 @@ fun LoginScreen(
 fun LoginContent(
     onLoginClick: () -> Unit,
     onDismissClick: () -> Unit,
-    isSpotifyInstalled: Boolean
+    isSpotifyInstalled: Boolean,
+    modifier: Modifier = Modifier
 ) {
     // Show alert dialog only once
     var wasDialogShown: Boolean by rememberSaveable {
@@ -80,14 +83,15 @@ fun LoginContent(
     val transition = updateTransition(isSpotifyInstalled, label = "color state")
 
     val primaryColor by transition.animateColor( label = "color animation"
-    ) { isSpotifyInstalled ->
+    ) { _ ->
         if (isSpotifyInstalled) MaterialTheme.colorScheme.primary
         .saturation(6f) else Color.DarkGray
     }
 
     MyMusicLoginBackground(
         color = primaryColor,
-        contentAlignment = Alignment.TopCenter
+        contentAlignment = Alignment.TopCenter,
+        modifier = modifier
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

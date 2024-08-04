@@ -67,10 +67,10 @@ import kotlin.math.max
 
 @Composable
 fun LibraryScreen(
-    modifier: Modifier = Modifier,
     onNavigateToPlaylist: (String) -> Unit,
     onNavigateToAlbum: (String) -> Unit,
     onNavigateToLogin: () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: LibraryViewModel = hiltViewModel()
 ) {
     val isSyncing by viewModel.isSyncing.collectAsStateWithLifecycle()
@@ -100,7 +100,6 @@ fun LibraryScreen(
             onAlbumClick = viewModel::onAlbumClick,
             onPlaylistClick = viewModel::onPlaylistClick,
             modifier = modifier
-                .fillMaxSize(),
         )
     } else {
         LibraryContent(
@@ -115,7 +114,6 @@ fun LibraryScreen(
             onAlbumClick = viewModel::onAlbumClick,
             onPlaylistClick = viewModel::onPlaylistClick,
             modifier = modifier
-                .fillMaxSize(),
         )
     }
 }
@@ -130,9 +128,9 @@ fun LibraryContent(
     onNavigateToPlaylist: (String) -> Unit,
     onNavigateToAlbumClick: (String) -> Unit,
     currentSortOption: SortOption,
-    modifier: Modifier = Modifier,
     onAlbumClick: (String) -> Unit,
-    onPlaylistClick: (String) -> Unit
+    onPlaylistClick: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
     val scrollState = rememberScrollState(state = lazyListState)
@@ -211,8 +209,7 @@ fun LibraryContent(
                 when (uiState) {
                     AuthenticatedUiState.Loading -> {
                         items(count = 5) {
-                            AnimationBox(
-                            ) {
+                            AnimationBox {
                                 RectangleRoundedCornerPlaceholder(
                                     width = dimensionResource(id = R.dimen.player_card_width),
                                     height = 70.dp,

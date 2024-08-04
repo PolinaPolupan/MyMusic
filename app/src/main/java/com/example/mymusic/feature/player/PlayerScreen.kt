@@ -91,7 +91,6 @@ fun PlayerScreen(
                 onNavigateToAlbum = onNavigateToAlbum,
                 onAlbumClick = viewModel::onAlbumClick,
                 modifier = modifier
-                    .fillMaxSize(),
             )
     }
 }
@@ -103,8 +102,8 @@ fun PlayerContent(
     onBackClick: () -> Unit,
     onAddToPlaylistClick: (String) -> Unit,
     onNavigateToAlbum: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    onAlbumClick: (String) -> Unit
+    onAlbumClick: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->
