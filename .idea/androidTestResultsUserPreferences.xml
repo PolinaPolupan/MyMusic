@@ -3,6 +3,19 @@
   <component name="AndroidTestResultsUserPreferences">
     <option name="androidTestResultsTableState">
       <map>
+        <entry key="-1631406536">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="Xiaomi 23021RAA2Y" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-270333827">
           <value>
             <AndroidTestResultsTableState>
@@ -43,6 +56,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="1401954640">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="Xiaomi 23021RAA2Y" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="1667270406">
           <value>
             <AndroidTestResultsTableState>
@@ -50,6 +76,19 @@
                 <map>
                   <entry key="Duration" value="105" />
                   <entry key="Pixel_7_Pro_API_34" value="134" />
+                  <entry key="Tests" value="360" />
+                  <entry key="Xiaomi 23021RAA2Y" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1684009980">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
                   <entry key="Tests" value="360" />
                   <entry key="Xiaomi 23021RAA2Y" value="120" />
                 </map>
