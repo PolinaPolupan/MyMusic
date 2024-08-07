@@ -241,6 +241,7 @@ internal fun BlurredImageHeader(
                 ) - 0.3f
             ),
             modifier = modifier
+                .testTag("home:blurredImageHeader")
         )
     }
 }
@@ -304,6 +305,7 @@ internal fun TopPicks(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(dimensionResource(id = R.dimen.top_picks_card_max_size))
+                        .testTag("home:topPicks")
                 ) { page ->
                     AnimationBox(
                         enter = fadeIn(),
@@ -379,7 +381,7 @@ internal fun RecentlyPlayed(
             }
             is HomeUiState.Success -> {
 
-                LazyRow {
+                LazyRow(modifier = Modifier.testTag("home:recentlyPlayed")) {
                     items(items = recentlyPlayed.itemSnapshotList) { track ->
                         AnimationBox(
                             enter = fadeIn(),
