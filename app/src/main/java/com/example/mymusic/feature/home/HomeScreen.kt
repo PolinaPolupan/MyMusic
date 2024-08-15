@@ -204,45 +204,42 @@ internal fun BlurredImageHeader(
 ) {
     if (uiState is HomeUiState.Loading) {
         Spacer(
-            modifier = Modifier
+            modifier = modifier
                 .height(280.dp)
                 .testTag("home:blurredImageHeaderLoading")
         )
     }
     if (uiState is HomeUiState.Success && uiState.topPicks.isNotEmpty()) {
 
-        val page = pagerState.currentPage % uiState.topPicks.size
+        Box(modifier = modifier.testTag("home:blurredImageHeader")) {
 
-        var pageInd by remember {
-            mutableIntStateOf(page)
+            val page = pagerState.currentPage % uiState.topPicks.size
+
+            var pageInd by remember { mutableIntStateOf(page) }
+
+            val onUpdate = { pageInd = page }
+
+            val launchChange by rememberUpdatedState(newValue = onUpdate)
+
+            LaunchedEffect(key1 = page) {
+                delay(1500)
+                launchChange()
+                dominantColorState.updateColorsFromImageUrl(uiState.topPicks[pageInd].album.imageUrl)
+            }
+
+            BlurredImageHeader(
+                imageUrl = uiState.topPicks[pageInd].album.imageUrl,
+                alpha = max(
+                    0.0f,
+                    lerpScrollOffset(
+                        scrollState = scrollState,
+                        valueMin = 100f,
+                        valueMax = 300f,
+                        reverse = true
+                    ) - 0.3f
+                )
+            )
         }
-
-        val onUpdate = {
-            pageInd = page
-        }
-
-        val launchChange by rememberUpdatedState(newValue = onUpdate)
-
-        LaunchedEffect(key1 = page) {
-            delay(1500)
-            launchChange()
-            dominantColorState.updateColorsFromImageUrl(uiState.topPicks[pageInd].album.imageUrl)
-        }
-
-        BlurredImageHeader(
-            imageUrl = uiState.topPicks[pageInd].album.imageUrl,
-            alpha = max(
-                0.0f,
-                lerpScrollOffset(
-                    scrollState = scrollState,
-                    valueMin = 100f,
-                    valueMax = 300f,
-                    reverse = true
-                ) - 0.3f
-            ),
-            modifier = modifier
-                .testTag("home:blurredImageHeader")
-        )
     }
 }
 
