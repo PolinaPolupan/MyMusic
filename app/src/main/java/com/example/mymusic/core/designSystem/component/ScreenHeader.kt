@@ -26,13 +26,13 @@ import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.feature.account.AccountDialog
+import com.example.mymusic.feature.home.AuthenticatedUiState
 
 @Composable
 fun ScreenHeader(
+    uiState: AuthenticatedUiState,
     @StringRes titleRes: Int,
-    imageUrl: String?,
-    modifier: Modifier = Modifier,
-    isLoading: Boolean = false
+    modifier: Modifier = Modifier
 ) {
     /* Show account when the picture is clicked. */
     var showAccountDialog by rememberSaveable { mutableStateOf(false) }
@@ -57,15 +57,19 @@ fun ScreenHeader(
             IconButton(
                 modifier = Modifier.clip(RoundedCornerShape(100)),
                 onClick = { showAccountDialog = true },
-                enabled = !isLoading
+                enabled = uiState is AuthenticatedUiState.Success
             ) {
-                if (isLoading) {
-                    CirclePlaceholder(radius = 32.dp, modifier = Modifier.fillMaxSize())
-                } else {
-                    NetworkImage(
-                        imageUrl = imageUrl ?: "",
-                        defaultImageRes = R.drawable.spotify_logo_white_on_green
-                    )
+                when (uiState) {
+                    AuthenticatedUiState.Loading -> {
+                        CirclePlaceholder(radius = 32.dp, modifier = Modifier.fillMaxSize())
+                    }
+                    AuthenticatedUiState.NotAuthenticated -> {}
+                    is AuthenticatedUiState.Success -> {
+                        NetworkImage(
+                            imageUrl = uiState.userImageUrl,
+                            defaultImageRes = R.drawable.spotify_logo_white_on_green
+                        )
+                    }
                 }
             }
         }
@@ -77,9 +81,8 @@ fun ScreenHeader(
 fun ScreenHeaderPreview() {
     MyMusicTheme {
         ScreenHeader(
+            uiState = AuthenticatedUiState.Loading,
             titleRes = R.string.listen_now,
-            imageUrl = "",
-            isLoading = false
         )
     }
 }
@@ -89,9 +92,8 @@ fun ScreenHeaderPreview() {
 fun ScreenHeaderLoadingPreview() {
     MyMusicTheme {
         ScreenHeader(
+            uiState = AuthenticatedUiState.Success(""),
             titleRes = R.string.listen_now,
-            imageUrl = "",
-            isLoading = true
         )
     }
 }

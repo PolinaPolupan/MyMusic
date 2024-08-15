@@ -11,6 +11,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.mymusic.core.designSystem.component.PreviewParameterData
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
+import com.example.mymusic.feature.home.AuthenticatedUiState
 import com.example.mymusic.feature.home.HomeContent
 import com.example.mymusic.feature.home.HomeUiState
 import com.example.mymusic.model.Track
@@ -31,7 +32,7 @@ class HomeScreenTest {
             MyMusicTheme {
                 HomeContent(
                     uiState = HomeUiState.Loading,
-                    userImageUrl = "",
+                    authenticatedUiState = AuthenticatedUiState.Loading,
                     onTrackClick = {},
                     recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
                 )
@@ -57,7 +58,7 @@ class HomeScreenTest {
             MyMusicTheme {
                 HomeContent(
                     uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
-                    userImageUrl = "",
+                    authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
                     recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
                 )
@@ -82,7 +83,7 @@ class HomeScreenTest {
             MyMusicTheme {
                 HomeContent(
                     uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
-                    userImageUrl = "",
+                    authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
                     recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
                 )
@@ -127,7 +128,7 @@ class HomeScreenTest {
             MyMusicTheme {
                 HomeContent(
                     uiState = HomeUiState.Success(topPicks = emptyList()),
-                    userImageUrl = "",
+                    authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
                     recentlyPlayed = flowOf(PagingData.from(PreviewParameterData.tracks)).collectAsLazyPagingItems()
                 )
@@ -162,7 +163,7 @@ class HomeScreenTest {
             MyMusicTheme {
                 HomeContent(
                     uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
-                    userImageUrl = "",
+                    authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
                     recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
                 )

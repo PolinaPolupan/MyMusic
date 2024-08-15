@@ -36,6 +36,7 @@ import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
 import com.example.mymusic.core.designSystem.component.ScreenHeader
 import com.example.mymusic.core.designSystem.component.MyMusicIcons
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
+import com.example.mymusic.feature.home.AuthenticatedUiState
 
 @Composable
 fun SearchScreen(
@@ -65,8 +66,8 @@ fun SearchContent(
                 .fillMaxSize()
         ) {
             ScreenHeader(
+                uiState = AuthenticatedUiState.Loading, // TODO
                 titleRes = R.string.search,
-                imageUrl = "",
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
             SearchToolbar(

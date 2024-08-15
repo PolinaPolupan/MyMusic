@@ -93,7 +93,7 @@ internal fun HomeScreen(
 
         HomeContent(
             uiState = uiState,
-            userImageUrl = (authenticatedUiState as AuthenticatedUiState.Success).userImageUrl,
+            authenticatedUiState = authenticatedUiState,
             onTrackClick = onTrackClick,
             recentlyPlayed = recentlyPlayed,
             modifier = modifier
@@ -103,7 +103,7 @@ internal fun HomeScreen(
     else {
         HomeContent(
             uiState = HomeUiState.Loading,
-            userImageUrl = "",
+            authenticatedUiState = authenticatedUiState,
             onTrackClick = {},
             recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems(),
             modifier = modifier
@@ -115,7 +115,7 @@ internal fun HomeScreen(
 @Composable
 internal fun HomeContent(
     uiState: HomeUiState,
-    userImageUrl: String?,
+    authenticatedUiState: AuthenticatedUiState,
     onTrackClick: (String) -> Unit,
     recentlyPlayed: LazyPagingItems<Track>,
     modifier: Modifier = Modifier
@@ -171,9 +171,8 @@ internal fun HomeContent(
                     .fillMaxSize()
             ) {
                 ScreenHeader(
+                    uiState = authenticatedUiState,
                     titleRes = R.string.listen_now,
-                    imageUrl = userImageUrl,
-                    isLoading = uiState is HomeUiState.Loading,
                     modifier = Modifier.padding(horizontal = 16.dp))
                 Spacer(modifier = Modifier.height(16.dp))
                 TopPicks(
@@ -408,7 +407,7 @@ fun HomePreview() {
     MyMusicTheme {
         HomeContent(
             uiState = HomeUiState.Success(tracks),
-            userImageUrl = null,
+            authenticatedUiState = AuthenticatedUiState.Success(""),
             onTrackClick = {},
             recentlyPlayed = flowOf(PagingData.from(PreviewParameterData.tracks)).collectAsLazyPagingItems()
         )
@@ -421,7 +420,7 @@ fun HomeLoadingPreview() {
     MyMusicTheme {
         HomeContent(
             uiState = HomeUiState.Loading,
-            userImageUrl = null,
+            authenticatedUiState = AuthenticatedUiState.Success(""),
             onTrackClick = {},
             recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
         )

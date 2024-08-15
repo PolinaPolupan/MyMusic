@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -90,7 +91,6 @@ fun LibraryScreen(
 
         LibraryContent(
             uiState = authenticatedUiState,
-            userImageUrl = (authenticatedUiState as AuthenticatedUiState.Success).userImageUrl,
             albums = savedAlbums,
             playlists = savedPlaylists,
             onSortOptionChanged =  { viewModel.currentSortOption.value = it },
@@ -104,15 +104,14 @@ fun LibraryScreen(
     } else {
         LibraryContent(
             uiState = AuthenticatedUiState.Loading,
-            userImageUrl = "",
             albums = flowOf(PagingData.from(emptyList<SimplifiedAlbum>())).collectAsLazyPagingItems(),
             playlists = flowOf(PagingData.from(emptyList<SimplifiedPlaylist>())).collectAsLazyPagingItems(),
             onSortOptionChanged =  { viewModel.currentSortOption.value = it },
-            onNavigateToPlaylist = onNavigateToPlaylist,
-            onNavigateToAlbumClick = onNavigateToAlbum,
+            onNavigateToPlaylist = {},
+            onNavigateToAlbumClick = {},
             currentSortOption = viewModel.currentSortOption.value,
-            onAlbumClick = viewModel::onAlbumClick,
-            onPlaylistClick = viewModel::onPlaylistClick,
+            onAlbumClick = {},
+            onPlaylistClick = {},
             modifier = modifier
         )
     }
@@ -121,7 +120,6 @@ fun LibraryScreen(
 @Composable
 fun LibraryContent(
     uiState: AuthenticatedUiState,
-    userImageUrl: String?,
     albums: LazyPagingItems<SimplifiedAlbum>,
     playlists: LazyPagingItems<SimplifiedPlaylist>,
     onSortOptionChanged: (SortOption) -> Unit,
@@ -176,7 +174,9 @@ fun LibraryContent(
                     start = 16.dp,
                     bottom = dimensionResource(id = R.dimen.player_with_bottom_app_bar_height)
                 ),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .testTag("library:items")
             ) {
                 item {
                     Column(modifier = Modifier.alpha(
@@ -191,9 +191,8 @@ fun LibraryContent(
                         )
                     )) {
                         ScreenHeader(
+                            uiState = uiState,
                             titleRes = R.string.your_library,
-                            imageUrl = userImageUrl,
-                            isLoading = uiState is AuthenticatedUiState.Loading
                         )
 
                         Sort(
@@ -213,7 +212,8 @@ fun LibraryContent(
                                 RectangleRoundedCornerPlaceholder(
                                     width = dimensionResource(id = R.dimen.player_card_width),
                                     height = 70.dp,
-                                    cornerSize = 12.dp
+                                    cornerSize = 12.dp,
+                                    modifier = Modifier.testTag("library:itemsLoading")
                                 )
                             }
                         }
@@ -338,7 +338,6 @@ fun LibraryPreview() {
     MyMusicTheme {
         LibraryContent(
             uiState = AuthenticatedUiState.Success(""),
-            userImageUrl = "",
             albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
             playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),
             onSortOptionChanged = {},
@@ -357,7 +356,6 @@ fun LibraryLoadingPreview() {
     MyMusicTheme {
         LibraryContent(
             uiState = AuthenticatedUiState.Loading,
-            userImageUrl = "",
             albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
             playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),
             onSortOptionChanged = {},
