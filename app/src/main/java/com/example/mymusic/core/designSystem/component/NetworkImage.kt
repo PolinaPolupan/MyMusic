@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImagePainter
@@ -39,6 +40,7 @@ fun NetworkImage(
         },
     )
     val isLocalInspection = LocalInspectionMode.current
+
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center,
@@ -55,7 +57,8 @@ fun NetworkImage(
         Image(
             alpha = alpha,
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .testTag(imageUrl ?: ""),
             contentScale = contentScale,
             painter = if (isError.not() && !isLocalInspection) {
                 imageLoader
