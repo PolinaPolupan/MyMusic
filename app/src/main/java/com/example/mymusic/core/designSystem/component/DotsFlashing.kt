@@ -8,18 +8,18 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun DotsFlashing(
+    modifier: Modifier = Modifier,
     count: Int = 3,
     delayUnit: Int = 300,
     @FloatRange(from = 0.0, to = 1.0) minAlpha: Float = 0.3f,
-    @FloatRange(from = 0.0, to = 1.0) maxAlpha: Float = 0.7f,
-    color: Color = MaterialTheme.colorScheme.primary
+    @FloatRange(from = 0.0, to = 1.0) maxAlpha: Float = 0.7f
 ) {
     @Composable
     fun Dot(
@@ -29,7 +29,7 @@ fun DotsFlashing(
         modifier
             .alpha(alpha)
             .background(
-                color = color,
+                color = MaterialTheme.colorScheme.primary,
                 shape = CircleShape
             )
             .aspectRatio(1f)
@@ -51,7 +51,10 @@ fun DotsFlashing(
         ), label = ""
     )
 
-    Row {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
         for (i in 0..<count) {
             val alpha by animateAlphaWithDelay(delayUnit * i)
             Dot(alpha, modifier = Modifier.fillMaxWidth().weight(3f))
