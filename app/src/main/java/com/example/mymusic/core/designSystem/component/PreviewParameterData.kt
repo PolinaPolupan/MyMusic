@@ -41,7 +41,88 @@ object PreviewParameterData {
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
+            )
+        ),
+        SimplifiedAlbum(
+            id = "53XhwfbYqKCa1cC15pYq2q",
+            type = AlbumType.Album,
+            imageUrl = "ttps://i.scdn.co/image/ab67616d0000b2735675e83f707f1d7271e5cf8a",
+            name = "Evolve",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "53XhwfbYqKCa1cC15pYq2q",
+                    name = "Imagine Dragons"
+                )
             ),
+        ),
+        SimplifiedAlbum(
+            id = "2Auw0pTT6EcQdvHNimhLQI",
+            type = AlbumType.Album,
+            imageUrl = "https://i.scdn.co/image/ab67616d0000b273442b53773d50e1b5369bb16c",
+            name = "V",
+            artists = listOf(SimplifiedArtist(id = "04gDigrS5kc9YWfZHwBETP", name = "Maroon 5")),
+        ),
+        SimplifiedAlbum(
+            id = "6TElmwQZfd0lIA3yWoBfUm",
+            type = AlbumType.Album,
+            imageUrl = "https://i.scdn.co/image/ab67616d0000b273d29a7db4c624f7a662c30783",
+            name = "Key of Sea",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "1rL7w1UIwu887SlCVYYMJW",
+                    name = "Jennifer Thomas"
+                )
+            ),
+        ),
+        SimplifiedAlbum(
+            id = "7gbuuXibrC1KoULn6nfxaH",
+            type = AlbumType.Album,
+            imageUrl = "https://i.scdn.co/image/ab67616d0000b27305271302d0b7ebbaadba7c8a",
+            name = "Zwezdnyie voiny: Mest sitkhov (Originalnyi Saundtrek)",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "3dRfiJ2650SZu6GbydcHNb",
+                    name = "John Williams"
+                )
+            ),
+        ),
+        SimplifiedAlbum(
+            id = "4OAzTjKrZX2tsO64fuvUGA",
+            type = AlbumType.Album,
+            imageUrl = "https://i.scdn.co/image/ab67616d0000b273ad23694f5312acca60c1c2cb",
+            name = "The Way",
+            artists = listOf(SimplifiedArtist(id = "2Eg0o1Mok66akOkuOiGdEv", name = "Zack Hemsey")),
+        ),
+        SimplifiedAlbum(
+            id = "3AOeatEAPjy1CKtdkaXaDq",
+            type = AlbumType.Album,
+            imageUrl = "https://i.scdn.co/image/ab67616d0000b273536f3b6f6b46e6e97742673b",
+            name = "Game Of Thrones: Season 8 (Music from the HBO Series)",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "1hCkSJcXREhrodeIHQdav8",
+                    name = "Ramin Djawadi"
+                )
+            ),
+        ),
+        SimplifiedAlbum(
+            id = "4NGvKveOupPBLw4h0uFmeu",
+            type = AlbumType.Album,
+            imageUrl = "https://i.scdn.co/image/ab67616d0000b2733454f72d03a754c790792034",
+            name = "Experience",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "2uFUBdaVGtyMqckSeCl0Qj",
+                    name = "Ludovico Einaudi"
+                )
+            ),
+        ),
+        SimplifiedAlbum(
+            id = "4SYYFXoD8abpjsQoravjur",
+            type = AlbumType.Album,
+            imageUrl = "https://i.scdn.co/image/ab67616d0000b2732a7a0737b075aa279357a7d6",
+            name = "Fly",
+            artists = listOf(SimplifiedArtist(id = "348Ajoa7Nqzh4RHaGSTgGH", name = "Ludovico Einaudi")),
         )
     )
     val simplifiedTracks = listOf(
@@ -550,12 +631,48 @@ object PreviewParameterData {
         )
     }
 
-    val simplifiedPlaylists = List(10) {
+    val simplifiedPlaylists = listOf<SimplifiedPlaylist>(
         SimplifiedPlaylist(
             id = "37i9dQZF1DXaMu9xyX1HzK",
             name = "Best of the Decade For You",
             ownerName = "Spotify",
             imageUrl = "https://i.scdn.co/image/ab67706f00000003ba77a2166a7b66e9a300ffaa"
+        ),
+        SimplifiedPlaylist(
+            id = "37i9dQZF1DX7iB3RCnBnN4",
+            name = "BILLIONS CLUB",
+            ownerName = "Spotify",
+            imageUrl = "https://i.scdn.co/image/ab67706f00000002f6ca7e915476b90299a5b75e"
+        ),
+        SimplifiedPlaylist(
+            id = "5wtuoO5ZsNT5ySbuPD5CRc",
+            name = "My recommendation playlist",
+            ownerName = "Spotify",
+            imageUrl = "https://mosaic.scdn.co/640/ab67616d00001e025d29fc4c51a450bd32135de1ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02b3be3b970fc89a02f301c9daab67616d00001e02bfd46639322b597331d9ecef"
+        ),
+        SimplifiedPlaylist(
+            id = "37i9dQZF1EUMDoJuT8yJsl",
+            name = "Your Top Songs 2021",
+            ownerName = "Spotify",
+            imageUrl = "https://lineup-images.scdn.co/wrapped-2021-top100_DEFAULT-en.jpg"
+        ),
+        SimplifiedPlaylist(
+            id = "37i9dQZF1DXdfOcg1fm0VG",
+            name = "Video Game Soundtracks",
+            ownerName = "Spotify",
+            imageUrl = "https://i.scdn.co/image/ab67706f00000002c94fd5639e1bd451f55b103c"
+        ),
+        SimplifiedPlaylist(
+            id = "37i9dQZF1DXaUaRhCgtpCo",
+            name = "Best of Star Wars",
+            ownerName = "Spotify",
+            imageUrl = "https://i.scdn.co/image/ab67706f00000002df318081a0b2da5d16202c1e"
+        ),
+        SimplifiedPlaylist(
+            id = "37i9dQZF1DX1tz6EDao8it",
+            name = "Iconic Soundtracks",
+            ownerName = "Spotify",
+            imageUrl = "https://i.scdn.co/image/ab67706f000000026319ff8355868a79d6bcf74a"
         )
-    }
+    )
 }
