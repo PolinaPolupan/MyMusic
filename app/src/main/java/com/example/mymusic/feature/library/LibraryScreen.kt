@@ -31,7 +31,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,7 +64,6 @@ import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedPlaylist
 import kotlinx.coroutines.flow.flowOf
 import kotlin.math.abs
-import kotlin.math.max
 
 @Composable
 fun LibraryScreen(
@@ -144,33 +142,29 @@ fun LibraryContent(
     }
 
     val firstVisibleItemScrollOffset by remember {
-        derivedStateOf {
-            lazyListState.firstVisibleItemScrollOffset
-        }
+        derivedStateOf { lazyListState.firstVisibleItemScrollOffset }
     }
 
     val firstVisibleItemIndex by remember {
-        derivedStateOf {
-            lazyListState.firstVisibleItemIndex
-        }
+        derivedStateOf { lazyListState.firstVisibleItemIndex }
     }
 
     val textAlpha: Float by animateFloatAsState(
         if (abs(firstVisibleItemScrollOffset) >= 200 || firstVisibleItemIndex > 0) 1f else 0.0f,
-        animationSpec = tween(500, easing = LinearOutSlowInEasing
-        ), label = "library:textAlpha"
+        animationSpec = tween(500, easing = LinearOutSlowInEasing),
+        label = "library:textAlpha"
     )
 
     val dividerAlpha: Float by animateFloatAsState(
         if (abs(firstVisibleItemScrollOffset) >= 300 || firstVisibleItemIndex > 0) 1f else 0.0f,
-        animationSpec = tween(800, easing = LinearOutSlowInEasing
-        ), label = "library:dividerAlpha"
+        animationSpec = tween(800, easing = LinearOutSlowInEasing),
+        label = "library:dividerAlpha"
     )
 
     val dissolveBackground: Float by animateFloatAsState(
         if (abs(firstVisibleItemScrollOffset) >= 100 || firstVisibleItemIndex > 0) 1f else 0.75f,
-        animationSpec = tween(1000, easing = LinearOutSlowInEasing
-        ), label = "library:dissolve"
+        animationSpec = tween(1000, easing = LinearOutSlowInEasing),
+        label = "library:dissolve"
     )
 
     MyMusicGradientBackground(
@@ -192,28 +186,19 @@ fun LibraryContent(
             ) {
                 item {
                     Column(modifier = Modifier.alpha(
-                        max(
-                            0.0f,
-                            lerpScrollOffset(
-                                scrollOffset = abs(firstVisibleItemScrollOffset),
-                                valueMin = 0f,
-                                valueMax = 250f,
-                                reverse = true
-                            )
-                        )
-                    )) {
-                        ScreenHeader(
-                            uiState = uiState,
-                            titleRes = R.string.your_library,
-                        )
-
+                        lerpScrollOffset(
+                            scrollOffset = abs(firstVisibleItemScrollOffset),
+                            valueMin = 0f,
+                            valueMax = 250f,
+                            reverse = true
+                        ))
+                    ) {
+                        ScreenHeader(uiState = uiState, titleRes = R.string.your_library)
                         Sort(
                             sortOption = currentSortOption,
                             modifier = Modifier
                                 .padding(16.dp)
-                                .clickable {
-                                    showBottomSheet = true
-                                }
+                                .clickable { showBottomSheet = true }
                         )
                     }
                 }
@@ -230,7 +215,7 @@ fun LibraryContent(
                             }
                         }
                     }
-                    AuthenticatedUiState.NotAuthenticated -> {}
+                    AuthenticatedUiState.NotAuthenticated -> Unit
                     is AuthenticatedUiState.Success -> {
                         albumsList(albums, onNavigateToAlbumClick, onAlbumClick)
                         playlistsList(playlists, onNavigateToPlaylist, onPlaylistClick)
@@ -242,15 +227,11 @@ fun LibraryContent(
     }
 }
 
-
-
-
 fun LazyListScope.albumsList(
     albums: LazyPagingItems<SimplifiedAlbum>,
     onNavigateToAlbumClick: (String) -> Unit,
     onAlbumClick: (String) -> Unit
 ) {
-
     items(
         items = albums.itemSnapshotList,
         key = { it?.id ?: "0" }
@@ -274,33 +255,24 @@ fun LazyListScope.albumsList(
 fun LazyListScope.playlistsList(
     playlists: LazyPagingItems<SimplifiedPlaylist>,
     onNavigateToPlaylistClick: (String) -> Unit,
-    onPlaylistClick: (String) -> Unit,
-    isSelectable: Boolean = true,
+    onPlaylistClick: (String) -> Unit
 ) {
-
     items(
         items = playlists.itemSnapshotList,
         key = { it?.id ?: "0" }
-    ) {
-        playlist ->
-        // rememberSaveable is needed in order to save selection state during scrolling
-        var isSelected by rememberSaveable {
-            mutableStateOf(false)
-        }
+    ) { playlist ->
         AnimationBox {
             PlaylistCard(
                 name = playlist!!.name,
                 ownerName = playlist.ownerName,
                 imageUrl = playlist.imageUrl,
-                isSelected = isSelected,
-                isSelectable = isSelectable,
+                isSelected = false,
+                isSelectable = false,
                 onClick = {
-                    isSelected = !isSelected
                     onPlaylistClick(playlist.id)
                     onNavigateToPlaylistClick(playlist.id)
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }

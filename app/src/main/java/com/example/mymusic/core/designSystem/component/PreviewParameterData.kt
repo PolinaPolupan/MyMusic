@@ -125,37 +125,7 @@ object PreviewParameterData {
             artists = listOf(SimplifiedArtist(id = "348Ajoa7Nqzh4RHaGSTgGH", name = "Ludovico Einaudi")),
         )
     )
-    val simplifiedTracks = listOf(
-        SimplifiedTrack(
-            id = "0",
-            name = "New Rules",
-            artists = listOf(
-                SimplifiedArtist(
-                    id = "2ekn2ttSfGqwhhate0LSR0",
-                    name = "Dua Lipa"
-                )
-            )
-        ),
-        SimplifiedTrack(
-            id = "0",
-            name = "New Rules",
-            artists = listOf(
-                SimplifiedArtist(
-                    id = "2ekn2ttSfGqwhhate0LSR0",
-                    name = "Dua Lipa"
-                )
-            )
-        ),
-        SimplifiedTrack(
-            id = "0",
-            name = "New Rules",
-            artists = listOf(
-                SimplifiedArtist(
-                    id = "2ekn2ttSfGqwhhate0LSR0",
-                    name = "Dua Lipa"
-                )
-            )
-        ),
+    val simplifiedTracks = List(size = 10) {
         SimplifiedTrack(
             id = "0",
             name = "New Rules",
@@ -166,7 +136,7 @@ object PreviewParameterData {
                 )
             )
         )
-    )
+    }
 
     val tracks = listOf(
         Track(
@@ -645,10 +615,22 @@ object PreviewParameterData {
             imageUrl = "https://i.scdn.co/image/ab67706f00000002f6ca7e915476b90299a5b75e"
         ),
         SimplifiedPlaylist(
+            id = "66mDstPtgRQoDPvcBwUokA",
+            name = "My recommendation playlist",
+            ownerName = "Spotify",
+            imageUrl = "https://mosaic.scdn.co/640/ab67616d00001e02712701c5e263efc8726b1464ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02bfd46639322b597331d9ecefab67616d00001e02dfc2f59568272de50a257f2f"
+        ),
+        SimplifiedPlaylist(
             id = "5wtuoO5ZsNT5ySbuPD5CRc",
             name = "My recommendation playlist",
             ownerName = "Spotify",
             imageUrl = "https://mosaic.scdn.co/640/ab67616d00001e025d29fc4c51a450bd32135de1ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02b3be3b970fc89a02f301c9daab67616d00001e02bfd46639322b597331d9ecef"
+        ),
+        SimplifiedPlaylist(
+            id = "6MSKHpsAlEAwz6USSHvXRh",
+            name = "My recommendation playlist",
+            ownerName = "Spotify",
+            imageUrl = "https://mosaic.scdn.co/640/ab67616d00001e02a200f972bd8b1f9cb76da8c2ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02bfd46639322b597331d9ecefab67616d00001e02f062321ad9046a2a99c6bac8"
         ),
         SimplifiedPlaylist(
             id = "37i9dQZF1EUMDoJuT8yJsl",
