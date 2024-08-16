@@ -167,7 +167,7 @@ fun AddToPlayListContent(
             LazyColumn(
                 state = lazyListState,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxHeight()
+                modifier = Modifier.fillMaxHeight().testTag("addToPlaylist:items")
             ) {
                 stickyHeader { TopAppBar(onBackPress = onBackPress, alpha = alpha) }
                 item {
@@ -291,7 +291,11 @@ private fun TopAppBar(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
+            ConstraintLayout(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("addToPlaylist:topAppBar"),
+            ) {
                 val text = createRef()
                 IconButton(onClick = onBackPress, modifier = Modifier.size(30.dp)) {
                     Icon(

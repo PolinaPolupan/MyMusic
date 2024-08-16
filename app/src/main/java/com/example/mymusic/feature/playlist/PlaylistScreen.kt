@@ -34,7 +34,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -65,6 +68,7 @@ import com.example.mymusic.model.Track
 import com.example.mymusic.core.designSystem.component.PreviewParameterData
 import com.example.mymusic.core.designSystem.component.PreviewWithBackground
 import com.example.mymusic.core.designSystem.util.rememberScrollState
+import kotlin.math.abs
 
 @Composable
 fun PlaylistScreen(
@@ -100,6 +104,12 @@ fun PlaylistScreenContent(
 ) {
     val lazyListState = rememberLazyListState()
     val scrollState = rememberScrollState(state = lazyListState)
+
+    val firstVisibleItemScrollOffset by rememberSaveable {
+        derivedStateOf {
+            lazyListState.firstVisibleItemScrollOffset
+        }
+    }
 
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->
@@ -150,7 +160,7 @@ fun PlaylistScreenContent(
                     .background(
                         MaterialTheme.colorScheme.primary
                             .darker(0.92f)
-                            .copy(alpha = lerpScrollOffset(scrollState, 500f, 800f))
+                            .copy(alpha = lerpScrollOffset(abs(firstVisibleItemScrollOffset), 500f, 800f))
                     )
                     .testTag("album:topAppBar")
             )
@@ -168,6 +178,12 @@ fun PlaylistContent(
     scrollState: MutableState<Int>,
     modifier: Modifier = Modifier
 ) {
+    val firstVisibleItemScrollOffset by remember {
+        derivedStateOf {
+            lazyListState.firstVisibleItemScrollOffset
+        }
+    }
+
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         state = lazyListState,
@@ -184,7 +200,7 @@ fun PlaylistContent(
     ) {
         item {
             Box(modifier = Modifier
-                .graphicsLayer(alpha = lerpScrollOffset(scrollState, 400f, 800f, reverse = true))
+                .graphicsLayer(alpha = lerpScrollOffset(abs(firstVisibleItemScrollOffset), 400f, 800f, reverse = true))
             ) {
                 NetworkImage(
                     imageUrl = imageUrl,
