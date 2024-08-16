@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -53,9 +55,7 @@ import com.example.mymusic.core.designSystem.component.Sort
 import com.example.mymusic.core.designSystem.component.SortBottomSheet
 import com.example.mymusic.core.designSystem.component.SortOption
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
-import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
-import com.example.mymusic.core.designSystem.util.rememberScrollState
 import com.example.mymusic.core.designSystem.component.AlbumCard
 import com.example.mymusic.core.designSystem.component.PlaylistCard
 import com.example.mymusic.core.designSystem.component.PreviewParameterData
@@ -64,6 +64,7 @@ import com.example.mymusic.feature.home.AuthenticatedUiState
 import com.example.mymusic.model.SimplifiedAlbum
 import com.example.mymusic.model.SimplifiedPlaylist
 import kotlinx.coroutines.flow.flowOf
+import kotlin.math.abs
 import kotlin.math.max
 
 @Composable
@@ -131,7 +132,6 @@ fun LibraryContent(
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
-    val scrollState = rememberScrollState(state = lazyListState)
 
     var showBottomSheet by remember { mutableStateOf(false) }
 
@@ -143,20 +143,32 @@ fun LibraryContent(
         )
     }
 
+    val firstVisibleItemScrollOffset by remember {
+        derivedStateOf {
+            lazyListState.firstVisibleItemScrollOffset
+        }
+    }
+
+    val firstVisibleItemIndex by remember {
+        derivedStateOf {
+            lazyListState.firstVisibleItemIndex
+        }
+    }
+
     val textAlpha: Float by animateFloatAsState(
-        if (scrollState.value >= 200) 1f else 0.0f,
+        if (abs(firstVisibleItemScrollOffset) >= 200 || firstVisibleItemIndex > 0) 1f else 0.0f,
         animationSpec = tween(500, easing = LinearOutSlowInEasing
         ), label = "library:textAlpha"
     )
 
     val dividerAlpha: Float by animateFloatAsState(
-        if (scrollState.value >= 300) 1f else 0.0f,
+        if (abs(firstVisibleItemScrollOffset) >= 300 || firstVisibleItemIndex > 0) 1f else 0.0f,
         animationSpec = tween(800, easing = LinearOutSlowInEasing
         ), label = "library:dividerAlpha"
     )
 
     val dissolveBackground: Float by animateFloatAsState(
-        if (scrollState.value >= 100) 1f else 0.75f,
+        if (abs(firstVisibleItemScrollOffset) >= 100 || firstVisibleItemIndex > 0) 1f else 0.75f,
         animationSpec = tween(1000, easing = LinearOutSlowInEasing
         ), label = "library:dissolve"
     )
@@ -183,7 +195,7 @@ fun LibraryContent(
                         max(
                             0.0f,
                             lerpScrollOffset(
-                                scrollState = scrollState,
+                                scrollOffset = abs(firstVisibleItemScrollOffset),
                                 valueMin = 0f,
                                 valueMax = 250f,
                                 reverse = true
@@ -225,16 +237,7 @@ fun LibraryContent(
                     }
                 }
             }
-            TopAppBar(
-                dividerAlpha = dividerAlpha,
-                textAlpha = textAlpha,
-                modifier = Modifier
-                    .background(
-                        MaterialTheme.colorScheme.tertiary
-                            .darker(0.9f)
-                            .copy(alpha = textAlpha)
-                    )
-            )
+            TopAppBar(dividerAlpha = dividerAlpha, textAlpha = textAlpha)
         }
     }
 }
@@ -311,6 +314,8 @@ private fun TopAppBar(
 ) {
     Column(modifier = modifier
         .fillMaxWidth()
+        .background(Color.Black.copy(alpha = textAlpha))
+        .testTag("library:topAppBar")
     ) {
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
         Row(
@@ -323,6 +328,7 @@ private fun TopAppBar(
             Text(
                 text = stringResource(id = R.string.your_library),
                 style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .wrapContentSize()
                     .alpha(textAlpha)
