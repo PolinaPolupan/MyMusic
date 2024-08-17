@@ -1,5 +1,6 @@
 package com.example.mymusic.core.designSystem.component
 
+import com.example.mymusic.model.Album
 import com.example.mymusic.model.AlbumType
 import com.example.mymusic.model.Artist
 import com.example.mymusic.model.Playlist
@@ -10,6 +11,35 @@ import com.example.mymusic.model.SimplifiedTrack
 import com.example.mymusic.model.Track
 
 object PreviewParameterData {
+
+    val simplifiedTracks = List(size = 10) {
+        SimplifiedTrack(
+            id = "0",
+            name = "New Rules",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "2ekn2ttSfGqwhhate0LSR0",
+                    name = "Dua Lipa"
+                )
+            )
+        )
+    }
+
+    val albums = listOf(
+        Album(
+            id = "6nxDQi0FeEwccEPJeNySoS",
+            type = AlbumType.Album,
+            imageUrl = "https://i.scdn.co/image/ab67616d0000b273407bd04707c463bbb3410737",
+            name = "Night Visions",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "53XhwfbYqKCa1cC15pYq2q",
+                    name = "Imagine Dragons"
+                )
+            ),
+            tracks = simplifiedTracks
+        ),
+    )
 
     val simplifiedAlbums = listOf<SimplifiedAlbum>(
         SimplifiedAlbum(
@@ -125,18 +155,6 @@ object PreviewParameterData {
             artists = listOf(SimplifiedArtist(id = "348Ajoa7Nqzh4RHaGSTgGH", name = "Ludovico Einaudi")),
         )
     )
-    val simplifiedTracks = List(size = 10) {
-        SimplifiedTrack(
-            id = "0",
-            name = "New Rules",
-            artists = listOf(
-                SimplifiedArtist(
-                    id = "2ekn2ttSfGqwhhate0LSR0",
-                    name = "Dua Lipa"
-                )
-            )
-        )
-    }
 
     val tracks = listOf(
         Track(
