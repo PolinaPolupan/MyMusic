@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymusic.core.data.repository.MusicRepository
+import com.example.mymusic.core.designSystem.component.OneOf
+import com.example.mymusic.core.designSystem.component.TracksListUiState
 import com.example.mymusic.model.Playlist
 import com.example.mymusic.model.SimplifiedPlaylist
 import com.example.mymusic.model.Track
@@ -27,23 +29,18 @@ class PlaylistViewModel @Inject constructor(
 
     private val _playlistTracksFlow: Flow<List<Track>> = musicRepository.observePlaylistTracks(_playlistId)
 
-    val uiState: StateFlow<PlaylistUiState> =
+    val uiState: StateFlow<TracksListUiState> =
         combine(_playlistFlow, _playlistTracksFlow) { playlist, tracks ->
-            PlaylistUiState.Success(
-                Playlist(
-                    id = playlist.id,
-                    imageUrl = playlist.imageUrl,
-                    name = playlist.name,
-                    ownerName = playlist.ownerName,
-                    tracks = tracks)
+            TracksListUiState.Success(
+                item = OneOf(
+                    playlist = Playlist(
+                        id = playlist.id,
+                        imageUrl = playlist.imageUrl,
+                        name = playlist.name,
+                        ownerName = playlist.ownerName,
+                        tracks = tracks)
+                )
             )
         }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), PlaylistUiState.Loading)
-}
-
-sealed interface PlaylistUiState {
-    data object Loading: PlaylistUiState
-    data class Success(
-        val playlist: Playlist,
-    ): PlaylistUiState
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), TracksListUiState.Loading)
 }
