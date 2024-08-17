@@ -71,6 +71,27 @@ internal fun RectangleRoundedCornerPlaceholder(
     )
 }
 
+@Composable
+internal fun RectangleRoundedCornerPlaceholder(
+    modifier: Modifier = Modifier,
+    cornerSize: Dp = 24.dp
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "infinite transition")
+
+    val alpha by infiniteTransition.animateFloat(
+        initialValue = 0.05f,
+        targetValue = 0.1f,
+        animationSpec = infiniteRepeatable(tween(500), RepeatMode.Reverse)
+    )
+
+    Box(
+        modifier = modifier
+            .clip(shape = RoundedCornerShape(cornerSize))
+            .background(color = Color.White.copy(alpha = alpha))
+            .shimmerLoadingAnimation()
+    )
+}
+
 
 @Composable
 internal fun RectanglePlaceholder(
