@@ -3,7 +3,6 @@ package com.example.mymusic.feature.home
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -48,25 +47,23 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.component.AnimationBox
 import com.example.mymusic.core.designSystem.component.BlurredImageHeader
+import com.example.mymusic.core.designSystem.component.FeaturedTrack
+import com.example.mymusic.core.designSystem.component.PreviewParameterData
+import com.example.mymusic.core.designSystem.component.RectanglePlaceholder
+import com.example.mymusic.core.designSystem.component.RectangleRoundedCornerPlaceholder
+import com.example.mymusic.core.designSystem.component.ScreenHeader
+import com.example.mymusic.core.designSystem.component.TrackCard
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.core.designSystem.theme.DominantColorState
-import com.example.mymusic.core.designSystem.component.ScreenHeader
 import com.example.mymusic.core.designSystem.theme.DynamicThemePrimaryColorsFromImage
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
-import com.example.mymusic.core.designSystem.util.lerpScrollOffset
-import com.example.mymusic.core.designSystem.component.FeaturedTrack
-import com.example.mymusic.core.designSystem.component.PreviewParameterData
-import com.example.mymusic.core.designSystem.component.RectanglePlaceholder
-import com.example.mymusic.core.designSystem.component.RectangleRoundedCornerPlaceholder
-import com.example.mymusic.core.designSystem.component.TrackCard
 import com.example.mymusic.model.Track
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import kotlin.math.absoluteValue
-import kotlin.math.max
 
 
 @Composable
@@ -153,7 +150,6 @@ internal fun HomeContent(
                 BlurredImageHeader(
                     uiState = uiState,
                     pagerState = pagerState,
-                    scrollState = scrollState,
                     dominantColorState = dominantColorState,
                 )
                 Box(modifier = Modifier
@@ -198,7 +194,6 @@ internal fun BlurredImageHeader(
     uiState: HomeUiState,
     dominantColorState: DominantColorState,
     pagerState: PagerState,
-    scrollState: ScrollState,
     modifier: Modifier = Modifier
 ) {
     if (uiState is HomeUiState.Loading) {
@@ -228,15 +223,7 @@ internal fun BlurredImageHeader(
 
             BlurredImageHeader(
                 imageUrl = uiState.topPicks[pageInd].album.imageUrl,
-                alpha = max(
-                    0.0f,
-                    lerpScrollOffset(
-                        scrollState = scrollState,
-                        valueMin = 100f,
-                        valueMax = 300f,
-                        reverse = true
-                    ) - 0.3f
-                )
+                alpha = 0.7f
             )
         }
     }
