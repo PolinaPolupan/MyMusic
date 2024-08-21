@@ -12,18 +12,148 @@ import com.example.mymusic.model.Track
 
 object PreviewParameterData {
 
-    val simplifiedTracks = List(size = 10) {
+    val simplifiedTracks = listOf(
         SimplifiedTrack(
-            id = "0",
+            id = "62yJjFtgkhUrXktIoSjgP2",
+            name = "Radioactive",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift"
+                )
+            ),
+        ),
+        SimplifiedTrack(
+            id = "7lBPn6LpIvbvAihTRvBMig",
+            name = "Tiptoe",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift"
+                )
+            ),
+        ),
+        SimplifiedTrack(
+            id = "7MXlTgQeo3IVlMpLnZuhxc",
+            name = "It's Time",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift",
+                )
+            )
+        ),
+        SimplifiedTrack(
+            id = "5qaEfEh1AtSdrdrByCP7qR",
+            name = "Demons",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift"
+                )
+            ),
+        ),
+        SimplifiedTrack(
+            id = "213x4gsFDm04hSqIUkg88w",
+            name = "On Top Of The World",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift",
+                )
+            ),
+        ),
+        SimplifiedTrack(
+            id = "5gXdinVZqeuDIVxogWzRk0",
+            name = "Amsterdam",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift"
+                )
+            )
+        ),
+        SimplifiedTrack(
+            id = "76cy1WJvNGJTj78UqeA5zr",
+            name = "IDGAF",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift"
+                )
+            )
+        ),
+        SimplifiedTrack(
+            id = "2ekn2ttSfGqwhhate0LSR0",
             name = "New Rules",
             artists = listOf(
                 SimplifiedArtist(
-                    id = "2ekn2ttSfGqwhhate0LSR0",
-                    name = "Dua Lipa"
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift"
+                )
+            )
+        ),
+        SimplifiedTrack(
+            id = "4wNQAG2BzbVkLhdajjxGpR",
+            name = "Begging",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift"
+                )
+            )
+        ),
+        SimplifiedTrack(
+            id = "10nqz67NQWWa7XPq7ycihi",
+            name = "Welcome To New York",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift"
+                )
+            )
+        ),
+        SimplifiedTrack(
+            id = "2ls70nUDfjzm1lSRDuKxmw",
+            name = "Blank Space",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift"
+                )
+            )
+        ),
+        SimplifiedTrack(
+            id = "71PmZqBXH0RUETqxpwlV0w",
+            name = "Style",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift"
+                )
+            )
+        ),
+        SimplifiedTrack(
+            id = "7EpVQjqtKygiwJIASxMWNg",
+            name = "Out Of The Woods",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift"
+                )
+            )
+        ),
+        SimplifiedTrack(
+            id = "1kKlhuQE0HXp1IwBRpaH2P",
+            name = "Shake It Off",
+            artists = listOf(
+                SimplifiedArtist(
+                    id = "06HL4z0CvFAxyc27GXpf02",
+                    name = "Taylor Swift",
                 )
             )
         )
-    }
+    )
 
     val albums = listOf(
         Album(
@@ -158,66 +288,6 @@ object PreviewParameterData {
 
     val tracks = listOf(
         Track(
-            id = "0",
-            album = simplifiedAlbums[1],
-            name = "New Rules",
-            artists = listOf(
-                Artist(
-                    id = "2ekn2ttSfGqwhhate0LSR0",
-                    name = "Dua Lipa",
-                    imageUrl = "https://i.scdn.co/image/ab67616d0000b273838698485511bd9108fadadc"
-                )
-            )
-        ),
-        Track(
-            id = "1",
-            album = simplifiedAlbums[0],
-            name = "Sugar",
-            artists = listOf(
-                Artist(
-                    id = "",
-                    name = "Maroon 5",
-                    imageUrl = ""
-                )
-            )
-        ),
-        Track(
-            id = "2",
-            album = simplifiedAlbums[0],
-            name = "Happier",
-            artists = listOf(
-                Artist(
-                    id = "",
-                    imageUrl = "",
-                    name = "Marshmello"
-                )
-            )
-        ),
-        Track(
-            id = "3",
-            album = simplifiedAlbums[2],
-            name = "Blank Space",
-            artists = listOf(
-                Artist(
-                    id = "",
-                    imageUrl = "",
-                    name = "Taylor Swift"
-                )
-            )
-        ),
-        Track(
-            id = "62yJjFtgkhUrXktIoSjgP2",
-            name = "Radioactive",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
             id = "7lBPn6LpIvbvAihTRvBMig",
             name = "Tiptoe",
             artists = listOf(
@@ -280,138 +350,6 @@ object PreviewParameterData {
         Track(
             id = "62yJjFtgkhUrXktIoSjgP2",
             name = "Radioactive",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
-            id = "7lBPn6LpIvbvAihTRvBMig",
-            name = "Tiptoe",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
-            id = "7MXlTgQeo3IVlMpLnZuhxc",
-            name = "It's Time",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
-            id = "5qaEfEh1AtSdrdrByCP7qR",
-            name = "Demons",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
-            id = "213x4gsFDm04hSqIUkg88w",
-            name = "On Top Of The World",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
-            id = "5gXdinVZqeuDIVxogWzRk0",
-            name = "Amsterdam",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
-            id = "62yJjFtgkhUrXktIoSjgP2",
-            name = "Radioactive",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
-            id = "7lBPn6LpIvbvAihTRvBMig",
-            name = "Tiptoe",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
-            id = "7MXlTgQeo3IVlMpLnZuhxc",
-            name = "It's Time",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
-            id = "5qaEfEh1AtSdrdrByCP7qR",
-            name = "Demons",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
-            id = "213x4gsFDm04hSqIUkg88w",
-            name = "On Top Of The World",
-            artists = listOf(
-                Artist(
-                    id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift",
-                    imageUrl = ""
-                )
-            ),
-            album = simplifiedAlbums[0]
-        ),
-        Track(
-            id = "5gXdinVZqeuDIVxogWzRk0",
-            name = "Amsterdam",
             artists = listOf(
                 Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
