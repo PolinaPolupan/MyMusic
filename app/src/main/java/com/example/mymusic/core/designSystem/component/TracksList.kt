@@ -117,24 +117,22 @@ fun <T> TracksList(
                                 )
                             )
                     ) {
-                        var imageUrl = ""
                         if (uiState is TracksListUiState.Success) {
-                            imageUrl = if (uiState.item.album != null) {
+                            val imageUrl = if (uiState.item.album != null) {
                                 uiState.item.album.imageUrl
                             } else {
                                 uiState.item.playlist!!.imageUrl
                             }
-                        }
-                        LaunchedEffect(imageUrl) { dominantColorState.updateColorsFromImageUrl(imageUrl) }
 
-                        NetworkImage(
-                            imageUrl = imageUrl,
-                            modifier = Modifier
-                                .size(400.dp)
-                                .graphicsLayer {
-                                    translationY = -firstVisibleItemScrollOffset * 0.1f
-                                }
-                        )
+                            LaunchedEffect(imageUrl) { dominantColorState.updateColorsFromImageUrl(imageUrl) }
+
+                            NetworkImage(
+                                imageUrl = imageUrl,
+                                modifier = Modifier
+                                    .size(400.dp)
+                                    .graphicsLayer {translationY = -firstVisibleItemScrollOffset * 0.1f }
+                            )
+                        }
                         Box(
                             modifier = Modifier
                                 .matchParentSize()
@@ -177,26 +175,7 @@ fun <T> TracksList(
                     }
                 }
             }
-            TopAppBar(
-                uiState = uiState,
-                onBackClick = onBackClick,
-                textAlpha = textAlpha,
-                dividerAlpha = dividerAlpha,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        MaterialTheme.colorScheme.primary
-                            .darker(0.92f)
-                            .copy(
-                                alpha = lerpScrollOffset(
-                                    scrollOffset = abs(firstVisibleItemScrollOffset),
-                                    valueMin = 500f,
-                                    valueMax = 800f
-                                )
-                            )
-                    )
-                    .testTag("album:topAppBar")
-            )
+            TopAppBar(uiState = uiState, onBackClick = onBackClick, textAlpha = textAlpha, dividerAlpha = dividerAlpha)
         }
     }
 
@@ -210,7 +189,11 @@ private fun TopAppBar(
     textAlpha: Float = 1.0f,
     dividerAlpha: Float = 1.0f,
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
+    Column(modifier = modifier
+        .fillMaxWidth()
+        .background(MaterialTheme.colorScheme.primary.darker(0.92f).copy(alpha = textAlpha))
+        .testTag("tracksList:topAppBar")
+    ) {
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
         Row(
             verticalAlignment = Alignment.CenterVertically,
