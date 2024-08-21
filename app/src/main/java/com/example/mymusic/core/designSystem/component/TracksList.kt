@@ -82,14 +82,14 @@ fun <T> TracksList(
     val textAlpha: Float by animateFloatAsState(
         if (abs(firstVisibleItemScrollOffset) >= 600 || firstVisibleItemIndex > 0) 1f else 0.0f,
         animationSpec = tween(500, easing = LinearOutSlowInEasing),
-        label = "album:textAlpha"
+        label = "tracksList:textAlpha"
     )
     // Top app bar divider alpha dynamically changes with scrolling.
     // The Divider should appear later than the other elements, so the offset is bigger
     val dividerAlpha: Float by animateFloatAsState(
         if (abs(firstVisibleItemScrollOffset) >= 800 || firstVisibleItemIndex > 0) 1f else 0.0f,
         animationSpec = tween(500, easing = LinearOutSlowInEasing),
-        label = "album:dividerAlpha"
+        label = "tracksList:dividerAlpha"
     )
     DynamicThemePrimaryColorsFromImage {
         Box(
@@ -103,7 +103,7 @@ fun <T> TracksList(
                 modifier = Modifier
                     .fillMaxHeight()
                     .background(MaterialTheme.colorScheme.primary.darker(0.92f))
-                    .testTag("album:lazyColumn")
+                    .testTag("tracksList:lazyColumn")
             ) {
                 item {
                     Box(
@@ -159,7 +159,7 @@ fun <T> TracksList(
                                     height = 70.dp,
                                     cornerSize = 12.dp,
                                     modifier = Modifier
-                                        .testTag("library:itemsLoading")
+                                        .testTag("tracksList:itemsLoading")
                                         .padding(vertical = 4.dp)
                                 )
                             }
@@ -215,7 +215,10 @@ private fun TopAppBar(
             Spacer(modifier = Modifier.width(16.dp))
             when (uiState) {
                 TracksListUiState.Loading -> {
-                    RectangleRoundedCornerPlaceholder(modifier = Modifier.height(30.dp))
+                    RectangleRoundedCornerPlaceholder(modifier = Modifier
+                        .height(30.dp)
+                        .testTag("tracksList:topAppBarLoading")
+                    )
                 }
                 is TracksListUiState.Success -> {
                     val name: String = if (uiState.item.album != null) {
@@ -265,12 +268,14 @@ fun CoverHeader(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(3f)
+                                .testTag("tracksList:nameTextPlaceholder")
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         RectangleRoundedCornerPlaceholder(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(1f)
+                                .testTag("tracksList:descriptionTextPlaceholder")
                         )
                     }
                     is TracksListUiState.Success -> {
