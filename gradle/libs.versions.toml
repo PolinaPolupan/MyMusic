@@ -50,6 +50,7 @@ androidx-activity-compose = { group = "androidx.activity", name =  "activity-com
 androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
+androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigation-compose" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayout-compose" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDatastore" }
