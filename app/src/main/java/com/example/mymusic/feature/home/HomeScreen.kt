@@ -18,7 +18,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -117,8 +116,6 @@ internal fun HomeContent(
     recentlyPlayed: LazyPagingItems<Track>,
     modifier: Modifier = Modifier
 ) {
-    val scrollState = rememberScrollState()
-
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->
         // We want a color which has sufficient contrast against the surface color
@@ -144,6 +141,7 @@ internal fun HomeContent(
             contentAlignment = Alignment.TopCenter,
             modifier = modifier
                 .background(MaterialTheme.colorScheme.primary.darker(0.95f))
+                .testTag("home")
         ) {
 
             Box(modifier = Modifier) {
