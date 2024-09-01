@@ -52,7 +52,7 @@ fun ScreenHeader(
             Text(
                 text = stringResource(id = titleRes),
                 color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.displaySmall,
+                style = MaterialTheme.typography.displaySmall
             )
             IconButton(
                 modifier = Modifier.clip(RoundedCornerShape(100)),
