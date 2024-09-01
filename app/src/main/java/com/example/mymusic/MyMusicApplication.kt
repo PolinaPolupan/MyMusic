@@ -1,19 +1,15 @@
 package com.example.mymusic
 
 import android.app.Application
-import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.Configuration
+import com.example.mymusic.core.data.sync.Sync
 import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
 
 @HiltAndroidApp
-class MyMusicApplication : Application(), Configuration.Provider {
+class MyMusicApplication : Application() {
 
-    @Inject lateinit var workerFactory: HiltWorkerFactory
-
-    override val workManagerConfiguration: Configuration
-        get() = Configuration.Builder()
-            .setMinimumLoggingLevel(android.util.Log.DEBUG)
-            .setWorkerFactory(workerFactory)
-            .build()
+    override fun onCreate() {
+        super.onCreate()
+        // Initialize Sync; the system responsible for keeping data in the app up to date.
+        Sync.initialize(context = this)
+    }
 }
