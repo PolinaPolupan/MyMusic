@@ -5,19 +5,19 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="topApBar_whenScrolledDown_isDisplayed()">
+      <SelectionState runConfigName="playlists_whenScreenIsLoaded_existAndShowUsersPlaylists()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="AlbumScreenTest">
+      <SelectionState runConfigName="NavigationTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="placeholders_whenScreenIsLoading_exist() (1)">
+      <SelectionState runConfigName="firstScreen_isHome()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="tracks_whenScreenIsLoaded_existAndShowAlbumsTracks() (1)">
+      <SelectionState runConfigName="navigationBar_navigatesToLibrary()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PlaylistScreenTest">
+      <SelectionState runConfigName="navigationBar_navigatesToSearch()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
