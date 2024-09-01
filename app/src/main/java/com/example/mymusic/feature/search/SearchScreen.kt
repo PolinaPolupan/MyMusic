@@ -48,7 +48,7 @@ fun SearchScreen(
         onSearchQueryChanged = viewModel::onSearchQueryChanged,
         searchQuery = viewModel.searchQuery,
         recentSearches = viewModel.recentSearches,
-        modifier = modifier
+        modifier = modifier.testTag("search")
     )
 }
 

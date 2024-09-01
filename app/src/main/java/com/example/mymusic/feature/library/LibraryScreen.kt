@@ -111,7 +111,7 @@ fun LibraryScreen(
             currentSortOption = viewModel.currentSortOption.value,
             onAlbumClick = {},
             onPlaylistClick = {},
-            modifier = modifier
+            modifier = modifier.testTag("library")
         )
     }
 }
