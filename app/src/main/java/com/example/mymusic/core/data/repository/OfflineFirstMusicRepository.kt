@@ -40,45 +40,45 @@ class OfflineFirstMusicRepository @Inject constructor(
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     private val apiService: MyMusicAPIService,
     private val database: MusicDatabase
-) {
+): MusicRepository {
 
-    fun observeRecommendations(): Flow<List<Track>> {
+    override fun observeRecommendations(): Flow<List<Track>> {
          return musicDao.observeRecommendations().map { tracks ->
              tracks.toExternal()
         }
     }
 
-    fun observeTrack(id: String): Flow<Track> {
+    override fun observeTrack(id: String): Flow<Track> {
         return musicDao.observeTrack(id).map { track ->
             track.toExternal()
         }
     }
 
-    fun observeAlbum(id: String): Flow<SimplifiedAlbum> {
+    override fun observeAlbum(id: String): Flow<SimplifiedAlbum> {
         return musicDao.observeAlbum(id).map { album ->
             album.toExternalSimplified()
         }
     }
 
-    fun observeAlbumTracks(id: String): Flow<List<SimplifiedTrack>> {
+    override fun observeAlbumTracks(id: String): Flow<List<SimplifiedTrack>> {
         return musicDao.observeAlbumTracks(id).map { tracks ->
             tracks.toExternal()
         }
     }
 
-    fun observePlaylist(id: String): Flow<SimplifiedPlaylist> {
+    override fun observePlaylist(id: String): Flow<SimplifiedPlaylist> {
         return musicDao.observePlaylist(id).map { playlist ->
             playlist.toExternal()
         }
     }
 
-    fun observePlaylistTracks(id: String): Flow<List<Track>> {
+    override fun observePlaylistTracks(id: String): Flow<List<Track>> {
         return musicDao.observePlaylistTracks(id).map { tracks ->
             tracks.toExternal()
         }
     }
 
-    suspend fun loadTrack(id: String) {
+    override suspend fun loadTrack(id: String) {
         withContext(dispatcher) {
             val track = getTrack(id)
 
@@ -88,7 +88,7 @@ class OfflineFirstMusicRepository @Inject constructor(
         }
     }
 
-    suspend fun loadAlbumTracks(id: String) {
+    override suspend fun loadAlbumTracks(id: String) {
         withContext(dispatcher) {
             val tracks = getAlbumTracks(id)
 
@@ -105,7 +105,7 @@ class OfflineFirstMusicRepository @Inject constructor(
         }
     }
 
-    suspend fun loadPlaylistTracks(id: String) {
+    override suspend fun loadPlaylistTracks(id: String) {
         withContext(dispatcher) {
             val tracks = getPlaylistTracks(id)
 
@@ -120,7 +120,7 @@ class OfflineFirstMusicRepository @Inject constructor(
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    fun observeRecentlyPlayed(): Flow<PagingData<Track>> {
+    override fun observeRecentlyPlayed(): Flow<PagingData<Track>> {
 
         val pagingSourceFactory = { database.musicDao().observeRecentlyPlayed() }
 
@@ -138,7 +138,7 @@ class OfflineFirstMusicRepository @Inject constructor(
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    fun observeSavedAlbums(): Flow<PagingData<SimplifiedAlbum>> {
+    override fun observeSavedAlbums(): Flow<PagingData<SimplifiedAlbum>> {
 
         val pagingSourceFactory = { database.musicDao().observeSavedAlbums() }
 
@@ -156,7 +156,7 @@ class OfflineFirstMusicRepository @Inject constructor(
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    fun observeSavedPlaylists(): Flow<PagingData<SimplifiedPlaylist>> {
+    override fun observeSavedPlaylists(): Flow<PagingData<SimplifiedPlaylist>> {
         val pagingSourceFactory = { database.musicDao().observeSavedPlaylists() }
 
         return Pager(
@@ -170,7 +170,7 @@ class OfflineFirstMusicRepository @Inject constructor(
             .map { it.map { it.toExternal() } }
     }
 
-    suspend fun refresh() {
+    override suspend fun refresh() {
         withContext(dispatcher) {
 
             val remoteMusic = getRecommendations()
