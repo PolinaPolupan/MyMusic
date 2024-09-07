@@ -21,7 +21,8 @@ data class UserPreferences (
 
 class OfflineFirstUserDataRepository @Inject constructor(
     private val dataStore: DataStore<Preferences>
-) {
+): UserDataRepository {
+
     private object PreferencesKeys {
         val AUTH_STATE = stringPreferencesKey(Constants.AUTH_STATE)
         val DISPLAY_NAME = stringPreferencesKey(Constants.DATA_DISPLAY_NAME)
@@ -29,7 +30,7 @@ class OfflineFirstUserDataRepository @Inject constructor(
         val IMAGE_URL = stringPreferencesKey(Constants.IMAGE_URL)
     }
 
-    val userPreferencesFlow: Flow<UserPreferences> = dataStore.data
+    override val userPreferencesFlow: Flow<UserPreferences> = dataStore.data
         .catch { exception ->
             // dataStore.data throws an IOException when an error is encountered when reading data
             if (exception is IOException) {
@@ -47,29 +48,16 @@ class OfflineFirstUserDataRepository @Inject constructor(
             )
         }
 
-    suspend fun updateAuthState(authState: String) {
+    override suspend fun updateAuthState(authState: String) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.AUTH_STATE] = authState
         }
     }
 
-    /**
-     * [updateUserData] updates user's display name and email
-     */
-    suspend fun updateUserData(displayName: String, email: String) {
+    override suspend fun updateUserData(displayName: String, email: String, imageUrl: String) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.DISPLAY_NAME] = displayName
             preferences[PreferencesKeys.EMAIL] = email
-        }
-    }
-
-    /**
-     * [updatePicture] updates user's picture. This function is separate from [updateUserData]
-     * because images array from Spotify API can be empty
-     * https://developer.spotify.com/documentation/web-api/reference/get-current-users-profile
-     */
-    suspend fun updateImageUrl(imageUrl: String) {
-        dataStore.edit { preferences ->
             preferences[PreferencesKeys.IMAGE_URL] = imageUrl
         }
     }

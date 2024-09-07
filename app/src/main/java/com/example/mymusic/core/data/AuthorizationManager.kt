@@ -193,7 +193,6 @@ class AuthorizationManager @Inject constructor(
                         val user: SpotifyUser = Json.decodeFromString(jsonBody)
                         updateUserData(user)
                         persistState(_authState.jsonSerializeString())
-                        if (user.images.isNotEmpty()) updateUserImageUrl(user.images[0].url) else updateUserImageUrl("")
 
                     } catch (e: Exception) {
                         Log.e("MainActivity", "API call error!")
@@ -218,17 +217,8 @@ class AuthorizationManager @Inject constructor(
             withContext(dispatcher) {
                 userDataRepository.updateUserData(
                     displayName = user.displayName,
-                    email = user.email
-                )
-            }
-        }
-    }
-
-    private fun updateUserImageUrl(imageUrl: String) {
-        coroutineScope.launch {
-            withContext(dispatcher) {
-                userDataRepository.updateImageUrl(
-                    imageUrl = imageUrl
+                    email = user.email,
+                    imageUrl = if (user.images.isNotEmpty()) user.images[0].url else ""
                 )
             }
         }
