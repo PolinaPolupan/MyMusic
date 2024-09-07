@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.mymusic.core.data.sync.SyncManager
-import com.example.mymusic.core.data.repository.MusicRepository
-import com.example.mymusic.core.data.repository.UserDataRepository
+import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
+import com.example.mymusic.core.data.repository.OfflineFirstUserDataRepository
 import com.example.mymusic.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    userDataRepository: UserDataRepository,
-    musicRepository: MusicRepository,
+    userDataRepository: OfflineFirstUserDataRepository,
+    musicRepository: OfflineFirstMusicRepository,
     syncManager: SyncManager
 ): ViewModel()
 {

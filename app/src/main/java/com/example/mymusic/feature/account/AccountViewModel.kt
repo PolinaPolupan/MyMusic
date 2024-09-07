@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymusic.core.data.AuthorizationManager
-import com.example.mymusic.core.data.repository.UserDataRepository
+import com.example.mymusic.core.data.repository.OfflineFirstUserDataRepository
 import com.example.mymusic.core.data.sync.SyncManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     private val authorizationManager: AuthorizationManager,
-    userDataRepository: UserDataRepository,
+    userDataRepository: OfflineFirstUserDataRepository,
     private val syncManager: SyncManager
 ): ViewModel() {
 

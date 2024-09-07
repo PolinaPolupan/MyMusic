@@ -3,7 +3,7 @@ package com.example.mymusic.feature.player
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.core.data.repository.MusicRepository
+import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
 import com.example.mymusic.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val musicRepository: MusicRepository
+    private val musicRepository: OfflineFirstMusicRepository
 ): ViewModel() {
 
     val trackId: String = checkNotNull(savedStateHandle[TRACK_ID_ARG])

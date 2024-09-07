@@ -9,7 +9,7 @@ import android.util.Log
 import com.example.mymusic.core.data.di.ApplicationScope
 import com.example.mymusic.core.data.di.IoDispatcher
 import com.example.mymusic.core.data.network.model.SpotifyUser
-import com.example.mymusic.core.data.repository.UserDataRepository
+import com.example.mymusic.core.data.repository.OfflineFirstUserDataRepository
 import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
@@ -37,7 +37,7 @@ import javax.inject.Singleton
 
 @Singleton
 class AuthorizationManager @Inject constructor(
-    private val userDataRepository: UserDataRepository,
+    private val userDataRepository: OfflineFirstUserDataRepository,
     @ApplicationContext val context: Context,
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationScope private val coroutineScope: CoroutineScope

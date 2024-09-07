@@ -35,7 +35,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class MusicRepository @Inject constructor(
+class OfflineFirstMusicRepository @Inject constructor(
     private val musicDao: MusicDao,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     private val apiService: MyMusicAPIService,

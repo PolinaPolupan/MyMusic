@@ -19,7 +19,7 @@ data class UserPreferences (
     val imageUrl: String?
 )
 
-class UserDataRepository @Inject constructor(
+class OfflineFirstUserDataRepository @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
     private object PreferencesKeys {
