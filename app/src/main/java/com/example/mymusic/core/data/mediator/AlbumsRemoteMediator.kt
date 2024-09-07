@@ -1,4 +1,4 @@
-package com.example.mymusic.core.data.repository
+package com.example.mymusic.core.data.mediator
 
 import android.net.http.HttpException
 import android.os.Build
@@ -17,6 +17,7 @@ import com.example.mymusic.core.data.network.model.ErrorResponse
 import com.example.mymusic.core.data.network.model.SavedAlbumsResponse
 import com.example.mymusic.core.data.network.model.toLocal
 import com.example.mymusic.core.data.network.model.toLocalAlbum
+import com.example.mymusic.core.data.repository.processResponse
 import com.haroldadmin.cnradapter.NetworkResponse
 import java.io.IOException
 import javax.inject.Inject
