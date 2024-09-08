@@ -9,12 +9,15 @@ import android.util.Log
 import com.example.common.ApplicationScope
 import com.example.common.Constants
 import com.example.common.IoDispatcher
+import com.example.datastore.MyMusicPreferencesDataSource
 import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import net.openid.appauth.AppAuthConfiguration
 import net.openid.appauth.AuthState
@@ -34,15 +37,56 @@ import java.security.SecureRandom
 import javax.inject.Inject
 import javax.inject.Singleton
 
-data class User(
+
+@Serializable
+data class SpotifyUser(
+    @SerialName("display_name")
     val displayName: String,
+    @SerialName("external_urls")
+    val externalUrls: ExternalUrls,
+    val href: String,
+    val id: String,
+    val images: List<SpotifyImage>,
+    val type: String,
+    val uri: String,
+    val followers: Followers,
+    val country: String,
+    val product: String,
+    @SerialName("explicit_content")
+    val explicitContent: ExplicitContent,
     val email: String,
-    val images: List<String>
 )
+
+@Serializable
+data class ExplicitContent(
+    @SerialName("filter_enabled")
+    val filterEnabled: Boolean,
+    @SerialName("filter_locked")
+    val filterLocked: Boolean
+)
+
+@kotlinx.serialization.Serializable
+data class ExternalUrls(
+    val spotify: String
+)
+
+@kotlinx.serialization.Serializable
+data class Followers(
+    val href: String?,
+    val total: Int
+)
+
+@kotlinx.serialization.Serializable
+data class SpotifyImage(
+    val url: String,
+    val height: Int?,
+    val width: Int?
+)
+
 
 @Singleton
 class AuthorizationManager @Inject constructor(
-   // private val userDataRepository: OfflineFirstUserDataRepository,
+    private val userDataSource: MyMusicPreferencesDataSource,
     @ApplicationContext val context: Context,
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationScope private val coroutineScope: CoroutineScope
@@ -118,8 +162,7 @@ class AuthorizationManager @Inject constructor(
             Uri.parse(Constants.URL_AUTH_REDIRECT))
             .setCodeVerifier(codeVerifier,
                 codeChallenge,
-                Constants.CODE_VERIFIER_CHALLENGE_METHOD
-            )
+                Constants.CODE_VERIFIER_CHALLENGE_METHOD)
 
         builder.setScopes(
             Constants.SCOPE_STREAMING,
@@ -194,11 +237,11 @@ class AuthorizationManager @Inject constructor(
 
                     try {
                         val response = client.newCall(request).execute()
-                       // val jsonBody = response.body?.string() ?: ""
+                        val jsonBody = response.body?.string() ?: ""
 
-                       // val user: User = Json.decodeFromString(jsonBody)
-                      // updateUserData(user.displayName, user.email, user.images)
-                      // persistState(_authState.jsonSerializeString())
+                        val user: SpotifyUser = Json.decodeFromString(jsonBody)
+                        updateUserData(user)
+                        persistState(_authState.jsonSerializeString())
 
                     } catch (e: Exception) {
                         Log.e("MainActivity", "API call error!")
@@ -213,19 +256,19 @@ class AuthorizationManager @Inject constructor(
     private fun persistState(authState: String) {
         coroutineScope.launch {
             withContext(dispatcher) {
-                //userDataRepository.updateAuthState(authState)
+                userDataSource.updateAuthState(authState)
             }
         }
     }
 
-    private fun updateUserData(displayName: String, email: String, images: List<String>) {
+    private fun updateUserData(user: SpotifyUser) {
         coroutineScope.launch {
             withContext(dispatcher) {
-               // userDataRepository.updateUserData(
-               //     displayName = displayName,
-               //     email = email,
-               //     imageUrl = if (images.isNotEmpty()) images[0] else ""
-               // )
+                userDataSource.updateUserData(
+                    displayName = user.displayName,
+                    email = user.email,
+                    imageUrl = if (user.images.isNotEmpty()) user.images[0].url else ""
+                )
             }
         }
     }

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.plugin.serialization)
 }
 
 android {
@@ -41,7 +42,9 @@ dependencies {
     implementation(libs.appauth)
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.network.response.adapter)
     implementation(project(":core:common"))
+    implementation(project(":core:datastore"))
 
     testImplementation(libs.junit)
 

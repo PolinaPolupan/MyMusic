@@ -1,5 +1,6 @@
 package com.example.data.repository
 
+import com.example.model.UserPreferences
 import kotlinx.coroutines.flow.Flow
 
 interface UserDataRepository {

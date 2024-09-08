@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.example.auth"
+    namespace = "com.example.datastore"
     compileSdk = 34
 
     defaultConfig {
@@ -33,13 +34,20 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.androidx.hilt.common)
-    implementation(libs.androidx.hilt.work)
+
+    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.datastore.preferences.core)
+    implementation(libs.androidx.datastore.preferences)
     implementation(project(":core:common"))
-    implementation(project(":core:auth"))
-    implementation(project(":core:data"))
-    implementation(project(":core:datastore"))
     implementation(project(":core:model"))
+
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit.test.ext)
+    androidTestImplementation(libs.androidx.test.espresso)
 }
