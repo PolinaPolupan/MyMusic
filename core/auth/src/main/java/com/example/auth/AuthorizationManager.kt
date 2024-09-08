@@ -65,18 +65,18 @@ data class ExplicitContent(
     val filterLocked: Boolean
 )
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class ExternalUrls(
     val spotify: String
 )
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class Followers(
     val href: String?,
     val total: Int
 )
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class SpotifyImage(
     val url: String,
     val height: Int?,

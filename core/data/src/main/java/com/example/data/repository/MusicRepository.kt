@@ -12,32 +12,32 @@ interface MusicRepository {
     /**
      * Returns recommendations as a stream of tracks
      */
-    fun observeRecommendations(): Flow<List<com.example.model.Track>>
+    fun observeRecommendations(): Flow<List<Track>>
 
     /**
      * Returns a stream of [Track] by id
      */
-    fun observeTrack(id: String): Flow<com.example.model.Track>
+    fun observeTrack(id: String): Flow<Track>
 
     /**
      * Returns a stream of [SimplifiedAlbum] by id
      */
-    fun observeAlbum(id: String): Flow<com.example.model.SimplifiedAlbum>
+    fun observeAlbum(id: String): Flow<SimplifiedAlbum>
 
     /**
      * Returns a stream of simplified tracks for a specific album
      */
-    fun observeAlbumTracks(id: String): Flow<List<com.example.model.SimplifiedTrack>>
+    fun observeAlbumTracks(id: String): Flow<List<SimplifiedTrack>>
 
     /**
      * Returns a stream of [SimplifiedPlaylist] by id
      */
-    fun observePlaylist(id: String): Flow<com.example.model.SimplifiedPlaylist>
+    fun observePlaylist(id: String): Flow<SimplifiedPlaylist>
 
     /**
      * Returns a stream of simplified tracks for a specific playlist
      */
-    fun observePlaylistTracks(id: String): Flow<List<com.example.model.Track>>
+    fun observePlaylistTracks(id: String): Flow<List<Track>>
 
     /**
      * Loads a specific track into the database
@@ -57,17 +57,17 @@ interface MusicRepository {
     /**
      * Returns a stream of recently played tracks as a paging data
      */
-    fun observeRecentlyPlayed(): Flow<PagingData<com.example.model.Track>>
+    fun observeRecentlyPlayed(): Flow<PagingData<Track>>
 
     /**
      * Returns a stream of saved albums as a paging data
      */
-    fun observeSavedAlbums(): Flow<PagingData<com.example.model.SimplifiedAlbum>>
+    fun observeSavedAlbums(): Flow<PagingData<SimplifiedAlbum>>
 
     /**
      * Returns a stream of saved playlists as a paging data
      */
-    fun observeSavedPlaylists(): Flow<PagingData<com.example.model.SimplifiedPlaylist>>
+    fun observeSavedPlaylists(): Flow<PagingData<SimplifiedPlaylist>>
 
     /**
      * Refreshes database

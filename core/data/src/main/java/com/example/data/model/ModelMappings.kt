@@ -20,7 +20,6 @@ import com.example.model.SimplifiedArtist
 import com.example.model.SimplifiedPlaylist
 import com.example.model.SimplifiedTrack
 import com.example.model.Track
-import com.example.network.model.PlaylistTrack
 import com.example.network.model.SavedAlbum
 import com.example.network.model.SpotifyAlbum
 import com.example.network.model.SpotifyArtist
@@ -36,25 +35,6 @@ fun SpotifyPlayHistoryObject.toLocal() = LocalRecentlyPlayed(
     track = track.toLocalTrack()
 )
 
-@JvmName("SpotifyPlayHistoryObjectToLocalTrackConversion")
-fun SpotifyPlayHistoryObject.toLocalTrack() = LocalTrack(
-    id = track.id,
-    album = track.album.toLocal(),
-    name = track.name
-)
-
-@JvmName("SpotifyPlayHistoryObjectToLocalSimplifiedTrackConversion")
-fun SpotifyPlayHistoryObject.toLocalSimplifiedTrack() = LocalSimplifiedTrack(
-    id = track.id,
-    name = track.name
-)
-
-@JvmName("SpotifyPlayHistoryObjectListToLocalTracks")
-fun List<SpotifyPlayHistoryObject>.toLocalTracks() = map(SpotifyPlayHistoryObject::toLocalTrack)
-
-@JvmName("SpotifyPlayHistoryObjectListToLocalSimplifiedTracks")
-fun List<SpotifyPlayHistoryObject>.toLocalSimplifiedTracks() = map(SpotifyPlayHistoryObject::toLocalSimplifiedTrack)
-
 @JvmName("SpotifyPlayHistoryObjectListToLocalRecentlyPlayed")
 fun List<SpotifyPlayHistoryObject>.toLocal() = map(SpotifyPlayHistoryObject::toLocal)
 
@@ -65,16 +45,6 @@ fun SpotifyAlbum.toLocal() = LocalAlbum(
     imageUrl = if (images.isNotEmpty()) images[0].url else "",
     name = name
 )
-
-@JvmName("PlaylistTrackToLocalTrack")
-fun PlaylistTrack.toLocal() = LocalTrack(
-    id = track.id,
-    album = track.album.toLocal(),
-    name = track.name
-)
-
-@JvmName("PlaylistTrackListToLocalTracks")
-fun List<PlaylistTrack>.toLocal() = map(PlaylistTrack::toLocal)
 
 @JvmName("SavedAlbumToLocalAlbumConversion")
 fun SavedAlbum.toLocalAlbum() = LocalAlbum(
@@ -162,12 +132,6 @@ fun SpotifyTrack.toLocalSimplifiedTrack() = LocalSimplifiedTrack(
     name = name
 )
 
-@JvmName("SpotifyTrackListToLocalSimplifiedTracks")
-fun List<SpotifyTrack>.toLocalSimplifiedTracks() = map(SpotifyTrack::toLocalSimplifiedTrack)
-
-@JvmName("SpotifyTrackListToLocalTracks")
-fun List<SpotifyTrack>.toLocal() = map(SpotifyTrack::toLocalTrack)
-
 @JvmName("SpotifyTrackToLocalRecommendation")
 fun SpotifyTrack.toLocalRecommendation() = LocalRecommendation(
     id = id
@@ -183,22 +147,16 @@ fun LocalAlbumWithArtists.toExternalSimplified(): SimplifiedAlbum =
         type = album.type.toAlbumType(),
         imageUrl = album.imageUrl,
         name = album.name,
-        artists = simplifiedArtists.map { it.toExternal() },
+        artists = simplifiedArtists.map { it.toExternal() }
     )
 
-@JvmName("LocalAlbumWithArtistsListToExternalSimplifiedAlbums")
-fun List<LocalAlbumWithArtists>.toExternal() = map(LocalAlbumWithArtists::toExternalSimplified)
-
 @JvmName("LocalRecentlyPlayedWithArtistsToExternalTrack")
-fun LocalRecentlyPlayedWithArtists.toExternal() = com.example.model.Track(
+fun LocalRecentlyPlayedWithArtists.toExternal() = Track(
     id = trackHistory.track.id,
     album = trackHistory.track.album.toExternalSimplified(albumArtists.toExternal()),
     name = trackHistory.track.name,
     artists = artists.toExternal()
 )
-
-@JvmName("LocalRecentlyPlayedWithArtistsListToExternalTracks")
-fun List<LocalRecentlyPlayedWithArtists>.toExternal() = map(LocalRecentlyPlayedWithArtists::toExternal)
 
 @JvmName("LocalSimplifiedTrackWithArtistsToExternalSimplifiedTrack")
 fun LocalSimplifiedTrackWithArtists.toExternal() = SimplifiedTrack(
@@ -261,9 +219,6 @@ fun LocalPlaylist.toExternal() = SimplifiedPlaylist(
     ownerName = ownerName ?: ""
 )
 
-@JvmName("LocalPlaylistListToExternalSimplifiedPlaylists")
-fun List<LocalPlaylist>.toExternal() = map(LocalPlaylist::toExternal)
-
 @JvmName("LocalSimplifiedArtistToExternalSimplifiedArtist")
 fun LocalSimplifiedArtist.toExternal() = SimplifiedArtist(
     id = id,
@@ -272,12 +227,3 @@ fun LocalSimplifiedArtist.toExternal() = SimplifiedArtist(
 
 @JvmName("LocalSimplifiedArtistListToExternalSimplifiedArtists")
 fun List<LocalSimplifiedArtist>.toExternal() = map(LocalSimplifiedArtist::toExternal)
-
-@JvmName("LocalTrackToExternalTrack")
-fun LocalTrack.toExternal(albumArtists: List<SimplifiedArtist>, artists: List<Artist>) =
-    Track(
-        id = id,
-        album = album.toExternalSimplified(albumArtists),
-        name = name,
-        artists = artists
-    )
