@@ -35,7 +35,7 @@ import com.example.mymusic.core.designSystem.component.TracksList
 import com.example.mymusic.core.designSystem.component.TracksListUiState
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.artistsString
-import com.example.mymusic.model.Track
+import com.example.model.Track
 
 @Composable
 fun PlaylistScreen(
@@ -62,7 +62,7 @@ fun PlaylistContent(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    TracksList<Track>(
+    TracksList<com.example.model.Track>(
         uiState = uiState,
         onBackClick = onBackClick,
         modifier = modifier,
@@ -78,7 +78,7 @@ fun PlaylistContent(
 
 @Composable
 private fun TrackItem(
-    track: Track,
+    track: com.example.model.Track,
     onTrackClick: (String) -> Unit,
     onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier

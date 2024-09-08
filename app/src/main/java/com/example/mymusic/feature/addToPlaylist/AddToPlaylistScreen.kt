@@ -73,7 +73,7 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
-import com.example.mymusic.model.SimplifiedPlaylist
+import com.example.model.SimplifiedPlaylist
 import kotlinx.coroutines.flow.flowOf
 import kotlin.math.abs
 
@@ -90,7 +90,7 @@ fun AddToPlayListScreen(
 
             AddToPlayListContent(
                 uiState = uiState,
-                playlists = flowOf(PagingData.from(emptyList<SimplifiedPlaylist>())).collectAsLazyPagingItems(),
+                playlists = flowOf(PagingData.from(emptyList<com.example.model.SimplifiedPlaylist>())).collectAsLazyPagingItems(),
                 onSortOptionChanged = viewModel::setSortOption,
                 currentSortOption = viewModel.currentSortOption.value,
                 onBackPress = onBackPress,
@@ -117,7 +117,7 @@ fun AddToPlayListScreen(
 @Composable
 fun AddToPlayListContent(
     uiState: AddToPlaylistUiState,
-    playlists: LazyPagingItems<SimplifiedPlaylist>,
+    playlists: LazyPagingItems<com.example.model.SimplifiedPlaylist>,
     onBackPress: () -> Unit,
     onSortOptionChanged: (SortOption) -> Unit,
     currentSortOption: SortOption,
@@ -234,7 +234,7 @@ private fun BlurredImageHeader(
 
 private fun LazyListScope.playlistsList(
     uiState: AddToPlaylistUiState,
-    playlists: LazyPagingItems<SimplifiedPlaylist>,
+    playlists: LazyPagingItems<com.example.model.SimplifiedPlaylist>,
 ) {
     when (uiState) {
         AddToPlaylistUiState.Loading -> {
@@ -339,7 +339,7 @@ fun AddToPlayListLoadingPreview() {
     MyMusicTheme {
         AddToPlayListContent(
             uiState = AddToPlaylistUiState.Loading,
-            playlists = flowOf(PagingData.from(emptyList<SimplifiedPlaylist>())).collectAsLazyPagingItems(),
+            playlists = flowOf(PagingData.from(emptyList<com.example.model.SimplifiedPlaylist>())).collectAsLazyPagingItems(),
             currentSortOption = SortOption.RECENTLY_ADDED,
             onSortOptionChanged = {},
             onBackPress = {}

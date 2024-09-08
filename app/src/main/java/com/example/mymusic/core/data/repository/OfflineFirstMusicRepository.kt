@@ -27,10 +27,10 @@ import com.example.mymusic.core.data.network.model.SpotifySimplifiedTrack
 import com.example.mymusic.core.data.network.model.SpotifyTrack
 import com.example.mymusic.core.data.network.model.toLocal
 import com.example.mymusic.core.data.network.model.toLocalRecommendations
-import com.example.mymusic.model.SimplifiedAlbum
-import com.example.mymusic.model.SimplifiedPlaylist
-import com.example.mymusic.model.SimplifiedTrack
-import com.example.mymusic.model.Track
+import com.example.model.SimplifiedAlbum
+import com.example.model.SimplifiedPlaylist
+import com.example.model.SimplifiedTrack
+import com.example.model.Track
 import com.haroldadmin.cnradapter.NetworkResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -45,37 +45,37 @@ class OfflineFirstMusicRepository @Inject constructor(
     private val database: MusicDatabase
 ): MusicRepository {
 
-    override fun observeRecommendations(): Flow<List<Track>> {
+    override fun observeRecommendations(): Flow<List<com.example.model.Track>> {
          return musicDao.observeRecommendations().map { tracks ->
              tracks.toExternal()
         }
     }
 
-    override fun observeTrack(id: String): Flow<Track> {
+    override fun observeTrack(id: String): Flow<com.example.model.Track> {
         return musicDao.observeTrack(id).map { track ->
             track.toExternal()
         }
     }
 
-    override fun observeAlbum(id: String): Flow<SimplifiedAlbum> {
+    override fun observeAlbum(id: String): Flow<com.example.model.SimplifiedAlbum> {
         return musicDao.observeAlbum(id).map { album ->
             album.toExternalSimplified()
         }
     }
 
-    override fun observeAlbumTracks(id: String): Flow<List<SimplifiedTrack>> {
+    override fun observeAlbumTracks(id: String): Flow<List<com.example.model.SimplifiedTrack>> {
         return musicDao.observeAlbumTracks(id).map { tracks ->
             tracks.toExternal()
         }
     }
 
-    override fun observePlaylist(id: String): Flow<SimplifiedPlaylist> {
+    override fun observePlaylist(id: String): Flow<com.example.model.SimplifiedPlaylist> {
         return musicDao.observePlaylist(id).map { playlist ->
             playlist.toExternal()
         }
     }
 
-    override fun observePlaylistTracks(id: String): Flow<List<Track>> {
+    override fun observePlaylistTracks(id: String): Flow<List<com.example.model.Track>> {
         return musicDao.observePlaylistTracks(id).map { tracks ->
             tracks.toExternal()
         }
@@ -123,7 +123,7 @@ class OfflineFirstMusicRepository @Inject constructor(
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun observeRecentlyPlayed(): Flow<PagingData<Track>> {
+    override fun observeRecentlyPlayed(): Flow<PagingData<com.example.model.Track>> {
 
         val pagingSourceFactory = { database.musicDao().observeRecentlyPlayed() }
 
@@ -141,7 +141,7 @@ class OfflineFirstMusicRepository @Inject constructor(
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun observeSavedAlbums(): Flow<PagingData<SimplifiedAlbum>> {
+    override fun observeSavedAlbums(): Flow<PagingData<com.example.model.SimplifiedAlbum>> {
 
         val pagingSourceFactory = { database.musicDao().observeSavedAlbums() }
 
@@ -159,7 +159,7 @@ class OfflineFirstMusicRepository @Inject constructor(
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun observeSavedPlaylists(): Flow<PagingData<SimplifiedPlaylist>> {
+    override fun observeSavedPlaylists(): Flow<PagingData<com.example.model.SimplifiedPlaylist>> {
         val pagingSourceFactory = { database.musicDao().observeSavedPlaylists() }
 
         return Pager(

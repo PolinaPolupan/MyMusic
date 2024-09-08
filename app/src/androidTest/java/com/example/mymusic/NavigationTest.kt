@@ -12,7 +12,7 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.feature.home.AuthenticatedUiState
 import com.example.mymusic.feature.home.HomeContent
 import com.example.mymusic.feature.home.HomeUiState
-import com.example.mymusic.model.Track
+import com.example.model.Track
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.flowOf
@@ -102,7 +102,7 @@ class NavigationTest {
                     uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
                     authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
-                    recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
+                    recentlyPlayed = flowOf(PagingData.from(emptyList<com.example.model.Track>())).collectAsLazyPagingItems()
                 )
             }
         }

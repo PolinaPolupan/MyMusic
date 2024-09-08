@@ -5,9 +5,9 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.RoomWarnings
-import com.example.mymusic.model.Artist
-import com.example.mymusic.model.SimplifiedArtist
-import com.example.mymusic.model.Track
+import com.example.model.Artist
+import com.example.model.SimplifiedArtist
+import com.example.model.Track
 
 /**
  * [LocalTrack] defines a track.
@@ -22,9 +22,10 @@ data class LocalTrack(
     @ColumnInfo(name = "trackName") val name: String
 )
 
-fun LocalTrack.toExternal(albumArtists: List<SimplifiedArtist>, artists: List<Artist>) = Track(
-    id = id,
-    album = album.toExternalSimplified(albumArtists),
-    name = name,
-    artists = artists
-)
+fun LocalTrack.toExternal(albumArtists: List<com.example.model.SimplifiedArtist>, artists: List<com.example.model.Artist>) =
+    com.example.model.Track(
+        id = id,
+        album = album.toExternalSimplified(albumArtists),
+        name = name,
+        artists = artists
+    )

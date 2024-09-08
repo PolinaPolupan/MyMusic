@@ -33,6 +33,8 @@ hilt-compiler = "1.2.0"
 paging = "3.3.2"
 paging-room = "2.6.1"
 logging-interceptor = "4.12.0"
+jetbrains-kotlin-jvm = "2.0.0"
+annotation-jvm = "1.8.2"
 
 [libraries]
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom" }
@@ -82,6 +84,7 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 network-response-adapter = { group = "com.github.haroldadmin", name = "NetworkResponseAdapter", version.ref = "network-response-adapter" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging-interceptor" }
+androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotation-jvm" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
@@ -91,3 +94,4 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "plugin-serailization" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrains-kotlin-jvm" }

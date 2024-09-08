@@ -55,8 +55,8 @@ import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.artistsString
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.lerpScrollOffset
-import com.example.mymusic.model.Album
-import com.example.mymusic.model.Playlist
+import com.example.model.Album
+import com.example.model.Playlist
 import kotlin.math.abs
 
 @Composable
@@ -348,8 +348,8 @@ sealed interface TracksListUiState {
 }
 
 data class OneOf(
-    val playlist: Playlist? = null,
-    val album: Album? = null
+    val playlist: com.example.model.Playlist? = null,
+    val album: com.example.model.Album? = null
 )
 
 @PreviewWithBackground

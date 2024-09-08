@@ -1,4 +1,4 @@
-package com.example.mymusic.model
+package com.example.model
 
 data class Playlist(
     val id: String,

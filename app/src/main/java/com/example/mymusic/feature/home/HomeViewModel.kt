@@ -6,7 +6,7 @@ import androidx.paging.cachedIn
 import com.example.mymusic.core.data.sync.SyncManager
 import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
 import com.example.mymusic.core.data.repository.OfflineFirstUserDataRepository
-import com.example.mymusic.model.Track
+import com.example.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -47,7 +47,7 @@ sealed interface HomeUiState {
     data object Loading: HomeUiState
 
     data class Success(
-        val topPicks: List<Track>
+        val topPicks: List<com.example.model.Track>
     ): HomeUiState
 }
 

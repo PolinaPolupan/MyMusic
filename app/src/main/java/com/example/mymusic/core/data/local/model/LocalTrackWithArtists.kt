@@ -10,7 +10,7 @@ import com.example.mymusic.core.data.local.model.entities.LocalSimplifiedArtist
 import com.example.mymusic.core.data.local.model.entities.LocalTrack
 import com.example.mymusic.core.data.local.model.entities.toExternal
 import com.example.mymusic.core.data.local.model.entities.toExternalSimplified
-import com.example.mymusic.model.Track
+import com.example.model.Track
 
 data class LocalTrackWithArtists(
     @Embedded val track: LocalTrack,
@@ -28,7 +28,7 @@ data class LocalTrackWithArtists(
     val albumArtists: List<LocalSimplifiedArtist>
 )
 
-fun LocalTrackWithArtists.toExternal() = Track(
+fun LocalTrackWithArtists.toExternal() = com.example.model.Track(
     id = track.id,
     album = track.album.toExternalSimplified(albumArtists.toExternal()),
     name = track.name,

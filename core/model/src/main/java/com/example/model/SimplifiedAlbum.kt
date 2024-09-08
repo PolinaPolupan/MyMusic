@@ -1,4 +1,4 @@
-package com.example.mymusic.model
+package com.example.model
 
 /**
  * [Album] defines an album, which holds tracks.

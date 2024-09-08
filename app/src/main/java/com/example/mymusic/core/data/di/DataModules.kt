@@ -13,7 +13,12 @@ import com.example.mymusic.core.data.local.MusicDao
 import com.example.mymusic.core.data.local.MusicDatabase
 import com.example.mymusic.core.data.network.MyMusicAPIService
 import com.example.mymusic.core.data.network.TokenInterceptor
+import com.example.mymusic.core.data.repository.MusicRepository
+import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
+import com.example.mymusic.core.data.repository.OfflineFirstUserDataRepository
+import com.example.mymusic.core.data.repository.UserDataRepository
 import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +30,21 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class DataModule {
+
+    @Binds
+    internal abstract fun bindsMusicRepository(
+        musicRepository: OfflineFirstMusicRepository,
+    ): MusicRepository
+
+    @Binds
+    internal abstract fun bindsUserDataRepository(
+        userDataRepository: OfflineFirstUserDataRepository,
+    ): UserDataRepository
+}
 
 @InstallIn(SingletonComponent::class)
 @Module

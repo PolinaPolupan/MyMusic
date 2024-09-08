@@ -20,7 +20,7 @@ import com.example.mymusic.core.designSystem.component.SortOption
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.feature.addToPlaylist.AddToPlayListContent
 import com.example.mymusic.feature.addToPlaylist.AddToPlaylistUiState
-import com.example.mymusic.model.SimplifiedPlaylist
+import com.example.model.SimplifiedPlaylist
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
@@ -38,7 +38,7 @@ class AddToPlaylistScreenTest {
             MyMusicTheme {
                 AddToPlayListContent(
                     uiState = AddToPlaylistUiState.Loading,
-                    playlists = flowOf(PagingData.from(emptyList<SimplifiedPlaylist>())).collectAsLazyPagingItems(),
+                    playlists = flowOf(PagingData.from(emptyList<com.example.model.SimplifiedPlaylist>())).collectAsLazyPagingItems(),
                     onBackPress = {},
                     onSortOptionChanged = {},
                     currentSortOption = SortOption.CREATOR

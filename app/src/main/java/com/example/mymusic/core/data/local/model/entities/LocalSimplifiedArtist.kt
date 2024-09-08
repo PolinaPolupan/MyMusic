@@ -3,7 +3,7 @@ package com.example.mymusic.core.data.local.model.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.mymusic.model.SimplifiedArtist
+import com.example.model.SimplifiedArtist
 
 @Entity(tableName = "simplified_artists")
 data class LocalSimplifiedArtist(
@@ -12,7 +12,7 @@ data class LocalSimplifiedArtist(
     @ColumnInfo(name = "simplifiedArtistName") val name: String
 )
 
-fun LocalSimplifiedArtist.toExternal() = SimplifiedArtist(
+fun LocalSimplifiedArtist.toExternal() = com.example.model.SimplifiedArtist(
     id = id,
     name = name
 )

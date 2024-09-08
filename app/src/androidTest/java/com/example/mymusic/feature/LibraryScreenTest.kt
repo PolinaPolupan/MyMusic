@@ -21,8 +21,8 @@ import com.example.mymusic.core.designSystem.component.SortOption
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.feature.home.AuthenticatedUiState
 import com.example.mymusic.feature.library.LibraryContent
-import com.example.mymusic.model.SimplifiedAlbum
-import com.example.mymusic.model.SimplifiedPlaylist
+import com.example.model.SimplifiedAlbum
+import com.example.model.SimplifiedPlaylist
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
@@ -40,8 +40,8 @@ class LibraryScreenTest {
             MyMusicTheme {
                 LibraryContent(
                     uiState = AuthenticatedUiState.Loading,
-                    albums = flowOf(PagingData.from(emptyList<SimplifiedAlbum>())).collectAsLazyPagingItems(),
-                    playlists = flowOf(PagingData.from(emptyList<SimplifiedPlaylist>())).collectAsLazyPagingItems(),
+                    albums = flowOf(PagingData.from(emptyList<com.example.model.SimplifiedAlbum>())).collectAsLazyPagingItems(),
+                    playlists = flowOf(PagingData.from(emptyList<com.example.model.SimplifiedPlaylist>())).collectAsLazyPagingItems(),
                     onSortOptionChanged = {},
                     onNavigateToPlaylist = {},
                     onNavigateToAlbumClick = {},
@@ -66,7 +66,7 @@ class LibraryScreenTest {
                 LibraryContent(
                     uiState = AuthenticatedUiState.Success(""),
                     albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
-                    playlists = flowOf(PagingData.from(emptyList<SimplifiedPlaylist>())).collectAsLazyPagingItems(),
+                    playlists = flowOf(PagingData.from(emptyList<com.example.model.SimplifiedPlaylist>())).collectAsLazyPagingItems(),
                     onSortOptionChanged = {},
                     onNavigateToPlaylist = {},
                     onNavigateToAlbumClick = {},
@@ -95,7 +95,7 @@ class LibraryScreenTest {
             MyMusicTheme {
                 LibraryContent(
                     uiState = AuthenticatedUiState.Success(""),
-                    albums = flowOf(PagingData.from(emptyList<SimplifiedAlbum>())).collectAsLazyPagingItems(),
+                    albums = flowOf(PagingData.from(emptyList<com.example.model.SimplifiedAlbum>())).collectAsLazyPagingItems(),
                     playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),
                     onSortOptionChanged = {},
                     onNavigateToPlaylist = {},

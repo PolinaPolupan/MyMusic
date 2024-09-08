@@ -59,7 +59,7 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
 import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.util.darker
-import com.example.mymusic.model.Track
+import com.example.model.Track
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import kotlin.math.absoluteValue
@@ -101,7 +101,7 @@ internal fun HomeScreen(
             uiState = HomeUiState.Loading,
             authenticatedUiState = authenticatedUiState,
             onTrackClick = {},
-            recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems(),
+            recentlyPlayed = flowOf(PagingData.from(emptyList<com.example.model.Track>())).collectAsLazyPagingItems(),
             modifier = modifier
         )
     }
@@ -113,7 +113,7 @@ internal fun HomeContent(
     uiState: HomeUiState,
     authenticatedUiState: AuthenticatedUiState,
     onTrackClick: (String) -> Unit,
-    recentlyPlayed: LazyPagingItems<Track>,
+    recentlyPlayed: LazyPagingItems<com.example.model.Track>,
     modifier: Modifier = Modifier
 ) {
     val surfaceColor = MaterialTheme.colorScheme.surface
@@ -330,7 +330,7 @@ internal fun TopPicks(
 @Composable
 internal fun RecentlyPlayed(
     uiState: HomeUiState,
-    recentlyPlayed: LazyPagingItems<Track>,
+    recentlyPlayed: LazyPagingItems<com.example.model.Track>,
     onTrackClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -407,7 +407,7 @@ fun HomeLoadingPreview() {
             uiState = HomeUiState.Loading,
             authenticatedUiState = AuthenticatedUiState.Success(""),
             onTrackClick = {},
-            recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
+            recentlyPlayed = flowOf(PagingData.from(emptyList<com.example.model.Track>())).collectAsLazyPagingItems()
         )
     }
 }

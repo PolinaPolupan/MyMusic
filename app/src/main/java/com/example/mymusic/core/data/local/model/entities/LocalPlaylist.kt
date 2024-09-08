@@ -3,7 +3,7 @@ package com.example.mymusic.core.data.local.model.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.mymusic.model.SimplifiedPlaylist
+import com.example.model.SimplifiedPlaylist
 
 @Entity(tableName = "playlists")
 data class LocalPlaylist(
@@ -14,7 +14,7 @@ data class LocalPlaylist(
     val ownerName: String?
 )
 
-fun LocalPlaylist.toExternal() = SimplifiedPlaylist(
+fun LocalPlaylist.toExternal() = com.example.model.SimplifiedPlaylist(
     id = id,
     imageUrl = imageUrl,
     name = name,

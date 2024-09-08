@@ -60,8 +60,8 @@ import com.example.mymusic.core.designSystem.component.PlaylistCard
 import com.example.mymusic.core.designSystem.component.PreviewParameterData
 import com.example.mymusic.core.designSystem.component.RectangleRoundedCornerPlaceholder
 import com.example.mymusic.feature.home.AuthenticatedUiState
-import com.example.mymusic.model.SimplifiedAlbum
-import com.example.mymusic.model.SimplifiedPlaylist
+import com.example.model.SimplifiedAlbum
+import com.example.model.SimplifiedPlaylist
 import kotlinx.coroutines.flow.flowOf
 import kotlin.math.abs
 
@@ -103,8 +103,8 @@ fun LibraryScreen(
     } else {
         LibraryContent(
             uiState = AuthenticatedUiState.Loading,
-            albums = flowOf(PagingData.from(emptyList<SimplifiedAlbum>())).collectAsLazyPagingItems(),
-            playlists = flowOf(PagingData.from(emptyList<SimplifiedPlaylist>())).collectAsLazyPagingItems(),
+            albums = flowOf(PagingData.from(emptyList<com.example.model.SimplifiedAlbum>())).collectAsLazyPagingItems(),
+            playlists = flowOf(PagingData.from(emptyList<com.example.model.SimplifiedPlaylist>())).collectAsLazyPagingItems(),
             onSortOptionChanged =  { viewModel.currentSortOption.value = it },
             onNavigateToPlaylist = {},
             onNavigateToAlbumClick = {},
@@ -119,8 +119,8 @@ fun LibraryScreen(
 @Composable
 fun LibraryContent(
     uiState: AuthenticatedUiState,
-    albums: LazyPagingItems<SimplifiedAlbum>,
-    playlists: LazyPagingItems<SimplifiedPlaylist>,
+    albums: LazyPagingItems<com.example.model.SimplifiedAlbum>,
+    playlists: LazyPagingItems<com.example.model.SimplifiedPlaylist>,
     onSortOptionChanged: (SortOption) -> Unit,
     onNavigateToPlaylist: (String) -> Unit,
     onNavigateToAlbumClick: (String) -> Unit,
@@ -228,7 +228,7 @@ fun LibraryContent(
 }
 
 fun LazyListScope.albumsList(
-    albums: LazyPagingItems<SimplifiedAlbum>,
+    albums: LazyPagingItems<com.example.model.SimplifiedAlbum>,
     onNavigateToAlbumClick: (String) -> Unit,
     onAlbumClick: (String) -> Unit
 ) {
@@ -253,7 +253,7 @@ fun LazyListScope.albumsList(
 }
 
 fun LazyListScope.playlistsList(
-    playlists: LazyPagingItems<SimplifiedPlaylist>,
+    playlists: LazyPagingItems<com.example.model.SimplifiedPlaylist>,
     onNavigateToPlaylistClick: (String) -> Unit,
     onPlaylistClick: (String) -> Unit
 ) {

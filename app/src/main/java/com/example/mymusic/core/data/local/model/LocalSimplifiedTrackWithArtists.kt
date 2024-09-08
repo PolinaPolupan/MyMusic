@@ -7,7 +7,7 @@ import com.example.mymusic.core.data.local.model.crossRef.SimplifiedTrackArtistC
 import com.example.mymusic.core.data.local.model.entities.LocalSimplifiedArtist
 import com.example.mymusic.core.data.local.model.entities.LocalSimplifiedTrack
 import com.example.mymusic.core.data.local.model.entities.toExternal
-import com.example.mymusic.model.SimplifiedTrack
+import com.example.model.SimplifiedTrack
 
 data class LocalSimplifiedTrackWithArtists(
     @Embedded val simplifiedTrack: LocalSimplifiedTrack,
@@ -19,7 +19,7 @@ data class LocalSimplifiedTrackWithArtists(
     val artists: List<LocalSimplifiedArtist>
 )
 
-fun LocalSimplifiedTrackWithArtists.toExternal() = SimplifiedTrack(
+fun LocalSimplifiedTrackWithArtists.toExternal() = com.example.model.SimplifiedTrack(
     id = simplifiedTrack.id,
     name = simplifiedTrack.name,
     artists = artists.toExternal()

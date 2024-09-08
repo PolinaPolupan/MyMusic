@@ -1,7 +1,7 @@
 package com.example.mymusic.core.data.network.model
 
 import com.example.mymusic.core.data.local.model.entities.LocalAlbum
-import com.example.mymusic.model.AlbumType
+import com.example.model.AlbumType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -29,11 +29,11 @@ data class SpotifyAlbum(
     val artists: List<SpotifySimplifiedArtist>
 )
 
-fun String.toAlbumType(): AlbumType {
+fun String.toAlbumType(): com.example.model.AlbumType {
     return when(this) {
-        "album" -> AlbumType.Album
-        "single" -> AlbumType.Single
-        "compilation" -> AlbumType.Compilation
+        "album" -> com.example.model.AlbumType.Album
+        "single" -> com.example.model.AlbumType.Single
+        "compilation" -> com.example.model.AlbumType.Compilation
         else -> {
             throw IllegalArgumentException("Unknown type")
         }

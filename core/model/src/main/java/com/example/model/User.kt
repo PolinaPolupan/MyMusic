@@ -1,6 +1,4 @@
-package com.example.mymusic.model
-
-import androidx.annotation.DrawableRes
+package com.example.model
 
 data class User(
     val id: String,

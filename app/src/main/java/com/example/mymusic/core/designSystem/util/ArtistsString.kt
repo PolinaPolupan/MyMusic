@@ -1,10 +1,10 @@
 package com.example.mymusic.core.designSystem.util
 
-import com.example.mymusic.model.Artist
-import com.example.mymusic.model.SimplifiedArtist
+import com.example.model.Artist
+import com.example.model.SimplifiedArtist
 
 @JvmName("artistsListMethod")
-fun artistsString(artists: List<SimplifiedArtist>) : String {
+fun artistsString(artists: List<com.example.model.SimplifiedArtist>) : String {
     var artistsString = ""
     for (artist in artists) {
         if (artist.name.isNotBlank()) artistsString += artist.name + ", "
@@ -16,7 +16,7 @@ fun artistsString(artists: List<SimplifiedArtist>) : String {
 }
 
 @JvmName("simplifiedArtistsListMethod")
-fun artistsString(artists: List<Artist>) : String {
+fun artistsString(artists: List<com.example.model.Artist>) : String {
     var artistsString = ""
     for (artist in artists) {
         if (artist.name.isNotBlank()) artistsString += artist.name + ", "

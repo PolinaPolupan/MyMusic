@@ -14,7 +14,7 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.feature.home.AuthenticatedUiState
 import com.example.mymusic.feature.home.HomeContent
 import com.example.mymusic.feature.home.HomeUiState
-import com.example.mymusic.model.Track
+import com.example.model.Track
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
@@ -34,7 +34,7 @@ class HomeScreenTest {
                     uiState = HomeUiState.Loading,
                     authenticatedUiState = AuthenticatedUiState.Loading,
                     onTrackClick = {},
-                    recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
+                    recentlyPlayed = flowOf(PagingData.from(emptyList<com.example.model.Track>())).collectAsLazyPagingItems()
                 )
             }
         }
@@ -60,7 +60,7 @@ class HomeScreenTest {
                     uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
                     authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
-                    recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
+                    recentlyPlayed = flowOf(PagingData.from(emptyList<com.example.model.Track>())).collectAsLazyPagingItems()
                 )
             }
         }
@@ -85,7 +85,7 @@ class HomeScreenTest {
                     uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
                     authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
-                    recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
+                    recentlyPlayed = flowOf(PagingData.from(emptyList<com.example.model.Track>())).collectAsLazyPagingItems()
                 )
             }
         }
@@ -165,7 +165,7 @@ class HomeScreenTest {
                     uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
                     authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
-                    recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
+                    recentlyPlayed = flowOf(PagingData.from(emptyList<com.example.model.Track>())).collectAsLazyPagingItems()
                 )
             }
         }

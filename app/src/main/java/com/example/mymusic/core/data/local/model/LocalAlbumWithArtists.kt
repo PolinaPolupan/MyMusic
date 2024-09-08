@@ -8,7 +8,7 @@ import com.example.mymusic.core.data.local.model.entities.LocalAlbum
 import com.example.mymusic.core.data.local.model.entities.LocalSimplifiedArtist
 import com.example.mymusic.core.data.local.model.entities.toExternal
 import com.example.mymusic.core.data.network.model.toAlbumType
-import com.example.mymusic.model.SimplifiedAlbum
+import com.example.model.SimplifiedAlbum
 
 /**
  * [LocalAlbumWithArtists] defines an album with the list of artists.
@@ -23,12 +23,13 @@ data class LocalAlbumWithArtists(
     val simplifiedArtists: List<LocalSimplifiedArtist>
 )
 
-fun LocalAlbumWithArtists.toExternalSimplified(): SimplifiedAlbum = SimplifiedAlbum(
-    id = album.id,
-    type = album.type.toAlbumType(),
-    imageUrl = album.imageUrl,
-    name = album.name,
-    artists = simplifiedArtists.map { it.toExternal() },
-)
+fun LocalAlbumWithArtists.toExternalSimplified(): com.example.model.SimplifiedAlbum =
+    com.example.model.SimplifiedAlbum(
+        id = album.id,
+        type = album.type.toAlbumType(),
+        imageUrl = album.imageUrl,
+        name = album.name,
+        artists = simplifiedArtists.map { it.toExternal() },
+    )
 
 fun List<LocalAlbumWithArtists>.toExternal() = map(LocalAlbumWithArtists::toExternalSimplified)

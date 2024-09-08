@@ -23,13 +23,13 @@ import androidx.compose.ui.unit.sp
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.artistsString
-import com.example.mymusic.model.Artist
+import com.example.model.Artist
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrackCard(
     name: String,
-    artists: List<Artist>,
+    artists: List<com.example.model.Artist>,
     imageUrl: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
 import com.example.mymusic.core.designSystem.component.SortOption
-import com.example.mymusic.model.Track
+import com.example.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -24,7 +24,7 @@ class AddToPlaylistViewModel @Inject constructor(
 
     private val _trackId: String = checkNotNull(savedStateHandle[com.example.mymusic.feature.player.TRACK_ID_ARG])
 
-    private val _trackFlow: Flow<Track?> = musicRepository.observeTrack(_trackId)
+    private val _trackFlow: Flow<com.example.model.Track?> = musicRepository.observeTrack(_trackId)
 
     val savedPlaylists = musicRepository.observeSavedPlaylists().cachedIn(viewModelScope)
 
@@ -50,6 +50,6 @@ class AddToPlaylistViewModel @Inject constructor(
 sealed interface AddToPlaylistUiState {
     data object Loading: AddToPlaylistUiState
     data class Success(
-        val track: Track
+        val track: com.example.model.Track
     ): AddToPlaylistUiState
 }

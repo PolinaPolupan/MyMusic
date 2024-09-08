@@ -30,7 +30,7 @@ import com.example.mymusic.core.designSystem.component.TracksList
 import com.example.mymusic.core.designSystem.component.TracksListUiState
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.artistsString
-import com.example.mymusic.model.SimplifiedTrack
+import com.example.model.SimplifiedTrack
 
 @Composable
 fun AlbumScreen(
@@ -60,7 +60,7 @@ fun AlbumContent(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    TracksList<SimplifiedTrack>(
+    TracksList<com.example.model.SimplifiedTrack>(
         uiState = uiState,
         onBackClick = onBackClick,
         modifier = modifier,
@@ -74,7 +74,7 @@ fun AlbumContent(
 
 @Composable
 private fun TrackItem(
-    track: SimplifiedTrack,
+    track: com.example.model.SimplifiedTrack,
     onTrackClick: (String) -> Unit,
     onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier

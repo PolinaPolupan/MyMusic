@@ -3,7 +3,7 @@ package com.example.mymusic.core.data.local.model.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.mymusic.model.Artist
+import com.example.model.Artist
 
 @Entity(tableName = "artists")
 data class LocalArtist(
@@ -13,7 +13,7 @@ data class LocalArtist(
     @ColumnInfo(name = "artistImageUrl") val imageUrl: String?
 )
 
-fun LocalArtist.toExternal() = Artist(
+fun LocalArtist.toExternal() = com.example.model.Artist(
     id = id,
     name = name,
     imageUrl = imageUrl

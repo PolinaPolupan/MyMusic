@@ -21,12 +21,12 @@ import androidx.compose.ui.unit.dp
 import com.example.mymusic.R
 import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.artistsString
-import com.example.mymusic.model.SimplifiedArtist
+import com.example.model.SimplifiedArtist
 
 @Composable
 fun AlbumCard(
     name: String,
-    artists: List<SimplifiedArtist>,
+    artists: List<com.example.model.SimplifiedArtist>,
     imageUrl: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier

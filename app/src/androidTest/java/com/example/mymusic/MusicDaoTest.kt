@@ -32,8 +32,8 @@ import com.example.mymusic.core.data.network.model.toLocalSimplified
 import com.example.mymusic.core.data.network.model.toLocalSimplifiedTrack
 import com.example.mymusic.core.data.network.model.toLocalSimplifiedTracks
 import com.example.mymusic.core.data.network.model.toLocalTrack
-import com.example.mymusic.model.SimplifiedTrack
-import com.example.mymusic.model.Track
+import com.example.model.SimplifiedTrack
+import com.example.model.Track
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -115,7 +115,7 @@ class MusicDaoTest {
         val simplifiedArtists = networkSimplifiedArtists.toLocal().toExternal()
         val artists = networkArtists.toLocal().toExternal()
 
-        val recommendations = mutableListOf<Track>()
+        val recommendations = mutableListOf<com.example.model.Track>()
         for (track in networkTracks) {
             recommendations.add(track.toLocalTrack().toExternal(simplifiedArtists, artists))
         }
@@ -219,7 +219,13 @@ class MusicDaoTest {
 
         // Map to external
         val albumTracks = musicDao.observeAlbumTracks("0").first().toExternal()
-        val simplifiedTracks = networkTracks.map { SimplifiedTrack(it.id, it.name, networkSimplifiedArtists.toLocal().toExternal()) }
+        val simplifiedTracks = networkTracks.map {
+            com.example.model.SimplifiedTrack(
+                it.id,
+                it.name,
+                networkSimplifiedArtists.toLocal().toExternal()
+            )
+        }
 
 
         assertEquals(albumTracks, simplifiedTracks)

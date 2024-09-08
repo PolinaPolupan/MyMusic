@@ -89,6 +89,7 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.room)
     implementation(libs.logging.interceptor)
+    implementation(project(":core:model"))
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)
     ksp(libs.androidx.hilt.compiler)

@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
 import com.example.mymusic.core.designSystem.component.OneOf
 import com.example.mymusic.core.designSystem.component.TracksListUiState
-import com.example.mymusic.model.Playlist
-import com.example.mymusic.model.SimplifiedPlaylist
-import com.example.mymusic.model.Track
+import com.example.model.Playlist
+import com.example.model.SimplifiedPlaylist
+import com.example.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,20 +25,21 @@ class PlaylistViewModel @Inject constructor(
 
     private val _playlistId: String = checkNotNull(savedStateHandle[PLAYLIST_ID_ARG])
 
-    private val _playlistFlow: Flow<SimplifiedPlaylist> = musicRepository.observePlaylist(_playlistId)
+    private val _playlistFlow: Flow<com.example.model.SimplifiedPlaylist> = musicRepository.observePlaylist(_playlistId)
 
-    private val _playlistTracksFlow: Flow<List<Track>> = musicRepository.observePlaylistTracks(_playlistId)
+    private val _playlistTracksFlow: Flow<List<com.example.model.Track>> = musicRepository.observePlaylistTracks(_playlistId)
 
     val uiState: StateFlow<TracksListUiState> =
         combine(_playlistFlow, _playlistTracksFlow) { playlist, tracks ->
             TracksListUiState.Success(
                 item = OneOf(
-                    playlist = Playlist(
+                    playlist = com.example.model.Playlist(
                         id = playlist.id,
                         imageUrl = playlist.imageUrl,
                         name = playlist.name,
                         ownerName = playlist.ownerName,
-                        tracks = tracks)
+                        tracks = tracks
+                    )
                 )
             )
         }

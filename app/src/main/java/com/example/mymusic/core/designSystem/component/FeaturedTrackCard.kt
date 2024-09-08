@@ -26,12 +26,12 @@ import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.example.mymusic.core.designSystem.util.artistsString
 import com.example.mymusic.core.designSystem.util.darker
 import com.example.mymusic.core.designSystem.util.saturation
-import com.example.mymusic.model.Artist
+import com.example.model.Artist
 
 @Composable
 fun FeaturedTrack(
     name: String,
-    artists: List<Artist>,
+    artists: List<com.example.model.Artist>,
     coverUrl: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,

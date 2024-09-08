@@ -55,7 +55,7 @@ import com.example.mymusic.core.designSystem.util.contrastAgainst
 import com.example.mymusic.core.designSystem.component.linearGradientScrim
 import com.example.mymusic.core.designSystem.util.artistsString
 import com.example.mymusic.core.designSystem.util.saturation
-import com.example.mymusic.model.Track
+import com.example.model.Track
 import com.example.mymusic.core.designSystem.component.PreviewParameterData
 import kotlinx.coroutines.launch
 import java.time.Duration
@@ -98,7 +98,7 @@ fun PlayerScreen(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlayerContent(
-    track: Track,
+    track: com.example.model.Track,
     onBackClick: () -> Unit,
     onAddToPlaylistClick: (String) -> Unit,
     onNavigateToAlbum: (String) -> Unit,
