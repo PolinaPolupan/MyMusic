@@ -14,26 +14,24 @@ import com.example.mymusic.core.data.local.model.crossRef.TrackArtistCrossRef
 import com.example.mymusic.core.data.local.model.entities.toExternal
 import com.example.mymusic.core.data.local.model.entities.toExternalSimplified
 import com.example.mymusic.core.data.local.model.toExternal
-import com.example.mymusic.core.data.network.model.ExternalUrls
-import com.example.mymusic.core.data.network.model.SavedAlbum
-import com.example.mymusic.core.data.network.model.SpotifyAlbum
-import com.example.mymusic.core.data.network.model.SpotifyArtist
-import com.example.mymusic.core.data.network.model.SpotifyOwner
-import com.example.mymusic.core.data.network.model.SpotifyPlayHistoryObject
-import com.example.mymusic.core.data.network.model.SpotifySimplifiedArtist
-import com.example.mymusic.core.data.network.model.SpotifySimplifiedPlaylist
-import com.example.mymusic.core.data.network.model.SpotifyTrack
-import com.example.mymusic.core.data.network.model.SpotifyTracks
-import com.example.mymusic.core.data.network.model.toLocal
-import com.example.mymusic.core.data.network.model.toLocalAlbum
-import com.example.mymusic.core.data.network.model.toLocalRecommendations
-import com.example.mymusic.core.data.network.model.toLocalSaved
-import com.example.mymusic.core.data.network.model.toLocalSimplified
-import com.example.mymusic.core.data.network.model.toLocalSimplifiedTrack
-import com.example.mymusic.core.data.network.model.toLocalSimplifiedTracks
-import com.example.mymusic.core.data.network.model.toLocalTrack
-import com.example.model.SimplifiedTrack
-import com.example.model.Track
+import com.example.network.model.ExternalUrls
+import com.example.network.model.SavedAlbum
+import com.example.network.model.SpotifyAlbum
+import com.example.network.model.SpotifyArtist
+import com.example.network.model.SpotifyOwner
+import com.example.network.model.SpotifyPlayHistoryObject
+import com.example.network.model.SpotifySimplifiedArtist
+import com.example.network.model.SpotifySimplifiedPlaylist
+import com.example.network.model.SpotifyTrack
+import com.example.network.model.SpotifyTracks
+import com.example.network.model.toLocal
+import com.example.network.model.toLocalAlbum
+import com.example.network.model.toLocalRecommendations
+import com.example.network.model.toLocalSaved
+import com.example.network.model.toLocalSimplified
+import com.example.network.model.toLocalSimplifiedTrack
+import com.example.network.model.toLocalSimplifiedTracks
+import com.example.network.model.toLocalTrack
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -135,11 +133,28 @@ class MusicDaoTest {
             testNetworkTrack("0", "New Rules", networkAlbum, networkArtists),
             testNetworkTrack("1", "Genesis", networkAlbum, networkArtists),
             testNetworkTrack("2", "Be The One", networkAlbum, networkArtists))
-        val context = com.example.mymusic.core.data.network.model.Context(type = "", href = "", externalUrls = ExternalUrls(""), uri = "")
+        val context = com.example.network.model.Context(
+            type = "",
+            href = "",
+            externalUrls = com.example.network.model.ExternalUrls(""),
+            uri = ""
+        )
         val recentlyPlayed = listOf(
-            SpotifyPlayHistoryObject(networkTracks[0], playedAt = null, context = context),
-            SpotifyPlayHistoryObject(networkTracks[1], playedAt = null, context = context),
-            SpotifyPlayHistoryObject(networkTracks[2], playedAt = null, context = context)
+            com.example.network.model.SpotifyPlayHistoryObject(
+                networkTracks[0],
+                playedAt = null,
+                context = context
+            ),
+            com.example.network.model.SpotifyPlayHistoryObject(
+                networkTracks[1],
+                playedAt = null,
+                context = context
+            ),
+            com.example.network.model.SpotifyPlayHistoryObject(
+                networkTracks[2],
+                playedAt = null,
+                context = context
+            )
         )
 
         // Upsert tracks to the database
@@ -171,9 +186,9 @@ class MusicDaoTest {
             testNetworkAlbum("2", "1989", networkSimplifiedArtists)
         )
         val networkSavedAlbums = listOf(
-            SavedAlbum("", networkAlbums[0]),
-            SavedAlbum("", networkAlbums[1]),
-            SavedAlbum("", networkAlbums[2])
+            com.example.network.model.SavedAlbum("", networkAlbums[0]),
+            com.example.network.model.SavedAlbum("", networkAlbums[1]),
+            com.example.network.model.SavedAlbum("", networkAlbums[2])
         )
 
         // Upsert to the database
@@ -242,7 +257,7 @@ class MusicDaoTest {
             testNetworkTrack("0", "New Rules", networkAlbum, networkArtists),
             testNetworkTrack("1", "Genesis", networkAlbum, networkArtists),
             testNetworkTrack("2", "Be The One", networkAlbum, networkArtists))
-        val spotifyTrack = SpotifyTracks("", 0)
+        val spotifyTrack = com.example.network.model.SpotifyTracks("", 0)
         val playlist = networkPlaylist("0", "Playlist", spotifyTrack)
 
         // Upsert tracks
@@ -263,7 +278,7 @@ class MusicDaoTest {
     fun musicDao_upsertSavedPlaylists() = runTest {
 
         // Initialize data
-        val spotifyTrack = SpotifyTracks("", 0)
+        val spotifyTrack = com.example.network.model.SpotifyTracks("", 0)
         val networkPlaylists = listOf(
             networkPlaylist("0", "Playlist", spotifyTrack),
             networkPlaylist("1", "Playlist1", spotifyTrack),
@@ -277,7 +292,7 @@ class MusicDaoTest {
 
     }
 
-    private suspend fun upsertTrack(track: SpotifyTrack) {
+    private suspend fun upsertTrack(track: com.example.network.model.SpotifyTrack) {
 
         musicDao.upsertTrack(track.toLocalTrack())
         musicDao.upsertSimplifiedTrack(track.toLocalSimplifiedTrack())
@@ -298,7 +313,7 @@ class MusicDaoTest {
     private fun testNetworkArtist(
         id: String,
         name: String
-    ) = SpotifyArtist(
+    ) = com.example.network.model.SpotifyArtist(
         externalUrls = null,
         followers = null,
         genres = null,
@@ -314,7 +329,7 @@ class MusicDaoTest {
     private fun testNetworkSimplifiedArtist(
         id: String,
         name: String
-    ) = SpotifySimplifiedArtist(
+    ) = com.example.network.model.SpotifySimplifiedArtist(
         externalUrls = null,
         href = "",
         id = id,
@@ -326,13 +341,13 @@ class MusicDaoTest {
     private fun testNetworkAlbum(
         id: String,
         name: String,
-        simplifiedArtists: List<SpotifySimplifiedArtist>
-    ) = SpotifyAlbum(
+        simplifiedArtists: List<com.example.network.model.SpotifySimplifiedArtist>
+    ) = com.example.network.model.SpotifyAlbum(
         albumType = null,
         totalTracks = 1,
         availableMarkets = null,
         externalUrls = null,
-        href= "",
+        href = "",
         id = id,
         images = emptyList(),
         name = name,
@@ -347,9 +362,9 @@ class MusicDaoTest {
     private fun testNetworkTrack(
         id: String,
         name: String,
-        album: SpotifyAlbum,
-        artists: List<SpotifyArtist>
-    ) = SpotifyTrack(
+        album: com.example.network.model.SpotifyAlbum,
+        artists: List<com.example.network.model.SpotifyArtist>
+    ) = com.example.network.model.SpotifyTrack(
         album = album,
         artists = artists,
         availableMarkets = null,
@@ -375,8 +390,8 @@ class MusicDaoTest {
     private fun networkPlaylist(
         id: String,
         name: String,
-        tracks: SpotifyTracks
-    ) = SpotifySimplifiedPlaylist(
+        tracks: com.example.network.model.SpotifyTracks
+    ) = com.example.network.model.SpotifySimplifiedPlaylist(
         collaborative = true,
         description = "",
         externalUrls = null,
@@ -384,7 +399,7 @@ class MusicDaoTest {
         id = id,
         images = null,
         name = name,
-        owner = SpotifyOwner(
+        owner = com.example.network.model.SpotifyOwner(
             externalUrls = null,
             followers = null,
             href = "",

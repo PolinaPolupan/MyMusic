@@ -1,7 +1,7 @@
 package com.example.mymusic
 
 import android.app.Application
-import com.example.mymusic.core.data.sync.Sync
+import com.example.sync.Sync
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

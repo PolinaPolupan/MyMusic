@@ -3,7 +3,7 @@ package com.example.mymusic.feature.playlist
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
+import com.example.data.repository.OfflineFirstMusicRepository
 import com.example.mymusic.core.designSystem.component.OneOf
 import com.example.mymusic.core.designSystem.component.TracksListUiState
 import com.example.model.Playlist
@@ -25,15 +25,15 @@ class PlaylistViewModel @Inject constructor(
 
     private val _playlistId: String = checkNotNull(savedStateHandle[PLAYLIST_ID_ARG])
 
-    private val _playlistFlow: Flow<com.example.model.SimplifiedPlaylist> = musicRepository.observePlaylist(_playlistId)
+    private val _playlistFlow: Flow<SimplifiedPlaylist> = musicRepository.observePlaylist(_playlistId)
 
-    private val _playlistTracksFlow: Flow<List<com.example.model.Track>> = musicRepository.observePlaylistTracks(_playlistId)
+    private val _playlistTracksFlow: Flow<List<Track>> = musicRepository.observePlaylistTracks(_playlistId)
 
     val uiState: StateFlow<TracksListUiState> =
         combine(_playlistFlow, _playlistTracksFlow) { playlist, tracks ->
             TracksListUiState.Success(
                 item = OneOf(
-                    playlist = com.example.model.Playlist(
+                    playlist = Playlist(
                         id = playlist.id,
                         imageUrl = playlist.imageUrl,
                         name = playlist.name,

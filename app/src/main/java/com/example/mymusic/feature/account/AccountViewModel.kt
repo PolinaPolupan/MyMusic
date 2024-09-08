@@ -3,9 +3,7 @@ package com.example.mymusic.feature.account
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.core.data.AuthorizationManager
-import com.example.mymusic.core.data.repository.OfflineFirstUserDataRepository
-import com.example.mymusic.core.data.sync.SyncManager
+import com.example.auth.AuthorizationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     private val authorizationManager: AuthorizationManager,
-    userDataRepository: OfflineFirstUserDataRepository,
-    private val syncManager: SyncManager
+    userDataRepository: com.example.data.repository.OfflineFirstUserDataRepository,
+    private val syncManager: com.example.sync.SyncManager
 ): ViewModel() {
 
     val uiState: StateFlow<AccountUiState> =

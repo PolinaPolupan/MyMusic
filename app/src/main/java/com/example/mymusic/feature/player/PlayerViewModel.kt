@@ -3,7 +3,7 @@ package com.example.mymusic.feature.player
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
+import com.example.data.repository.OfflineFirstMusicRepository
 import com.example.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -22,7 +22,7 @@ class PlayerViewModel @Inject constructor(
 
     val trackId: String = checkNotNull(savedStateHandle[TRACK_ID_ARG])
 
-    private val _trackFlow: Flow<com.example.model.Track> = musicRepository.observeTrack(trackId)
+    private val _trackFlow: Flow<Track> = musicRepository.observeTrack(trackId)
 
     val uiState: StateFlow<PlayerUiState> = _trackFlow
         .map { track ->

@@ -20,6 +20,9 @@
       <SelectionState runConfigName="whenAccountDialogDismissed_previousScreenIsDisplayed()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="core.common">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>

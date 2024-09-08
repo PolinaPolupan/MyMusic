@@ -1,18 +1,18 @@
 package com.example.mymusic
 
-import com.example.mymusic.core.data.network.model.SpotifyAlbum
-import com.example.mymusic.core.data.network.model.SpotifyArtist
-import com.example.mymusic.core.data.network.model.SpotifyImage
-import com.example.mymusic.core.data.network.model.SpotifyOwner
-import com.example.mymusic.core.data.network.model.SpotifySimplifiedArtist
-import com.example.mymusic.core.data.network.model.SpotifySimplifiedPlaylist
-import com.example.mymusic.core.data.network.model.SpotifyTrack
-import com.example.mymusic.core.data.network.model.SpotifyTracks
-import com.example.mymusic.core.data.network.model.toLocal
-import com.example.mymusic.core.data.network.model.toLocalRecommendation
-import com.example.mymusic.core.data.network.model.toLocalSaved
-import com.example.mymusic.core.data.network.model.toLocalSimplifiedTrack
-import com.example.mymusic.core.data.network.model.toLocalTrack
+import com.example.network.model.SpotifyAlbum
+import com.example.network.model.SpotifyArtist
+import com.example.network.model.SpotifyImage
+import com.example.network.model.SpotifyOwner
+import com.example.network.model.SpotifySimplifiedArtist
+import com.example.network.model.SpotifySimplifiedPlaylist
+import com.example.network.model.SpotifyTrack
+import com.example.network.model.SpotifyTracks
+import com.example.network.model.toLocal
+import com.example.network.model.toLocalRecommendation
+import com.example.network.model.toLocalSaved
+import com.example.network.model.toLocalSimplifiedTrack
+import com.example.network.model.toLocalTrack
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -23,7 +23,7 @@ class NetworkLocalTest {
 
     @Test
     fun networkSimplifiedArtist_canBeMappedToLocal() {
-        val networkSimplifiedArtist = SpotifySimplifiedArtist(
+        val networkSimplifiedArtist = com.example.network.model.SpotifySimplifiedArtist(
             externalUrls = null,
             href = "",
             id = "0",
@@ -39,14 +39,14 @@ class NetworkLocalTest {
 
     @Test
     fun networkArtist_canBeMappedToLocal() {
-        val networkArtist = SpotifyArtist(
+        val networkArtist = com.example.network.model.SpotifyArtist(
             externalUrls = null,
             href = "",
             id = "0",
             type = "",
             uri = "",
             name = "Dua Lipa",
-            images = listOf(SpotifyImage("url", 0, 0))
+            images = listOf(com.example.network.model.SpotifyImage("url", 0, 0))
         )
         val local = networkArtist.toLocal()
 
@@ -57,14 +57,14 @@ class NetworkLocalTest {
 
     @Test
     fun networkAlbum_canBeMappedToLocal() {
-        val networkAlbum = SpotifyAlbum(
+        val networkAlbum = com.example.network.model.SpotifyAlbum(
             albumType = null,
             totalTracks = 1,
             availableMarkets = null,
             externalUrls = null,
-            href= "",
+            href = "",
             id = "0",
-            images = listOf(SpotifyImage("url", 0, 0)),
+            images = listOf(com.example.network.model.SpotifyImage("url", 0, 0)),
             name = "Album",
             releaseDate = null,
             releaseDatePrecision = null,
@@ -72,7 +72,7 @@ class NetworkLocalTest {
             type = "album",
             uri = "",
             artists = listOf(
-                SpotifySimplifiedArtist(
+                com.example.network.model.SpotifySimplifiedArtist(
                     externalUrls = null,
                     href = "",
                     id = "0",
@@ -92,23 +92,25 @@ class NetworkLocalTest {
 
     @Test
     fun networkTrack_canBeMappedToLocal() {
-        val networkArtists = listOf(SpotifyArtist(
-            externalUrls = null,
-            href = "",
-            id = "0",
-            type = "",
-            uri = "",
-            name = "Dua Lipa",
-            images = listOf(SpotifyImage("url", 0, 0))
-        ))
-        val networkAlbum = SpotifyAlbum(
+        val networkArtists = listOf(
+            com.example.network.model.SpotifyArtist(
+                externalUrls = null,
+                href = "",
+                id = "0",
+                type = "",
+                uri = "",
+                name = "Dua Lipa",
+                images = listOf(com.example.network.model.SpotifyImage("url", 0, 0))
+            )
+        )
+        val networkAlbum = com.example.network.model.SpotifyAlbum(
             albumType = null,
             totalTracks = 1,
             availableMarkets = null,
             externalUrls = null,
-            href= "",
+            href = "",
             id = "0",
-            images = listOf(SpotifyImage("url", 0, 0)),
+            images = listOf(com.example.network.model.SpotifyImage("url", 0, 0)),
             name = "Album",
             releaseDate = null,
             releaseDatePrecision = null,
@@ -116,7 +118,7 @@ class NetworkLocalTest {
             type = "album",
             uri = "",
             artists = listOf(
-                SpotifySimplifiedArtist(
+                com.example.network.model.SpotifySimplifiedArtist(
                     externalUrls = null,
                     href = "",
                     id = "0",
@@ -126,7 +128,7 @@ class NetworkLocalTest {
                 )
             )
         )
-        val networkTrack = SpotifyTrack(
+        val networkTrack = com.example.network.model.SpotifyTrack(
             album = networkAlbum,
             artists = networkArtists,
             availableMarkets = null,
@@ -166,15 +168,15 @@ class NetworkLocalTest {
 
     @Test
     fun networkPlaylist_canBeMappedToLocal() {
-        val networkPlaylist = SpotifySimplifiedPlaylist(
+        val networkPlaylist = com.example.network.model.SpotifySimplifiedPlaylist(
             collaborative = true,
             description = "",
             externalUrls = null,
             href = "",
             id = "0",
-            images = listOf(SpotifyImage("url", 0, 0)),
+            images = listOf(com.example.network.model.SpotifyImage("url", 0, 0)),
             name = "Playlist",
-            owner = SpotifyOwner(
+            owner = com.example.network.model.SpotifyOwner(
                 externalUrls = null,
                 followers = null,
                 href = "",
@@ -185,7 +187,7 @@ class NetworkLocalTest {
             ),
             public = false,
             snapshotId = null,
-            tracks = SpotifyTracks("", 0),
+            tracks = com.example.network.model.SpotifyTracks("", 0),
             type = "playlist",
             uri = ""
         )

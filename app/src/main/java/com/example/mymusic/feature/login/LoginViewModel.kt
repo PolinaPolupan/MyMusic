@@ -3,8 +3,8 @@ package com.example.mymusic.feature.login
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.core.data.AuthorizationManager
-import com.example.mymusic.core.data.sync.SyncManager
+import com.example.auth.AuthorizationManager
+import com.example.sync.SyncManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

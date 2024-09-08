@@ -3,7 +3,7 @@ package com.example.mymusic.feature.album
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
+import com.example.data.repository.OfflineFirstMusicRepository
 import com.example.mymusic.core.designSystem.component.OneOf
 import com.example.mymusic.core.designSystem.component.TracksListUiState
 import com.example.model.Album
@@ -26,15 +26,15 @@ class AlbumViewModel @Inject constructor(
 
     private val _albumId: String = checkNotNull(savedStateHandle[ALBUM_ID_ARG])
 
-    private val _albumFlow: Flow<com.example.model.SimplifiedAlbum> = musicRepository.observeAlbum(_albumId)
+    private val _albumFlow: Flow<SimplifiedAlbum> = musicRepository.observeAlbum(_albumId)
 
-    private val _albumTracksFlow: Flow<List<com.example.model.SimplifiedTrack>> = musicRepository.observeAlbumTracks(_albumId)
+    private val _albumTracksFlow: Flow<List<SimplifiedTrack>> = musicRepository.observeAlbumTracks(_albumId)
 
     val uiState: StateFlow<TracksListUiState> =
         combine(_albumFlow, _albumTracksFlow) { album, tracks ->
             TracksListUiState.Success(
                 item = OneOf(
-                    album = com.example.model.Album(
+                    album = Album(
                         id = album.id,
                         type = album.type,
                         imageUrl = album.imageUrl,
