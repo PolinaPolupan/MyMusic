@@ -31,12 +31,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.designsystem.component.MyMusicGradientBackground
+import com.example.designsystem.component.MyMusicIcons
+import com.example.designsystem.component.ScreenHeader
+import com.example.designsystem.theme.MyMusicTheme
 import com.example.mymusic.R
-import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
-import com.example.mymusic.core.designSystem.component.ScreenHeader
-import com.example.mymusic.core.designSystem.component.MyMusicIcons
-import com.example.mymusic.core.designSystem.theme.MyMusicTheme
-import com.example.mymusic.feature.home.AuthenticatedUiState
+import com.example.mymusic.feature.account.AccountDialog
 
 @Composable
 fun SearchScreen(
@@ -66,10 +66,11 @@ fun SearchContent(
                 .fillMaxSize()
         ) {
             ScreenHeader(
-                uiState = AuthenticatedUiState.Loading, // TODO
-                titleRes = R.string.search,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
+                isLoading = true,
+                titleRes = R.string.your_library,
+                AccountDialog = { AccountDialog(onDismiss = it) },
+                imageUrl = "",
+                modifier = Modifier.padding(horizontal = 16.dp))
             SearchToolbar(
                 searchQuery = searchQuery,
                 onSearchQueryChanged = onSearchQueryChanged,

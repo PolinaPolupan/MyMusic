@@ -46,22 +46,24 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.designsystem.component.AlbumCard
+import com.example.designsystem.component.AnimationBox
+import com.example.designsystem.component.MyMusicGradientBackground
+import com.example.designsystem.component.PlaylistCard
+import com.example.designsystem.component.PreviewParameterData
+import com.example.designsystem.component.RectangleRoundedCornerPlaceholder
+import com.example.designsystem.component.ScreenHeader
+import com.example.designsystem.component.Sort
+import com.example.designsystem.component.SortBottomSheet
+import com.example.designsystem.component.SortOption
+import com.example.designsystem.theme.MyMusicTheme
+import com.example.designsystem.util.lerpScrollOffset
 import com.example.mymusic.R
-import com.example.mymusic.core.designSystem.component.AnimationBox
-import com.example.mymusic.core.designSystem.component.MyMusicGradientBackground
-import com.example.mymusic.core.designSystem.component.ScreenHeader
-import com.example.mymusic.core.designSystem.component.Sort
-import com.example.mymusic.core.designSystem.component.SortBottomSheet
-import com.example.mymusic.core.designSystem.component.SortOption
-import com.example.mymusic.core.designSystem.theme.MyMusicTheme
-import com.example.mymusic.core.designSystem.util.lerpScrollOffset
-import com.example.mymusic.core.designSystem.component.AlbumCard
-import com.example.mymusic.core.designSystem.component.PlaylistCard
-import com.example.mymusic.core.designSystem.component.PreviewParameterData
-import com.example.mymusic.core.designSystem.component.RectangleRoundedCornerPlaceholder
 import com.example.mymusic.feature.home.AuthenticatedUiState
 import com.example.model.SimplifiedAlbum
 import com.example.model.SimplifiedPlaylist
+import com.example.mymusic.feature.account.AccountDialog
+import com.example.mymusic.feature.home.HomeUiState
 import kotlinx.coroutines.flow.flowOf
 import kotlin.math.abs
 
@@ -193,7 +195,12 @@ fun LibraryContent(
                             reverse = true
                         ))
                     ) {
-                        ScreenHeader(uiState = uiState, titleRes = R.string.your_library)
+                        ScreenHeader(
+                            isLoading = uiState is AuthenticatedUiState.Loading,
+                            titleRes = R.string.your_library,
+                            AccountDialog = { AccountDialog(onDismiss = it) },
+                            imageUrl = if (uiState is AuthenticatedUiState.Success) uiState.userImageUrl ?: "" else "",
+                            modifier = Modifier.padding(horizontal = 16.dp))
                         Sort(
                             sortOption = currentSortOption,
                             modifier = Modifier

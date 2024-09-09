@@ -43,23 +43,24 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.designsystem.component.AnimationBox
+import com.example.designsystem.component.FeaturedTrack
+import com.example.designsystem.component.PreviewParameterData
+import com.example.designsystem.component.RectangleRoundedCornerPlaceholder
+import com.example.designsystem.component.ScreenHeader
+import com.example.designsystem.component.TrackCard
+import com.example.designsystem.component.linearGradientScrim
+import com.example.designsystem.component.BlurredImageHeader
+import com.example.designsystem.component.RectanglePlaceholder
+import com.example.designsystem.theme.DominantColorState
+import com.example.designsystem.theme.DynamicThemePrimaryColorsFromImage
+import com.example.designsystem.theme.MyMusicTheme
+import com.example.designsystem.theme.rememberDominantColorState
+import com.example.designsystem.util.contrastAgainst
+import com.example.designsystem.util.darker
 import com.example.mymusic.R
-import com.example.mymusic.core.designSystem.component.AnimationBox
-import com.example.mymusic.core.designSystem.component.BlurredImageHeader
-import com.example.mymusic.core.designSystem.component.FeaturedTrack
-import com.example.mymusic.core.designSystem.component.PreviewParameterData
-import com.example.mymusic.core.designSystem.component.RectanglePlaceholder
-import com.example.mymusic.core.designSystem.component.RectangleRoundedCornerPlaceholder
-import com.example.mymusic.core.designSystem.component.ScreenHeader
-import com.example.mymusic.core.designSystem.component.TrackCard
-import com.example.mymusic.core.designSystem.component.linearGradientScrim
-import com.example.mymusic.core.designSystem.theme.DominantColorState
-import com.example.mymusic.core.designSystem.theme.DynamicThemePrimaryColorsFromImage
-import com.example.mymusic.core.designSystem.theme.MyMusicTheme
-import com.example.mymusic.core.designSystem.theme.rememberDominantColorState
-import com.example.mymusic.core.designSystem.util.contrastAgainst
-import com.example.mymusic.core.designSystem.util.darker
 import com.example.model.Track
+import com.example.mymusic.feature.account.AccountDialog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import kotlin.math.absoluteValue
@@ -165,8 +166,10 @@ internal fun HomeContent(
                     .fillMaxSize()
             ) {
                 ScreenHeader(
-                    uiState = authenticatedUiState,
+                    isLoading = uiState is HomeUiState.Loading,
                     titleRes = R.string.listen_now,
+                    AccountDialog = { AccountDialog(onDismiss = it) },
+                    imageUrl = if (authenticatedUiState is AuthenticatedUiState.Success) authenticatedUiState.userImageUrl ?: "" else "",
                     modifier = Modifier.padding(horizontal = 16.dp))
                 Spacer(modifier = Modifier.height(16.dp))
                 TopPicks(

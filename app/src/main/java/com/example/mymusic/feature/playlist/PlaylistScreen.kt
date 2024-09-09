@@ -25,17 +25,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.designsystem.component.MyMusicIcons
+import com.example.designsystem.component.NetworkImage
+import com.example.designsystem.component.OneOf
+import com.example.designsystem.component.PreviewParameterData
+import com.example.designsystem.component.PreviewWithBackground
+import com.example.designsystem.component.TracksList
+import com.example.designsystem.component.TracksListUiState
+import com.example.designsystem.theme.MyMusicTheme
+import com.example.designsystem.util.artistsString
 import com.example.mymusic.R
-import com.example.mymusic.core.designSystem.component.MyMusicIcons
-import com.example.mymusic.core.designSystem.component.NetworkImage
-import com.example.mymusic.core.designSystem.component.OneOf
-import com.example.mymusic.core.designSystem.component.PreviewParameterData
-import com.example.mymusic.core.designSystem.component.PreviewWithBackground
-import com.example.mymusic.core.designSystem.component.TracksList
-import com.example.mymusic.core.designSystem.component.TracksListUiState
-import com.example.mymusic.core.designSystem.theme.MyMusicTheme
-import com.example.mymusic.core.designSystem.util.artistsString
-import com.example.model.Track
+
 
 @Composable
 fun PlaylistScreen(

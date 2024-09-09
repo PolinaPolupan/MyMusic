@@ -35,12 +35,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.designsystem.component.MyMusicLoginBackground
+import com.example.designsystem.component.SpotifyIsNotInstalledDialog
+import com.example.designsystem.theme.MyMusicTheme
+import com.example.designsystem.util.darker
+import com.example.designsystem.util.saturation
 import com.example.mymusic.R
-import com.example.mymusic.core.designSystem.component.MyMusicLoginBackground
-import com.example.mymusic.core.designSystem.theme.MyMusicTheme
-import com.example.mymusic.core.designSystem.util.darker
-import com.example.mymusic.core.designSystem.util.saturation
-import com.example.mymusic.core.designSystem.component.SpotifyIsNotInstalledDialog
+
 
 @Composable
 fun LoginScreen(
@@ -84,8 +85,7 @@ fun LoginContent(
 
     val primaryColor by transition.animateColor( label = "color animation"
     ) { _ ->
-        if (isSpotifyInstalled) MaterialTheme.colorScheme.primary
-        .saturation(6f) else Color.DarkGray
+        if (isSpotifyInstalled) MaterialTheme.colorScheme.primary.saturation(6f) else Color.DarkGray
     }
 
     MyMusicLoginBackground(

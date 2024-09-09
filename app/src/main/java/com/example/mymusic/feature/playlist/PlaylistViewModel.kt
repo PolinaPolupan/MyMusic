@@ -4,8 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.repository.OfflineFirstMusicRepository
-import com.example.mymusic.core.designSystem.component.OneOf
-import com.example.mymusic.core.designSystem.component.TracksListUiState
+import com.example.designsystem.component.OneOf
+import com.example.designsystem.component.TracksListUiState
 import com.example.model.Playlist
 import com.example.model.SimplifiedPlaylist
 import com.example.model.Track

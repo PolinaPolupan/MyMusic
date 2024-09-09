@@ -15,8 +15,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.common.Constants
+import com.example.designsystem.theme.MyMusicTheme
 import com.example.sync.SyncManager
-import com.example.mymusic.core.designSystem.theme.MyMusicTheme
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote

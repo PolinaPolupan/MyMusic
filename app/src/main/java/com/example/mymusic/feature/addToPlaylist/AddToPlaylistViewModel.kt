@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.data.repository.OfflineFirstMusicRepository
-import com.example.mymusic.core.designSystem.component.SortOption
+import com.example.designsystem.component.SortOption
 import com.example.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow

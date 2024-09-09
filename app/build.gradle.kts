@@ -82,6 +82,7 @@ dependencies {
     implementation(project(":sync"))
     implementation(project(":core:auth"))
     implementation(project(":core:model"))
+    implementation(project(":core:designSystem"))
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)

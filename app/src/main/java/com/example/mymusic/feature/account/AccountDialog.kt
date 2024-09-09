@@ -32,9 +32,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.designsystem.component.NetworkImage
+import com.example.designsystem.theme.MyMusicTheme
 import com.example.mymusic.R
-import com.example.mymusic.core.designSystem.component.NetworkImage
-import com.example.mymusic.core.designSystem.theme.MyMusicTheme
+
 
 @Composable
 fun AccountDialog(
