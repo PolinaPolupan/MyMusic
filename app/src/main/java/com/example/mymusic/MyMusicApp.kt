@@ -24,7 +24,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.compose.rememberNavController
 import com.example.designsystem.component.PlayerCard
 import com.example.designsystem.component.linearGradientScrim
-import com.example.mymusic.feature.player.navigateToPlayer
+import com.example.player.navigateToPlayer
 import com.example.mymusic.navigation.BottomNavigationBarItem
 import com.example.mymusic.navigation.MyMusicNavHost
 import com.example.mymusic.navigation.TopLevelDestination

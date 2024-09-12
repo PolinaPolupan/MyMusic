@@ -18,7 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "com.example.mymusic.MyMusicTestRunner"
+        testInstrumentationRunner = "com.example.mymusic.core.testing.MyMusicTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -83,6 +83,15 @@ dependencies {
     implementation(project(":core:auth"))
     implementation(project(":core:model"))
     implementation(project(":core:designSystem"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:account"))
+    implementation(project(":feature:addToPlaylist"))
+    implementation(project(":feature:album"))
+    implementation(project(":feature:library"))
+    implementation(project(":feature:login"))
+    implementation(project(":feature:player"))
+    implementation(project(":feature:playlist"))
+    implementation(project(":feature:search"))
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)
