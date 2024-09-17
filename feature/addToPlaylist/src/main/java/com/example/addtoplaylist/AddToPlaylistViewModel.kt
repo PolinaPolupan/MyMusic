@@ -19,12 +19,12 @@ import javax.inject.Inject
 @HiltViewModel
 class AddToPlaylistViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    musicRepository: com.example.data.repository.OfflineFirstMusicRepository
+    musicRepository: OfflineFirstMusicRepository
 ): ViewModel() {
 
     private val _trackId: String = checkNotNull(savedStateHandle[TRACK_ID_ARG])
 
-    private val _trackFlow: Flow<com.example.model.Track?> = musicRepository.observeTrack(_trackId)
+    private val _trackFlow: Flow<Track?> = musicRepository.observeTrack(_trackId)
 
     val savedPlaylists = musicRepository.observeSavedPlaylists().cachedIn(viewModelScope)
 
@@ -52,6 +52,6 @@ class AddToPlaylistViewModel @Inject constructor(
 sealed interface AddToPlaylistUiState {
     data object Loading: AddToPlaylistUiState
     data class Success(
-        val track: com.example.model.Track
+        val track: Track
     ): AddToPlaylistUiState
 }

@@ -38,8 +38,6 @@ android {
 dependencies {
 
     implementation(libs.androidx.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -48,8 +46,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.util)
-    implementation(libs.coil.kt)
-    implementation(libs.androidx.palette)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)

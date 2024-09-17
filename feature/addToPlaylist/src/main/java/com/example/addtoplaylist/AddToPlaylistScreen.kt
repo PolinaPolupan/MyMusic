@@ -235,7 +235,7 @@ private fun LazyListScope.playlistsList(
     playlists: LazyPagingItems<com.example.model.SimplifiedPlaylist>,
 ) {
     when (uiState) {
-        com.example.addtoplaylist.AddToPlaylistUiState.Loading -> {
+        AddToPlaylistUiState.Loading -> {
             items(count = 5) {
                 AnimationBox {
                     RectangleRoundedCornerPlaceholder(
