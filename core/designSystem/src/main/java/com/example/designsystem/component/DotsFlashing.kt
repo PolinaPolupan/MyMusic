@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 
+
 @Composable
 fun DotsFlashing(
     modifier: Modifier = Modifier,

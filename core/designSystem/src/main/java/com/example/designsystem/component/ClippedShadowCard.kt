@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import com.example.designsystem.theme.MyMusicTheme
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClippedShadowCard(
     modifier: Modifier = Modifier,

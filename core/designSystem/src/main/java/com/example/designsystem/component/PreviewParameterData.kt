@@ -13,141 +13,141 @@ import com.example.model.Track
 object PreviewParameterData {
 
     val simplifiedTracks = listOf(
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "62yJjFtgkhUrXktIoSjgP2",
             name = "Radioactive",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             ),
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "7lBPn6LpIvbvAihTRvBMig",
             name = "Tiptoe",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             ),
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "7MXlTgQeo3IVlMpLnZuhxc",
             name = "It's Time",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                 )
             )
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "5qaEfEh1AtSdrdrByCP7qR",
             name = "Demons",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             ),
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "213x4gsFDm04hSqIUkg88w",
             name = "On Top Of The World",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                 )
             ),
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "5gXdinVZqeuDIVxogWzRk0",
             name = "Amsterdam",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             )
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "76cy1WJvNGJTj78UqeA5zr",
             name = "IDGAF",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             )
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "2ekn2ttSfGqwhhate0LSR0",
             name = "New Rules",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             )
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "4wNQAG2BzbVkLhdajjxGpR",
             name = "Begging",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             )
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "10nqz67NQWWa7XPq7ycihi",
             name = "Welcome To New York",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             )
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "2ls70nUDfjzm1lSRDuKxmw",
             name = "Blank Space",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             )
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "71PmZqBXH0RUETqxpwlV0w",
             name = "Style",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             )
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "7EpVQjqtKygiwJIASxMWNg",
             name = "Out Of The Woods",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             )
         ),
-        com.example.model.SimplifiedTrack(
+        SimplifiedTrack(
             id = "1kKlhuQE0HXp1IwBRpaH2P",
             name = "Shake It Off",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                 )
@@ -156,13 +156,13 @@ object PreviewParameterData {
     )
 
     val albums = listOf(
-        com.example.model.Album(
+        Album(
             id = "6nxDQi0FeEwccEPJeNySoS",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273407bd04707c463bbb3410737",
             name = "Night Visions",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "53XhwfbYqKCa1cC15pYq2q",
                     name = "Imagine Dragons"
                 )
@@ -171,129 +171,129 @@ object PreviewParameterData {
         ),
     )
 
-    val simplifiedAlbums = listOf<com.example.model.SimplifiedAlbum>(
-        com.example.model.SimplifiedAlbum(
+    val simplifiedAlbums = listOf<SimplifiedAlbum>(
+        SimplifiedAlbum(
             id = "6nxDQi0FeEwccEPJeNySoS",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273407bd04707c463bbb3410737",
             name = "Night Visions",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "53XhwfbYqKCa1cC15pYq2q",
                     name = "Imagine Dragons"
                 )
             ),
         ),
-        com.example.model.SimplifiedAlbum(
+        SimplifiedAlbum(
             id = "01sfgrNbnnPUEyz6GZYlt9",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273838698485511bd9108fadadc",
             name = "Dua Lipa (Deluxe)",
-            artists = listOf(com.example.model.SimplifiedArtist(id = "fgyu", name = "Dau Lipa")),
+            artists = listOf(SimplifiedArtist(id = "fgyu", name = "Dau Lipa")),
         ),
-        com.example.model.SimplifiedAlbum(
+        SimplifiedAlbum(
             id = "5fy0X0JmZRZnVa2UEicIOl",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273b7e976d2b35c767f9012cb72",
             name = "1989",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift"
                 )
             )
         ),
-        com.example.model.SimplifiedAlbum(
+        SimplifiedAlbum(
             id = "53XhwfbYqKCa1cC15pYq2q",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "ttps://i.scdn.co/image/ab67616d0000b2735675e83f707f1d7271e5cf8a",
             name = "Evolve",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "53XhwfbYqKCa1cC15pYq2q",
                     name = "Imagine Dragons"
                 )
             ),
         ),
-        com.example.model.SimplifiedAlbum(
+        SimplifiedAlbum(
             id = "2Auw0pTT6EcQdvHNimhLQI",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273442b53773d50e1b5369bb16c",
             name = "V",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "04gDigrS5kc9YWfZHwBETP",
                     name = "Maroon 5"
                 )
             ),
         ),
-        com.example.model.SimplifiedAlbum(
+        SimplifiedAlbum(
             id = "6TElmwQZfd0lIA3yWoBfUm",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273d29a7db4c624f7a662c30783",
             name = "Key of Sea",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "1rL7w1UIwu887SlCVYYMJW",
                     name = "Jennifer Thomas"
                 )
             ),
         ),
-        com.example.model.SimplifiedAlbum(
+        SimplifiedAlbum(
             id = "7gbuuXibrC1KoULn6nfxaH",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b27305271302d0b7ebbaadba7c8a",
             name = "Zwezdnyie voiny: Mest sitkhov (Originalnyi Saundtrek)",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "3dRfiJ2650SZu6GbydcHNb",
                     name = "John Williams"
                 )
             ),
         ),
-        com.example.model.SimplifiedAlbum(
+        SimplifiedAlbum(
             id = "4OAzTjKrZX2tsO64fuvUGA",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273ad23694f5312acca60c1c2cb",
             name = "The Way",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "2Eg0o1Mok66akOkuOiGdEv",
                     name = "Zack Hemsey"
                 )
             ),
         ),
-        com.example.model.SimplifiedAlbum(
+        SimplifiedAlbum(
             id = "3AOeatEAPjy1CKtdkaXaDq",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b273536f3b6f6b46e6e97742673b",
             name = "Game Of Thrones: Season 8 (Music from the HBO Series)",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "1hCkSJcXREhrodeIHQdav8",
                     name = "Ramin Djawadi"
                 )
             ),
         ),
-        com.example.model.SimplifiedAlbum(
+        SimplifiedAlbum(
             id = "4NGvKveOupPBLw4h0uFmeu",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b2733454f72d03a754c790792034",
             name = "Experience",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "2uFUBdaVGtyMqckSeCl0Qj",
                     name = "Ludovico Einaudi"
                 )
             ),
         ),
-        com.example.model.SimplifiedAlbum(
+        SimplifiedAlbum(
             id = "4SYYFXoD8abpjsQoravjur",
-            type = com.example.model.AlbumType.Album,
+            type = AlbumType.Album,
             imageUrl = "https://i.scdn.co/image/ab67616d0000b2732a7a0737b075aa279357a7d6",
             name = "Fly",
             artists = listOf(
-                com.example.model.SimplifiedArtist(
+                SimplifiedArtist(
                     id = "348Ajoa7Nqzh4RHaGSTgGH",
                     name = "Ludovico Einaudi"
                 )
@@ -302,11 +302,11 @@ object PreviewParameterData {
     )
 
     val tracks = listOf(
-        com.example.model.Track(
+        Track(
             id = "7lBPn6LpIvbvAihTRvBMig",
             name = "Tiptoe",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -314,11 +314,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "7MXlTgQeo3IVlMpLnZuhxc",
             name = "It's Time",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -326,11 +326,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "5qaEfEh1AtSdrdrByCP7qR",
             name = "Demons",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -338,11 +338,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "213x4gsFDm04hSqIUkg88w",
             name = "On Top Of The World",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -350,11 +350,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "5gXdinVZqeuDIVxogWzRk0",
             name = "Amsterdam",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -362,11 +362,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "62yJjFtgkhUrXktIoSjgP2",
             name = "Radioactive",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -374,11 +374,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "4P76CEIXrrWT2cgS1YrTMr",
             name = "Genesis",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -386,11 +386,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "2OWKDTonST8HNko3dBlPPp",
             name = "Lost In Your Light (feat. Miguel)",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -398,11 +398,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "5eTNdkstwKaNahHf41fJ9u",
             name = "Hotter Than Hell",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -410,11 +410,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "7FCfMXYTIiQ9b4hDYs4Iol",
             name = "Be the One",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -422,11 +422,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "76cy1WJvNGJTj78UqeA5zr",
             name = "IDGAF",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -434,11 +434,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "2ekn2ttSfGqwhhate0LSR0",
             name = "New Rules",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -446,11 +446,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "4wNQAG2BzbVkLhdajjxGpR",
             name = "Begging",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -458,11 +458,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "10nqz67NQWWa7XPq7ycihi",
             name = "Welcome To New York",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -470,11 +470,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "2ls70nUDfjzm1lSRDuKxmw",
             name = "Blank Space",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -482,11 +482,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "71PmZqBXH0RUETqxpwlV0w",
             name = "Style",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -494,11 +494,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "7EpVQjqtKygiwJIASxMWNg",
             name = "Out Of The Woods",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -506,11 +506,11 @@ object PreviewParameterData {
             ),
             album = simplifiedAlbums[0]
         ),
-        com.example.model.Track(
+        Track(
             id = "1kKlhuQE0HXp1IwBRpaH2P",
             name = "Shake It Off",
             artists = listOf(
-                com.example.model.Artist(
+                Artist(
                     id = "06HL4z0CvFAxyc27GXpf02",
                     name = "Taylor Swift",
                     imageUrl = ""
@@ -521,22 +521,22 @@ object PreviewParameterData {
     )
 
     val artists = listOf(
-        com.example.model.Artist(
+        Artist(
             id = "0",
             name = "BLACKPINK",
             imageUrl = "https://i.scdn.co/image/ab6761610000f178c9690bc711d04b3d4fd4b87c"
         ),
-        com.example.model.Artist(
+        Artist(
             id = "1",
             name = "Adele",
             imageUrl = "https://i.scdn.co/image/ab6761610000e5ebb99cacf8acd537820676726"
         ),
-        com.example.model.Artist(
+        Artist(
             id = "04gDigrS5kc9YWfZHwBETP",
             name = "Maroon 5",
             imageUrl = "https://i.scdn.co/image/ab6761610000e5ebf8349dfb619a7f842242de77"
         ),
-        com.example.model.Artist(
+        Artist(
             id = "53XhwfbYqKCa1cC15pYq2q",
             name = "Imagine Dragons",
             imageUrl = "https://i.scdn.co/image/ab6761610000e5eb920dc1f617550de8388f368e"
@@ -544,26 +544,26 @@ object PreviewParameterData {
     )
 
     val simplifiedArtists = listOf(
-        com.example.model.SimplifiedArtist(
+        SimplifiedArtist(
             id = "0",
             name = "BLACKPINK"
         ),
-        com.example.model.SimplifiedArtist(
+        SimplifiedArtist(
             id = "1",
             name = "Adele"
         ),
-        com.example.model.SimplifiedArtist(
+        SimplifiedArtist(
             id = "04gDigrS5kc9YWfZHwBETP",
             name = "Maroon 5"
         ),
-        com.example.model.SimplifiedArtist(
+        SimplifiedArtist(
             id = "53XhwfbYqKCa1cC15pYq2q",
             name = "Imagine Dragons"
         )
     )
 
     val playlists = List(10) {
-        com.example.model.Playlist(
+        Playlist(
             id = "37i9dQZF1DXaMu9xyX1HzK",
             name = "Best of the Decade For You",
             ownerName = "Spotify",
@@ -572,56 +572,56 @@ object PreviewParameterData {
         )
     }
 
-    val simplifiedPlaylists = listOf<com.example.model.SimplifiedPlaylist>(
-        com.example.model.SimplifiedPlaylist(
+    val simplifiedPlaylists = listOf<SimplifiedPlaylist>(
+        SimplifiedPlaylist(
             id = "37i9dQZF1DXaMu9xyX1HzK",
             name = "Best of the Decade For You",
             ownerName = "Spotify",
             imageUrl = "https://i.scdn.co/image/ab67706f00000003ba77a2166a7b66e9a300ffaa"
         ),
-        com.example.model.SimplifiedPlaylist(
+        SimplifiedPlaylist(
             id = "37i9dQZF1DX7iB3RCnBnN4",
             name = "BILLIONS CLUB",
             ownerName = "Spotify",
             imageUrl = "https://i.scdn.co/image/ab67706f00000002f6ca7e915476b90299a5b75e"
         ),
-        com.example.model.SimplifiedPlaylist(
+        SimplifiedPlaylist(
             id = "66mDstPtgRQoDPvcBwUokA",
             name = "My recommendation playlist1",
             ownerName = "Spotify",
             imageUrl = "https://mosaic.scdn.co/640/ab67616d00001e02712701c5e263efc8726b1464ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02bfd46639322b597331d9ecefab67616d00001e02dfc2f59568272de50a257f2f"
         ),
-        com.example.model.SimplifiedPlaylist(
+        SimplifiedPlaylist(
             id = "5wtuoO5ZsNT5ySbuPD5CRc",
             name = "My recommendation playlist2",
             ownerName = "Spotify",
             imageUrl = "https://mosaic.scdn.co/640/ab67616d00001e025d29fc4c51a450bd32135de1ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02b3be3b970fc89a02f301c9daab67616d00001e02bfd46639322b597331d9ecef"
         ),
-        com.example.model.SimplifiedPlaylist(
+        SimplifiedPlaylist(
             id = "6MSKHpsAlEAwz6USSHvXRh",
             name = "My recommendation playlist3",
             ownerName = "Spotify",
             imageUrl = "https://mosaic.scdn.co/640/ab67616d00001e02a200f972bd8b1f9cb76da8c2ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02bfd46639322b597331d9ecefab67616d00001e02f062321ad9046a2a99c6bac8"
         ),
-        com.example.model.SimplifiedPlaylist(
+        SimplifiedPlaylist(
             id = "37i9dQZF1EUMDoJuT8yJsl",
             name = "Your Top Songs 2021",
             ownerName = "Spotify",
             imageUrl = "https://lineup-images.scdn.co/wrapped-2021-top100_DEFAULT-en.jpg"
         ),
-        com.example.model.SimplifiedPlaylist(
+        SimplifiedPlaylist(
             id = "37i9dQZF1DXdfOcg1fm0VG",
             name = "Video Game Soundtracks",
             ownerName = "Spotify",
             imageUrl = "https://i.scdn.co/image/ab67706f00000002c94fd5639e1bd451f55b103c"
         ),
-        com.example.model.SimplifiedPlaylist(
+        SimplifiedPlaylist(
             id = "37i9dQZF1DXaUaRhCgtpCo",
             name = "Best of Star Wars",
             ownerName = "Spotify",
             imageUrl = "https://i.scdn.co/image/ab67706f00000002df318081a0b2da5d16202c1e"
         ),
-        com.example.model.SimplifiedPlaylist(
+        SimplifiedPlaylist(
             id = "37i9dQZF1DX1tz6EDao8it",
             name = "Iconic Soundtracks",
             ownerName = "Spotify",

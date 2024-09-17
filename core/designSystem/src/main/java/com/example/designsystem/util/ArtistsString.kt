@@ -4,7 +4,7 @@ import com.example.model.Artist
 import com.example.model.SimplifiedArtist
 
 @JvmName("artistsListMethod")
-fun artistsString(artists: List<com.example.model.SimplifiedArtist>) : String {
+fun artistsString(artists: List<SimplifiedArtist>) : String {
     var artistsString = ""
     for (artist in artists) {
         if (artist.name.isNotBlank()) artistsString += artist.name + ", "
@@ -16,7 +16,7 @@ fun artistsString(artists: List<com.example.model.SimplifiedArtist>) : String {
 }
 
 @JvmName("simplifiedArtistsListMethod")
-fun artistsString(artists: List<com.example.model.Artist>) : String {
+fun artistsString(artists: List<Artist>) : String {
     var artistsString = ""
     for (artist in artists) {
         if (artist.name.isNotBlank()) artistsString += artist.name + ", "

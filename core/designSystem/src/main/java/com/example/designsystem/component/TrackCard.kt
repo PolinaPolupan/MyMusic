@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,11 +24,11 @@ import com.example.designsystem.theme.MyMusicTheme
 import com.example.designsystem.util.artistsString
 import com.example.model.Artist
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun TrackCard(
     name: String,
-    artists: List<com.example.model.Artist>,
+    artists: List<Artist>,
     imageUrl: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
