@@ -14,7 +14,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
@@ -60,7 +59,7 @@ fun AlbumContent(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    TracksList<com.example.model.SimplifiedTrack>(
+    TracksList<SimplifiedTrack>(
         uiState = uiState,
         onBackClick = onBackClick,
         modifier = modifier,
@@ -74,7 +73,7 @@ fun AlbumContent(
 
 @Composable
 private fun TrackItem(
-    track: com.example.model.SimplifiedTrack,
+    track: SimplifiedTrack,
     onTrackClick: (String) -> Unit,
     onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier

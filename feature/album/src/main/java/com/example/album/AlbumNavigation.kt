@@ -14,7 +14,7 @@ const val ALBUM_ROUTE = "album_route"
 internal const val ALBUM_ID_ARG = "albumId"
 
 fun NavController.navigateToAlbum(albumId: String) {
-    navigate("${com.example.album.ALBUM_ROUTE}/$albumId") {
+    navigate("$ALBUM_ROUTE/$albumId") {
         launchSingleTop = true
     }
 }
@@ -25,9 +25,9 @@ fun NavGraphBuilder.albumScreen(
 ) {
     composable(
         enterTransition = {fadeIn()},
-        route = "${com.example.album.ALBUM_ROUTE}/{${com.example.album.ALBUM_ID_ARG}}",
+        route = "$ALBUM_ROUTE/{$ALBUM_ID_ARG}",
         arguments = listOf(
-            navArgument(com.example.album.ALBUM_ID_ARG) { type = NavType.StringType },
+            navArgument(ALBUM_ID_ARG) { type = NavType.StringType },
         )
     ) {
         AlbumScreen(onBackClick = onBackClick, onNavigateToPlayer = onNavigateToPlayer)
