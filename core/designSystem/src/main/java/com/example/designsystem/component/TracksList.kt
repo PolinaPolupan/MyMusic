@@ -164,10 +164,11 @@ fun <T> TracksList(
                         }
                     }
                     is TracksListUiState.Success -> {
+                        // Item is either album or playlist
                         val tracks: List<T> = if (uiState.item.album != null) {
                             uiState.item.album.tracks as List<T>
                         } else {
-                            uiState.item.playlist?.tracks as List<T>
+                            uiState.item.playlist!!.tracks as List<T>
                         }
                         items(tracks) { track -> content(track) }
                     }
@@ -176,7 +177,6 @@ fun <T> TracksList(
             TopAppBar(uiState = uiState, onBackClick = onBackClick, textAlpha = textAlpha, dividerAlpha = dividerAlpha)
         }
     }
-
 }
 
 @Composable
