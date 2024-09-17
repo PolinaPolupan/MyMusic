@@ -92,6 +92,7 @@ dependencies {
     implementation(project(":feature:player"))
     implementation(project(":feature:playlist"))
     implementation(project(":feature:search"))
+    testImplementation(project(":core:network"))
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)

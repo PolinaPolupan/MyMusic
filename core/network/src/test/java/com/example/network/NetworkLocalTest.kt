@@ -1,18 +1,10 @@
-package com.example.mymusic
+package com.example.network
+
 
 import com.example.network.model.SpotifyAlbum
 import com.example.network.model.SpotifyArtist
 import com.example.network.model.SpotifyImage
-import com.example.network.model.SpotifyOwner
 import com.example.network.model.SpotifySimplifiedArtist
-import com.example.network.model.SpotifySimplifiedPlaylist
-import com.example.network.model.SpotifyTrack
-import com.example.network.model.SpotifyTracks
-import com.example.network.model.toLocal
-import com.example.network.model.toLocalRecommendation
-import com.example.network.model.toLocalSaved
-import com.example.network.model.toLocalSimplifiedTrack
-import com.example.network.model.toLocalTrack
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -23,7 +15,7 @@ class NetworkLocalTest {
 
     @Test
     fun networkSimplifiedArtist_canBeMappedToLocal() {
-        val networkSimplifiedArtist = com.example.network.model.SpotifySimplifiedArtist(
+        val networkSimplifiedArtist = SpotifySimplifiedArtist(
             externalUrls = null,
             href = "",
             id = "0",
@@ -39,14 +31,14 @@ class NetworkLocalTest {
 
     @Test
     fun networkArtist_canBeMappedToLocal() {
-        val networkArtist = com.example.network.model.SpotifyArtist(
+        val networkArtist = SpotifyArtist(
             externalUrls = null,
             href = "",
             id = "0",
             type = "",
             uri = "",
             name = "Dua Lipa",
-            images = listOf(com.example.network.model.SpotifyImage("url", 0, 0))
+            images = listOf(SpotifyImage("url", 0, 0))
         )
         val local = networkArtist.toLocal()
 
@@ -57,14 +49,14 @@ class NetworkLocalTest {
 
     @Test
     fun networkAlbum_canBeMappedToLocal() {
-        val networkAlbum = com.example.network.model.SpotifyAlbum(
+        val networkAlbum = SpotifyAlbum(
             albumType = null,
             totalTracks = 1,
             availableMarkets = null,
             externalUrls = null,
             href = "",
             id = "0",
-            images = listOf(com.example.network.model.SpotifyImage("url", 0, 0)),
+            images = listOf(SpotifyImage("url", 0, 0)),
             name = "Album",
             releaseDate = null,
             releaseDatePrecision = null,
@@ -72,7 +64,7 @@ class NetworkLocalTest {
             type = "album",
             uri = "",
             artists = listOf(
-                com.example.network.model.SpotifySimplifiedArtist(
+                SpotifySimplifiedArtist(
                     externalUrls = null,
                     href = "",
                     id = "0",
