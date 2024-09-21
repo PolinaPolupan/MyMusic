@@ -64,9 +64,13 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(files("libs/spotify-app-remote-release-0.8.0.aar"))
     implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.common)
+    implementation(libs.androidx.datastore.preferences.core)
+    implementation(libs.appauth)
+    runtimeOnly(libs.androidx.room.runtime)
+    compileOnly(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.paging.compose)
+
 
     implementation(project(":core:data"))
     implementation(project(":core:common"))
@@ -89,7 +93,7 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
-    testImplementation(libs.androidx.core)
+    testRuntimeOnly(libs.androidx.core)
     kspTest(libs.hilt.compiler)
 
     androidTestImplementation(libs.androidx.junit.test.ext)
@@ -99,5 +103,5 @@ dependencies {
     kspAndroidTest(libs.hilt.compiler)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    debugRuntimeOnly(libs.androidx.compose.ui.test.manifest)
 }

@@ -189,7 +189,7 @@ class AuthorizationManager @Inject constructor(
 
                     try {
                         val response = client.newCall(request).execute()
-                        val jsonBody = response.body?.string() ?: ""
+                        val jsonBody = response.body()?.string() ?: ""
 
                         val user: SpotifyUser = Json.decodeFromString(jsonBody)
                         updateUserData(user)

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.dependency.analysis)
 }
 
 android {
@@ -15,6 +16,8 @@ android {
 
         testInstrumentationRunner = "com.example.mymusic.core.testing.MyMusicTestRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.example.mymusic"
     }
 
     buildTypes {
@@ -42,11 +45,9 @@ dependencies {
     implementation(libs.androidx.compose.ui.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.coil.kt)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
 
     implementation(project(":core:model"))
     implementation(project(":sync"))
@@ -59,6 +60,5 @@ dependencies {
 
     testImplementation(libs.junit)
 
-    androidTestImplementation(libs.androidx.junit.test.ext)
     androidTestImplementation(libs.androidx.test.espresso)
 }

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.dependency.analysis)
 }
 
 android {
@@ -14,6 +15,8 @@ android {
 
         testInstrumentationRunner = "com.example.mymusic.core.testing.MyMusicTestRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.example.mymusic"
     }
 
     buildTypes {
@@ -35,8 +38,8 @@ android {
 }
 
 dependencies {
+
     implementation(libs.hilt.android)
-    implementation(libs.androidx.ktx)
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.dependency.analysis)
 }
 
 android {
@@ -15,6 +16,8 @@ android {
 
         testInstrumentationRunner = "com.example.mymusic.core.testing.MyMusicTestRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.example.mymusic"
     }
 
     buildTypes {
@@ -37,31 +40,19 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.ktx)
-    implementation(libs.material)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui.util)
-    implementation(libs.coil.kt)
-    implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.lifecycle.runtime.compose.android)
 
-    implementation(project(":core:model"))
     implementation(project(":sync"))
-    implementation(project(":core:data"))
     implementation(project(":core:designSystem"))
     implementation(project(":core:auth"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:account"))
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
@@ -69,5 +60,4 @@ dependencies {
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit.test.ext)
-    androidTestImplementation(libs.androidx.test.espresso)
 }
