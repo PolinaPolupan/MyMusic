@@ -14,7 +14,7 @@ const val PLAYLIST_ROUTE = "playlist_route"
 internal const val PLAYLIST_ID_ARG = "playlistId"
 
 fun NavController.navigateToPlaylist(playlistId: String) {
-    navigate("${com.example.playlist.PLAYLIST_ROUTE}/$playlistId") {
+    navigate("${PLAYLIST_ROUTE}/$playlistId") {
         launchSingleTop = true
     }
 }
@@ -24,9 +24,9 @@ fun NavGraphBuilder.playlistScreen(
 ) {
     composable(
         enterTransition = { fadeIn() },
-        route = "${com.example.playlist.PLAYLIST_ROUTE}/{${com.example.playlist.PLAYLIST_ID_ARG}}",
+        route = "${PLAYLIST_ROUTE}/{${PLAYLIST_ID_ARG}}",
         arguments = listOf(
-            navArgument(com.example.playlist.PLAYLIST_ID_ARG) { type = NavType.StringType },
+            navArgument(PLAYLIST_ID_ARG) { type = NavType.StringType },
         )
     ) {
         PlaylistScreen(onBackClick = onBackClick)
