@@ -12,6 +12,7 @@ import com.example.designsystem.component.PreviewParameterData
 import com.example.addtoplaylist.ADD_TO_PLAYLIST_ROUTE
 import com.example.home.navigateToHome
 import com.example.library.navigateToLibrary
+import com.example.login.LOGIN_ROUTE
 import com.example.player.PLAYER_ROUTE
 import com.example.search.navigateToSearch
 import com.example.mymusic.navigation.TopLevelDestination
@@ -40,7 +41,7 @@ class MyMusicAppState @Inject constructor(
      * should be shown or not
      */
     private val _fullScreenDestinationRoutes: List<String> = listOf(
-        com.example.player.PLAYER_ROUTE, com.example.addtoplaylist.ADD_TO_PLAYLIST_ROUTE, com.example.login.LOGIN_ROUTE
+        PLAYER_ROUTE, ADD_TO_PLAYLIST_ROUTE, LOGIN_ROUTE
     )
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries

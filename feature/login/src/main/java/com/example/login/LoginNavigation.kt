@@ -6,11 +6,11 @@ import androidx.navigation.compose.composable
 
 const val LOGIN_ROUTE = "login_route"
 
-fun NavController.navigateToLogin() = navigate(com.example.login.LOGIN_ROUTE)
+fun NavController.navigateToLogin() = navigate(LOGIN_ROUTE)
 
 fun NavGraphBuilder.loginScreen(onNavigateToHome: () -> Unit) {
     composable(
-        route = com.example.login.LOGIN_ROUTE
+        route = LOGIN_ROUTE
     ) {
         LoginScreen(onNavigateToHome = onNavigateToHome)
     }
