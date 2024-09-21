@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.plugin.serialization)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.dependency.analysis)
 }
 
 android {
@@ -53,30 +54,20 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui.util)
-    implementation(libs.coil.kt)
-    implementation(libs.androidx.palette)
-    implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.constraintlayout.compose)
     implementation(files("libs/spotify-app-remote-release-0.8.0.aar"))
     implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.lifecycle.runtime.compose.android)
     implementation(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.paging.compose)
-    implementation(libs.androidx.paging.runtime)
-    implementation(libs.androidx.paging.room)
+
     implementation(project(":core:data"))
     implementation(project(":core:common"))
     implementation(project(":sync"))
@@ -92,7 +83,6 @@ dependencies {
     implementation(project(":feature:player"))
     implementation(project(":feature:playlist"))
     implementation(project(":feature:search"))
-    testImplementation(project(":core:network"))
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)
@@ -100,12 +90,9 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.androidx.core)
-    testImplementation(libs.hilt.testing)
     kspTest(libs.hilt.compiler)
 
-    androidTestImplementation(libs.androidx.paging.testing)
     androidTestImplementation(libs.androidx.junit.test.ext)
-    androidTestImplementation(libs.androidx.test.espresso)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.hilt.testing)
