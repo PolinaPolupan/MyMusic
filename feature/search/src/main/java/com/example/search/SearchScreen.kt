@@ -35,7 +35,7 @@ import com.example.designsystem.component.MyMusicGradientBackground
 import com.example.designsystem.component.MyMusicIcons
 import com.example.designsystem.component.ScreenHeader
 import com.example.designsystem.theme.MyMusicTheme
-import com.example.account.AccountDialog
+
 
 @Composable
 fun SearchScreen(
