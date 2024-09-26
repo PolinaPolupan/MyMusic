@@ -6,11 +6,8 @@ import com.example.network.model.PlaylistTrack
 import com.example.network.model.PlaylistsTracksResponse
 import com.example.network.model.RecentlyPlayedTracksResponse
 import com.example.network.model.RecommendationsResponse
-import com.example.network.model.SavedAlbum
 import com.example.network.model.SavedAlbumsResponse
 import com.example.network.model.SavedPlaylistResponse
-import com.example.network.model.SpotifyPlayHistoryObject
-import com.example.network.model.SpotifySimplifiedPlaylist
 import com.example.network.model.SpotifySimplifiedTrack
 import com.example.network.model.SpotifyTrack
 import com.haroldadmin.cnradapter.NetworkResponse
@@ -27,11 +24,11 @@ class RetrofitNetworkDataSource @Inject constructor(
         return processResponse(response, data, emptyList())
     }
 
-    override suspend fun getRecentlyPlayed(before: String): List<SpotifyPlayHistoryObject> {
+    override suspend fun getRecentlyPlayed(before: String): RecentlyPlayedTracksResponse? {
         val response = apiService.getRecentlyPlayed(before=before)
-        val data = (response as? NetworkResponse.Success<RecentlyPlayedTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
+        val data = (response as? NetworkResponse.Success<RecentlyPlayedTracksResponse, ErrorResponse>?)?.body
 
-        return processResponse(response, data, emptyList())
+        return processResponse(response, data, null)
     }
 
     override suspend fun getAlbumTracks(id: String): List<SpotifySimplifiedTrack> {
@@ -41,18 +38,18 @@ class RetrofitNetworkDataSource @Inject constructor(
         return processResponse(response, data, emptyList())
     }
 
-    override suspend fun getSavedAlbums(offset: Int, limit: Int): List<SavedAlbum> {
+    override suspend fun getSavedAlbums(offset: Int, limit: Int): SavedAlbumsResponse? {
         val response = apiService.getSavedAlbums(offset=offset, limit=limit)
-        val data = (response as? NetworkResponse.Success<SavedAlbumsResponse, ErrorResponse>?)?.body?.items ?: emptyList()
+        val data = (response as? NetworkResponse.Success<SavedAlbumsResponse, ErrorResponse>?)?.body
 
-        return processResponse(response, data, emptyList())
+        return processResponse(response, data, null)
     }
 
-    override suspend fun getSavedPlaylists(offset: Int, limit: Int): List<SpotifySimplifiedPlaylist> {
+    override suspend fun getSavedPlaylists(offset: Int, limit: Int): SavedPlaylistResponse? {
         val response = apiService.getSavedPlaylists(offset=offset, limit=limit)
-        val data = (response as? NetworkResponse.Success<SavedPlaylistResponse, ErrorResponse>?)?.body?.items ?: emptyList()
+        val data = (response as? NetworkResponse.Success<SavedPlaylistResponse, ErrorResponse>?)?.body
 
-        return processResponse(response, data, emptyList())
+        return processResponse(response, data, null)
     }
 
     override suspend fun getPlaylistTracks(id: String, fields: String): List<PlaylistTrack> {

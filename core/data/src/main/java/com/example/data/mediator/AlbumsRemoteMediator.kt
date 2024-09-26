@@ -12,19 +12,15 @@ import com.example.database.MusicDatabase
 import com.example.database.model.LocalAlbumWithArtists
 import com.example.database.model.crossRef.AlbumArtistCrossRef
 import com.example.database.model.entities.RemoteKeys
-import com.example.network.MyMusicAPIService
-import com.example.network.model.ErrorResponse
-import com.example.network.model.SavedAlbumsResponse
+import com.example.network.MyMusicNetworkDataSource
 import com.example.network.model.toLocal
 import com.example.network.model.toLocalAlbum
-import com.example.network.processResponse
-import com.haroldadmin.cnradapter.NetworkResponse
 import java.io.IOException
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class AlbumsRemoteMediator @Inject constructor(
-    private val apiService: MyMusicAPIService,
+    private val networkDataSource: MyMusicNetworkDataSource,
     private val musicDatabase: MusicDatabase
 ): RemoteMediator<Int, LocalAlbumWithArtists>() {
 
@@ -56,13 +52,12 @@ class AlbumsRemoteMediator @Inject constructor(
         }
 
         try {
-            val apiResponse = apiService.getSavedAlbums(offset = page, limit = limit)
+            val data = networkDataSource.getSavedAlbums(offset = page, limit = limit)
 
-            val data = (apiResponse as? NetworkResponse.Success<SavedAlbumsResponse, ErrorResponse>?)?.body?.items ?: emptyList()
-            val next = (apiResponse as? NetworkResponse.Success<SavedAlbumsResponse, ErrorResponse>?)?.body?.next
-            val albums =  processResponse(apiResponse, data, emptyList())
+            val next = data?.next
+            val albums = data?.items
 
-            val endOfPaginationReached = albums.isEmpty() || next == null
+            val endOfPaginationReached = albums?.isEmpty() == true || next == null
 
             musicDatabase.withTransaction {
 
@@ -75,18 +70,24 @@ class AlbumsRemoteMediator @Inject constructor(
                 val prevKey = if (page == 0) null else page - limit
                 val nextKey = if (endOfPaginationReached) null else page + limit
 
-                val keys = albums.map {
+                val keys = albums?.map {
                     RemoteKeys(id = it.album.id, prevKey = prevKey, nextKey = nextKey)
                 }
 
-                musicDatabase.remoteKeysDao().insertAllKeys(keys)
+                if (keys != null) {
+                    musicDatabase.remoteKeysDao().insertAllKeys(keys)
+                }
 
-                musicDao.upsertSavedAlbums(albums.toLocal())
-                musicDao.upsertAlbums(albums.toLocalAlbum())
-                for (savedAlbum in albums) {
-                    musicDao.upsertSimplifiedArtists(savedAlbum.album.artists.toLocal())
-                    for (artist in savedAlbum.album.artists)
-                        musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(albumId = savedAlbum.album.id, simplifiedArtistId = artist.id))
+                if (albums != null) {
+
+                    musicDao.upsertSavedAlbums(albums.toLocal())
+                    musicDao.upsertAlbums(albums.toLocalAlbum())
+
+                    for (savedAlbum in albums) {
+                        musicDao.upsertSimplifiedArtists(savedAlbum.album.artists.toLocal())
+                        for (artist in savedAlbum.album.artists)
+                            musicDao.upsertAlbumArtistCrossRef(AlbumArtistCrossRef(albumId = savedAlbum.album.id, simplifiedArtistId = artist.id))
+                    }
                 }
             }
 

@@ -1,9 +1,9 @@
 package com.example.network
 
 import com.example.network.model.PlaylistTrack
-import com.example.network.model.SavedAlbum
-import com.example.network.model.SpotifyPlayHistoryObject
-import com.example.network.model.SpotifySimplifiedPlaylist
+import com.example.network.model.RecentlyPlayedTracksResponse
+import com.example.network.model.SavedAlbumsResponse
+import com.example.network.model.SavedPlaylistResponse
 import com.example.network.model.SpotifySimplifiedTrack
 import com.example.network.model.SpotifyTrack
 
@@ -11,13 +11,13 @@ interface MyMusicNetworkDataSource {
 
     suspend fun getRecommendations(): List<SpotifyTrack>
 
-    suspend fun getRecentlyPlayed(before: String): List<SpotifyPlayHistoryObject>
+    suspend fun getRecentlyPlayed(before: String): RecentlyPlayedTracksResponse?
 
     suspend fun getAlbumTracks(id: String): List<SpotifySimplifiedTrack>
 
-    suspend fun getSavedAlbums(offset: Int, limit: Int): List<SavedAlbum>
+    suspend fun getSavedAlbums(offset: Int, limit: Int): SavedAlbumsResponse?
 
-    suspend fun getSavedPlaylists(offset: Int, limit: Int): List<SpotifySimplifiedPlaylist>
+    suspend fun getSavedPlaylists(offset: Int, limit: Int): SavedPlaylistResponse?
 
     suspend fun getPlaylistTracks(id: String, fields: String): List<PlaylistTrack>
 

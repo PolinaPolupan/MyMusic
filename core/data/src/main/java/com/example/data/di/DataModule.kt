@@ -4,6 +4,8 @@ import com.example.data.repository.MusicRepository
 import com.example.data.repository.OfflineFirstMusicRepository
 import com.example.data.repository.OfflineFirstUserDataRepository
 import com.example.data.repository.UserDataRepository
+import com.example.network.MyMusicNetworkDataSource
+import com.example.network.RetrofitNetworkDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,4 +24,9 @@ abstract class DataModule {
     internal abstract fun bindsUserDataRepository(
         userDataRepository: OfflineFirstUserDataRepository,
     ): UserDataRepository
+
+    @Binds
+    internal abstract fun bindsNetworkDataSource(
+        networkDataSource: RetrofitNetworkDataSource,
+    ): MyMusicNetworkDataSource
 }

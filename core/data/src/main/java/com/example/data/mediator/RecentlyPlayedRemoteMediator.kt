@@ -8,22 +8,18 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.example.data.repository.processResponse
 import com.example.data.repository.upsertTrack
 import com.example.database.MusicDatabase
 import com.example.database.model.LocalRecentlyPlayedWithArtists
 import com.example.database.model.entities.CursorRemoteKeys
-import com.example.network.MyMusicAPIService
-import com.example.network.model.ErrorResponse
-import com.example.network.model.RecentlyPlayedTracksResponse
+import com.example.network.MyMusicNetworkDataSource
 import com.example.network.model.toLocal
-import com.haroldadmin.cnradapter.NetworkResponse
 import java.io.IOException
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class RecentlyPlayedRemoteMediator @Inject constructor(
-    private val apiService: MyMusicAPIService,
+    private val networkDataSource: MyMusicNetworkDataSource,
     private val musicDatabase: MusicDatabase
 ): RemoteMediator<Int, LocalRecentlyPlayedWithArtists>() {
 
@@ -54,17 +50,14 @@ class RecentlyPlayedRemoteMediator @Inject constructor(
         }
 
         try {
-            val response = apiService.getRecentlyPlayed(before = page.toString())
-            val items = (response as? NetworkResponse.Success<RecentlyPlayedTracksResponse, ErrorResponse>?)?.body?.items
-            val data = (response as? NetworkResponse.Success<RecentlyPlayedTracksResponse, ErrorResponse>?)?.body
-
-            val recentlyPlayed = processResponse(response, items, emptyList()) ?: emptyList()
-            val cursors = processResponse(response, data, null)?.cursors
+            val data = networkDataSource.getRecentlyPlayed(before = page.toString())
+            val cursors = data?.cursors
+            val recentlyPlayed = data?.items
 
             val nextKey = cursors?.after?.toLong()
             val prevKey = cursors?.before?.toLong()
 
-            val endOfPaginationReached = recentlyPlayed.isEmpty()
+            val endOfPaginationReached = recentlyPlayed?.isEmpty() ?: true
 
             musicDatabase.withTransaction {
                 // clear all tables in the database
@@ -73,16 +66,22 @@ class RecentlyPlayedRemoteMediator @Inject constructor(
                     musicDao.deleteRecentlyPlayed()
                 }
 
-                val keys = recentlyPlayed.map {
+                val keys = recentlyPlayed?.map {
                     CursorRemoteKeys(id = it.track.id, before = prevKey, after = nextKey)
                 }
-                musicDatabase.remoteKeysDao().insertAllCursors(keys)
-
-                for (track in recentlyPlayed) {
-                    upsertTrack(track.track, musicDao)
+                if (keys != null) {
+                    musicDatabase.remoteKeysDao().insertAllCursors(keys)
                 }
 
-                musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
+                if (recentlyPlayed != null) {
+                    for (track in recentlyPlayed) {
+                        upsertTrack(track.track, musicDao)
+                    }
+                }
+
+                if (recentlyPlayed != null) {
+                    musicDao.upsertLocalPlayHistory(recentlyPlayed.toLocal())
+                }
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {

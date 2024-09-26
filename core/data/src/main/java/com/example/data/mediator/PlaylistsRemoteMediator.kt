@@ -8,21 +8,17 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.example.data.repository.processResponse
 import com.example.database.MusicDatabase
 import com.example.database.model.entities.LocalPlaylist
 import com.example.database.model.entities.RemoteKeys
-import com.example.network.MyMusicAPIService
-import com.example.network.model.ErrorResponse
-import com.example.network.model.SavedPlaylistResponse
+import com.example.network.MyMusicNetworkDataSource
 import com.example.network.model.toLocal
 import com.example.network.model.toLocalSaved
-import com.haroldadmin.cnradapter.NetworkResponse
 import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
 class PlaylistsRemoteMediator(
-    private val apiService: MyMusicAPIService,
+    private val networkDataSource: MyMusicNetworkDataSource,
     private val musicDatabase: MusicDatabase
 ): RemoteMediator<Int, LocalPlaylist>()  {
 
@@ -53,13 +49,12 @@ class PlaylistsRemoteMediator(
         }
 
         try {
-            val apiResponse = apiService.getSavedPlaylists(offset = page, limit = limit)
 
-            val data = (apiResponse as? NetworkResponse.Success<SavedPlaylistResponse, ErrorResponse>?)?.body?.items ?: emptyList()
-            val next = (apiResponse as? NetworkResponse.Success<SavedPlaylistResponse, ErrorResponse>?)?.body?.next
-            val playlists =  processResponse(apiResponse, data, emptyList())
+            val data = networkDataSource.getSavedPlaylists(offset = page, limit = limit)
+            val next = data?.next
+            val playlists = data?.items
 
-            val endOfPaginationReached = playlists.isEmpty() || next == null
+            val endOfPaginationReached = playlists?.isEmpty() == true || next == null
 
             musicDatabase.withTransaction {
 
@@ -72,16 +67,20 @@ class PlaylistsRemoteMediator(
                 val prevKey = if (page == 0) null else page - limit
                 val nextKey = if (endOfPaginationReached) null else page + limit
 
-                val keys = playlists.map {
+                val keys = playlists?.map {
                     RemoteKeys(id = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
 
-                musicDatabase.remoteKeysDao().insertAllKeys(keys)
+                if (keys != null) {
+                    musicDatabase.remoteKeysDao().insertAllKeys(keys)
+                }
 
-                if (playlists.isNotEmpty()) {
-                    musicDao.deleteSavedPlaylists()
-                    musicDao.upsertPlaylists(playlists.toLocal())
-                    musicDao.upsertSavedPlaylists(playlists.toLocalSaved())
+                if (playlists != null) {
+                    if (playlists.isNotEmpty()) {
+                        musicDao.deleteSavedPlaylists()
+                        musicDao.upsertPlaylists(playlists.toLocal())
+                        musicDao.upsertSavedPlaylists(playlists.toLocalSaved())
+                    }
                 }
             }
 

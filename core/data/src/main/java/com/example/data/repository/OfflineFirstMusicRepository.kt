@@ -21,18 +21,12 @@ import com.example.model.SimplifiedAlbum
 import com.example.model.SimplifiedPlaylist
 import com.example.model.SimplifiedTrack
 import com.example.model.Track
-import com.example.network.MyMusicAPIService
-import com.example.network.model.AlbumTracksResponse
-import com.example.network.model.ErrorResponse
+import com.example.network.MyMusicNetworkDataSource
 import com.example.network.model.PlaylistTrack
-import com.example.network.model.PlaylistsTracksResponse
-import com.example.network.model.RecommendationsResponse
 import com.example.network.model.SpotifySimplifiedTrack
 import com.example.network.model.SpotifyTrack
 import com.example.network.model.toLocal
 import com.example.network.model.toLocalRecommendations
-import com.example.network.processResponse
-import com.haroldadmin.cnradapter.NetworkResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -42,7 +36,7 @@ import javax.inject.Inject
 class OfflineFirstMusicRepository @Inject constructor(
     private val musicDao: MusicDao,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
-    private val apiService: MyMusicAPIService,
+    private val networkDataSource: MyMusicNetworkDataSource,
     private val database: MusicDatabase
 ): MusicRepository {
 
@@ -131,7 +125,7 @@ class OfflineFirstMusicRepository @Inject constructor(
         return Pager(
             config = PagingConfig(pageSize = 10, enablePlaceholders = false),
             remoteMediator = RecentlyPlayedRemoteMediator(
-                apiService,
+                networkDataSource,
                 database
             ),
             pagingSourceFactory = pagingSourceFactory
@@ -149,7 +143,7 @@ class OfflineFirstMusicRepository @Inject constructor(
         return Pager(
             config = PagingConfig(pageSize = 5, enablePlaceholders = false),
             remoteMediator = AlbumsRemoteMediator(
-                apiService,
+                networkDataSource,
                 database
             ),
             pagingSourceFactory = pagingSourceFactory
@@ -166,7 +160,7 @@ class OfflineFirstMusicRepository @Inject constructor(
         return Pager(
             config = PagingConfig(pageSize = 5, enablePlaceholders = false),
             remoteMediator = PlaylistsRemoteMediator(
-                apiService,
+                networkDataSource,
                 database
             ),
             pagingSourceFactory = pagingSourceFactory
@@ -192,31 +186,11 @@ class OfflineFirstMusicRepository @Inject constructor(
         }
     }
 
-    private suspend fun getRecommendations(): List<SpotifyTrack> {
-        val response = apiService.getRecommendations()
-        val data = (response as? NetworkResponse.Success<RecommendationsResponse, ErrorResponse>?)?.body?.tracks ?: emptyList()
+    private suspend fun getRecommendations(): List<SpotifyTrack> = networkDataSource.getRecommendations()
 
-        return processResponse(response, data, emptyList())
-    }
+    private suspend fun getAlbumTracks(id: String): List<SpotifySimplifiedTrack> = networkDataSource.getAlbumTracks(id)
 
-    private suspend fun getAlbumTracks(id: String): List<SpotifySimplifiedTrack> {
-        val response = apiService.getAlbumTracks(id)
-        val data = (response as? NetworkResponse.Success<AlbumTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
+    private suspend fun getPlaylistTracks(id: String): List<PlaylistTrack> = networkDataSource.getPlaylistTracks(id, fields = "href, limit, next, offset, previous, total, items(added_at, added_by, is_local, track)")
 
-        return processResponse(response, data, emptyList())
-    }
-
-    private suspend fun getPlaylistTracks(id: String): List<PlaylistTrack> {
-        val response = apiService.getPlaylistTracks(id)
-        val data = (response as? NetworkResponse.Success<PlaylistsTracksResponse, ErrorResponse>?)?.body?.items ?: emptyList()
-
-        return processResponse(response, data, emptyList())
-    }
-
-    private suspend fun getTrack(id: String): SpotifyTrack? {
-        val response = apiService.getTrack(id)
-        val data = (response as? NetworkResponse.Success<SpotifyTrack, ErrorResponse>?)?.body
-
-        return processResponse(response, data, null)
-    }
+    private suspend fun getTrack(id: String): SpotifyTrack? = networkDataSource.getTrack(id)
 }
