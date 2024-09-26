@@ -8,7 +8,6 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.example.data.repository.processResponse
 import com.example.database.MusicDatabase
 import com.example.database.model.LocalAlbumWithArtists
 import com.example.database.model.crossRef.AlbumArtistCrossRef
@@ -18,6 +17,7 @@ import com.example.network.model.ErrorResponse
 import com.example.network.model.SavedAlbumsResponse
 import com.example.network.model.toLocal
 import com.example.network.model.toLocalAlbum
+import com.example.network.processResponse
 import com.haroldadmin.cnradapter.NetworkResponse
 import java.io.IOException
 import javax.inject.Inject
