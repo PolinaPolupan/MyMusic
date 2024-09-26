@@ -32,7 +32,7 @@ class PlaylistScreenTest {
     fun placeholders_whenScreenIsLoading_exist() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.playlist.PlaylistContent(
+                PlaylistContent(
                     uiState = TracksListUiState.Loading,
                     onTrackClick = {},
                     onSettingsClick = {},
@@ -67,7 +67,7 @@ class PlaylistScreenTest {
     fun tracks_whenScreenIsLoaded_existAndShowPlaylistsTracks() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.playlist.PlaylistContent(
+                PlaylistContent(
                     uiState = TracksListUiState.Success(item = OneOf(playlist = PreviewParameterData.playlists[0])),
                     onTrackClick = {},
                     onSettingsClick = {},
@@ -95,7 +95,7 @@ class PlaylistScreenTest {
 
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.playlist.PlaylistContent(
+                PlaylistContent(
                     uiState = TracksListUiState.Success(item = OneOf(playlist = PreviewParameterData.playlists[0])),
                     onTrackClick = {},
                     onSettingsClick = {},

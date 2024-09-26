@@ -32,7 +32,7 @@ class AlbumScreenTest {
     fun placeholders_whenScreenIsLoading_exist() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.album.AlbumContent(
+                AlbumContent(
                     uiState = TracksListUiState.Loading,
                     onTrackClick = {},
                     onBackClick = {},
@@ -67,7 +67,7 @@ class AlbumScreenTest {
     fun tracks_whenScreenIsLoaded_existAndShowAlbumsTracks() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.album.AlbumContent(
+                AlbumContent(
                     uiState = TracksListUiState.Success(item = OneOf(album = PreviewParameterData.albums[0])),
                     onTrackClick = {},
                     onBackClick = {},
@@ -95,7 +95,7 @@ class AlbumScreenTest {
 
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.album.AlbumContent(
+                AlbumContent(
                     uiState = TracksListUiState.Success(item = OneOf(album = PreviewParameterData.albums[0])),
                     onTrackClick = {},
                     onBackClick = {},

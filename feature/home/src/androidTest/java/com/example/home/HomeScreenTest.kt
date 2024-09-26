@@ -27,9 +27,9 @@ class HomeScreenTest {
     fun placeholders_whenScreenIsLoading_exist() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.home.HomeContent(
-                    uiState = com.example.home.HomeUiState.Loading,
-                    authenticatedUiState = com.example.home.AuthenticatedUiState.Loading,
+                HomeContent(
+                    uiState = HomeUiState.Loading,
+                    authenticatedUiState = AuthenticatedUiState.Loading,
                     onTrackClick = {},
                     recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
                 )
@@ -53,9 +53,9 @@ class HomeScreenTest {
     fun blurredImageHeader_whenScreenIsLoaded_existsAndShowsCorrectImage() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.home.HomeContent(
-                    uiState = com.example.home.HomeUiState.Success(topPicks = PreviewParameterData.tracks),
-                    authenticatedUiState = com.example.home.AuthenticatedUiState.Success(""),
+                HomeContent(
+                    uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
+                    authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
                     recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
                 )
@@ -78,9 +78,9 @@ class HomeScreenTest {
     fun topPicks_whenScreenIsLoaded_existsAndShowsRecommendations() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.home.HomeContent(
-                    uiState = com.example.home.HomeUiState.Success(topPicks = PreviewParameterData.tracks),
-                    authenticatedUiState = com.example.home.AuthenticatedUiState.Success(""),
+                HomeContent(
+                    uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
+                    authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
                     recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
                 )
@@ -123,9 +123,9 @@ class HomeScreenTest {
     fun recentlyPlayed_whenScreenIsLoaded_existsAndShowsTracks() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.home.HomeContent(
-                    uiState = com.example.home.HomeUiState.Success(topPicks = emptyList()),
-                    authenticatedUiState = com.example.home.AuthenticatedUiState.Success(""),
+                HomeContent(
+                    uiState = HomeUiState.Success(topPicks = emptyList()),
+                    authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
                     recentlyPlayed = flowOf(PagingData.from(PreviewParameterData.tracks)).collectAsLazyPagingItems()
                 )
@@ -158,9 +158,9 @@ class HomeScreenTest {
 
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.home.HomeContent(
-                    uiState = com.example.home.HomeUiState.Success(topPicks = PreviewParameterData.tracks),
-                    authenticatedUiState = com.example.home.AuthenticatedUiState.Success(""),
+                HomeContent(
+                    uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
+                    authenticatedUiState = AuthenticatedUiState.Success(""),
                     onTrackClick = {},
                     recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
                 )

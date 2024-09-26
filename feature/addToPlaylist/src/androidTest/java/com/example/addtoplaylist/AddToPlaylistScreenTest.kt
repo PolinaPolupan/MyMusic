@@ -34,8 +34,8 @@ class AddToPlaylistScreenTest {
     fun placeholders_whenScreenIsLoading_exist() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.addtoplaylist.AddToPlayListContent(
-                    uiState = com.example.addtoplaylist.AddToPlaylistUiState.Loading,
+                AddToPlayListContent(
+                    uiState = AddToPlaylistUiState.Loading,
                     playlists = flowOf(PagingData.from(emptyList<SimplifiedPlaylist>())).collectAsLazyPagingItems(),
                     onBackPress = {},
                     onSortOptionChanged = {},
@@ -54,8 +54,8 @@ class AddToPlaylistScreenTest {
     fun playlists_whenScreenIsLoaded_existAndShowUsersPlaylists() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.addtoplaylist.AddToPlayListContent(
-                    uiState = com.example.addtoplaylist.AddToPlaylistUiState.Success(track = PreviewParameterData.tracks[0]),
+                AddToPlayListContent(
+                    uiState = AddToPlaylistUiState.Success(track = PreviewParameterData.tracks[0]),
                     playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),
                     onBackPress = {},
                     onSortOptionChanged = {},
@@ -83,8 +83,8 @@ class AddToPlaylistScreenTest {
 
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.addtoplaylist.AddToPlayListContent(
-                    uiState = com.example.addtoplaylist.AddToPlaylistUiState.Success(track = PreviewParameterData.tracks[0]),
+                AddToPlayListContent(
+                    uiState = AddToPlaylistUiState.Success(track = PreviewParameterData.tracks[0]),
                     playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),
                     onBackPress = {},
                     onSortOptionChanged = {},
