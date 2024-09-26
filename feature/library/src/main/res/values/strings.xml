@@ -1,50 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">My Music</string>
-    <string name="listen_now">Listen Now</string>
-    <string name="top_picks">Top Picks</string>
-    <string name="recently_played">Recently played</string>
-    <string name="more_like">More like</string>
-    <string name="home">Home</string>
-    <string name="search">Search</string>
-    <string name="library">Library</string>
-    <string name="skip_previous">Skip previous</string>
-    <string name="skip_next">Skip Next</string>
-    <string name="pause">Pause</string>
-    <string name="play">Play</string>
-    <string name="recent_searches">Recent searches</string>
-    <string name="hinted_search_text">What do you want to listen to?</string>
-    <string name="back">Back</string>
-    <string name="close">Close</string>
     <string name="your_library">Your Library</string>
-    <string name="playlist_label">Playlist \u2022 %s</string>
-    <string name="album_label">Album \u2022 %s</string>
-    <string name="recently_added">Recently added</string>
-    <string name="alphabetical">Alphabetical</string>
-    <string name="creator">Creator</string>
-    <string name="sort">Sort</string>
-    <string name="sort_by">Sort by</string>
-    <string name="sort_option_selection_desc">Current sort option</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="more">More</string>
-    <string name="is_checked">Is checked</string>
-    <string name="done">Done</string>
-    <string name="title_feature">feature</string>
-    <string name="album_type_name">Album</string>
-    <string name="single_type_name">Single</string>
-    <string name="compilation_type_name">Compilation</string>
-
-    <string name="login_text">Explore millions of songs</string>
-    <string name="login_description">Log in to your Spotify to use My Music</string>
-    <string name="login">Log in</string>
-    <string name="log_out">Log out</string>
-
-    <string name="spotify_is_not_installed">Spotify is not installed</string>
-    <string name="spotify_is_not_installed_text">
-        Spotify is not installed on your device. Please, install Spotify to proceed using the app.
-    </string>
-    <string name="dismiss">Dismiss</string>
-    <string name="install">Install</string>
-
-    <string name="loading">Loading…</string>
 </resources>

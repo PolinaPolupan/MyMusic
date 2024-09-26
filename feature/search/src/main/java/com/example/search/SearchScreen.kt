@@ -66,7 +66,7 @@ fun SearchContent(
         ) {
             ScreenHeader(
                 isLoading = true,
-                titleRes = R.string.your_library,
+                titleRes = R.string.search,
                 AccountDialog = { com.example.account.AccountDialog(onDismiss = it) },
                 imageUrl = "",
                 modifier = Modifier.padding(horizontal = 16.dp))

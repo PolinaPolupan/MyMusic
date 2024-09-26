@@ -75,13 +75,13 @@ fun LibraryScreen(
     val authenticatedUiState by viewModel.authenticatedUiState.collectAsStateWithLifecycle()
 
     // If not authorized - navigate to login screen
-    if (authenticatedUiState is com.example.home.AuthenticatedUiState.NotAuthenticated) {
+    if (authenticatedUiState is AuthenticatedUiState.NotAuthenticated) {
         LaunchedEffect(key1 = authenticatedUiState) {
             onNavigateToLogin()
         }
     }
     // Show ui if the data is ready and user is authorized
-    else if (authenticatedUiState is com.example.home.AuthenticatedUiState.Success && !isSyncing) {
+    else if (authenticatedUiState is AuthenticatedUiState.Success && !isSyncing) {
 
         val savedAlbums = viewModel.savedAlbums.collectAsLazyPagingItems()
         val savedPlaylists = viewModel.savedPlaylists.collectAsLazyPagingItems()
@@ -100,7 +100,7 @@ fun LibraryScreen(
         )
     } else {
         LibraryContent(
-            uiState = com.example.home.AuthenticatedUiState.Loading,
+            uiState = AuthenticatedUiState.Loading,
             albums = flowOf(PagingData.from(emptyList<com.example.model.SimplifiedAlbum>())).collectAsLazyPagingItems(),
             playlists = flowOf(PagingData.from(emptyList<com.example.model.SimplifiedPlaylist>())).collectAsLazyPagingItems(),
             onSortOptionChanged =  { viewModel.currentSortOption.value = it },
@@ -116,7 +116,7 @@ fun LibraryScreen(
 
 @Composable
 fun LibraryContent(
-    uiState: com.example.home.AuthenticatedUiState,
+    uiState: AuthenticatedUiState,
     albums: LazyPagingItems<com.example.model.SimplifiedAlbum>,
     playlists: LazyPagingItems<com.example.model.SimplifiedPlaylist>,
     onSortOptionChanged: (SortOption) -> Unit,
@@ -192,10 +192,10 @@ fun LibraryContent(
                         ))
                     ) {
                         ScreenHeader(
-                            isLoading = uiState is com.example.home.AuthenticatedUiState.Loading,
+                            isLoading = uiState is AuthenticatedUiState.Loading,
                             titleRes = R.string.your_library,
-                            AccountDialog = { com.example.account.AccountDialog(onDismiss = it) },
-                            imageUrl = if (uiState is com.example.home.AuthenticatedUiState.Success) uiState.userImageUrl ?: "" else "",
+                            AccountDialog = { AccountDialog(onDismiss = it) },
+                            imageUrl = if (uiState is AuthenticatedUiState.Success) uiState.userImageUrl ?: "" else "",
                             modifier = Modifier.padding(horizontal = 16.dp))
                         Sort(
                             sortOption = currentSortOption,
@@ -206,7 +206,7 @@ fun LibraryContent(
                     }
                 }
                 when (uiState) {
-                    com.example.home.AuthenticatedUiState.Loading -> {
+                    AuthenticatedUiState.Loading -> {
                         items(count = 5) {
                             AnimationBox {
                                 RectangleRoundedCornerPlaceholder(
@@ -218,8 +218,8 @@ fun LibraryContent(
                             }
                         }
                     }
-                    com.example.home.AuthenticatedUiState.NotAuthenticated -> Unit
-                    is com.example.home.AuthenticatedUiState.Success -> {
+                    AuthenticatedUiState.NotAuthenticated -> Unit
+                    is AuthenticatedUiState.Success -> {
                         albumsList(albums, onNavigateToAlbumClick, onAlbumClick)
                         playlistsList(playlists, onNavigateToPlaylist, onPlaylistClick)
                     }
@@ -318,7 +318,7 @@ private fun TopAppBar(
 fun LibraryPreview() {
     MyMusicTheme {
         LibraryContent(
-            uiState = com.example.home.AuthenticatedUiState.Success(""),
+            uiState = AuthenticatedUiState.Success(""),
             albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
             playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),
             onSortOptionChanged = {},
@@ -336,7 +336,7 @@ fun LibraryPreview() {
 fun LibraryLoadingPreview() {
     MyMusicTheme {
         LibraryContent(
-            uiState = com.example.home.AuthenticatedUiState.Loading,
+            uiState = AuthenticatedUiState.Loading,
             albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
             playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),
             onSortOptionChanged = {},
