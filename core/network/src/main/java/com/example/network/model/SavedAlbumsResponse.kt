@@ -1,5 +1,7 @@
 package com.example.network.model
 
+import com.example.database.model.entities.LocalAlbum
+import com.example.database.model.entities.LocalSavedAlbum
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -21,4 +23,21 @@ data class SavedAlbumsResponse(
     val items: List<SavedAlbum>
 )
 
+@JvmName("SavedAlbumToLocalAlbumConversion")
+fun SavedAlbum.toLocalAlbum() = LocalAlbum(
+    id = album.id,
+    type = album.type,
+    imageUrl = if (album.images.isNotEmpty()) album.images[0].url else "",
+    name = album.name
+)
 
+@JvmName("SavedAlbumListToLocalAlbums")
+fun List<SavedAlbum>.toLocalAlbum() = map(SavedAlbum::toLocalAlbum)
+
+@JvmName("SavedAlbumToLocalSavedAlbum")
+fun SavedAlbum.toLocal() = LocalSavedAlbum(
+    id = album.id
+)
+
+@JvmName("SavedAlbumListToLocalSavedAlbums")
+fun List<SavedAlbum>.toLocal() = map(SavedAlbum::toLocal)

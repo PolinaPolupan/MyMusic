@@ -3,6 +3,7 @@ package com.example.database.model.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.model.Artist
 
 @Entity(tableName = "artists")
 data class LocalArtist(
@@ -11,3 +12,13 @@ data class LocalArtist(
     @ColumnInfo(name = "artistName") val name: String,
     @ColumnInfo(name = "artistImageUrl") val imageUrl: String?
 )
+
+@JvmName("LocalArtistToExternalArtist")
+fun LocalArtist.toExternal() = Artist(
+    id = id,
+    name = name,
+    imageUrl = imageUrl
+)
+
+@JvmName("LocalArtistListToExternalArtists")
+fun List<LocalArtist>.toExternal() = map(LocalArtist::toExternal)

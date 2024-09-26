@@ -1,15 +1,15 @@
 package com.example.data.repository
 
 import android.util.Log
-import com.example.data.model.toLocal
-import com.example.data.model.toLocalSimplified
-import com.example.data.model.toLocalSimplifiedTrack
-import com.example.data.model.toLocalTrack
 import com.example.database.MusicDao
 import com.example.database.model.crossRef.AlbumArtistCrossRef
 import com.example.database.model.crossRef.SimplifiedTrackArtistCrossRef
 import com.example.database.model.crossRef.TrackArtistCrossRef
 import com.example.network.model.SpotifyTrack
+import com.example.network.model.toLocal
+import com.example.network.model.toLocalSimplified
+import com.example.network.model.toLocalSimplifiedTrack
+import com.example.network.model.toLocalTrack
 import com.haroldadmin.cnradapter.NetworkResponse
 
 /**

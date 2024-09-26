@@ -9,15 +9,14 @@ import com.example.common.DefaultDispatcher
 import com.example.data.mediator.AlbumsRemoteMediator
 import com.example.data.mediator.PlaylistsRemoteMediator
 import com.example.data.mediator.RecentlyPlayedRemoteMediator
-import com.example.data.model.toExternal
-import com.example.data.model.toExternalSimplified
-import com.example.data.model.toLocal
-import com.example.data.model.toLocalRecommendations
 import com.example.database.MusicDao
 import com.example.database.MusicDatabase
 import com.example.database.model.crossRef.AlbumTrackCrossRef
 import com.example.database.model.crossRef.PlaylistTrackCrossRef
 import com.example.database.model.crossRef.SimplifiedTrackArtistCrossRef
+import com.example.database.model.entities.toExternal
+import com.example.database.model.toExternal
+import com.example.database.model.toExternalSimplified
 import com.example.model.SimplifiedAlbum
 import com.example.model.SimplifiedPlaylist
 import com.example.model.SimplifiedTrack
@@ -30,6 +29,8 @@ import com.example.network.model.PlaylistsTracksResponse
 import com.example.network.model.RecommendationsResponse
 import com.example.network.model.SpotifySimplifiedTrack
 import com.example.network.model.SpotifyTrack
+import com.example.network.model.toLocal
+import com.example.network.model.toLocalRecommendations
 import com.haroldadmin.cnradapter.NetworkResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

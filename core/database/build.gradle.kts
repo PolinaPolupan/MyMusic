@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.androidx.paging.room)
     implementation(libs.hilt.android)
     implementation(libs.androidx.room.ktx)
+    implementation(project(":core:model"))
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)

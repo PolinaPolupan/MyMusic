@@ -1,5 +1,6 @@
 package com.example.network.model
 
+import com.example.database.model.entities.LocalAlbum
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -27,4 +28,11 @@ data class SpotifyAlbum(
     val artists: List<SpotifySimplifiedArtist>
 )
 
+@JvmName("SpotifyAlbumToLocalAlbum")
+fun SpotifyAlbum.toLocal() = LocalAlbum(
+    id = id,
+    type = type,
+    imageUrl = if (images.isNotEmpty()) images[0].url else "",
+    name = name
+)
 

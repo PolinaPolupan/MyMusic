@@ -1,5 +1,8 @@
 package com.example.network.model
 
+import com.example.database.model.entities.LocalRecommendation
+import com.example.database.model.entities.LocalSimplifiedTrack
+import com.example.database.model.entities.LocalTrack
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -36,3 +39,24 @@ data class SpotifyTrack(
     @SerialName("is_local")
     val isLocal: Boolean
 )
+
+@JvmName("SpotifyTrackToLocalTrackConversion")
+fun SpotifyTrack.toLocalTrack() = LocalTrack(
+    id = id,
+    album = album.toLocal(),
+    name = name
+)
+
+@JvmName("SpotifyTrackToLocalSimplifiedTrackConversion")
+fun SpotifyTrack.toLocalSimplifiedTrack() = LocalSimplifiedTrack(
+    id = id,
+    name = name
+)
+
+@JvmName("SpotifyTrackToLocalRecommendation")
+fun SpotifyTrack.toLocalRecommendation() = LocalRecommendation(
+    id = id
+)
+
+@JvmName("SpotifyTrackListToLocalRecommendations")
+fun List<SpotifyTrack>.toLocalRecommendations() = map(SpotifyTrack::toLocalRecommendation)

@@ -1,5 +1,7 @@
 package com.example.network.model
 
+import com.example.database.model.entities.LocalPlaylist
+import com.example.database.model.entities.LocalSavedPlaylist
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -21,3 +23,20 @@ data class SpotifySimplifiedPlaylist(
     val type: String,
     val uri: String
 )
+
+@JvmName("SpotifySimplifiedPlaylistToLocalPlaylist")
+fun SpotifySimplifiedPlaylist.toLocal() = LocalPlaylist(
+    id = id,
+    imageUrl = if (!images.isNullOrEmpty()) images!![0].url else "",
+    name = name,
+    ownerName = owner.displayName
+)
+
+@JvmName("SpotifySimplifiedPlaylistListToLocalPlaylists")
+fun List<SpotifySimplifiedPlaylist>.toLocal() = map(SpotifySimplifiedPlaylist::toLocal)
+
+@JvmName("SpotifySimplifiedPlaylistToLocalSavedPlaylist")
+fun SpotifySimplifiedPlaylist.toLocalSaved() = LocalSavedPlaylist(id = id)
+
+@JvmName("SpotifySimplifiedPlaylistListToLocalSavedPlaylists")
+fun List<SpotifySimplifiedPlaylist>.toLocalSaved() = map(SpotifySimplifiedPlaylist::toLocalSaved)

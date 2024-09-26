@@ -1,5 +1,6 @@
 package com.example.network.model
 
+import com.example.database.model.entities.LocalSimplifiedTrack
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -32,3 +33,12 @@ data class SpotifySimplifiedTrack(
     @SerialName("is_local")
     val isLocal: Boolean
 )
+
+@JvmName("SpotifySimplifiedTrackToLocalSimplifiedTrack")
+fun SpotifySimplifiedTrack.toLocal() = LocalSimplifiedTrack(
+    id = id,
+    name = name
+)
+
+@JvmName("SpotifySimplifiedTrackListToLocalSimplifiedTracks")
+fun List<SpotifySimplifiedTrack>.toLocal() = map(SpotifySimplifiedTrack::toLocal)

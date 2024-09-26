@@ -6,6 +6,9 @@ import androidx.room.Relation
 import com.example.database.model.crossRef.AlbumArtistCrossRef
 import com.example.database.model.entities.LocalAlbum
 import com.example.database.model.entities.LocalSimplifiedArtist
+import com.example.database.model.entities.toAlbumType
+import com.example.database.model.entities.toExternal
+import com.example.model.SimplifiedAlbum
 
 /**
  * [LocalAlbumWithArtists] defines an album with the list of artists.
@@ -19,3 +22,13 @@ data class LocalAlbumWithArtists(
     )
     val simplifiedArtists: List<LocalSimplifiedArtist>
 )
+
+@JvmName("LocalAlbumWithArtistsToExternalSimplifiedAlbum")
+fun LocalAlbumWithArtists.toExternalSimplified(): SimplifiedAlbum =
+    SimplifiedAlbum(
+        id = album.id,
+        type = album.type.toAlbumType(),
+        imageUrl = album.imageUrl,
+        name = album.name,
+        artists = simplifiedArtists.map { it.toExternal() }
+    )

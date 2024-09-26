@@ -8,6 +8,9 @@ import com.example.database.model.crossRef.TrackArtistCrossRef
 import com.example.database.model.entities.LocalArtist
 import com.example.database.model.entities.LocalRecentlyPlayed
 import com.example.database.model.entities.LocalSimplifiedArtist
+import com.example.database.model.entities.toExternal
+import com.example.database.model.entities.toExternalSimplified
+import com.example.model.Track
 
 
 data class LocalRecentlyPlayedWithArtists(
@@ -26,3 +29,10 @@ data class LocalRecentlyPlayedWithArtists(
     val albumArtists: List<LocalSimplifiedArtist>
 )
 
+@JvmName("LocalRecentlyPlayedWithArtistsToExternalTrack")
+fun LocalRecentlyPlayedWithArtists.toExternal() = Track(
+    id = trackHistory.track.id,
+    album = trackHistory.track.album.toExternalSimplified(albumArtists.toExternal()),
+    name = trackHistory.track.name,
+    artists = artists.toExternal()
+)

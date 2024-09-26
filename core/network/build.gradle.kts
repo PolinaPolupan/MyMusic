@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.converter.gson)
     implementation(project(":core:auth"))
+    implementation(project(":core:database"))
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)

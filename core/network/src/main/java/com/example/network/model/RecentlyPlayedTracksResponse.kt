@@ -1,5 +1,6 @@
 package com.example.network.model
 
+import com.example.database.model.entities.LocalRecentlyPlayed
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -19,3 +20,12 @@ data class RecentlyPlayedTracksResponse(
     val total: Int? = null,
     val items: List<SpotifyPlayHistoryObject>
 )
+
+@JvmName("SpotifyPlayHistoryObjectToLocalRecentlyPlayed")
+fun SpotifyPlayHistoryObject.toLocal() = LocalRecentlyPlayed(
+    id = track.id,
+    track = track.toLocalTrack()
+)
+
+@JvmName("SpotifyPlayHistoryObjectListToLocalRecentlyPlayed")
+fun List<SpotifyPlayHistoryObject>.toLocal() = map(SpotifyPlayHistoryObject::toLocal)

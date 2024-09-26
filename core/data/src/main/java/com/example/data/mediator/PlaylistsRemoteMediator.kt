@@ -8,8 +8,6 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.example.data.model.toLocal
-import com.example.data.model.toLocalSaved
 import com.example.data.repository.processResponse
 import com.example.database.MusicDatabase
 import com.example.database.model.entities.LocalPlaylist
@@ -17,6 +15,8 @@ import com.example.database.model.entities.RemoteKeys
 import com.example.network.MyMusicAPIService
 import com.example.network.model.ErrorResponse
 import com.example.network.model.SavedPlaylistResponse
+import com.example.network.model.toLocal
+import com.example.network.model.toLocalSaved
 import com.haroldadmin.cnradapter.NetworkResponse
 import java.io.IOException
 
