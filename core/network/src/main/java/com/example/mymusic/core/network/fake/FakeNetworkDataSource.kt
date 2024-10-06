@@ -1,6 +1,7 @@
 package com.example.mymusic.core.network.fake
 
 import android.content.Context
+import com.example.mymusic.core.common.IoDispatcher
 import com.example.mymusic.core.network.MyMusicNetworkDataSource
 import com.example.mymusic.core.network.R
 import com.example.network.model.PlaylistTrack
@@ -17,7 +18,7 @@ import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class FakeNetworkDataSource @Inject constructor(
-    @com.example.mymusic.core.common.IoDispatcher val dispatcher: CoroutineDispatcher,
+    @IoDispatcher val dispatcher: CoroutineDispatcher,
     @ApplicationContext val context: Context
 ) : MyMusicNetworkDataSource {
 

@@ -43,6 +43,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1802275172">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="Xiaomi 23021RAA2Y" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1800363490">
           <value>
             <AndroidTestResultsTableState>
@@ -611,6 +624,19 @@
           </value>
         </entry>
         <entry key="1944264488">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="Xiaomi 23021RAA2Y" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="2055439447">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
