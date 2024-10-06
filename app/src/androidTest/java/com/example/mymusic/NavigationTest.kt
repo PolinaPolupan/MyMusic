@@ -5,17 +5,8 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.paging.PagingData
-import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.mymusic.feature.home.AuthenticatedUiState
-import com.example.mymusic.feature.home.HomeContent
-import com.example.mymusic.feature.home.HomeUiState
-import com.example.mymusic.core.designsystem.component.PreviewParameterData
-import com.example.mymusic.core.designsystem.theme.MyMusicTheme
-import com.example.mymusic.core.model.Track
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.flow.flowOf
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -95,19 +86,6 @@ class NavigationTest {
 
     @Test
     fun whenAccountDialogDismissed_previousScreenIsDisplayed() {
-
-        composeTestRule.setContent {
-            MyMusicTheme {
-                com.example.mymusic.feature.home.HomeContent(
-                    uiState = com.example.mymusic.feature.home.HomeUiState.Success(topPicks = PreviewParameterData.tracks),
-                    authenticatedUiState = com.example.mymusic.feature.home.AuthenticatedUiState.Success(
-                        ""
-                    ),
-                    onTrackClick = {},
-                    recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
-                )
-            }
-        }
 
         composeTestRule
             .onNodeWithTag("accountIcon")
