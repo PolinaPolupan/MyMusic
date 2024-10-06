@@ -16,13 +16,13 @@
             <option value="$PROJECT_DIR$/core/data" />
             <option value="$PROJECT_DIR$/core/database" />
             <option value="$PROJECT_DIR$/core/datastore" />
-            <option value="$PROJECT_DIR$/core/designSystem" />
+            <option value="$PROJECT_DIR$/core/designsystem" />
             <option value="$PROJECT_DIR$/core/model" />
             <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/core/testing" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/account" />
-            <option value="$PROJECT_DIR$/feature/addToPlaylist" />
+            <option value="$PROJECT_DIR$/feature/addtoplaylist" />
             <option value="$PROJECT_DIR$/feature/album" />
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/library" />

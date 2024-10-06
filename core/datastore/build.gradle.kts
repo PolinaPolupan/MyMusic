@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.datastore"
+    namespace = "com.example.mymusic.core.datastore"
     compileSdk = 34
 
     defaultConfig {

@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.login"
+    namespace = "com.example.mymusic.feature.login"
     compileSdk = 34
 
     defaultConfig {
@@ -49,9 +49,9 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-
     implementation(project(":sync"))
-    implementation(project(":core:designSystem"))
+
+    implementation(project(":core:designsystem"))
     implementation(project(":core:auth"))
 
     ksp(libs.hilt.compiler)

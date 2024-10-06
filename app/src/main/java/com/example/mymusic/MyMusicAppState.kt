@@ -8,13 +8,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.example.designsystem.component.PreviewParameterData
-import com.example.addtoplaylist.ADD_TO_PLAYLIST_ROUTE
-import com.example.home.navigateToHome
-import com.example.library.navigateToLibrary
-import com.example.login.LOGIN_ROUTE
-import com.example.player.PLAYER_ROUTE
-import com.example.search.navigateToSearch
+import com.example.mymusic.feature.addtoplaylist.ADD_TO_PLAYLIST_ROUTE
+import com.example.mymusic.feature.home.navigateToHome
+import com.example.mymusic.feature.library.navigateToLibrary
+import com.example.mymusic.core.designsystem.component.PreviewParameterData
+import com.example.mymusic.feature.player.PLAYER_ROUTE
+import com.example.mymusic.feature.search.navigateToSearch
 import com.example.mymusic.navigation.TopLevelDestination
 import javax.inject.Inject
 
@@ -41,7 +40,8 @@ class MyMusicAppState @Inject constructor(
      * should be shown or not
      */
     private val _fullScreenDestinationRoutes: List<String> = listOf(
-        PLAYER_ROUTE, ADD_TO_PLAYLIST_ROUTE, LOGIN_ROUTE
+        com.example.mymusic.feature.player.PLAYER_ROUTE, com.example.mymusic.feature.addtoplaylist.ADD_TO_PLAYLIST_ROUTE,
+        com.example.mymusic.feature.login.LOGIN_ROUTE
     )
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries

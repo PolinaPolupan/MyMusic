@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.account"
+    namespace = "com.example.mymusic.feature.account"
     compileSdk = 34
 
     defaultConfig {
@@ -48,11 +48,11 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
-
     implementation(project(":core:model"))
     implementation(project(":sync"))
+
     implementation(project(":core:data"))
-    implementation(project(":core:designSystem"))
+    implementation(project(":core:designsystem"))
     implementation(project(":core:auth"))
 
     ksp(libs.hilt.compiler)

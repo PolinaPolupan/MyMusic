@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.home"
+    namespace = "com.example.mymusic.feature.home"
     compileSdk = 34
 
     defaultConfig {
@@ -53,18 +53,21 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     implementation(libs.androidx.paging.compose)
-
+    implementation(libs.androidx.compose.runtime)
     implementation(project(":core:model"))
     implementation(project(":sync"))
+
     implementation(project(":core:data"))
-    implementation(project(":core:designSystem"))
+    implementation(project(":core:designsystem"))
     implementation(project(":feature:account"))
+    //   implementation(project(":core:testing"))
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
 
+    androidTestImplementation(libs.androidx.compose.runtime)
     androidTestImplementation(libs.androidx.junit.test.ext)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)

@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.auth"
+    namespace = "com.example.mymusic.core.common"
     compileSdk = 34
 
     defaultConfig {

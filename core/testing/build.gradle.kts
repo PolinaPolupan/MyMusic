@@ -3,21 +3,18 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.dependency.analysis)
 }
 
 android {
-    namespace = "com.example.testing"
+    namespace = "com.example.mymusic.core.testing"
     compileSdk = 34
 
     defaultConfig {
         minSdk = 24
 
-        testInstrumentationRunner = "com.example.mymusic.core.testing.MyMusicTestRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        manifestPlaceholders["appAuthRedirectScheme"] = "com.example.mymusic"
     }
 
     buildTypes {
@@ -40,7 +37,6 @@ android {
 
 dependencies {
 
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.hilt.android)
     implementation(libs.androidx.runner)
     implementation(libs.androidx.hilt.common)

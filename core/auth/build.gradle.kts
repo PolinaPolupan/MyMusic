@@ -3,10 +3,12 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.plugin.serialization)
     alias(libs.plugins.dependency.analysis)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.example.auth"
+    namespace = "com.example.mymusic.core.auth"
     compileSdk = 34
 
     defaultConfig {
@@ -44,6 +46,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(project(":core:common"))
     implementation(project(":core:datastore"))
+
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
 

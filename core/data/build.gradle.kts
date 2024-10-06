@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.data"
+    namespace = "com.example.mymusic.core.data"
     compileSdk = 34
 
     defaultConfig {
@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    
+
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.room)
     implementation(libs.network.response.adapter)
@@ -45,9 +45,9 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
-
     implementation(project(":core:model"))
     implementation(project(":core:network"))
+
     implementation(project(":core:database"))
     implementation(project(":core:common"))
     implementation(project(":core:datastore"))

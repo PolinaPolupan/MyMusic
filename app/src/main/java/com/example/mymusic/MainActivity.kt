@@ -14,9 +14,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.common.Constants
-import com.example.designsystem.theme.MyMusicTheme
-import com.example.sync.SyncManager
+import com.example.mymusic.core.common.Constants
+import com.example.mymusic.core.designsystem.theme.MyMusicTheme
+import com.example.mymusic.sync.SyncManager
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
 
     var spotifyAppRemote: SpotifyAppRemote? = null
 
-    @Inject lateinit var syncManager: SyncManager
+    @Inject lateinit var syncManager: com.example.mymusic.sync.SyncManager
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -70,17 +70,17 @@ dependencies {
     compileOnly(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.paging.compose)
-
-
     implementation(project(":core:data"))
+
+
     implementation(project(":core:common"))
     implementation(project(":sync"))
     implementation(project(":core:auth"))
     implementation(project(":core:model"))
-    implementation(project(":core:designSystem"))
+    implementation(project(":core:designsystem"))
     implementation(project(":feature:home"))
     implementation(project(":feature:account"))
-    implementation(project(":feature:addToPlaylist"))
+    implementation(project(":feature:addtoplaylist"))
     implementation(project(":feature:album"))
     implementation(project(":feature:library"))
     implementation(project(":feature:login"))
@@ -100,6 +100,7 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.hilt.testing)
+    androidTestImplementation(project(":core:testing"))
     kspAndroidTest(libs.hilt.compiler)
 
     debugImplementation(libs.androidx.compose.ui.tooling)

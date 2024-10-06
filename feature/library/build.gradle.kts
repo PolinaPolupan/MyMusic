@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.library"
+    namespace = "com.example.mymusic.feature.library"
     compileSdk = 34
 
     defaultConfig {
@@ -50,11 +50,11 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.paging.compose)
-
     implementation(project(":core:model"))
     implementation(project(":sync"))
+
     implementation(project(":core:data"))
-    implementation(project(":core:designSystem"))
+    implementation(project(":core:designsystem"))
     implementation(project(":feature:home"))
     implementation(project(":feature:account"))
 

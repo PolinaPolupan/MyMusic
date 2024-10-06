@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.database"
+    namespace = "com.example.mymusic.core.database"
     compileSdk = 34
 
     defaultConfig {
