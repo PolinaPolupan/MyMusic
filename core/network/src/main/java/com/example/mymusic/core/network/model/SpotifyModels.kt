@@ -48,7 +48,7 @@ data class LinkedFrom(
 data class RecommendationSeed(
     val afterFilteringSize: Int,
     val afterRelinkingSize: Int,
-    val href: String,
+    val href: String?,
     val id: String,
     val initialPoolSize: Int,
     val type: String
@@ -56,8 +56,8 @@ data class RecommendationSeed(
 
 @Serializable
 data class RecommendationsResponse(
-    val seeds: List<RecommendationSeed>,
-    val tracks: List<SpotifyTrack>
+    val tracks: List<SpotifyTrack>,
+    val seeds: List<RecommendationSeed>
 )
 
 @Serializable

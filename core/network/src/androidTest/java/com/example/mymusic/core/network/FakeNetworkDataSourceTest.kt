@@ -4,6 +4,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.example.mymusic.core.network.fake.FakeNetworkDataSource
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
@@ -23,6 +24,9 @@ class FakeNetworkDataSourceTest {
     }
 
     @Test
-    fun test() {}
+    fun test() = runTest(testDispatcher) {
+
+        subject.getRecommendations()
+    }
 
 }

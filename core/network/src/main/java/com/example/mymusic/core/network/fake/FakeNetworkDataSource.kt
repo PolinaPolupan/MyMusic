@@ -5,6 +5,7 @@ import com.example.mymusic.core.network.MyMusicNetworkDataSource
 import com.example.mymusic.core.network.R
 import com.example.network.model.PlaylistTrack
 import com.example.network.model.RecentlyPlayedTracksResponse
+import com.example.network.model.RecommendationsResponse
 import com.example.network.model.SavedAlbumsResponse
 import com.example.network.model.SavedPlaylistResponse
 import com.example.network.model.SpotifySimplifiedTrack
@@ -25,7 +26,8 @@ class FakeNetworkDataSource @Inject constructor(
             val inputStream = context.resources.openRawResource(R.raw.recommendations)
                 .bufferedReader().use { it.readText() }
 
-            Json.decodeFromString<List<SpotifyTrack>>(inputStream)
+            val response = Json.decodeFromString<RecommendationsResponse>(inputStream)
+            response.tracks
         }
 
     override suspend fun getRecentlyPlayed(before: String): RecentlyPlayedTracksResponse? {
