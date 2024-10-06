@@ -4,11 +4,14 @@ import com.example.mymusic.core.designsystem.util.artistsString
 import com.example.mymusic.core.model.Artist
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
 
 /**
  * [UtilsTest] tests utils functions tests
  */
+@RunWith(JUnit4::class)
 class UtilsTest {
 
     @Test
