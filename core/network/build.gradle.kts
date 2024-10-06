@@ -53,15 +53,17 @@ dependencies {
     implementation(project(":core:auth"))
     implementation(project(":core:database"))
     implementation(project(":core:common"))
-    //    implementation(project(":core:testing"))
     implementation(libs.androidx.core.ktx)
-    implementation("androidx.compose.runtime:runtime:${libs.versions.androidx.compose}")
+    implementation(libs.hilt.testing)
+    implementation(libs.androidx.compose.runtime)
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
 
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    androidTestImplementation(project(":core:testing"))
     androidTestImplementation(libs.androidx.junit.test.ext)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)

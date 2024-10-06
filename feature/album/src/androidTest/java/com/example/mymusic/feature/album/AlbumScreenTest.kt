@@ -13,16 +13,16 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.performScrollToNode
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.mymusic.core.designsystem.component.OneOf
 import com.example.mymusic.core.designsystem.component.PreviewParameterData
 import com.example.mymusic.core.designsystem.component.TracksListUiState
 import com.example.mymusic.core.designsystem.theme.MyMusicTheme
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+
+@HiltAndroidTest
 class AlbumScreenTest {
 
     @get:Rule
@@ -32,7 +32,7 @@ class AlbumScreenTest {
     fun placeholders_whenScreenIsLoading_exist() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.album.AlbumContent(
+                AlbumContent(
                     uiState = TracksListUiState.Loading,
                     onTrackClick = {},
                     onBackClick = {},
@@ -67,7 +67,7 @@ class AlbumScreenTest {
     fun tracks_whenScreenIsLoaded_existAndShowAlbumsTracks() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.album.AlbumContent(
+                AlbumContent(
                     uiState = TracksListUiState.Success(item = OneOf(album = PreviewParameterData.albums[0])),
                     onTrackClick = {},
                     onBackClick = {},
@@ -95,7 +95,7 @@ class AlbumScreenTest {
 
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.album.AlbumContent(
+                AlbumContent(
                     uiState = TracksListUiState.Success(item = OneOf(album = PreviewParameterData.albums[0])),
                     onTrackClick = {},
                     onBackClick = {},

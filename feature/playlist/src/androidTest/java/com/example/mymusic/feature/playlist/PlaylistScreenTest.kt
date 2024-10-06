@@ -13,16 +13,15 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.performScrollToNode
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.mymusic.core.designsystem.component.OneOf
 import com.example.mymusic.core.designsystem.component.PreviewParameterData
 import com.example.mymusic.core.designsystem.component.TracksListUiState
 import com.example.mymusic.core.designsystem.theme.MyMusicTheme
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class PlaylistScreenTest {
 
     @get:Rule
@@ -32,7 +31,7 @@ class PlaylistScreenTest {
     fun placeholders_whenScreenIsLoading_exist() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.playlist.PlaylistContent(
+                PlaylistContent(
                     uiState = TracksListUiState.Loading,
                     onTrackClick = {},
                     onSettingsClick = {},
@@ -67,7 +66,7 @@ class PlaylistScreenTest {
     fun tracks_whenScreenIsLoaded_existAndShowPlaylistsTracks() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.playlist.PlaylistContent(
+                PlaylistContent(
                     uiState = TracksListUiState.Success(item = OneOf(playlist = PreviewParameterData.playlists[0])),
                     onTrackClick = {},
                     onSettingsClick = {},
@@ -95,7 +94,7 @@ class PlaylistScreenTest {
 
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.playlist.PlaylistContent(
+                PlaylistContent(
                     uiState = TracksListUiState.Success(item = OneOf(playlist = PreviewParameterData.playlists[0])),
                     onTrackClick = {},
                     onSettingsClick = {},

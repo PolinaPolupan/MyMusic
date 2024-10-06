@@ -48,8 +48,8 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
+    implementation(libs.hilt.testing)
     implementation(project(":core:model"))
-
     implementation(project(":core:data"))
     implementation(project(":core:designsystem"))
 
@@ -58,8 +58,10 @@ dependencies {
 
     testImplementation(libs.junit)
 
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
     androidTestImplementation(libs.androidx.junit.test.ext)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(project(":core:testing"))
     kspAndroidTest(libs.hilt.compiler)
 }

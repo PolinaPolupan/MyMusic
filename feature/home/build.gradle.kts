@@ -54,22 +54,23 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.hilt.testing)
     implementation(project(":core:model"))
     implementation(project(":sync"))
-
     implementation(project(":core:data"))
     implementation(project(":core:designsystem"))
     implementation(project(":feature:account"))
-    //   implementation(project(":core:testing"))
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
 
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
     androidTestImplementation(libs.androidx.compose.runtime)
     androidTestImplementation(libs.androidx.junit.test.ext)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(project(":core:testing"))
     kspAndroidTest(libs.hilt.compiler)
 }

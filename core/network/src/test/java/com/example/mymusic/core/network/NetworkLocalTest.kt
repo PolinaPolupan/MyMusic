@@ -12,11 +12,14 @@ import com.example.network.model.toLocalSimplifiedTrack
 import com.example.network.model.toLocalTrack
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
 
 /**
  * [NetworkLocalTest] class tests data mappings from network to local models
  */
+@RunWith(JUnit4::class)
 class NetworkLocalTest {
 
     @Test

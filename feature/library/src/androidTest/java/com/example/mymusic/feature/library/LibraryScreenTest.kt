@@ -15,19 +15,18 @@ import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.performScrollToNode
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.mymusic.feature.home.AuthenticatedUiState
 import com.example.mymusic.core.designsystem.component.PreviewParameterData
 import com.example.mymusic.core.designsystem.component.SortOption
 import com.example.mymusic.core.designsystem.theme.MyMusicTheme
 import com.example.mymusic.core.model.SimplifiedAlbum
 import com.example.mymusic.core.model.SimplifiedPlaylist
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class LibraryScreenTest {
 
     @get:Rule
@@ -37,7 +36,7 @@ class LibraryScreenTest {
     fun placeholders_whenScreenIsLoading_exist() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.library.LibraryContent(
+                LibraryContent(
                     uiState = AuthenticatedUiState.Loading,
                     albums = flowOf(PagingData.from(emptyList<SimplifiedAlbum>())).collectAsLazyPagingItems(),
                     playlists = flowOf(PagingData.from(emptyList<SimplifiedPlaylist>())).collectAsLazyPagingItems(),
@@ -62,7 +61,7 @@ class LibraryScreenTest {
     fun albums_whenScreenIsLoaded_existAndShowUsersAlbums() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.library.LibraryContent(
+                LibraryContent(
                     uiState = AuthenticatedUiState.Success(""),
                     albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
                     playlists = flowOf(PagingData.from(emptyList<SimplifiedPlaylist>())).collectAsLazyPagingItems(),
@@ -92,7 +91,7 @@ class LibraryScreenTest {
     fun playlists_whenScreenIsLoaded_existAndShowUsersPlaylists() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.library.LibraryContent(
+                LibraryContent(
                     uiState = AuthenticatedUiState.Success(""),
                     albums = flowOf(PagingData.from(emptyList<SimplifiedAlbum>())).collectAsLazyPagingItems(),
                     playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),
@@ -125,7 +124,7 @@ class LibraryScreenTest {
 
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.library.LibraryContent(
+                LibraryContent(
                     uiState = AuthenticatedUiState.Success(""),
                     albums = flowOf(PagingData.from(PreviewParameterData.simplifiedAlbums)).collectAsLazyPagingItems(),
                     playlists = flowOf(PagingData.from(PreviewParameterData.simplifiedPlaylists)).collectAsLazyPagingItems(),

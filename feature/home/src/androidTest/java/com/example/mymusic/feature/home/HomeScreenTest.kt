@@ -8,16 +8,16 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollToIndex
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.mymusic.core.designsystem.component.PreviewParameterData
 import com.example.mymusic.core.designsystem.theme.MyMusicTheme
 import com.example.mymusic.core.model.Track
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+
+@HiltAndroidTest
 class HomeScreenTest {
 
     @get:Rule
@@ -27,9 +27,9 @@ class HomeScreenTest {
     fun placeholders_whenScreenIsLoading_exist() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.home.HomeContent(
-                    uiState = com.example.mymusic.feature.home.HomeUiState.Loading,
-                    authenticatedUiState = com.example.mymusic.feature.home.AuthenticatedUiState.Loading,
+                HomeContent(
+                    uiState = HomeUiState.Loading,
+                    authenticatedUiState = AuthenticatedUiState.Loading,
                     onTrackClick = {},
                     recentlyPlayed = flowOf(PagingData.from(emptyList<Track>())).collectAsLazyPagingItems()
                 )
@@ -53,9 +53,9 @@ class HomeScreenTest {
     fun blurredImageHeader_whenScreenIsLoaded_existsAndShowsCorrectImage() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.home.HomeContent(
-                    uiState = com.example.mymusic.feature.home.HomeUiState.Success(topPicks = PreviewParameterData.tracks),
-                    authenticatedUiState = com.example.mymusic.feature.home.AuthenticatedUiState.Success(
+                HomeContent(
+                    uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
+                    authenticatedUiState = AuthenticatedUiState.Success(
                         ""
                     ),
                     onTrackClick = {},
@@ -80,9 +80,9 @@ class HomeScreenTest {
     fun topPicks_whenScreenIsLoaded_existsAndShowsRecommendations() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.home.HomeContent(
-                    uiState = com.example.mymusic.feature.home.HomeUiState.Success(topPicks = PreviewParameterData.tracks),
-                    authenticatedUiState = com.example.mymusic.feature.home.AuthenticatedUiState.Success(
+                HomeContent(
+                    uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
+                    authenticatedUiState = AuthenticatedUiState.Success(
                         ""
                     ),
                     onTrackClick = {},
@@ -127,9 +127,9 @@ class HomeScreenTest {
     fun recentlyPlayed_whenScreenIsLoaded_existsAndShowsTracks() {
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.home.HomeContent(
-                    uiState = com.example.mymusic.feature.home.HomeUiState.Success(topPicks = emptyList()),
-                    authenticatedUiState = com.example.mymusic.feature.home.AuthenticatedUiState.Success(
+                HomeContent(
+                    uiState = HomeUiState.Success(topPicks = emptyList()),
+                    authenticatedUiState = AuthenticatedUiState.Success(
                         ""
                     ),
                     onTrackClick = {},
@@ -164,9 +164,9 @@ class HomeScreenTest {
 
         composeTestRule.setContent {
             MyMusicTheme {
-                com.example.mymusic.feature.home.HomeContent(
-                    uiState = com.example.mymusic.feature.home.HomeUiState.Success(topPicks = PreviewParameterData.tracks),
-                    authenticatedUiState = com.example.mymusic.feature.home.AuthenticatedUiState.Success(
+                HomeContent(
+                    uiState = HomeUiState.Success(topPicks = PreviewParameterData.tracks),
+                    authenticatedUiState = AuthenticatedUiState.Success(
                         ""
                     ),
                     onTrackClick = {},

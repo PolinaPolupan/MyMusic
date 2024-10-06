@@ -1,14 +1,13 @@
 package com.example.mymusic.core.network
 
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.mymusic.core.network.fake.FakeNetworkDataSource
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.StandardTestDispatcher
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class FakeNetworkDataSourceTest {
 
     private lateinit var subject: FakeNetworkDataSource
