@@ -1,6 +1,10 @@
-package com.example.network.model
+package com.example.mymusic.core.network.model
 
 import com.example.database.model.entities.LocalRecentlyPlayed
+import com.example.network.model.Context
+import com.example.network.model.Cursors
+import com.example.network.model.SpotifyTrack
+import com.example.network.model.toLocalTrack
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -8,7 +12,7 @@ import kotlinx.serialization.Serializable
 data class SpotifyPlayHistoryObject(
     val track: SpotifyTrack,
     @SerialName("played_at") val playedAt: String?,
-    val context: Context
+    val context: Context?
 )
 
 @Serializable
