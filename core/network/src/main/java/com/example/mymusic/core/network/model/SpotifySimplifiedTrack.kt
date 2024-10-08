@@ -19,7 +19,7 @@ data class SpotifySimplifiedTrack(
     val href: String,
     val id: String,
     @SerialName("is_playable")
-    val isPlayable: Boolean,
+    val isPlayable: Boolean? = null,
     @SerialName("linked_from")
     val linkedFrom: LinkedFrom? = null,
     val restrictions: Restrictions? = null,
