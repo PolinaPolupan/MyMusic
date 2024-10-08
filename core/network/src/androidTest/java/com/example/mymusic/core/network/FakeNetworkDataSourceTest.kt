@@ -10,6 +10,7 @@ import com.example.network.model.SpotifyAlbum
 import com.example.network.model.SpotifyArtist
 import com.example.network.model.SpotifyImage
 import com.example.network.model.SpotifySimplifiedArtist
+import com.example.network.model.SpotifySimplifiedTrack
 import com.example.network.model.SpotifyTrack
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -215,6 +216,45 @@ class FakeNetworkDataSourceTest {
                 context = null
             ),
             recentlyPlayed?.items?.first()
+        )
+    }
+
+    @Test
+    fun networkDataSource_deserializationOfAlbumTracks_deserializesCorrectly() = runTest(testDispatcher) {
+
+        val albumTracks = networkDataSource.getAlbumTracks("")
+
+        assertEquals(
+            SpotifySimplifiedTrack(
+                artists = listOf(
+                    SpotifySimplifiedArtist(
+                        externalUrls = ExternalUrls(
+                            spotify = "https://open.spotify.com/artist/1hzfo8twXdOegF3xireCYs"
+                        ),
+                        href = "https://api.spotify.com/v1/artists/1hzfo8twXdOegF3xireCYs",
+                        id = "1hzfo8twXdOegF3xireCYs",
+                        name = "Milky Chance",
+                        type = "artist",
+                        uri =  "spotify:artist:1hzfo8twXdOegF3xireCYs"
+                    )
+                ),
+                availableMarkets = listOf("AR"),
+                discNumber = 1,
+                durationMs = 313684,
+                explicit = false,
+                externalUrls = ExternalUrls(
+                    spotify = "https://open.spotify.com/track/34xGLuxM0rkxhCVyMSqwJO"
+                ),
+                href = "https://api.spotify.com/v1/tracks/34xGLuxM0rkxhCVyMSqwJO",
+                id = "34xGLuxM0rkxhCVyMSqwJO",
+                isLocal = false,
+                name = "Stolen Dance",
+                previewUrl = "https://p.scdn.co/mp3-preview/a5a49157caae8d8fbb5c82b70a6244a9ec828562?cid=cfe923b2d660439caf2b557b21f31221",
+                trackNumber = 11,
+                type = "track",
+                uri = "spotify:track:34xGLuxM0rkxhCVyMSqwJO"
+            ),
+            albumTracks.get(10)
         )
     }
 }
