@@ -24,12 +24,12 @@ data class SpotifyImage(
 
 @Serializable
 data class Restrictions(
-    val reasons: String
+    val reason: String
 )
 
 @Serializable
 data class ExternalIds(
-    val isrc: String,
+    val isrc: String? = null,
     val ean: String? = null,
     val upc: String? = null
 )

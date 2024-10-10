@@ -44,7 +44,7 @@ data class SpotifyAlbumExtended(
     val uri: String,
     val artists: List<SpotifySimplifiedArtist>,
     val tracks: SpotifyAlbumTracks,
-    val copyrights: Copyright,
+    val copyrights: List<Copyright>,
     @SerialName("external_ids")
     val externalIds: ExternalIds,
     val genres: List<String>,

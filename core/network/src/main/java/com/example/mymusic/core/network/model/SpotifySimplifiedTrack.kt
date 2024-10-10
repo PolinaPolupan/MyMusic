@@ -25,7 +25,7 @@ data class SpotifySimplifiedTrack(
     val restrictions: Restrictions? = null,
     val name: String,
     @SerialName("preview_url")
-    val previewUrl: String?,
+    val previewUrl: String? = null,
     @SerialName("track_number")
     val trackNumber: Int,
     val type: String,
