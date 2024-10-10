@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 data class SavedAlbum(
     @SerialName("added_at")
     val addedAt: String,
-    val album: SpotifyAlbum
+    val album: SpotifyAlbumExtended
 )
 
 @Serializable
