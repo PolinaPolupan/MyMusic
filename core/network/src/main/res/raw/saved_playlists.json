@@ -1,0 +1,430 @@
+{
+  "href": "https://api.spotify.com/v1/users/ezs5m6sxmb82qowlqsdai2bmc/playlists?offset=0&limit=50&locale=en-US,en;q%3D0.5",
+  "limit": 50,
+  "next": null,
+  "offset": 0,
+  "previous": null,
+  "total": 11,
+  "items": [
+    {
+      "collaborative": false,
+      "description": "All the songs with more than 1 BILLION streams on Spotify. Wrecking Ball, you're up next 👀 !  Cover: Mark Ronson & Miley Cyrus",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1DX7iB3RCnBnN4"
+      },
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DX7iB3RCnBnN4",
+      "id": "37i9dQZF1DX7iB3RCnBnN4",
+      "images": [
+        {
+          "height": null,
+          "url": "https://i.scdn.co/image/ab67706f000000028ed8f953b0402422623ad3ca",
+          "width": null
+        }
+      ],
+      "name": "BILLIONS CLUB",
+      "owner": {
+        "display_name": "Spotify",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "type": "user",
+        "uri": "spotify:user:spotify"
+      },
+      "primary_color": "#ffffff",
+      "public": true,
+      "snapshot_id": "ZwbZzgAAAAC4uv5SjRXdla+m7JOnCMlJ",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DX7iB3RCnBnN4/tracks",
+        "total": 762
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:37i9dQZF1DX7iB3RCnBnN4"
+    },
+    {
+      "collaborative": false,
+      "description": "A few of the many great songs from the past 10 years in a playlist tuned for you.",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1DXaMu9xyX1HzK"
+      },
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DXaMu9xyX1HzK",
+      "id": "37i9dQZF1DXaMu9xyX1HzK",
+      "images": [
+        {
+          "height": null,
+          "url": "https://i.scdn.co/image/ab67706f00000002ba77a2166a7b66e9a300ffaa",
+          "width": null
+        }
+      ],
+      "name": "Best of the Decade For You",
+      "owner": {
+        "display_name": "Spotify",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "type": "user",
+        "uri": "spotify:user:spotify"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "ZIxUBgAAAAC5u5A9070fVobImBsfemPW",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DXaMu9xyX1HzK/tracks",
+        "total": 100
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:37i9dQZF1DXaMu9xyX1HzK"
+    },
+    {
+      "collaborative": false,
+      "description": "Playlist created by the tutorial on developer.spotify.com",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/66mDstPtgRQoDPvcBwUokA"
+      },
+      "href": "https://api.spotify.com/v1/playlists/66mDstPtgRQoDPvcBwUokA",
+      "id": "66mDstPtgRQoDPvcBwUokA",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d00001e02712701c5e263efc8726b1464ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02bfd46639322b597331d9ecefab67616d00001e02dfc2f59568272de50a257f2f",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d00001e02712701c5e263efc8726b1464ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02bfd46639322b597331d9ecefab67616d00001e02dfc2f59568272de50a257f2f",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d00001e02712701c5e263efc8726b1464ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02bfd46639322b597331d9ecefab67616d00001e02dfc2f59568272de50a257f2f",
+          "width": 60
+        }
+      ],
+      "name": "My recommendation playlist",
+      "owner": {
+        "display_name": "Polina Polupan",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/ezs5m6sxmb82qowlqsdai2bmc"
+        },
+        "href": "https://api.spotify.com/v1/users/ezs5m6sxmb82qowlqsdai2bmc",
+        "id": "ezs5m6sxmb82qowlqsdai2bmc",
+        "type": "user",
+        "uri": "spotify:user:ezs5m6sxmb82qowlqsdai2bmc"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "AAAAAq/MirAxfyl2GGYpoHBTlEujZ9er",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/66mDstPtgRQoDPvcBwUokA/tracks",
+        "total": 10
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:66mDstPtgRQoDPvcBwUokA"
+    },
+    {
+      "collaborative": false,
+      "description": "Playlist created by the tutorial on developer.spotify.com",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/5wtuoO5ZsNT5ySbuPD5CRc"
+      },
+      "href": "https://api.spotify.com/v1/playlists/5wtuoO5ZsNT5ySbuPD5CRc",
+      "id": "5wtuoO5ZsNT5ySbuPD5CRc",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d00001e025d29fc4c51a450bd32135de1ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02b3be3b970fc89a02f301c9daab67616d00001e02bfd46639322b597331d9ecef",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d00001e025d29fc4c51a450bd32135de1ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02b3be3b970fc89a02f301c9daab67616d00001e02bfd46639322b597331d9ecef",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d00001e025d29fc4c51a450bd32135de1ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02b3be3b970fc89a02f301c9daab67616d00001e02bfd46639322b597331d9ecef",
+          "width": 60
+        }
+      ],
+      "name": "My recommendation playlist",
+      "owner": {
+        "display_name": "Polina Polupan",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/ezs5m6sxmb82qowlqsdai2bmc"
+        },
+        "href": "https://api.spotify.com/v1/users/ezs5m6sxmb82qowlqsdai2bmc",
+        "id": "ezs5m6sxmb82qowlqsdai2bmc",
+        "type": "user",
+        "uri": "spotify:user:ezs5m6sxmb82qowlqsdai2bmc"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "AAAAAnNbIl4VFjeal594CUgSabAnIykR",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/5wtuoO5ZsNT5ySbuPD5CRc/tracks",
+        "total": 10
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:5wtuoO5ZsNT5ySbuPD5CRc"
+    },
+    {
+      "collaborative": false,
+      "description": "Playlist created by the tutorial on developer.spotify.com",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/6MSKHpsAlEAwz6USSHvXRh"
+      },
+      "href": "https://api.spotify.com/v1/playlists/6MSKHpsAlEAwz6USSHvXRh",
+      "id": "6MSKHpsAlEAwz6USSHvXRh",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d00001e02a200f972bd8b1f9cb76da8c2ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02bfd46639322b597331d9ecefab67616d00001e02f062321ad9046a2a99c6bac8",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d00001e02a200f972bd8b1f9cb76da8c2ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02bfd46639322b597331d9ecefab67616d00001e02f062321ad9046a2a99c6bac8",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d00001e02a200f972bd8b1f9cb76da8c2ab67616d00001e02b340b496cb7c38d727ff40beab67616d00001e02bfd46639322b597331d9ecefab67616d00001e02f062321ad9046a2a99c6bac8",
+          "width": 60
+        }
+      ],
+      "name": "My recommendation playlist",
+      "owner": {
+        "display_name": "Polina Polupan",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/ezs5m6sxmb82qowlqsdai2bmc"
+        },
+        "href": "https://api.spotify.com/v1/users/ezs5m6sxmb82qowlqsdai2bmc",
+        "id": "ezs5m6sxmb82qowlqsdai2bmc",
+        "type": "user",
+        "uri": "spotify:user:ezs5m6sxmb82qowlqsdai2bmc"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "AAAAA2shvYVmdjE2YlT7Not//sKc72RW",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/6MSKHpsAlEAwz6USSHvXRh/tracks",
+        "total": 10
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:6MSKHpsAlEAwz6USSHvXRh"
+    },
+    {
+      "collaborative": false,
+      "description": "Spotify Wrapped presents the songs that you loved most this year.",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1EUMDoJuT8yJsl"
+      },
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EUMDoJuT8yJsl",
+      "id": "37i9dQZF1EUMDoJuT8yJsl",
+      "images": [
+        {
+          "height": null,
+          "url": "https://lineup-images.scdn.co/wrapped-2021-top100_DEFAULT-en.jpg",
+          "width": null
+        }
+      ],
+      "name": "Your Top Songs 2021",
+      "owner": {
+        "display_name": "Spotify",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "type": "user",
+        "uri": "spotify:user:spotify"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "AAAAAAAAAAB0hSRpNcobWjzkoDXYFp2y",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EUMDoJuT8yJsl/tracks",
+        "total": 100
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:37i9dQZF1EUMDoJuT8yJsl"
+    },
+    {
+      "collaborative": false,
+      "description": "Double-jump into these legendary video game soundtracks, featuring old favorites and new classics.",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1DXdfOcg1fm0VG"
+      },
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DXdfOcg1fm0VG",
+      "id": "37i9dQZF1DXdfOcg1fm0VG",
+      "images": [
+        {
+          "height": null,
+          "url": "https://i.scdn.co/image/ab67706f00000002c94fd5639e1bd451f55b103c",
+          "width": null
+        }
+      ],
+      "name": "Video Game Soundtracks",
+      "owner": {
+        "display_name": "Spotify",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "type": "user",
+        "uri": "spotify:user:spotify"
+      },
+      "primary_color": "#ffffff",
+      "public": true,
+      "snapshot_id": "ZwP0qQAAAADvN68RbvsP8O/7XFA3bLlk",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DXdfOcg1fm0VG/tracks",
+        "total": 137
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:37i9dQZF1DXdfOcg1fm0VG"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/3GCiIkK1qDZwyZaGXHAeep"
+      },
+      "href": "https://api.spotify.com/v1/playlists/3GCiIkK1qDZwyZaGXHAeep",
+      "id": "3GCiIkK1qDZwyZaGXHAeep",
+      "images": null,
+      "name": "Мой плейлист № 2",
+      "owner": {
+        "display_name": "Polina Polupan",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/ezs5m6sxmb82qowlqsdai2bmc"
+        },
+        "href": "https://api.spotify.com/v1/users/ezs5m6sxmb82qowlqsdai2bmc",
+        "id": "ezs5m6sxmb82qowlqsdai2bmc",
+        "type": "user",
+        "uri": "spotify:user:ezs5m6sxmb82qowlqsdai2bmc"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "AAAAATcxqbKKOPfff2JoEXHZ6VmjHRWk",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/3GCiIkK1qDZwyZaGXHAeep/tracks",
+        "total": 0
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:3GCiIkK1qDZwyZaGXHAeep"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/6teYBx90Fv9CFCxlqqYcZz"
+      },
+      "href": "https://api.spotify.com/v1/playlists/6teYBx90Fv9CFCxlqqYcZz",
+      "id": "6teYBx90Fv9CFCxlqqYcZz",
+      "images": [
+        {
+          "height": null,
+          "url": "https://i.scdn.co/image/ab67616d00001e02536f3b6f6b46e6e97742673b",
+          "width": null
+        }
+      ],
+      "name": "Музыка",
+      "owner": {
+        "display_name": "Polina Polupan",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/ezs5m6sxmb82qowlqsdai2bmc"
+        },
+        "href": "https://api.spotify.com/v1/users/ezs5m6sxmb82qowlqsdai2bmc",
+        "id": "ezs5m6sxmb82qowlqsdai2bmc",
+        "type": "user",
+        "uri": "spotify:user:ezs5m6sxmb82qowlqsdai2bmc"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "AAAAAuFT07PQcn5eE3BHAlwOUWxWUstV",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/6teYBx90Fv9CFCxlqqYcZz/tracks",
+        "total": 1
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:6teYBx90Fv9CFCxlqqYcZz"
+    },
+    {
+      "collaborative": false,
+      "description": "May the Force be with you. Listen to all the best Star Wars tracks, all in one place. ",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1DXaUaRhCgtpCo"
+      },
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DXaUaRhCgtpCo",
+      "id": "37i9dQZF1DXaUaRhCgtpCo",
+      "images": [
+        {
+          "height": null,
+          "url": "https://i.scdn.co/image/ab67706f0000000265235f254adb83b20720ca8b",
+          "width": null
+        }
+      ],
+      "name": "Best of Star Wars",
+      "owner": {
+        "display_name": "Spotify",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "type": "user",
+        "uri": "spotify:user:spotify"
+      },
+      "primary_color": "#ffffff",
+      "public": true,
+      "snapshot_id": "ZvczwAAAAABDidaXFTZf21Tx4c0jSrl3",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DXaUaRhCgtpCo/tracks",
+        "total": 143
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:37i9dQZF1DXaUaRhCgtpCo"
+    },
+    {
+      "collaborative": false,
+      "description": "Timeless, unforgettable melodies from the movies.",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1DX1tz6EDao8it"
+      },
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DX1tz6EDao8it",
+      "id": "37i9dQZF1DX1tz6EDao8it",
+      "images": [
+        {
+          "height": null,
+          "url": "https://i.scdn.co/image/ab67706f000000026319ff8355868a79d6bcf74a",
+          "width": null
+        }
+      ],
+      "name": "Iconic Soundtracks",
+      "owner": {
+        "display_name": "Spotify",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "type": "user",
+        "uri": "spotify:user:spotify"
+      },
+      "primary_color": "#ffffff",
+      "public": true,
+      "snapshot_id": "Zva7JwAAAACy+kOVToKtR/aCqcZerr5q",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1DX1tz6EDao8it/tracks",
+        "total": 129
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:37i9dQZF1DX1tz6EDao8it"
+    }
+  ]
+}

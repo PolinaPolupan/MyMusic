@@ -58,9 +58,13 @@ class FakeNetworkDataSource @Inject constructor(
            Json.decodeFromString<SavedAlbumsResponse?>(inputStream)
         }
 
-    override suspend fun getSavedPlaylists(offset: Int, limit: Int): SavedPlaylistResponse? {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getSavedPlaylists(offset: Int, limit: Int): SavedPlaylistResponse? =
+        withContext(dispatcher) {
+            val inputStream = context.resources.openRawResource(R.raw.saved_playlists)
+                .bufferedReader().use { it.readText() }
+
+            Json.decodeFromString<SavedPlaylistResponse?>(inputStream)
+        }
 
     override suspend fun getPlaylistTracks(id: String, fields: String): List<PlaylistTrack> {
         TODO("Not yet implemented")

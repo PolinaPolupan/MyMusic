@@ -8,14 +8,18 @@ import com.example.network.model.Copyright
 import com.example.network.model.ExternalIds
 import com.example.network.model.ExternalUrls
 import com.example.network.model.SavedAlbum
+import com.example.network.model.SavedPlaylistResponse
 import com.example.network.model.SpotifyAlbum
 import com.example.network.model.SpotifyAlbumExtended
 import com.example.network.model.SpotifyAlbumTracks
 import com.example.network.model.SpotifyArtist
 import com.example.network.model.SpotifyImage
+import com.example.network.model.SpotifyOwner
 import com.example.network.model.SpotifySimplifiedArtist
+import com.example.network.model.SpotifySimplifiedPlaylist
 import com.example.network.model.SpotifySimplifiedTrack
 import com.example.network.model.SpotifyTrack
+import com.example.network.model.SpotifyTracks
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -386,5 +390,60 @@ class FakeNetworkDataSourceTest {
         )
 
         assertEquals(album.album.tracks.items[1], savedAlbums?.items?.get(0)?.album?.tracks?.items?.get(1))
+    }
+
+    @Test
+    fun networkDataSource_deserializationOfSavedPlaylists_deserializesCorrectly() = runTest(testDispatcher) {
+
+        val savedPlaylists = networkDataSource.getSavedPlaylists(0, 0)
+
+        val response = SavedPlaylistResponse(
+            href = "https://api.spotify.com/v1/users/ezs5m6sxmb82qowlqsdai2bmc/playlists?offset=0&limit=50&locale=en-US,en;q%3D0.5",
+            limit = 50,
+            next = null,
+            offset = 0,
+            previous = null,
+            total = 11,
+            items = listOf(
+                SpotifySimplifiedPlaylist(
+                    collaborative = false,
+                    description = "All the songs with more than 1 BILLION streams on Spotify. Wrecking Ball, you're up next \uD83D\uDC40 !  Cover: Mark Ronson & Miley Cyrus",
+                    externalUrls = ExternalUrls(
+                        spotify = "https://open.spotify.com/playlist/37i9dQZF1DX7iB3RCnBnN4"
+                    ),
+                    href = "https://api.spotify.com/v1/playlists/37i9dQZF1DX7iB3RCnBnN4",
+                    id = "37i9dQZF1DX7iB3RCnBnN4",
+                    images = listOf(
+                        SpotifyImage(
+                            height = null,
+                            url = "https://i.scdn.co/image/ab67706f000000028ed8f953b0402422623ad3ca",
+                            width = null
+                        )
+                    ),
+                    name = "BILLIONS CLUB",
+                    owner = SpotifyOwner(
+                        displayName = "Spotify",
+                        externalUrls = ExternalUrls(
+                            spotify = "https://open.spotify.com/user/spotify"
+                        ),
+                        href = "https://api.spotify.com/v1/users/spotify",
+                        id = "spotify",
+                        type = "user",
+                        uri = "spotify:user:spotify"
+                    ),
+                    public = true,
+                    snapshotId = "ZwbZzgAAAAC4uv5SjRXdla+m7JOnCMlJ",
+                    tracks = SpotifyTracks(
+                        href = "https://api.spotify.com/v1/playlists/37i9dQZF1DX7iB3RCnBnN4/tracks",
+                        total = 762
+                    ),
+                    type = "playlist",
+                    uri = "spotify:playlist:37i9dQZF1DX7iB3RCnBnN4",
+                    primaryColor = "#ffffff"
+                )
+            )
+        )
+
+        assertEquals(response.items.get(0), savedPlaylists?.items?.get(0))
     }
 }
