@@ -84,7 +84,7 @@ data class SpotifyOwner(
     val id: String,
     val type: String,
     val uri: String,
-    @ColumnInfo("display_name")
+    @SerialName("display_name")
     val displayName: String?
 )
 

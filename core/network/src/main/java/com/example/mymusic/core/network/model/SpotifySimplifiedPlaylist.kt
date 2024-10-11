@@ -21,7 +21,9 @@ data class SpotifySimplifiedPlaylist(
     val snapshotId: String?,
     val tracks: SpotifyTracks,
     val type: String,
-    val uri: String
+    val uri: String,
+    @SerialName("primary_color")
+    val primaryColor: String?
 )
 
 @JvmName("SpotifySimplifiedPlaylistToLocalPlaylist")
