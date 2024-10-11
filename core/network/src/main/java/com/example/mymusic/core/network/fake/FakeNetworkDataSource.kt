@@ -50,9 +50,13 @@ class FakeNetworkDataSource @Inject constructor(
             response.items
         }
 
-    override suspend fun getSavedAlbums(offset: Int, limit: Int): SavedAlbumsResponse? {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getSavedAlbums(offset: Int, limit: Int): SavedAlbumsResponse? =
+        withContext(dispatcher) {
+            val inputStream = context.resources.openRawResource(R.raw.saved_albums)
+                .bufferedReader().use { it.readText() }
+
+           Json.decodeFromString<SavedAlbumsResponse?>(inputStream)
+        }
 
     override suspend fun getSavedPlaylists(offset: Int, limit: Int): SavedPlaylistResponse? {
         TODO("Not yet implemented")

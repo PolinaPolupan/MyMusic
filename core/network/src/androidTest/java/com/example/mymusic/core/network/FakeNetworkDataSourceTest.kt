@@ -4,9 +4,13 @@ import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import com.example.mymusic.core.network.fake.FakeNetworkDataSource
 import com.example.mymusic.core.network.model.SpotifyPlayHistoryObject
+import com.example.network.model.Copyright
 import com.example.network.model.ExternalIds
 import com.example.network.model.ExternalUrls
+import com.example.network.model.SavedAlbum
 import com.example.network.model.SpotifyAlbum
+import com.example.network.model.SpotifyAlbumExtended
+import com.example.network.model.SpotifyAlbumTracks
 import com.example.network.model.SpotifyArtist
 import com.example.network.model.SpotifyImage
 import com.example.network.model.SpotifySimplifiedArtist
@@ -256,5 +260,131 @@ class FakeNetworkDataSourceTest {
             ),
             albumTracks.get(10)
         )
+    }
+
+    @Test
+    fun networkDataSource_deserializationOfSavedAlbums_deserializesCorrectly() = runTest(testDispatcher) {
+
+        val savedAlbums = networkDataSource.getSavedAlbums(0, 0)
+
+        val albumExternalUrl = ExternalUrls(spotify = "https://open.spotify.com/album/6nxDQi0FeEwccEPJeNySoS")
+        val artistExternalUrl = ExternalUrls(spotify = "https://open.spotify.com/artist/53XhwfbYqKCa1cC15pYq2q")
+
+        // Create SpotifyImage objects
+        val images = listOf(
+            SpotifyImage(url = "https://i.scdn.co/image/ab67616d0000b273407bd04707c463bbb3410737", height = 640, width = 640),
+            SpotifyImage(url = "https://i.scdn.co/image/ab67616d00001e02407bd04707c463bbb3410737", height = 300, width = 300),
+            SpotifyImage(url = "https://i.scdn.co/image/ab67616d00004851407bd04707c463bbb3410737", height = 64, width = 64)
+        )
+
+        // Create SpotifySimplifiedArtist object
+        val artist = SpotifySimplifiedArtist(
+            externalUrls = artistExternalUrl,
+            href = "https://api.spotify.com/v1/artists/53XhwfbYqKCa1cC15pYq2q",
+            id = "53XhwfbYqKCa1cC15pYq2q",
+            name = "Imagine Dragons",
+            type = "artist",
+            uri = "spotify:artist:53XhwfbYqKCa1cC15pYq2q"
+        )
+
+        // Create SpotifySimplifiedTrack objects
+        val tracks = listOf(
+            SpotifySimplifiedTrack(
+                artists = listOf(artist),
+                availableMarkets = listOf("AR"),
+                discNumber = 1,
+                durationMs = 186813,
+                explicit = false,
+                externalUrls = ExternalUrls(spotify = "https://open.spotify.com/track/62yJjFtgkhUrXktIoSjgP2"),
+                href = "https://api.spotify.com/v1/tracks/62yJjFtgkhUrXktIoSjgP2",
+                id = "62yJjFtgkhUrXktIoSjgP2",
+                name = "Radioactive",
+                trackNumber = 1,
+                type = "track",
+                uri = "spotify:track:62yJjFtgkhUrXktIoSjgP2",
+                isLocal = false
+            ),
+            SpotifySimplifiedTrack(
+                artists = listOf(artist),
+                availableMarkets = listOf("AR"),
+                discNumber = 1,
+                durationMs = 241426,
+                explicit = false,
+                externalUrls = ExternalUrls(spotify = "https://open.spotify.com/track/5gXdinVZqeuDIVxogWzRk0"),
+                href = "https://api.spotify.com/v1/tracks/5gXdinVZqeuDIVxogWzRk0",
+                id = "5gXdinVZqeuDIVxogWzRk0",
+                name = "Amsterdam",
+                trackNumber = 6,
+                type = "track",
+                uri = "spotify:track:5gXdinVZqeuDIVxogWzRk0",
+                isLocal = false
+            ),
+            SpotifySimplifiedTrack(
+                artists = listOf(artist),
+                availableMarkets = listOf("AR"),
+                discNumber = 1,
+                durationMs = 235386,
+                explicit = false,
+                externalUrls = ExternalUrls(spotify = "https://open.spotify.com/track/2OgOgEBfiZEj2XlIY2XD7f"),
+                href = "https://api.spotify.com/v1/tracks/2OgOgEBfiZEj2XlIY2XD7f",
+                id = "2OgOgEBfiZEj2XlIY2XD7f",
+                name = "Hear Me",
+                trackNumber = 7,
+                type = "track",
+                uri = "spotify:track:2OgOgEBfiZEj2XlIY2XD7f",
+                isLocal = false
+            )
+        )
+
+        // Create SpotifyAlbumTracks object
+        val albumTracks = SpotifyAlbumTracks(
+            href = "https://api.spotify.com/v1/albums/6nxDQi0FeEwccEPJeNySoS/tracks?offset=0&limit=50&locale=en-US,en%3Bq%3D0.5",
+            limit = 50,
+            next = null,
+            offset = 0,
+            previous = null,
+            total = 14,
+            items = tracks
+        )
+
+        // Create Copyright objects
+        val copyrights = listOf(
+            Copyright(text = "© 2013 KIDinaKORNER/Interscope Records", type = "C"),
+            Copyright(text = "℗ 2013 KIDinaKORNER/Interscope Records", type = "P")
+        )
+
+        // Create ExternalIds object
+        val externalIds = ExternalIds(upc = "00602537315741")
+
+        // Create SpotifyAlbumExtended object
+        val spotifyAlbumExtended = SpotifyAlbumExtended(
+            albumType = "album",
+            totalTracks = 14,
+            availableMarkets = listOf("AR"),
+            externalUrls = albumExternalUrl,
+            href = "https://api.spotify.com/v1/albums/6nxDQi0FeEwccEPJeNySoS?locale=en-US%2Cen%3Bq%3D0.5",
+            id = "6nxDQi0FeEwccEPJeNySoS",
+            images = images,
+            name = "Night Visions",
+            releaseDate = "2012-09-04",
+            releaseDatePrecision = "day",
+            type = "album",
+            uri = "spotify:album:6nxDQi0FeEwccEPJeNySoS",
+            artists = listOf(artist),
+            tracks = albumTracks,
+            copyrights = copyrights,
+            externalIds = externalIds,
+            genres = listOf(),
+            label = "Kid Ina Korner / Interscope",
+            popularity = 84
+        )
+
+        // Create SavedAlbum object
+        val album = SavedAlbum(
+            addedAt = "2024-03-21T17:07:05Z",
+            album = spotifyAlbumExtended
+        )
+
+        assertEquals(album.album.tracks.items[1], savedAlbums?.items?.get(0)?.album?.tracks?.items?.get(1))
     }
 }
