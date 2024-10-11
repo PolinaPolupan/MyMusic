@@ -190,7 +190,8 @@ class NetworkLocalTest {
             snapshotId = null,
             tracks = com.example.network.model.SpotifyTracks("", 0),
             type = "playlist",
-            uri = ""
+            uri = "",
+            primaryColor = null
         )
         val local = networkPlaylist.toLocal()
 
