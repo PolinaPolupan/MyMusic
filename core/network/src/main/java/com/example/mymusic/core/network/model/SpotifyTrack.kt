@@ -37,7 +37,9 @@ data class SpotifyTrack(
     val type: String,
     val uri: String,
     @SerialName("is_local")
-    val isLocal: Boolean
+    val isLocal: Boolean,
+    val episode: Boolean? = null,
+    val track: Boolean? = null
 )
 
 @JvmName("SpotifyTrackToLocalTrackConversion")

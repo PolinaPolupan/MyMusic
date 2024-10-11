@@ -14,6 +14,11 @@ data class AddedBy(
     val uri: String
 )
 
+@Serializable
+data class VideoThumbnail(
+    val url: String?
+)
+
 /*TODO: What if there is a podcast in the response*/
 @Serializable
 data class PlaylistTrack(
@@ -23,7 +28,11 @@ data class PlaylistTrack(
     val addedBy: AddedBy,
     @SerialName("is_local")
     val isLocal: Boolean,
-    val track: SpotifyTrack
+    val track: SpotifyTrack,
+    @SerialName("primary_color")
+    val primaryColor: String?,
+    @SerialName("video_thumbnail")
+    val videoThumbnail: VideoThumbnail
 )
 
 @Serializable
