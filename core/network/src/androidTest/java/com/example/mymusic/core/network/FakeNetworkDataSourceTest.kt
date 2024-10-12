@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import com.example.mymusic.core.network.fake.FakeNetworkDataSource
 import com.example.mymusic.core.network.model.SpotifyPlayHistoryObject
+import com.example.network.model.AddedBy
 import com.example.network.model.Copyright
 import com.example.network.model.ExternalIds
 import com.example.network.model.ExternalUrls
+import com.example.network.model.PlaylistTrack
 import com.example.network.model.SavedAlbum
 import com.example.network.model.SavedPlaylistResponse
 import com.example.network.model.SpotifyAlbum
@@ -20,6 +22,7 @@ import com.example.network.model.SpotifySimplifiedPlaylist
 import com.example.network.model.SpotifySimplifiedTrack
 import com.example.network.model.SpotifyTrack
 import com.example.network.model.SpotifyTracks
+import com.example.network.model.VideoThumbnail
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -262,7 +265,7 @@ class FakeNetworkDataSourceTest {
                 type = "track",
                 uri = "spotify:track:34xGLuxM0rkxhCVyMSqwJO"
             ),
-            albumTracks.get(10)
+            albumTracks[10]
         )
     }
 
@@ -444,6 +447,86 @@ class FakeNetworkDataSourceTest {
             )
         )
 
-        assertEquals(response.items.get(0), savedPlaylists?.items?.get(0))
+        assertEquals(response.items[0], savedPlaylists?.items?.get(0))
+    }
+
+    @Test
+    fun networkDataSource_deserializationOfPlaylistTracks_deserializesCorrectly() = runTest(testDispatcher) {
+
+        val playlistTracks = networkDataSource.getPlaylistTracks("", "")
+
+        assertEquals(
+            PlaylistTrack(
+                addedAt = "2015-01-15T12:39:22Z",
+                addedBy = AddedBy(
+                    externalUrls = ExternalUrls(spotify = "https://open.spotify.com/user/jmperezperez"),
+                    href = "https://api.spotify.com/v1/users/jmperezperez",
+                    id = "jmperezperez",
+                    type = "user",
+                    uri = "spotify:user:jmperezperez"
+                ),
+                isLocal = false,
+                primaryColor = null,
+                videoThumbnail = VideoThumbnail(url = null),
+                track = SpotifyTrack(
+                    album = SpotifyAlbum(
+                        albumType = "compilation",
+                        totalTracks = 20,
+                        availableMarkets = listOf("AR"),
+                        externalUrls = ExternalUrls(spotify = "https://open.spotify.com/album/2pANdqPvxInB0YvcDiw4ko"),
+                        href = "https://api.spotify.com/v1/albums/2pANdqPvxInB0YvcDiw4ko",
+                        id = "2pANdqPvxInB0YvcDiw4ko",
+                        images = listOf(
+                            SpotifyImage(url = "https://i.scdn.co/image/ab67616d0000b273ce6d0eef0c1ce77e5f95bbbc", height = 640, width = 640),
+                            SpotifyImage(url = "https://i.scdn.co/image/ab67616d00001e02ce6d0eef0c1ce77e5f95bbbc", height = 300, width = 300),
+                            SpotifyImage(url = "https://i.scdn.co/image/ab67616d00004851ce6d0eef0c1ce77e5f95bbbc", height = 64, width = 64)
+                        ),
+                        name = "Progressive Psy Trance Picks Vol.8",
+                        releaseDate = "2012-04-02",
+                        releaseDatePrecision = "day",
+                        uri = "spotify:album:2pANdqPvxInB0YvcDiw4ko",
+                        artists = listOf(
+                            SpotifySimplifiedArtist(
+                                externalUrls = ExternalUrls(spotify = "https://open.spotify.com/artist/0LyfQWJT6nXafLPZqxe9Of"),
+                                href = "https://api.spotify.com/v1/artists/0LyfQWJT6nXafLPZqxe9Of",
+                                id = "0LyfQWJT6nXafLPZqxe9Of",
+                                name = "Various Artists",
+                                type = "artist",
+                                uri = "spotify:artist:0LyfQWJT6nXafLPZqxe9Of"
+                            )
+                        ),
+                        type = "album"
+                    ),
+                    artists = listOf(
+                        SpotifyArtist(
+                            externalUrls = ExternalUrls(spotify = "https://open.spotify.com/artist/6eSdhw46riw2OUHgMwR8B5"),
+                            href = "https://api.spotify.com/v1/artists/6eSdhw46riw2OUHgMwR8B5",
+                            id = "6eSdhw46riw2OUHgMwR8B5",
+                            name = "Odiseo",
+                            uri = "spotify:artist:6eSdhw46riw2OUHgMwR8B5",
+                            type = "artist"
+                        )
+                    ),
+                    availableMarkets = listOf("AR"),
+                    discNumber = 1,
+                    durationMs = 376000,
+                    explicit = false,
+                    externalIds = ExternalIds(isrc = "DEKC41200989"),
+                    externalUrls = ExternalUrls(spotify = "https://open.spotify.com/track/4rzfv0JLZfVhOhbSQ8o5jZ"),
+                    href = "https://api.spotify.com/v1/tracks/4rzfv0JLZfVhOhbSQ8o5jZ",
+                    id = "4rzfv0JLZfVhOhbSQ8o5jZ",
+                    name = "Api",
+                    popularity = 1,
+                    previewUrl = "https://p.scdn.co/mp3-preview/04599a1fe12ffac01d2bcb08340f84c0dd2cc335?cid=cfe923b2d660439caf2b557b21f31221",
+                    trackNumber = 10,
+                    type = "track",
+                    uri = "spotify:track:4rzfv0JLZfVhOhbSQ8o5jZ",
+                    isLocal = false,
+                    track = true,
+                    episode = false
+                )
+            ),
+            playlistTracks[0]
+        )
     }
 }

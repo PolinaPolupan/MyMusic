@@ -7,6 +7,7 @@ import com.example.mymusic.core.network.R
 import com.example.network.model.PlaylistTrack
 import com.example.mymusic.core.network.model.RecentlyPlayedTracksResponse
 import com.example.network.model.AlbumTracksResponse
+import com.example.network.model.PlaylistsTracksResponse
 import com.example.network.model.RecommendationsResponse
 import com.example.network.model.SavedAlbumsResponse
 import com.example.network.model.SavedPlaylistResponse
@@ -66,9 +67,14 @@ class FakeNetworkDataSource @Inject constructor(
             Json.decodeFromString<SavedPlaylistResponse?>(inputStream)
         }
 
-    override suspend fun getPlaylistTracks(id: String, fields: String): List<PlaylistTrack> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getPlaylistTracks(id: String, fields: String): List<PlaylistTrack> =
+        withContext(dispatcher) {
+            val inputStream = context.resources.openRawResource(R.raw.playlist_tracks)
+                .bufferedReader().use { it.readText() }
+
+            val response = Json.decodeFromString<PlaylistsTracksResponse>(inputStream)
+            response.items
+        }
 
     override suspend fun getTrack(id: String): SpotifyTrack? {
         TODO("Not yet implemented")
