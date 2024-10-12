@@ -1,0 +1,85 @@
+{
+  "album": {
+    "album_type": "album",
+    "artists": [
+      {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/artist/1hzfo8twXdOegF3xireCYs"
+        },
+        "href": "https://api.spotify.com/v1/artists/1hzfo8twXdOegF3xireCYs",
+        "id": "1hzfo8twXdOegF3xireCYs",
+        "name": "Milky Chance",
+        "type": "artist",
+        "uri": "spotify:artist:1hzfo8twXdOegF3xireCYs"
+      }
+    ],
+    "available_markets": [
+      "CA",
+      "MX",
+      "US"
+    ],
+    "external_urls": {
+      "spotify": "https://open.spotify.com/album/3AWjk0oVV9YAY9r9boiffN"
+    },
+    "href": "https://api.spotify.com/v1/albums/3AWjk0oVV9YAY9r9boiffN",
+    "id": "3AWjk0oVV9YAY9r9boiffN",
+    "images": [
+      {
+        "url": "https://i.scdn.co/image/ab67616d0000b273266539b00fd32cbcb7579f6c",
+        "width": 640,
+        "height": 640
+      },
+      {
+        "url": "https://i.scdn.co/image/ab67616d00001e02266539b00fd32cbcb7579f6c",
+        "width": 300,
+        "height": 300
+      },
+      {
+        "url": "https://i.scdn.co/image/ab67616d00004851266539b00fd32cbcb7579f6c",
+        "width": 64,
+        "height": 64
+      }
+    ],
+    "name": "Sadnecessary (Bonus Track Version)",
+    "release_date": "2014-10-14",
+    "release_date_precision": "day",
+    "total_tracks": 14,
+    "type": "album",
+    "uri": "spotify:album:3AWjk0oVV9YAY9r9boiffN"
+  },
+  "artists": [
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/1hzfo8twXdOegF3xireCYs"
+      },
+      "href": "https://api.spotify.com/v1/artists/1hzfo8twXdOegF3xireCYs",
+      "id": "1hzfo8twXdOegF3xireCYs",
+      "name": "Milky Chance",
+      "type": "artist",
+      "uri": "spotify:artist:1hzfo8twXdOegF3xireCYs"
+    }
+  ],
+  "available_markets": [
+    "CA",
+    "MX",
+    "US"
+  ],
+  "disc_number": 1,
+  "duration_ms": 313626,
+  "explicit": false,
+  "external_ids": {
+    "isrc": "DEL211300741"
+  },
+  "external_urls": {
+    "spotify": "https://open.spotify.com/track/0ZfByLXCeKchuj7zi1CJ0S"
+  },
+  "href": "https://api.spotify.com/v1/tracks/0ZfByLXCeKchuj7zi1CJ0S",
+  "id": "0ZfByLXCeKchuj7zi1CJ0S",
+  "is_local": false,
+  "name": "Stolen Dance",
+  "popularity": 72,
+  "preview_url": "https://p.scdn.co/mp3-preview/a5a49157caae8d8fbb5c82b70a6244a9ec828562?cid=cfe923b2d660439caf2b557b21f31221",
+  "track_number": 11,
+  "type": "track",
+  "uri": "spotify:track:0ZfByLXCeKchuj7zi1CJ0S"
+}

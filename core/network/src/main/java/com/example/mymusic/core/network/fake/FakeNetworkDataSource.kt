@@ -38,8 +38,7 @@ class FakeNetworkDataSource @Inject constructor(
             val inputStream = context.resources.openRawResource(R.raw.recently_played)
                 .bufferedReader().use { it.readText() }
 
-            val response = Json.decodeFromString<RecentlyPlayedTracksResponse?>(inputStream)
-            response
+            Json.decodeFromString<RecentlyPlayedTracksResponse?>(inputStream)
         }
 
     override suspend fun getAlbumTracks(id: String): List<SpotifySimplifiedTrack> =
@@ -76,8 +75,11 @@ class FakeNetworkDataSource @Inject constructor(
             response.items
         }
 
-    override suspend fun getTrack(id: String): SpotifyTrack? {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getTrack(id: String): SpotifyTrack? =
+        withContext(dispatcher) {
+            val inputStream = context.resources.openRawResource(R.raw.track)
+                .bufferedReader().use { it.readText() }
 
+            Json.decodeFromString<SpotifyTrack?>(inputStream)
+        }
 }

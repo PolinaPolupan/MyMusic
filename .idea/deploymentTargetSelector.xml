@@ -11,9 +11,6 @@
       <SelectionState runConfigName="FakeNetworkDataSourceTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="networkDataSource_deserializationOfAlbumTracks_deserializesCorrectly()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="networkDataSource_deserializationOfSavedAlbums_deserializesCorrectly()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
@@ -21,6 +18,9 @@
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="networkDataSource_deserializationOfPlaylistTracks_deserializesCorrectly()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="networkDataSource_deserializationOfTrack_deserializesCorrectly()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
