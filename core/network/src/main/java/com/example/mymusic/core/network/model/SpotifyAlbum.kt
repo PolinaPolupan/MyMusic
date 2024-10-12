@@ -1,6 +1,6 @@
-package com.example.network.model
+package com.example.mymusic.core.network.model
 
-import com.example.database.model.entities.LocalAlbum
+import com.example.mymusic.core.database.model.entities.LocalAlbum
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

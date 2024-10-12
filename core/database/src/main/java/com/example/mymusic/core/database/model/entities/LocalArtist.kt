@@ -1,4 +1,4 @@
-package com.example.database.model.entities
+package com.example.mymusic.core.database.model.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -14,7 +14,7 @@ data class LocalArtist(
 )
 
 @JvmName("LocalArtistToExternalArtist")
-fun LocalArtist.toExternal() = com.example.mymusic.core.model.Artist(
+fun LocalArtist.toExternal() = Artist(
     id = id,
     name = name,
     imageUrl = imageUrl

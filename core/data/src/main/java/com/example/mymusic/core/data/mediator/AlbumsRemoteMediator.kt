@@ -8,13 +8,13 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.example.database.model.LocalAlbumWithArtists
+import com.example.mymusic.core.database.model.LocalAlbumWithArtists
 import com.example.mymusic.core.database.MusicDatabase
 import com.example.mymusic.core.database.model.crossRef.AlbumArtistCrossRef
 import com.example.mymusic.core.database.model.entities.RemoteKeys
 import com.example.mymusic.core.network.MyMusicNetworkDataSource
-import com.example.network.model.toLocal
-import com.example.network.model.toLocalAlbum
+import com.example.mymusic.core.network.model.toLocal
+import com.example.mymusic.core.network.model.toLocalAlbum
 import java.io.IOException
 import javax.inject.Inject
 

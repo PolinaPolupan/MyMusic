@@ -4,11 +4,11 @@ import com.example.mymusic.core.database.MusicDao
 import com.example.mymusic.core.database.model.crossRef.AlbumArtistCrossRef
 import com.example.mymusic.core.database.model.crossRef.SimplifiedTrackArtistCrossRef
 import com.example.mymusic.core.database.model.crossRef.TrackArtistCrossRef
-import com.example.network.model.SpotifyTrack
-import com.example.network.model.toLocal
-import com.example.network.model.toLocalSimplified
-import com.example.network.model.toLocalSimplifiedTrack
-import com.example.network.model.toLocalTrack
+import com.example.mymusic.core.network.model.SpotifyTrack
+import com.example.mymusic.core.network.model.toLocal
+import com.example.mymusic.core.network.model.toLocalSimplified
+import com.example.mymusic.core.network.model.toLocalSimplifiedTrack
+import com.example.mymusic.core.network.model.toLocalTrack
 
 /**
  * [upsertTrack] utility function. Upserts SpotifyTrack into the database

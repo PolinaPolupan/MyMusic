@@ -1,4 +1,4 @@
-package com.example.database.model.entities
+package com.example.mymusic.core.database.model.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -15,7 +15,7 @@ data class LocalPlaylist(
 )
 
 @JvmName("LocalPlaylistToExternalSimplifiedPlaylist")
-fun LocalPlaylist.toExternal() = com.example.mymusic.core.model.SimplifiedPlaylist(
+fun LocalPlaylist.toExternal() = SimplifiedPlaylist(
     id = id,
     imageUrl = imageUrl,
     name = name,

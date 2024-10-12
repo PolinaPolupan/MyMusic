@@ -1,10 +1,8 @@
-package com.example.database.model.entities
+package com.example.mymusic.core.database.model.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.mymusic.core.model.SimplifiedAlbum
-import com.example.mymusic.core.model.SimplifiedArtist
 
 @Entity(tableName = "albums")
 data class LocalAlbum(

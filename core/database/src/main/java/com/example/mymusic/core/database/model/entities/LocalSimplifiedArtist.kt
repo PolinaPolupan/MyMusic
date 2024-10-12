@@ -1,4 +1,4 @@
-package com.example.database.model.entities
+package com.example.mymusic.core.database.model.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -13,7 +13,7 @@ data class LocalSimplifiedArtist(
 )
 
 @JvmName("LocalSimplifiedArtistToExternalSimplifiedArtist")
-fun LocalSimplifiedArtist.toExternal() = com.example.mymusic.core.model.SimplifiedArtist(
+fun LocalSimplifiedArtist.toExternal() = SimplifiedArtist(
     id = id,
     name = name
 )

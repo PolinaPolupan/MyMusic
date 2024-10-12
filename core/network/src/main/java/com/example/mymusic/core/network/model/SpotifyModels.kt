@@ -1,6 +1,5 @@
-package com.example.network.model
+package com.example.mymusic.core.network.model
 
-import androidx.room.ColumnInfo
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

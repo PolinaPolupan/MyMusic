@@ -1,4 +1,4 @@
-package com.example.database.model.entities
+package com.example.mymusic.core.database.model.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

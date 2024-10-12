@@ -1,10 +1,11 @@
-package com.example.database.model.entities
+package com.example.mymusic.core.database.model.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.RoomWarnings
+import com.example.mymusic.core.database.model.entities.LocalAlbum
 
 
 /**
