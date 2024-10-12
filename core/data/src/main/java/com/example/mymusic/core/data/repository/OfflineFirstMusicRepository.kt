@@ -5,6 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.example.mymusic.core.common.DefaultDispatcher
 import com.example.mymusic.core.data.mediator.AlbumsRemoteMediator
 import com.example.mymusic.core.data.mediator.PlaylistsRemoteMediator
 import com.example.mymusic.core.data.mediator.RecentlyPlayedRemoteMediator
@@ -34,7 +35,7 @@ import javax.inject.Inject
 
 class OfflineFirstMusicRepository @Inject constructor(
     private val musicDao: MusicDao,
-    @com.example.mymusic.core.common.DefaultDispatcher private val dispatcher: CoroutineDispatcher,
+    @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     private val networkDataSource: MyMusicNetworkDataSource,
     private val database: MusicDatabase
 ): MusicRepository {
