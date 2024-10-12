@@ -45,9 +45,9 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.hilt.testing)
     implementation(project(":core:model"))
     implementation(project(":core:network"))
-
     implementation(project(":core:database"))
     implementation(project(":core:common"))
     implementation(project(":core:datastore"))
