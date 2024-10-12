@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.example.mymusic.core.common.Constants
 import com.example.mymusic.core.model.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -16,10 +17,10 @@ class MyMusicPreferencesDataSource @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
     private object PreferencesKeys {
-        val AUTH_STATE = stringPreferencesKey(com.example.mymusic.core.common.Constants.AUTH_STATE)
-        val DISPLAY_NAME = stringPreferencesKey(com.example.mymusic.core.common.Constants.DATA_DISPLAY_NAME)
-        val EMAIL = stringPreferencesKey(com.example.mymusic.core.common.Constants.DATA_EMAIL)
-        val IMAGE_URL = stringPreferencesKey(com.example.mymusic.core.common.Constants.IMAGE_URL)
+        val AUTH_STATE = stringPreferencesKey(Constants.AUTH_STATE)
+        val DISPLAY_NAME = stringPreferencesKey(Constants.DATA_DISPLAY_NAME)
+        val EMAIL = stringPreferencesKey(Constants.DATA_EMAIL)
+        val IMAGE_URL = stringPreferencesKey(Constants.IMAGE_URL)
     }
 
     val userPreferencesFlow: Flow<UserPreferences> = dataStore.data
