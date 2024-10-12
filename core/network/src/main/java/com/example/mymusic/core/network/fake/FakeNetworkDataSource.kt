@@ -19,6 +19,9 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
+/**
+ * [FakeNetworkDataSource] implementation that provides static news resources to aid development
+ */
 class FakeNetworkDataSource @Inject constructor(
     @IoDispatcher val dispatcher: CoroutineDispatcher,
     @ApplicationContext val context: Context
