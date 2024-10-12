@@ -104,24 +104,24 @@ import java.io.IOException
 //            testNetworkTrack("0", "New Rules", networkAlbum, networkArtists),
 //            testNetworkTrack("1", "Genesis", networkAlbum, networkArtists),
 //            testNetworkTrack("2", "Be The One", networkAlbum, networkArtists))
-//        val context = com.example.network.model.Context(
+//        val context = com.example.mymusic.core.network.model.Context(
 //            type = "",
 //            href = "",
-//            externalUrls = com.example.network.model.ExternalUrls(""),
+//            externalUrls = com.example.mymusic.core.network.model.ExternalUrls(""),
 //            uri = ""
 //        )
 //        val recentlyPlayed = listOf(
-//            com.example.network.model.SpotifyPlayHistoryObject(
+//            com.example.mymusic.core.network.model.SpotifyPlayHistoryObject(
 //                networkTracks[0],
 //                playedAt = null,
 //                context = context
 //            ),
-//            com.example.network.model.SpotifyPlayHistoryObject(
+//            com.example.mymusic.core.network.model.SpotifyPlayHistoryObject(
 //                networkTracks[1],
 //                playedAt = null,
 //                context = context
 //            ),
-//            com.example.network.model.SpotifyPlayHistoryObject(
+//            com.example.mymusic.core.network.model.SpotifyPlayHistoryObject(
 //                networkTracks[2],
 //                playedAt = null,
 //                context = context
@@ -157,9 +157,9 @@ import java.io.IOException
 //            testNetworkAlbum("2", "1989", networkSimplifiedArtists)
 //        )
 //        val networkSavedAlbums = listOf(
-//            com.example.network.model.SavedAlbum("", networkAlbums[0]),
-//            com.example.network.model.SavedAlbum("", networkAlbums[1]),
-//            com.example.network.model.SavedAlbum("", networkAlbums[2])
+//            com.example.mymusic.core.network.model.SavedAlbum("", networkAlbums[0]),
+//            com.example.mymusic.core.network.model.SavedAlbum("", networkAlbums[1]),
+//            com.example.mymusic.core.network.model.SavedAlbum("", networkAlbums[2])
 //        )
 //
 //        // Upsert to the database
@@ -228,7 +228,7 @@ import java.io.IOException
 //            testNetworkTrack("0", "New Rules", networkAlbum, networkArtists),
 //            testNetworkTrack("1", "Genesis", networkAlbum, networkArtists),
 //            testNetworkTrack("2", "Be The One", networkAlbum, networkArtists))
-//        val spotifyTrack = com.example.network.model.SpotifyTracks("", 0)
+//        val spotifyTrack = com.example.mymusic.core.network.model.SpotifyTracks("", 0)
 //        val playlist = networkPlaylist("0", "Playlist", spotifyTrack)
 //
 //        // Upsert tracks
@@ -249,7 +249,7 @@ import java.io.IOException
 //    fun musicDao_upsertSavedPlaylists() = runTest {
 //
 //        // Initialize data
-//        val spotifyTrack = com.example.network.model.SpotifyTracks("", 0)
+//        val spotifyTrack = com.example.mymusic.core.network.model.SpotifyTracks("", 0)
 //        val networkPlaylists = listOf(
 //            networkPlaylist("0", "Playlist", spotifyTrack),
 //            networkPlaylist("1", "Playlist1", spotifyTrack),
@@ -263,7 +263,7 @@ import java.io.IOException
 //
 //    }
 //
-//    private suspend fun upsertTrack(track: com.example.network.model.SpotifyTrack) {
+//    private suspend fun upsertTrack(track: com.example.mymusic.core.network.model.SpotifyTrack) {
 //
 //        musicDao.upsertTrack(track.toLocalTrack())
 //        musicDao.upsertSimplifiedTrack(track.toLocalSimplifiedTrack())
@@ -284,7 +284,7 @@ import java.io.IOException
 //    private fun testNetworkArtist(
 //        id: String,
 //        name: String
-//    ) = com.example.network.model.SpotifyArtist(
+//    ) = com.example.mymusic.core.network.model.SpotifyArtist(
 //        externalUrls = null,
 //        followers = null,
 //        genres = null,
@@ -300,7 +300,7 @@ import java.io.IOException
 //    private fun testNetworkSimplifiedArtist(
 //        id: String,
 //        name: String
-//    ) = com.example.network.model.SpotifySimplifiedArtist(
+//    ) = com.example.mymusic.core.network.model.SpotifySimplifiedArtist(
 //        externalUrls = null,
 //        href = "",
 //        id = id,
@@ -312,8 +312,8 @@ import java.io.IOException
 //    private fun testNetworkAlbum(
 //        id: String,
 //        name: String,
-//        simplifiedArtists: List<com.example.network.model.SpotifySimplifiedArtist>
-//    ) = com.example.network.model.SpotifyAlbum(
+//        simplifiedArtists: List<com.example.mymusic.core.network.model.SpotifySimplifiedArtist>
+//    ) = com.example.mymusic.core.network.model.SpotifyAlbum(
 //        albumType = null,
 //        totalTracks = 1,
 //        availableMarkets = null,
@@ -333,9 +333,9 @@ import java.io.IOException
 //    private fun testNetworkTrack(
 //        id: String,
 //        name: String,
-//        album: com.example.network.model.SpotifyAlbum,
-//        artists: List<com.example.network.model.SpotifyArtist>
-//    ) = com.example.network.model.SpotifyTrack(
+//        album: com.example.mymusic.core.network.model.SpotifyAlbum,
+//        artists: List<com.example.mymusic.core.network.model.SpotifyArtist>
+//    ) = com.example.mymusic.core.network.model.SpotifyTrack(
 //        album = album,
 //        artists = artists,
 //        availableMarkets = null,
@@ -361,8 +361,8 @@ import java.io.IOException
 //    private fun networkPlaylist(
 //        id: String,
 //        name: String,
-//        tracks: com.example.network.model.SpotifyTracks
-//    ) = com.example.network.model.SpotifySimplifiedPlaylist(
+//        tracks: com.example.mymusic.core.network.model.SpotifyTracks
+//    ) = com.example.mymusic.core.network.model.SpotifySimplifiedPlaylist(
 //        collaborative = true,
 //        description = "",
 //        externalUrls = null,
@@ -370,7 +370,7 @@ import java.io.IOException
 //        id = id,
 //        images = null,
 //        name = name,
-//        owner = com.example.network.model.SpotifyOwner(
+//        owner = com.example.mymusic.core.network.model.SpotifyOwner(
 //            externalUrls = null,
 //            followers = null,
 //            href = "",

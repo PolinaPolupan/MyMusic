@@ -1,15 +1,15 @@
 package com.example.mymusic.core.network
 
-import com.example.network.model.AlbumTracksResponse
-import com.example.network.model.ErrorResponse
-import com.example.network.model.PlaylistTrack
-import com.example.network.model.PlaylistsTracksResponse
-import com.example.network.model.RecentlyPlayedTracksResponse
-import com.example.network.model.RecommendationsResponse
-import com.example.network.model.SavedAlbumsResponse
-import com.example.network.model.SavedPlaylistResponse
-import com.example.network.model.SpotifySimplifiedTrack
-import com.example.network.model.SpotifyTrack
+import com.example.mymusic.core.network.model.AlbumTracksResponse
+import com.example.mymusic.core.network.model.ErrorResponse
+import com.example.mymusic.core.network.model.PlaylistTrack
+import com.example.mymusic.core.network.model.PlaylistsTracksResponse
+import com.example.mymusic.core.network.model.RecentlyPlayedTracksResponse
+import com.example.mymusic.core.network.model.RecommendationsResponse
+import com.example.mymusic.core.network.model.SavedAlbumsResponse
+import com.example.mymusic.core.network.model.SavedPlaylistResponse
+import com.example.mymusic.core.network.model.SpotifySimplifiedTrack
+import com.example.mymusic.core.network.model.SpotifyTrack
 import com.haroldadmin.cnradapter.NetworkResponse
 import javax.inject.Inject
 
