@@ -33,12 +33,6 @@ class NavigationTest {
     @Test
     fun appNavHost_firstScreenIsHome() {
 
-        // Animations need to be paused in order to load Home screen before Log in screen
-        composeTestRule.mainClock.autoAdvance = false // Pause animations
-
-        // Advance time by a small period before Log in screen appeears
-        composeTestRule.mainClock.advanceTimeBy(100) // Advance time to load home screen
-
         composeTestRule
             .onNodeWithText("Listen Now")
             .assertIsDisplayed()
@@ -47,17 +41,9 @@ class NavigationTest {
     @Test
     fun navigationBar_navigatesToLibrary() {
 
-        // Animations need to be paused in order to load Home screen before Log in screen
-        composeTestRule.mainClock.autoAdvance = false // Pause animations
-
-        // Advance time by a small period before Log in screen appeears
-        composeTestRule.mainClock.advanceTimeBy(100) // Advance time to load home screen
-
         composeTestRule
             .onNodeWithText("Library")
             .performClick()
-
-        composeTestRule.mainClock.advanceTimeBy(100) // Advance time to load library screen
 
         composeTestRule
             .onNodeWithTag("library")
@@ -67,17 +53,9 @@ class NavigationTest {
     @Test
     fun navigationBar_navigatesToSearch() {
 
-        // Animations need to be paused in order to load Home screen before Log in screen
-        composeTestRule.mainClock.autoAdvance = false // Pause animations
-
-        // Advance time by a small period before Log in screen appeears
-        composeTestRule.mainClock.advanceTimeBy(100) // Advance time to load home screen
-
         composeTestRule
             .onNodeWithText("Search")
             .performClick()
-
-        composeTestRule.mainClock.advanceTimeBy(100) // Advance time to load search screen
 
         composeTestRule
             .onNodeWithTag("search")
