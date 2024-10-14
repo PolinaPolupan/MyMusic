@@ -1,8 +1,8 @@
 package com.example.mymusic.core.data.di
 
+import com.example.mymusic.core.data.fake.FakeUserDataRepository
 import com.example.mymusic.core.data.repository.MusicRepository
 import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
-import com.example.mymusic.core.data.repository.OfflineFirstUserDataRepository
 import com.example.mymusic.core.data.repository.UserDataRepository
 import com.example.mymusic.core.network.MyMusicNetworkDataSource
 import com.example.mymusic.core.network.fake.FakeNetworkDataSource
@@ -25,7 +25,7 @@ internal interface TestDataModule {
 
     @Binds
     fun bindsUserDataRepository(
-        userDataRepository: OfflineFirstUserDataRepository,
+        userDataRepository: FakeUserDataRepository,
     ): UserDataRepository
 
     @Binds
