@@ -5,7 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
+import com.example.mymusic.core.data.repository.MusicRepository
 import com.example.mymusic.core.designsystem.component.SortOption
 import com.example.mymusic.core.model.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddToPlaylistViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    musicRepository: OfflineFirstMusicRepository
+    musicRepository: MusicRepository
 ): ViewModel() {
 
     private val _trackId: String = checkNotNull(savedStateHandle[TRACK_ID_ARG])

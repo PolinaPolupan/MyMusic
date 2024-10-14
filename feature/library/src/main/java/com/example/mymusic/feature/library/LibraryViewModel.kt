@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.example.mymusic.core.data.repository.MusicRepository
+import com.example.mymusic.core.data.repository.UserDataRepository
 import com.example.mymusic.sync.SyncManager
 import com.example.mymusic.core.designsystem.component.SortOption
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,9 +19,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
-    private val musicRepository: com.example.mymusic.core.data.repository.OfflineFirstMusicRepository,
-    userDataRepository: com.example.mymusic.core.data.repository.OfflineFirstUserDataRepository,
-    syncManager: com.example.mymusic.sync.SyncManager
+    private val musicRepository: MusicRepository,
+    userDataRepository: UserDataRepository,
+    syncManager: SyncManager
 ): ViewModel() {
 
     private val _userDataFlow = userDataRepository.userPreferencesFlow

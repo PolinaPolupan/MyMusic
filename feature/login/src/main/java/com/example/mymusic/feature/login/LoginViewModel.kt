@@ -12,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authorizationManager: AuthorizationManager,
-    private val syncManager: com.example.mymusic.sync.SyncManager
+    private val syncManager: SyncManager
 ): ViewModel() {
 
     fun signIn(): Intent {

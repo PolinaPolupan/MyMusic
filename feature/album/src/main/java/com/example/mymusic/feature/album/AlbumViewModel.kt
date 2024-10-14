@@ -3,7 +3,7 @@ package com.example.mymusic.feature.album
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
+import com.example.mymusic.core.data.repository.MusicRepository
 import com.example.mymusic.core.designsystem.component.OneOf
 import com.example.mymusic.core.designsystem.component.TracksListUiState
 import com.example.mymusic.core.model.Album
@@ -21,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AlbumViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val musicRepository: OfflineFirstMusicRepository) : ViewModel() {
+    private val musicRepository: MusicRepository
+) : ViewModel() {
 
     private val _albumId: String = checkNotNull(savedStateHandle[ALBUM_ID_ARG])
 
