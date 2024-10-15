@@ -9,8 +9,8 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkerParameters
 import com.example.mymusic.core.auth.AuthorizationManager
 import com.example.mymusic.core.common.IoDispatcher
-import com.example.mymusic.core.data.repository.OfflineFirstMusicRepository
-import com.example.mymusic.core.data.repository.OfflineFirstUserDataRepository
+import com.example.mymusic.core.data.repository.MusicRepository
+import com.example.mymusic.core.data.repository.UserDataRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -27,8 +27,8 @@ class SyncWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
     private val authorizationManager: AuthorizationManager,
-    private val musicRepository: OfflineFirstMusicRepository,
-    userDataRepository: OfflineFirstUserDataRepository,
+    private val musicRepository: MusicRepository,
+    userDataRepository: UserDataRepository,
 ): CoroutineWorker(appContext, workerParams) {
 
     private val authState: Flow<String?> =
