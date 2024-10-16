@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.datastore.preferences.core)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.hilt.testing)
     implementation(project(":core:common"))
     implementation(project(":core:model"))
 

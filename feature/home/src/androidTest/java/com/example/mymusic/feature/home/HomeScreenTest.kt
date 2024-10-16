@@ -11,16 +11,26 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mymusic.core.designsystem.component.PreviewParameterData
 import com.example.mymusic.core.designsystem.theme.MyMusicTheme
 import com.example.mymusic.core.model.Track
+import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
 
 
 @HiltAndroidTest
 class HomeScreenTest {
 
-    @get:Rule
+    /**
+     * Create a temporary folder used to create a Data Store file. This guarantees that
+     * the file is removed in between each test, preventing a crash.
+     */
+    @BindValue
+    @get:Rule(order = 0)
+    val tmpFolder: TemporaryFolder = TemporaryFolder.builder().assureDeletion().build()
+
+    @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @Test

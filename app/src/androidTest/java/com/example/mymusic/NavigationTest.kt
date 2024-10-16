@@ -5,11 +5,13 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
 
 @HiltAndroidTest
 class NavigationTest {
@@ -20,8 +22,16 @@ class NavigationTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
-
+    /**
+     * Create a temporary folder used to create a Data Store file. This guarantees that
+     * the file is removed in between each test, preventing a crash.
+     */
+    @BindValue
     @get:Rule(order = 1)
+    val tmpFolder: TemporaryFolder = TemporaryFolder.builder().assureDeletion().build()
+
+
+    @get:Rule(order = 2)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @Before
