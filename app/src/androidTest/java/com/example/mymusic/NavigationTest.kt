@@ -51,9 +51,13 @@ class NavigationTest {
     @Test
     fun navigationBar_navigatesToLibrary() {
 
+        composeTestRule.mainClock.autoAdvance = false // Pause animations
+
         composeTestRule
             .onNodeWithText("Library")
             .performClick()
+
+        composeTestRule.mainClock.advanceTimeBy(100) // Advance time to load library screen
 
         composeTestRule
             .onNodeWithTag("library")
