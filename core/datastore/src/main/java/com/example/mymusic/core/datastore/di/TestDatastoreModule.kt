@@ -27,6 +27,6 @@ internal object TestDataStoreModule {
 
 fun TemporaryFolder.testUserPreferencesDataStore() =
     PreferenceDataStoreFactory.create(
-        produceFile = { newFile("user_preferences_test.pb") }
+        produceFile = { newFile("user_preferences_test.preferences_pb") }
     )
 
