@@ -44,11 +44,15 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.room.ktx)
     implementation(project(":core:model"))
+    androidTestImplementation(project(":core:network"))
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)
     ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
+    androidTestImplementation(project(":core:testing"))
     androidTestImplementation(libs.androidx.junit.test.ext)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 }

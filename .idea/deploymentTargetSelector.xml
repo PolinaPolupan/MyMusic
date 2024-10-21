@@ -8,16 +8,19 @@
       <SelectionState runConfigName="core.common">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="NavigationTest">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="HomeScreenTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="navigationBar_navigatesToLibrary()">
+      <SelectionState runConfigName="MusicDaoTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="LibraryScreenTest">
+      <SelectionState runConfigName="musicDao_upsertRecentlyPlayed()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="musicDao_upsertSavedAlbums()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="musicDao_upsertAlbumTracks()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
