@@ -36,3 +36,5 @@ fun LocalRecentlyPlayedWithArtists.toExternal() = Track(
     name = trackHistory.track.name,
     artists = artists.toExternal()
 )
+
+fun List<LocalRecentlyPlayedWithArtists>.toExternal() = map(LocalRecentlyPlayedWithArtists::toExternal)

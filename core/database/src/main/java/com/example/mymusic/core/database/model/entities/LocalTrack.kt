@@ -5,7 +5,9 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.RoomWarnings
-import com.example.mymusic.core.database.model.entities.LocalAlbum
+import com.example.mymusic.core.model.Artist
+import com.example.mymusic.core.model.SimplifiedArtist
+import com.example.mymusic.core.model.Track
 
 
 /**
@@ -19,4 +21,11 @@ data class LocalTrack(
     @PrimaryKey val id: String,
     @Embedded val album: LocalAlbum,
     @ColumnInfo(name = "trackName") val name: String
+)
+
+fun LocalTrack.toExternal(albumArtists: List<SimplifiedArtist>, artists: List<Artist>) = Track(
+    id = id,
+    album = album.toExternalSimplified(albumArtists),
+    name = name,
+    artists = artists
 )

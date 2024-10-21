@@ -49,11 +49,15 @@ fun SpotifyTrack.toLocalTrack() = LocalTrack(
     name = name
 )
 
+fun List<SpotifyTrack>.toLocalTracks() = map(SpotifyTrack::toLocalTrack)
+
 @JvmName("SpotifyTrackToLocalSimplifiedTrackConversion")
 fun SpotifyTrack.toLocalSimplifiedTrack() = LocalSimplifiedTrack(
     id = id,
     name = name
 )
+
+fun List<SpotifyTrack>.toLocalSimplifiedTracks() = map(SpotifyTrack::toLocalSimplifiedTrack)
 
 @JvmName("SpotifyTrackToLocalRecommendation")
 fun SpotifyTrack.toLocalRecommendation() = LocalRecommendation(
