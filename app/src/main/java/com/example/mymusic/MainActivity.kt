@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
 
     var spotifyAppRemote: SpotifyAppRemote? = null
 
-    @Inject lateinit var syncManager: com.example.mymusic.sync.SyncManager
+    @Inject lateinit var syncManager: SyncManager
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
