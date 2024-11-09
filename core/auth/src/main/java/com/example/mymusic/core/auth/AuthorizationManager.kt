@@ -195,7 +195,7 @@ class AuthorizationManager @Inject constructor(
                         persistState(_authState.jsonSerializeString())
 
                     } catch (e: Exception) {
-                        Log.e("MainActivity", "API call error!")
+                        Log.e("MainActivity", "API call error! " + e.message)
                         _authState = AuthState()
                         persistState("") // Init to the empty auth state. User will be redirected to the login screen
                     }
