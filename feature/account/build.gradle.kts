@@ -61,4 +61,7 @@ dependencies {
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.test.espresso)
+    androidTestImplementation(project(":core:testing"))
+    androidTestImplementation(project(":sync"))
+    kspAndroidTest(libs.hilt.compiler)
 }

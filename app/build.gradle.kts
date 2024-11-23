@@ -71,8 +71,6 @@ dependencies {
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.paging.compose)
     implementation(project(":core:data"))
-
-
     implementation(project(":core:common"))
     implementation(project(":sync"))
     implementation(project(":core:auth"))

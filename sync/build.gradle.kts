@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.dependency.analysis)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -41,9 +43,14 @@ dependencies {
     implementation(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
     implementation(libs.hilt.android)
-    implementation(project(":core:common"))
+    implementation(libs.hilt.testing)
 
+    implementation(project(":core:common"))
     implementation(project(":core:auth"))
     implementation(project(":core:data"))
     implementation(project(":core:model"))
+
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.room.compiler)
+    ksp(libs.androidx.hilt.compiler)
 }
