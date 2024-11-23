@@ -82,9 +82,9 @@ fun LoginContent(
     }
     val transition = updateTransition(isSpotifyInstalled, label = "color state")
 
-    val primaryColor by transition.animateColor( label = "color animation"
-    ) { _ ->
-        if (isSpotifyInstalled) MaterialTheme.colorScheme.primary.saturation(6f) else Color.DarkGray
+    val primaryColor by transition.animateColor(label = "color animation"
+    ) { state ->
+        if (state) MaterialTheme.colorScheme.primary.saturation(6f) else Color.DarkGray
     }
 
     MyMusicLoginBackground(
