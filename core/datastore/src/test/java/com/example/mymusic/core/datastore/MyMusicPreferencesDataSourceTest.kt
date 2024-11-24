@@ -3,11 +3,9 @@ package com.example.mymusic.core.datastore
 import com.example.mymusic.core.datastore.di.failingTestUserPreferencesDataStore
 import com.example.mymusic.core.datastore.di.testUserPreferencesDataStore
 import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertNull
-import junit.framework.TestCase.assertTrue
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -19,6 +17,7 @@ import java.io.IOException
 
 class MyMusicPreferencesDataSourceTest {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val testScope = TestScope(UnconfinedTestDispatcher())
 
     private lateinit var dataSource: MyMusicPreferencesDataSource
