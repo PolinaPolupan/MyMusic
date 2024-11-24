@@ -7,6 +7,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.junit.rules.TemporaryFolder
 import javax.inject.Singleton
 
@@ -30,3 +32,13 @@ fun TemporaryFolder.testUserPreferencesDataStore() =
         produceFile = { newFile("user_preferences_test.preferences_pb") }
     )
 
+fun TemporaryFolder.failingTestUserPreferencesDataStore(exception: Throwable): DataStore<Preferences> {
+    return object : DataStore<Preferences> {
+        override val data: Flow<Preferences>
+            get() = flow { throw exception }
+
+        override suspend fun updateData(transform: suspend (Preferences) -> Preferences): Preferences {
+            throw exception
+        }
+    }
+}
