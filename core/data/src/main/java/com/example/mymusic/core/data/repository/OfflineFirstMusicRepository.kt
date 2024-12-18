@@ -171,7 +171,10 @@ class OfflineFirstMusicRepository @Inject constructor(
     override suspend fun refresh() {
         withContext(dispatcher) {
 
-            val remoteMusic = getRecommendations()
+            // Get recommendations endpoint is deprecated
+            //val remoteMusic = getRecommendations()
+
+            val remoteMusic = networkDataSource.getTopItems("tracks")
 
             if (remoteMusic.isNotEmpty()) {
 

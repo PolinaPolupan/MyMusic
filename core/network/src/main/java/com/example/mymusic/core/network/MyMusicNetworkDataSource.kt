@@ -8,6 +8,7 @@ import com.example.mymusic.core.network.model.SpotifySimplifiedTrack
 import com.example.mymusic.core.network.model.SpotifyTrack
 
 interface MyMusicNetworkDataSource {
+    suspend fun getTopItems(type: String): List<SpotifyTrack>
 
     suspend fun getRecommendations(): List<SpotifyTrack>
 

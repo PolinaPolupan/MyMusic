@@ -13,6 +13,7 @@ import com.example.mymusic.core.network.model.SavedAlbumsResponse
 import com.example.mymusic.core.network.model.SavedPlaylistResponse
 import com.example.mymusic.core.network.model.SpotifySimplifiedTrack
 import com.example.mymusic.core.network.model.SpotifyTrack
+import com.example.mymusic.core.network.model.UsersTopItemsResponse
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -26,6 +27,14 @@ class FakeNetworkDataSource @Inject constructor(
     @IoDispatcher val dispatcher: CoroutineDispatcher,
     @ApplicationContext val context: Context
 ) : MyMusicNetworkDataSource {
+    override suspend fun getTopItems(type: String): List<SpotifyTrack> =
+        withContext(dispatcher) {
+            val inputStream = context.resources.openRawResource(R.raw.top_items)
+                .bufferedReader().use { it.readText() }
+
+            val response = Json.decodeFromString<UsersTopItemsResponse>(inputStream)
+            response.items
+        }
 
     override suspend fun getRecommendations(): List<SpotifyTrack> =
         withContext(dispatcher) {

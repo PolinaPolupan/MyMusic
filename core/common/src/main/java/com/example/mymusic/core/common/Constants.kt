@@ -12,6 +12,7 @@ class Constants {
         const val SCOPE_USER_READ_CURRENTLY_PLAYING = "user-read-currently-playing"
         const val SCOPE_APP_REMOTE_CONTROL = "app-remote-control"
         const val SCOPE_STREAMING = "streaming"
+        const val SCOPE_USER_TOP_READ = "user-top-read"
         const val SCOPE_PLAYLIST_READ_PRIVATE = "playlist-read-private"
         const val SCOPE_PLAYLIST_MODIFY_PRIVATE = "playlist-modify-private"
         const val SCOPE_PLAYLIST_MODIFY_PUBLIC = "playlist-modify-public"

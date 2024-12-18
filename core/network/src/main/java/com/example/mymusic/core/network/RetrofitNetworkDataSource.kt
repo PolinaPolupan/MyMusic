@@ -10,12 +10,19 @@ import com.example.mymusic.core.network.model.SavedAlbumsResponse
 import com.example.mymusic.core.network.model.SavedPlaylistResponse
 import com.example.mymusic.core.network.model.SpotifySimplifiedTrack
 import com.example.mymusic.core.network.model.SpotifyTrack
+import com.example.mymusic.core.network.model.UsersTopItemsResponse
 import com.haroldadmin.cnradapter.NetworkResponse
 import javax.inject.Inject
 
 class RetrofitNetworkDataSource @Inject constructor(
     private val apiService: MyMusicAPIService
 ): MyMusicNetworkDataSource {
+    override suspend fun getTopItems(type: String): List<SpotifyTrack> {
+        val response = apiService.getTopItems(type)
+        val data = (response as? NetworkResponse.Success<UsersTopItemsResponse, ErrorResponse>?)?.body?.items ?: emptyList()
+
+        return processResponse(response, data, emptyList())
+    }
 
     override suspend fun getRecommendations(): List<SpotifyTrack> {
         val response = apiService.getRecommendations()

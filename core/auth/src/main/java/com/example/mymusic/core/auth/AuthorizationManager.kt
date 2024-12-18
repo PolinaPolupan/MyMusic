@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
 import com.example.mymusic.core.common.ApplicationScope
+import com.example.mymusic.core.common.Constants
 import com.example.mymusic.core.common.IoDispatcher
 import com.example.mymusic.core.datastore.MyMusicPreferencesDataSource
 import dagger.hilt.android.internal.Contexts
@@ -54,10 +55,10 @@ class AuthorizationManager @Inject constructor(
 
     private fun initAuthServiceConfig() {
         _authServiceConfig = AuthorizationServiceConfiguration(
-            Uri.parse(com.example.mymusic.core.common.Constants.URL_AUTHORIZATION),
-            Uri.parse(com.example.mymusic.core.common.Constants.URL_TOKEN_EXCHANGE),
+            Uri.parse(Constants.URL_AUTHORIZATION),
+            Uri.parse(Constants.URL_TOKEN_EXCHANGE),
             null,
-            Uri.parse(com.example.mymusic.core.common.Constants.URL_AUTH_REDIRECT))
+            Uri.parse(Constants.URL_AUTH_REDIRECT))
     }
 
     private fun initAuthService() {
@@ -102,28 +103,29 @@ class AuthorizationManager @Inject constructor(
         val encoding = Base64.URL_SAFE or Base64.NO_PADDING or Base64.NO_WRAP
         val codeVerifier = Base64.encodeToString(bytes, encoding)
 
-        val digest = MessageDigest.getInstance(com.example.mymusic.core.common.Constants.MESSAGE_DIGEST_ALGORITHM)
+        val digest = MessageDigest.getInstance(Constants.MESSAGE_DIGEST_ALGORITHM)
         val hash = digest.digest(codeVerifier.toByteArray())
         val codeChallenge = Base64.encodeToString(hash, encoding)
 
         val builder = AuthorizationRequest.Builder(
             _authServiceConfig,
-            com.example.mymusic.core.common.Constants.CLIENT_ID,
+            Constants.CLIENT_ID,
             ResponseTypeValues.CODE,
-            Uri.parse(com.example.mymusic.core.common.Constants.URL_AUTH_REDIRECT))
+            Uri.parse(Constants.URL_AUTH_REDIRECT))
             .setCodeVerifier(codeVerifier,
                 codeChallenge,
-                com.example.mymusic.core.common.Constants.CODE_VERIFIER_CHALLENGE_METHOD)
+                Constants.CODE_VERIFIER_CHALLENGE_METHOD)
 
         builder.setScopes(
-            com.example.mymusic.core.common.Constants.SCOPE_STREAMING,
-            com.example.mymusic.core.common.Constants.SCOPE_EMAIL,
-            com.example.mymusic.core.common.Constants.SCOPE_APP_REMOTE_CONTROL,
-            com.example.mymusic.core.common.Constants.SCOPE_USER_MODIFY_PLAYBACK_STATE,
-            com.example.mymusic.core.common.Constants.SCOPE_USER_READ_PRIVATE,
-            com.example.mymusic.core.common.Constants.SCOPE_USER_READ_RECENTLY_PLAYED,
-            com.example.mymusic.core.common.Constants.SCOPE_USER_LIBRARY_READ,
-            com.example.mymusic.core.common.Constants.SCOPE_PLAYLIST_READ_PRIVATE
+            Constants.SCOPE_STREAMING,
+            Constants.SCOPE_EMAIL,
+            Constants.SCOPE_APP_REMOTE_CONTROL,
+            Constants.SCOPE_USER_MODIFY_PLAYBACK_STATE,
+            Constants.SCOPE_USER_READ_PRIVATE,
+            Constants.SCOPE_USER_READ_RECENTLY_PLAYED,
+            Constants.SCOPE_USER_LIBRARY_READ,
+            Constants.SCOPE_PLAYLIST_READ_PRIVATE,
+            Constants.SCOPE_USER_TOP_READ
         )
 
         val request = builder.build()

@@ -8,12 +8,18 @@ import com.example.mymusic.core.network.model.RecentlyPlayedTracksResponse
 import com.example.mymusic.core.network.model.SavedAlbumsResponse
 import com.example.mymusic.core.network.model.SavedPlaylistResponse
 import com.example.mymusic.core.network.model.SpotifyTrack
+import com.example.mymusic.core.network.model.UsersTopItemsResponse
 import com.haroldadmin.cnradapter.NetworkResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MyMusicAPIService {
+
+    @GET("https://api.spotify.com/v1/me/top/{type}")
+    suspend fun getTopItems(
+        @Path("type") type: String
+    ): NetworkResponse<UsersTopItemsResponse, ErrorResponse>
 
     @GET("https://api.spotify.com/v1/recommendations?limit=10&seed_genres=pop")
     suspend fun getRecommendations(): NetworkResponse<RecommendationsResponse, ErrorResponse>
