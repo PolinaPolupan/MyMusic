@@ -198,8 +198,7 @@ fun LibraryContent(
                                     onDismiss = it
                                 )
                             },
-                            imageUrl = if (uiState is AuthenticatedUiState.Success) uiState.userImageUrl ?: "" else "",
-                            modifier = Modifier.padding(horizontal = 8.dp))
+                            imageUrl = if (uiState is AuthenticatedUiState.Success) uiState.userImageUrl ?: "" else "")
                         Sort(
                             sortOption = currentSortOption,
                             modifier = Modifier
