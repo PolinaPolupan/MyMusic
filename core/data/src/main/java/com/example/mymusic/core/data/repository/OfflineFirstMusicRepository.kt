@@ -1,5 +1,6 @@
 package com.example.mymusic.core.data.repository
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -29,6 +30,7 @@ import com.example.mymusic.core.network.model.toLocal
 import com.example.mymusic.core.network.model.toLocalRecommendations
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -47,9 +49,9 @@ class OfflineFirstMusicRepository @Inject constructor(
     }
 
     override fun observeTrack(id: String): Flow<Track> {
-        return musicDao.observeTrack(id).map { track ->
-            track.toExternal()
-        }
+        return musicDao.observeTrack(id)
+            .filterNotNull()
+            .map { track -> track.toExternal() }
     }
 
     override fun observeAlbum(id: String): Flow<SimplifiedAlbum> {
@@ -82,6 +84,8 @@ class OfflineFirstMusicRepository @Inject constructor(
 
             if (track != null) {
                 upsertTrack(track, musicDao)
+            } else {
+                Log.e("MainActivity", "Track with $id is null!")
             }
         }
     }

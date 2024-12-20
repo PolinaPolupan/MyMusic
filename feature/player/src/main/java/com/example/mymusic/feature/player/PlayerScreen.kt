@@ -69,15 +69,6 @@ fun PlayerScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-    LaunchedEffect(true) {
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            launch {
-                viewModel.loadTrack(viewModel.trackId)
-            }
-        }
-    }
-
     when (uiState) {
         /*TODO: Create loading screen*/
         PlayerUiState.Loading -> Unit
