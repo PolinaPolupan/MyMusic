@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.example.mymusic.feature.addtoplaylist"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24

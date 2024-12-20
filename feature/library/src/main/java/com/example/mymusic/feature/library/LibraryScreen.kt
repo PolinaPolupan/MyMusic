@@ -199,7 +199,7 @@ fun LibraryContent(
                                 )
                             },
                             imageUrl = if (uiState is AuthenticatedUiState.Success) uiState.userImageUrl ?: "" else "",
-                            modifier = Modifier.padding(horizontal = 16.dp))
+                            modifier = Modifier.padding(horizontal = 8.dp))
                         Sort(
                             sortOption = currentSortOption,
                             modifier = Modifier
