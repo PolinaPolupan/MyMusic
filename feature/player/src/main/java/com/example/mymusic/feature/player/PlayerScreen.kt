@@ -258,7 +258,7 @@ private fun TrackDescription(
     modifier: Modifier = Modifier,
     onAlbumClick: (String) -> Unit
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxWidth(.85f)) {
         Text(
             text = trackName,
             color = MaterialTheme.colorScheme.onSurface,
@@ -376,6 +376,26 @@ fun TrackPlayerPreview() {
             albumId = "0",
             trackName = "New Rules",
             artistName = "Dua Lipa",
+            trackDuration = Duration.ZERO,
+            onPlayClick = {},
+            onSkipPreviousClick = {},
+            onSkipNextClick = {},
+            onAddToPlaylistClick = {},
+            onNavigateToAlbum = {},
+            onAlbumClick = {}
+        )
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview
+@Composable
+fun TrackPlayerLongTextPreview() {
+    MyMusicTheme {
+        TrackPlayer(
+            albumId = "0",
+            trackName = "Long Long Long Long Long Long Long name",
+            artistName = "Long Long Long Long Long Long Long Long Long Long Long name",
             trackDuration = Duration.ZERO,
             onPlayClick = {},
             onSkipPreviousClick = {},
