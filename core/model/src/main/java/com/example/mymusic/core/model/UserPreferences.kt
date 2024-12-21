@@ -4,5 +4,7 @@ data class UserPreferences (
     val authState: String?,
     val displayName: String?,
     val email: String?,
-    val imageUrl: String?
+    val imageUrl: String?,
+    val spotifyId: String?,
+    val isPlaying: Boolean?
 )

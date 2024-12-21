@@ -32,6 +32,8 @@ import com.example.mymusic.navigation.TopLevelDestination
 @SuppressLint("NewApi")
 @Composable
 fun MyMusicApp(
+    isPlaying: Boolean,
+    onPlayClick: (Boolean) -> Unit,
     appState: MyMusicAppState = rememberMyMusicAppState()
 ) {
     val currentTrack = appState.currentTrack
@@ -60,8 +62,11 @@ fun MyMusicApp(
                     coverUrl = currentTrack.album.imageUrl,
                     name = currentTrack.name,
                     artistName = currentTrack.artists[0].name,
-                    isPaused = true,
-                    onClick = { appState.navController.navigateToPlayer(currentTrack.id) }
+                    isPlaying = isPlaying,
+                    onPlayClick = { onPlayClick(!isPlaying) },
+                    onClick = {
+                        appState.navController.navigateToPlayer(currentTrack.id)
+                    }
                 )
                 BottomNavigationBar(
                     destinations = appState.topLevelDestinations,

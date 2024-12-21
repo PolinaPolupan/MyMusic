@@ -2,6 +2,7 @@ package com.example.mymusic.core.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -21,6 +22,8 @@ class MyMusicPreferencesDataSource @Inject constructor(
         val DISPLAY_NAME = stringPreferencesKey(Constants.DATA_DISPLAY_NAME)
         val EMAIL = stringPreferencesKey(Constants.DATA_EMAIL)
         val IMAGE_URL = stringPreferencesKey(Constants.IMAGE_URL)
+        val SPOTIFY_ID = stringPreferencesKey(Constants.SPOTIFY_ID) // Denotes the recent playable object
+        val IS_PLAYING = booleanPreferencesKey(Constants.IS_PLAYING)
     }
 
     val userPreferencesFlow: Flow<UserPreferences> = dataStore.data
@@ -37,7 +40,9 @@ class MyMusicPreferencesDataSource @Inject constructor(
                 authState = preferences[PreferencesKeys.AUTH_STATE],
                 email = preferences[PreferencesKeys.EMAIL],
                 displayName = preferences[PreferencesKeys.DISPLAY_NAME],
-                imageUrl = preferences[PreferencesKeys.IMAGE_URL]
+                imageUrl = preferences[PreferencesKeys.IMAGE_URL],
+                spotifyId = preferences[PreferencesKeys.SPOTIFY_ID],
+                isPlaying = preferences[PreferencesKeys.IS_PLAYING]
             )
         }
 
@@ -52,6 +57,12 @@ class MyMusicPreferencesDataSource @Inject constructor(
             preferences[PreferencesKeys.DISPLAY_NAME] = displayName
             preferences[PreferencesKeys.EMAIL] = email
             preferences[PreferencesKeys.IMAGE_URL] = imageUrl
+        }
+    }
+
+    suspend fun setIsPlaying(isPlaying: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.IS_PLAYING] = isPlaying
         }
     }
 }

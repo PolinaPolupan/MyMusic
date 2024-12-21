@@ -1,7 +1,6 @@
 package com.example.mymusic.core.designsystem.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,8 +36,9 @@ fun PlayerCard(
     coverUrl: String,
     name: String,
     artistName: String,
-    isPaused: Boolean,
+    isPlaying: Boolean,
     onClick: () -> Unit,
+    onPlayClick: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     buttonModifier: Modifier = Modifier
         .size(36.dp)
@@ -98,27 +98,24 @@ fun PlayerCard(
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                if (isPaused) {
+
                     IconButton(
-                        onClick = {/*TODO*/},
+                        onClick = { onPlayClick(isPlaying) },
                         modifier = Modifier.size(40.dp)
                     ) {
-                        Icon(
-                            imageVector = MyMusicIcons.Play,
-                            contentDescription = stringResource(id = R.string.play),
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                } else {
-                    IconButton(
-                        onClick = {/*TODO*/},
-                        modifier = Modifier.size(40.dp)
-                    ) {
-                        Icon(
-                            imageVector = MyMusicIcons.Pause,
-                            contentDescription = stringResource(id = R.string.pause),
-                            modifier = Modifier.fillMaxSize()
-                        )
+                        if (isPlaying) {
+                            Icon(
+                                imageVector = MyMusicIcons.Pause,
+                                contentDescription = stringResource(id = R.string.pause),
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        } else {
+                            Icon(
+                                imageVector = MyMusicIcons.Play,
+                                contentDescription = stringResource(id = R.string.play),
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
                     }
                 }
                 IconButton(
@@ -134,14 +131,19 @@ fun PlayerCard(
             }
         }
     }
-}
 
 @PreviewWithBackground
 @Composable
 fun PlayerCardPreview() {
     MyMusicTheme {
         val mockTrack = PreviewParameterData.tracks[0]
-        PlayerCard(mockTrack.album.imageUrl, mockTrack.name, mockTrack.artists[0].name, false, onClick = {})
+        PlayerCard(
+            mockTrack.album.imageUrl,
+            mockTrack.name, mockTrack.artists[0].name,
+            false,
+            onClick = {},
+            onPlayClick = {}
+        )
     }
 }
 
@@ -150,7 +152,13 @@ fun PlayerCardPreview() {
 fun PlayerCardLongNamePreview() {
     MyMusicTheme {
         val mockTrack = PreviewParameterData.tracks[0]
-        PlayerCard(mockTrack.album.imageUrl, "This is a very very very very long name", mockTrack.artists[0].name, false, onClick = {})
+        PlayerCard(
+            mockTrack.album.imageUrl,
+            "This is a very very very very long name",
+            mockTrack.artists[0].name,
+            false,
+            onClick = {},
+            onPlayClick = {})
     }
 }
 
@@ -159,6 +167,12 @@ fun PlayerCardLongNamePreview() {
 fun PlayerCardLongArtistsNamePreview() {
     MyMusicTheme {
         val mockTrack = PreviewParameterData.tracks[0]
-        PlayerCard(mockTrack.album.imageUrl, mockTrack.name, "This is a very very very very long artists name", false, onClick = {})
+        PlayerCard(
+            mockTrack.album.imageUrl,
+            mockTrack.name,
+            "This is a very very very very long artists name",
+            false,
+            onClick = {},
+            onPlayClick = {})
     }
 }

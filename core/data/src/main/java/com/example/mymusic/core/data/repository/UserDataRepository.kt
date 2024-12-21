@@ -19,4 +19,6 @@ interface UserDataRepository {
      * Updates user's display name, email, and image url
      */
     suspend fun updateUserData(displayName: String, email: String, imageUrl: String)
+
+    suspend fun setIsPlaying(isPlaying: Boolean)
 }

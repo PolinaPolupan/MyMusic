@@ -8,10 +8,10 @@
       <SelectionState runConfigName="core.common">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="LibraryScreenTest">
+      <SelectionState runConfigName="MusicDaoTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="MusicDaoTest">
+      <SelectionState runConfigName="AddToPlayListPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

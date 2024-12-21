@@ -75,6 +75,8 @@ fun PlayerScreen(
         is PlayerUiState.Success ->
             PlayerContent(
                 track = (uiState as PlayerUiState.Success).track,
+                isPlaying = (uiState as PlayerUiState.Success).isPlaying,
+                onPlayClick = {viewModel.toggleIsPlaying(!(uiState as PlayerUiState.Success).isPlaying)},
                 onBackClick = onBackClick,
                 onAddToPlaylistClick = onAddToPlaylistClick,
                 onNavigateToAlbum = onNavigateToAlbum,
@@ -88,6 +90,8 @@ fun PlayerScreen(
 @Composable
 fun PlayerContent(
     track: com.example.mymusic.core.model.Track,
+    isPlaying: Boolean,
+    onPlayClick: () -> Unit,
     onBackClick: () -> Unit,
     onAddToPlaylistClick: (String) -> Unit,
     onNavigateToAlbum: (String) -> Unit,
@@ -157,11 +161,12 @@ fun PlayerContent(
             ) {
                 Column {
                     TrackPlayer(
+                        isPlaying = isPlaying,
                         albumId = track.album.id,
                         trackName = track.name,
                         artistName = artistsString(track.artists),
                         trackDuration = Duration.ZERO,
-                        onPlayClick = { /*TODO*/ },
+                        onPlayClick = onPlayClick,
                         onSkipPreviousClick = { /*TODO*/ },
                         onSkipNextClick = { /*TODO*/ },
                         onAddToPlaylistClick = { onAddToPlaylistClick(track.id) },
@@ -179,6 +184,7 @@ fun PlayerContent(
 
 @Composable
 private fun PlayerButtons(
+    isPlaying: Boolean,
     onPlayClick: () -> Unit,
     onSkipPreviousClick: () -> Unit,
     onSkipNextClick: () -> Unit,
@@ -212,12 +218,21 @@ private fun PlayerButtons(
             onClick = onPlayClick,
             modifier = playerButtonModifier
         ) {
-            Icon(
-                imageVector = MyMusicIcons.Play,
-                contentDescription = stringResource(R.string.play),
-                tint = MaterialTheme.colorScheme.onSurface,
-                modifier = playerButtonModifier
-            )
+            if (isPlaying) {
+                Icon(
+                    imageVector = MyMusicIcons.Pause,
+                    contentDescription = stringResource(R.string.pause),
+                    tint = MaterialTheme.colorScheme.onSurface,
+                    modifier = playerButtonModifier
+                )
+            } else {
+                Icon(
+                    imageVector = MyMusicIcons.Play,
+                    contentDescription = stringResource(R.string.play),
+                    tint = MaterialTheme.colorScheme.onSurface,
+                    modifier = playerButtonModifier
+                )
+            }
         }
         IconButton(
             onClick = onSkipNextClick,
@@ -248,7 +263,6 @@ private fun PlayerSlider(trackDuration: Duration?) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun TrackDescription(
     albumId: String,
@@ -283,6 +297,7 @@ private fun TrackDescription(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TrackPlayer(
+    isPlaying: Boolean,
     albumId: String,
     trackName: String,
     artistName: String,
@@ -321,6 +336,7 @@ fun TrackPlayer(
         }
         PlayerSlider(trackDuration = trackDuration)
         PlayerButtons(
+            isPlaying = isPlaying,
             onPlayClick = onPlayClick,
             onSkipPreviousClick = onSkipPreviousClick,
             onSkipNextClick = onSkipNextClick
@@ -373,6 +389,7 @@ private fun TopAppBar(
 fun TrackPlayerPreview() {
     MyMusicTheme {
         TrackPlayer(
+            isPlaying = true,
             albumId = "0",
             trackName = "New Rules",
             artistName = "Dua Lipa",
@@ -393,6 +410,7 @@ fun TrackPlayerPreview() {
 fun TrackPlayerLongTextPreview() {
     MyMusicTheme {
         TrackPlayer(
+            isPlaying = true,
             albumId = "0",
             trackName = "Long Long Long Long Long Long Long name",
             artistName = "Long Long Long Long Long Long Long Long Long Long Long name",
@@ -422,6 +440,8 @@ fun PlayerPreview() {
     MyMusicTheme {
         PlayerContent(
             track = PreviewParameterData.tracks[0],
+            isPlaying = true,
+            onPlayClick = {},
             onBackClick = {},
             onAddToPlaylistClick = {},
             onNavigateToAlbum = {},
@@ -458,6 +478,7 @@ fun PlayerSliderPreview() {
 fun PlayerButtonsPreview() {
     MyMusicTheme {
         PlayerButtons(
+            isPlaying = true,
             onPlayClick = {},
             onSkipPreviousClick = {},
             onSkipNextClick = {})

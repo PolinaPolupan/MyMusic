@@ -15,7 +15,7 @@ const val PLAYER_ROUTE = "player_route"
 internal const val TRACK_ID_ARG = "trackId"
 
 fun NavController.navigateToPlayer(trackId: String) {
-    navigate("${com.example.mymusic.feature.player.PLAYER_ROUTE}/$trackId") {
+    navigate("${PLAYER_ROUTE}/$trackId") {
         launchSingleTop = true
     }
 }
@@ -27,9 +27,9 @@ fun NavGraphBuilder.playerScreen(
     onBackClick: () -> Unit,
 ) {
     composable(
-        route = "${com.example.mymusic.feature.player.PLAYER_ROUTE}/{${com.example.mymusic.feature.player.TRACK_ID_ARG}}",
+        route = "${PLAYER_ROUTE}/{${TRACK_ID_ARG}}",
         arguments = listOf(
-            navArgument(com.example.mymusic.feature.player.TRACK_ID_ARG) { type = NavType.StringType },
+            navArgument(TRACK_ID_ARG) { type = NavType.StringType },
         ),
     ) {
         PlayerScreen(onBackClick = onBackClick, onAddToPlaylistClick = onAddToPlaylistClick, onNavigateToAlbum = onNavigateToAlbum)

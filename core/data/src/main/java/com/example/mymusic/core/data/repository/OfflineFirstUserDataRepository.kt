@@ -15,4 +15,6 @@ class OfflineFirstUserDataRepository @Inject constructor(
     override suspend fun updateAuthState(authState: String) = dataSource.updateAuthState(authState)
 
     override suspend fun updateUserData(displayName: String, email: String, imageUrl: String) = dataSource.updateUserData(displayName, email, imageUrl)
+
+    override suspend fun setIsPlaying(isPlaying: Boolean) = dataSource.setIsPlaying(isPlaying)
 }

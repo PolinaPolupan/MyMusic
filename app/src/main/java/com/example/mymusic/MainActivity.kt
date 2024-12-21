@@ -9,10 +9,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.example.mymusic.core.common.Constants
 import com.example.mymusic.core.designsystem.theme.MyMusicTheme
@@ -20,7 +23,9 @@ import com.example.mymusic.sync.SyncManager
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
+import com.spotify.protocol.types.Track
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -29,6 +34,8 @@ class MainActivity : ComponentActivity() {
     var spotifyAppRemote: SpotifyAppRemote? = null
 
     @Inject lateinit var syncManager: SyncManager
+
+    val viewModel: MainActivityViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,13 +59,15 @@ class MainActivity : ComponentActivity() {
 
             val appState = rememberMyMusicAppState()
 
+            val isPlaying by viewModel.isPlaying.collectAsState()
+
             MyMusicTheme(dynamicColor = true) {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyMusicApp(appState)
+                    MyMusicApp(appState = appState, isPlaying = isPlaying, onPlayClick = viewModel::toggleIsPlaying)
                 }
             }
         }
@@ -92,14 +101,14 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun connected() {
-//        // Then we will write some more code here.
-//        // Play a playlist
-//        spotifyAppRemote?.playerApi?.play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL")
-//        // Subscribe to PlayerState
-//        spotifyAppRemote?.playerApi?.subscribeToPlayerState()?.setEventCallback {
-//            val track: SpotifyTrack = it.track
-//            Log.d("MainActivity", track.name + " by " + track.artist.name)
-//        }
+        // Then we will write some more code here.
+        // Play a playlist
+        spotifyAppRemote?.playerApi?.play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL")
+        // Subscribe to PlayerState
+        spotifyAppRemote?.playerApi?.subscribeToPlayerState()?.setEventCallback {
+            val track: Track = it.track
+            Log.d("MainActivity", track.name + " by " + track.artist.name)
+        }
     }
 
     override fun onStop() {

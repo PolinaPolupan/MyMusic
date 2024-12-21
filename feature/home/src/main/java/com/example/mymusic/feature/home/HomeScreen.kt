@@ -90,7 +90,9 @@ internal fun HomeScreen(
         HomeContent(
             uiState = uiState,
             authenticatedUiState = authenticatedUiState,
-            onTrackClick = onTrackClick,
+            onTrackClick = {
+                viewModel.setIsPlaying(true)
+                onTrackClick(it) },
             recentlyPlayed = recentlyPlayed,
             modifier = modifier
         )

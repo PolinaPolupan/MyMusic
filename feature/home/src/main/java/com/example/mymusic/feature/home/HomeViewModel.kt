@@ -11,11 +11,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    userDataRepository: UserDataRepository,
+    private val userDataRepository: UserDataRepository,
     musicRepository: MusicRepository,
     syncManager: SyncManager
 ): ViewModel()
@@ -41,6 +42,12 @@ class HomeViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), HomeUiState.Loading)
 
     val recentlyPlayed = musicRepository.observeRecentlyPlayed().cachedIn(viewModelScope)
+
+    fun setIsPlaying(isPlaying: Boolean) {
+        viewModelScope.launch {
+            userDataRepository.setIsPlaying(isPlaying)
+        }
+    }
 }
 
 sealed interface HomeUiState {
