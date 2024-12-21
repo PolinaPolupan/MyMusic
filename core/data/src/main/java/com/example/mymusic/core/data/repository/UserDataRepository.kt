@@ -21,4 +21,6 @@ interface UserDataRepository {
     suspend fun updateUserData(displayName: String, email: String, imageUrl: String)
 
     suspend fun setIsPlaying(isPlaying: Boolean)
+
+    suspend fun setTrackId(trackId: String)
 }

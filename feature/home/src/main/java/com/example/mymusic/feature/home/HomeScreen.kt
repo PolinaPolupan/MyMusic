@@ -67,7 +67,6 @@ import kotlin.math.absoluteValue
 
 @Composable
 internal fun HomeScreen(
-    onTrackClick: (String) -> Unit,
     onNavigateToLogin: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
@@ -90,9 +89,7 @@ internal fun HomeScreen(
         HomeContent(
             uiState = uiState,
             authenticatedUiState = authenticatedUiState,
-            onTrackClick = {
-                viewModel.setIsPlaying(true)
-                onTrackClick(it) },
+            onTrackClick = { viewModel.onTrackClick(true, it) },
             recentlyPlayed = recentlyPlayed,
             modifier = modifier
         )

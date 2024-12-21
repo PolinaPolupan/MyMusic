@@ -35,10 +35,7 @@ fun MyMusicNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        homeScreen(
-            onTrackClick = navController::navigateToPlayer,
-            onNavigateToLogin = navController::navigateToLogin
-        )
+        homeScreen(onNavigateToLogin = navController::navigateToLogin)
         loginScreen(onNavigateToHome = navController::navigateToHome)
         searchScreen()
         libraryScreen(

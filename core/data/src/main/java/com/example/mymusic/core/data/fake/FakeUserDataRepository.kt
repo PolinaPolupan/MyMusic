@@ -17,7 +17,7 @@ class FakeUserDataRepository @Inject constructor(
             displayName = it.displayName,
             email = it.email,
             imageUrl = it.imageUrl,
-            spotifyId = it.spotifyId,
+            trackId = it.trackId,
             isPlaying = it.isPlaying
         )
     }
@@ -27,4 +27,6 @@ class FakeUserDataRepository @Inject constructor(
     override suspend fun updateUserData(displayName: String, email: String, imageUrl: String) = dataSource.updateUserData(displayName, email, imageUrl)
 
     override suspend fun setIsPlaying(isPlaying: Boolean) = dataSource.setIsPlaying(isPlaying)
+
+    override suspend fun setTrackId(trackId: String) = dataSource.setTrackId(trackId)
 }

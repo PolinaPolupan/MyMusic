@@ -17,4 +17,6 @@ class OfflineFirstUserDataRepository @Inject constructor(
     override suspend fun updateUserData(displayName: String, email: String, imageUrl: String) = dataSource.updateUserData(displayName, email, imageUrl)
 
     override suspend fun setIsPlaying(isPlaying: Boolean) = dataSource.setIsPlaying(isPlaying)
+
+    override suspend fun setTrackId(trackId: String) = dataSource.setTrackId(trackId)
 }

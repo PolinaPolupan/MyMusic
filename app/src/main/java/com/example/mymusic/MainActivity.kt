@@ -17,6 +17,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mymusic.core.common.Constants
 import com.example.mymusic.core.designsystem.theme.MyMusicTheme
 import com.example.mymusic.sync.SyncManager
@@ -59,7 +60,7 @@ class MainActivity : ComponentActivity() {
 
             val appState = rememberMyMusicAppState()
 
-            val isPlaying by viewModel.isPlaying.collectAsState()
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
             MyMusicTheme(dynamicColor = true) {
                 // A surface container using the 'background' color from the theme
@@ -67,7 +68,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyMusicApp(appState = appState, isPlaying = isPlaying, onPlayClick = viewModel::toggleIsPlaying)
+                    MyMusicApp(
+                        appState = appState,
+                        currentTrack = uiState.currentTrack,
+                        isPlaying = uiState.isPlaying,
+                        onPlayClick = viewModel::toggleIsPlaying
+                    )
                 }
             }
         }

@@ -22,7 +22,7 @@ class MyMusicPreferencesDataSource @Inject constructor(
         val DISPLAY_NAME = stringPreferencesKey(Constants.DATA_DISPLAY_NAME)
         val EMAIL = stringPreferencesKey(Constants.DATA_EMAIL)
         val IMAGE_URL = stringPreferencesKey(Constants.IMAGE_URL)
-        val SPOTIFY_ID = stringPreferencesKey(Constants.SPOTIFY_ID) // Denotes the recent playable object
+        val TRACK_ID = stringPreferencesKey(Constants.TRACK_ID) // Denotes the recent playable object
         val IS_PLAYING = booleanPreferencesKey(Constants.IS_PLAYING)
     }
 
@@ -41,7 +41,7 @@ class MyMusicPreferencesDataSource @Inject constructor(
                 email = preferences[PreferencesKeys.EMAIL],
                 displayName = preferences[PreferencesKeys.DISPLAY_NAME],
                 imageUrl = preferences[PreferencesKeys.IMAGE_URL],
-                spotifyId = preferences[PreferencesKeys.SPOTIFY_ID],
+                trackId = preferences[PreferencesKeys.TRACK_ID],
                 isPlaying = preferences[PreferencesKeys.IS_PLAYING]
             )
         }
@@ -63,6 +63,12 @@ class MyMusicPreferencesDataSource @Inject constructor(
     suspend fun setIsPlaying(isPlaying: Boolean) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.IS_PLAYING] = isPlaying
+        }
+    }
+
+    suspend fun setTrackId(trackId: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.TRACK_ID] = trackId
         }
     }
 }

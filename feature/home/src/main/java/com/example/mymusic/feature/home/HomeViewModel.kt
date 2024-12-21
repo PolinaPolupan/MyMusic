@@ -43,10 +43,21 @@ class HomeViewModel @Inject constructor(
 
     val recentlyPlayed = musicRepository.observeRecentlyPlayed().cachedIn(viewModelScope)
 
-    fun setIsPlaying(isPlaying: Boolean) {
+    private fun setTrackId(trackId: String) {
+        viewModelScope.launch {
+            userDataRepository.setTrackId(trackId)
+        }
+    }
+
+    private fun setIsPlaying(isPlaying: Boolean) {
         viewModelScope.launch {
             userDataRepository.setIsPlaying(isPlaying)
         }
+    }
+
+    fun onTrackClick(isPlaying: Boolean, trackId: String) {
+        setIsPlaying(isPlaying)
+        setTrackId(trackId)
     }
 }
 

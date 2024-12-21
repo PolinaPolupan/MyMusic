@@ -24,6 +24,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.compose.rememberNavController
 import com.example.mymusic.core.designsystem.component.PlayerCard
 import com.example.mymusic.core.designsystem.component.linearGradientScrim
+import com.example.mymusic.core.model.Track
 import com.example.mymusic.feature.player.navigateToPlayer
 import com.example.mymusic.navigation.BottomNavigationBarItem
 import com.example.mymusic.navigation.MyMusicNavHost
@@ -33,11 +34,10 @@ import com.example.mymusic.navigation.TopLevelDestination
 @Composable
 fun MyMusicApp(
     isPlaying: Boolean,
+    currentTrack: Track?,
     onPlayClick: (Boolean) -> Unit,
     appState: MyMusicAppState = rememberMyMusicAppState()
 ) {
-    val currentTrack = appState.currentTrack
-
     Box(
         contentAlignment = Alignment.BottomCenter,
         modifier = Modifier
@@ -58,16 +58,18 @@ fun MyMusicApp(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Show on top level destinations.
-                PlayerCard(
-                    coverUrl = currentTrack.album.imageUrl,
-                    name = currentTrack.name,
-                    artistName = currentTrack.artists[0].name,
-                    isPlaying = isPlaying,
-                    onPlayClick = { onPlayClick(!isPlaying) },
-                    onClick = {
-                        appState.navController.navigateToPlayer(currentTrack.id)
-                    }
-                )
+                if (currentTrack != null) {
+                    PlayerCard(
+                        coverUrl = currentTrack.album.imageUrl,
+                        name = currentTrack.name,
+                        artistName = currentTrack.artists[0].name,
+                        isPlaying = isPlaying,
+                        onPlayClick = { onPlayClick(!isPlaying) },
+                        onClick = {
+                            appState.navController.navigateToPlayer(currentTrack.id)
+                        }
+                    )
+                }
                 BottomNavigationBar(
                     destinations = appState.topLevelDestinations,
                     onNavigateToDestination = appState::navigateToTopLevelDestination,

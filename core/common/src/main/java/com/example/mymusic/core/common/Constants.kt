@@ -4,7 +4,7 @@ class Constants {
     companion object {
         const val DATASTORE_PREFERENCES_NAME = "AUTH_STATE_PREFERENCE"
         const val AUTH_STATE = "AUTH_STATE"
-        const val SPOTIFY_ID = "SPOTIFY_ID"
+        const val TRACK_ID = "TRACK_ID"
         const val IS_PLAYING = "IS_PLAYING"
 
         const val SCOPE_EMAIL = "user-read-email"
