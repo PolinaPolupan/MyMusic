@@ -66,6 +66,7 @@ public class SpotifyAppRemoteManager {
                         Log.d("MainActivity", track.name + " by " + track.artist.name);
                     }
                 });
+
     }
 
     public void onStop() {
