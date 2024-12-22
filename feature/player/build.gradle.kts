@@ -50,7 +50,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     implementation(project(":core:model"))
-
+    implementation(project(":app-remote"))
     implementation(project(":core:data"))
     implementation(project(":core:designsystem"))
 

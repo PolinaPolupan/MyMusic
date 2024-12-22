@@ -18,14 +18,14 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 
 public class SpotifyAppRemoteManager {
 
-    @Inject
-    @ApplicationContext
-    Context context;
-
-    @Inject
-    public SpotifyAppRemoteManager () {}
-
     private SpotifyAppRemote mSpotifyAppRemote;
+    private final Context context;
+
+    @Inject
+    public SpotifyAppRemoteManager(@ApplicationContext Context context) {
+        this.context = context;
+        onStart();
+    }
 
     public void onStart() {
         ConnectionParams connectionParams =

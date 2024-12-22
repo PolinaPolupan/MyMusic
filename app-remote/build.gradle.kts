@@ -34,8 +34,10 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.spotifyappremote)
+    implementation(libs.androidx.hilt.common)
+    implementation(libs.androidx.hilt.work)
     implementation(libs.hilt.android)
-    compileOnly(libs.androidx.hilt.common)
+    implementation(libs.hilt.testing)
     implementation(project(":core:common"))
 
     ksp(libs.hilt.compiler)

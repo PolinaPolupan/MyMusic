@@ -3,8 +3,10 @@ package com.example.mymusic.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.example.mymusic.appremote.SpotifyAppRemoteManager
 import com.example.mymusic.core.data.repository.MusicRepository
 import com.example.mymusic.core.data.repository.UserDataRepository
+import com.example.mymusic.core.model.Track
 import com.example.mymusic.sync.SyncManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val userDataRepository: UserDataRepository,
+    private val appRemoteManager: SpotifyAppRemoteManager,
     musicRepository: MusicRepository,
     syncManager: SyncManager
 ): ViewModel()
@@ -55,9 +58,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onTrackClick(isPlaying: Boolean, trackId: String) {
+    fun onTrackClick(isPlaying: Boolean, track: Track) {
         setIsPlaying(isPlaying)
-        setTrackId(trackId)
+        setTrackId(track.id)
+        appRemoteManager.play(track.uri)
     }
 }
 
@@ -66,7 +70,7 @@ sealed interface HomeUiState {
     data object Loading: HomeUiState
 
     data class Success(
-        val topPicks: List<com.example.mymusic.core.model.Track>
+        val topPicks: List<Track>
     ): HomeUiState
 }
 

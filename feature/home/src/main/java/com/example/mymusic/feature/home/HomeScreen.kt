@@ -2,7 +2,6 @@ package com.example.mymusic.feature.home
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,7 +42,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.mymusic.feature.account.AccountDialog
 import com.example.mymusic.core.designsystem.component.AnimationBox
 import com.example.mymusic.core.designsystem.component.FeaturedTrack
 import com.example.mymusic.core.designsystem.component.PreviewParameterData
@@ -106,12 +104,11 @@ internal fun HomeScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeContent(
     uiState: HomeUiState,
     authenticatedUiState: AuthenticatedUiState,
-    onTrackClick: (String) -> Unit,
+    onTrackClick: (Track) -> Unit,
     recentlyPlayed: LazyPagingItems<Track>,
     modifier: Modifier = Modifier
 ) {
@@ -187,7 +184,6 @@ fun HomeContent(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun BlurredImageHeader(
     uiState: HomeUiState,
@@ -228,12 +224,11 @@ internal fun BlurredImageHeader(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun TopPicks(
     uiState: HomeUiState,
     pagerState: PagerState,
-    onTrackClick: (String) -> Unit,
+    onTrackClick: (Track) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -297,7 +292,7 @@ internal fun TopPicks(
                             coverUrl = uiState.topPicks[page % uiState.topPicks.size].album.imageUrl,
                             name = uiState.topPicks[page % uiState.topPicks.size].name,
                             artists = uiState.topPicks[page % uiState.topPicks.size].artists,
-                            onClick = { onTrackClick(uiState.topPicks[page % uiState.topPicks.size].id) },
+                            onClick = { onTrackClick(uiState.topPicks[page % uiState.topPicks.size]) },
                             modifier = Modifier.carouselPageOffset(pagerState, page),
                             imageModifier = Modifier
                                 .graphicsLayer {
@@ -332,7 +327,7 @@ internal fun TopPicks(
 internal fun RecentlyPlayed(
     uiState: HomeUiState,
     recentlyPlayed: LazyPagingItems<Track>,
-    onTrackClick: (String) -> Unit,
+    onTrackClick: (Track) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -373,7 +368,7 @@ internal fun RecentlyPlayed(
                                 name = track!!.name,
                                 artists = track.artists,
                                 imageUrl = track.album.imageUrl,
-                                onClick = { onTrackClick(track.id) },
+                                onClick = { onTrackClick(track) },
                                 modifier = Modifier.padding(4.dp)
                             )
                         }
@@ -417,7 +412,6 @@ fun HomeLoadingPreview() {
  * [carouselPageOffset] helper extension function. Computes the scale and the offset of the item
  * of a center-aligned carousel
  */
-@OptIn(ExperimentalFoundationApi::class)
 fun Modifier.carouselPageOffset(pagerState: PagerState, page: Int) = graphicsLayer {
     // Calculate the absolute offset for the current page from the
     // scroll position. We use the absolute value which allows us to mirror
