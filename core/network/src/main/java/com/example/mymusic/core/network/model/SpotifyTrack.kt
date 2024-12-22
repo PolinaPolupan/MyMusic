@@ -46,7 +46,8 @@ data class SpotifyTrack(
 fun SpotifyTrack.toLocalTrack() = LocalTrack(
     id = id,
     album = album.toLocal(),
-    name = name
+    name = name,
+    uri = uri
 )
 
 fun List<SpotifyTrack>.toLocalTracks() = map(SpotifyTrack::toLocalTrack)

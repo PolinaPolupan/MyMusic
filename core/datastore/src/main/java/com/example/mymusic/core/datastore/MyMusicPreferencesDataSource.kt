@@ -24,6 +24,7 @@ class MyMusicPreferencesDataSource @Inject constructor(
         val IMAGE_URL = stringPreferencesKey(Constants.IMAGE_URL)
         val TRACK_ID = stringPreferencesKey(Constants.TRACK_ID) // Denotes the recent playable object
         val IS_PLAYING = booleanPreferencesKey(Constants.IS_PLAYING)
+        val SPOTIFY_URI = stringPreferencesKey(Constants.SPOTIFY_URI)
     }
 
     val userPreferencesFlow: Flow<UserPreferences> = dataStore.data
@@ -42,7 +43,8 @@ class MyMusicPreferencesDataSource @Inject constructor(
                 displayName = preferences[PreferencesKeys.DISPLAY_NAME],
                 imageUrl = preferences[PreferencesKeys.IMAGE_URL],
                 trackId = preferences[PreferencesKeys.TRACK_ID],
-                isPlaying = preferences[PreferencesKeys.IS_PLAYING]
+                isPlaying = preferences[PreferencesKeys.IS_PLAYING],
+                spotifyUri = preferences[PreferencesKeys.SPOTIFY_URI]
             )
         }
 
@@ -69,6 +71,12 @@ class MyMusicPreferencesDataSource @Inject constructor(
     suspend fun setTrackId(trackId: String) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.TRACK_ID] = trackId
+        }
+    }
+
+    suspend fun setSpotifyUri(spotifyUri: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.SPOTIFY_URI] = spotifyUri
         }
     }
 }

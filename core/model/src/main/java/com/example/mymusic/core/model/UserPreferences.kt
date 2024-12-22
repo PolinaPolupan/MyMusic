@@ -6,5 +6,6 @@ data class UserPreferences(
     val email: String?,
     val imageUrl: String?,
     val trackId: String?,
-    val isPlaying: Boolean?
+    val isPlaying: Boolean?,
+    val spotifyUri: String?
 )

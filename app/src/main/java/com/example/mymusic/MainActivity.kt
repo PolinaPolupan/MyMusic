@@ -32,7 +32,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    var spotifyAppRemote: SpotifyAppRemote? = null
+    @Inject
+    lateinit var spotifyAppRemoteManager: SpotifyAppRemoteManager
 
     @Inject lateinit var syncManager: SyncManager
 
@@ -72,7 +73,15 @@ class MainActivity : ComponentActivity() {
                         appState = appState,
                         currentTrack = uiState.currentTrack,
                         isPlaying = uiState.isPlaying,
-                        onPlayClick = viewModel::toggleIsPlaying
+                        onPlayClick = {
+                            viewModel.toggleIsPlaying(it)
+                            if (!uiState.isPlaying) uiState.currentTrack?.let { track ->
+                                Log.d("MainActivity", "Track ${track.uri}")
+                                spotifyAppRemoteManager.play(track.uri)
+                            } else {
+                                spotifyAppRemoteManager.pause()
+                            }
+                        }
                     )
                 }
             }
@@ -82,45 +91,12 @@ class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
 
-        // Set the connection parameters
-        val connectionParams = ConnectionParams.Builder(Constants.CLIENT_ID)
-            .setRedirectUri(Constants.URL_AUTH_REDIRECT)
-            .showAuthView(true)
-            .build()
-
-        SpotifyAppRemote.connect(this, connectionParams, object : Connector.ConnectionListener {
-            override fun onConnected(appRemote: SpotifyAppRemote) {
-                spotifyAppRemote = appRemote
-                Log.d("MainActivity", "Connected! Yay!")
-                // Now you can start interacting with App Remote
-                connected()
-            }
-
-            override fun onFailure(throwable: Throwable) {
-                Log.e("MainActivity", throwable.message, throwable)
-                // If Spotify is not installed, show alert dialog
-                if (!SpotifyAppRemote.isSpotifyInstalled(applicationContext)) {
-                    /*TODO*/
-                }
-            }
-        })
-    }
-
-    private fun connected() {
-        // Then we will write some more code here.
-        // Play a playlist
-        spotifyAppRemote?.playerApi?.play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL")
-        // Subscribe to PlayerState
-        spotifyAppRemote?.playerApi?.subscribeToPlayerState()?.setEventCallback {
-            val track: Track = it.track
-            Log.d("MainActivity", track.name + " by " + track.artist.name)
-        }
+        spotifyAppRemoteManager.onStart()
     }
 
     override fun onStop() {
         super.onStop()
-        spotifyAppRemote?.let {
-            SpotifyAppRemote.disconnect(it)
-        }
+
+        spotifyAppRemoteManager.onStop()
     }
 }

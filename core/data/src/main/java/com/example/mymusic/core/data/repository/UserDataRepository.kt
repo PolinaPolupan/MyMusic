@@ -23,4 +23,6 @@ interface UserDataRepository {
     suspend fun setIsPlaying(isPlaying: Boolean)
 
     suspend fun setTrackId(trackId: String)
+
+    suspend fun setSpotifyUri(spotifyUri: String)
 }

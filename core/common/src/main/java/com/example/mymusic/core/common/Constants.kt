@@ -6,6 +6,7 @@ class Constants {
         const val AUTH_STATE = "AUTH_STATE"
         const val TRACK_ID = "TRACK_ID"
         const val IS_PLAYING = "IS_PLAYING"
+        const val SPOTIFY_URI = "SPOTIFY_URI"
 
         const val SCOPE_EMAIL = "user-read-email"
         const val SCOPE_UGC_IMAGE_UPLOAD = "ugc-image-upload"

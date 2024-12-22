@@ -34,7 +34,8 @@ fun LocalTrackWithArtists.toExternal() = Track(
     id = track.id,
     album = track.album.toExternalSimplified(albumArtists.toExternal()),
     name = track.name,
-    artists = artists.toExternal()
+    artists = artists.toExternal(),
+    uri = track.uri
 )
 
 @JvmName("LocalTrackWithArtistsListToExternalTracks")

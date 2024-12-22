@@ -19,4 +19,6 @@ class OfflineFirstUserDataRepository @Inject constructor(
     override suspend fun setIsPlaying(isPlaying: Boolean) = dataSource.setIsPlaying(isPlaying)
 
     override suspend fun setTrackId(trackId: String) = dataSource.setTrackId(trackId)
+
+    override suspend fun setSpotifyUri(spotifyUri: String) = dataSource.setSpotifyUri(spotifyUri)
 }

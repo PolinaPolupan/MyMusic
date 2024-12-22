@@ -37,3 +37,22 @@ include(":feature:player")
 include(":feature:playlist")
 include(":feature:search")
 include(":sync")
+
+/* Optional - automatically sync gradle files for included build */
+rootDir.run {
+    listOf(
+        "gradle.properties",
+        "gradlew.bat",
+        "gradlew",
+        "gradle/wrapper/gradle-wrapper.jar",
+        "gradle/wrapper/gradle-wrapper.properties"
+    ).map { path ->
+        resolve(path)
+            .copyTo(
+                target = rootDir.resolve("spotify-app-remote").resolve(path),
+                overwrite = true
+            )
+    }
+}
+
+includeBuild("spotify-app-remote")

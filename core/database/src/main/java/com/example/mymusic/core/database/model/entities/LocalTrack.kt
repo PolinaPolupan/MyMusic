@@ -20,12 +20,14 @@ data class LocalTrack(
     @ColumnInfo(name = "trackId")
     @PrimaryKey val id: String,
     @Embedded val album: LocalAlbum,
-    @ColumnInfo(name = "trackName") val name: String
+    @ColumnInfo(name = "trackName") val name: String,
+    val uri: String
 )
 
 fun LocalTrack.toExternal(albumArtists: List<SimplifiedArtist>, artists: List<Artist>) = Track(
     id = id,
     album = album.toExternalSimplified(albumArtists),
     name = name,
-    artists = artists
+    artists = artists,
+    uri = uri
 )

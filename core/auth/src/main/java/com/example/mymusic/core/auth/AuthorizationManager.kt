@@ -125,7 +125,8 @@ class AuthorizationManager @Inject constructor(
             Constants.SCOPE_USER_READ_RECENTLY_PLAYED,
             Constants.SCOPE_USER_LIBRARY_READ,
             Constants.SCOPE_PLAYLIST_READ_PRIVATE,
-            Constants.SCOPE_USER_TOP_READ
+            Constants.SCOPE_USER_TOP_READ,
+            Constants.SCOPE_USER_READ_PLAYBACK_STATE
         )
 
         val request = builder.build()
