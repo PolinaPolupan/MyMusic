@@ -14,19 +14,13 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.mymusic.core.common.Constants
+import com.example.mymusic.appremote.SpotifyAppRemoteManager
 import com.example.mymusic.core.designsystem.theme.MyMusicTheme
 import com.example.mymusic.sync.SyncManager
-import com.spotify.android.appremote.api.ConnectionParams
-import com.spotify.android.appremote.api.Connector
-import com.spotify.android.appremote.api.SpotifyAppRemote
-import com.spotify.protocol.types.Track
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @AndroidEntryPoint

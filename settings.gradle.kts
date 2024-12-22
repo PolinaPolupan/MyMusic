@@ -56,3 +56,4 @@ rootDir.run {
 }
 
 includeBuild("spotify-app-remote")
+include(":app-remote")
