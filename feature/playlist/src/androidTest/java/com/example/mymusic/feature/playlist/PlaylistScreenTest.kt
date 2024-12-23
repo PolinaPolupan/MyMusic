@@ -17,12 +17,21 @@ import com.example.mymusic.core.designsystem.component.OneOf
 import com.example.mymusic.core.designsystem.component.PreviewParameterData
 import com.example.mymusic.core.designsystem.component.TracksListUiState
 import com.example.mymusic.core.designsystem.theme.MyMusicTheme
+import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
 
 @HiltAndroidTest
 class PlaylistScreenTest {
+
+    /**
+     * Create a temporary folder used to create a Data Store file. This guarantees that
+     * the file is removed in between each test, preventing a crash.
+     */
+    @BindValue
+    val tmpFolder: TemporaryFolder = TemporaryFolder.builder().assureDeletion().build()
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()

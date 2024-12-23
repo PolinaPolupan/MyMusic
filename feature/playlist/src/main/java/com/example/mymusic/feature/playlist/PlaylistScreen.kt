@@ -47,7 +47,7 @@ fun PlaylistScreen(
 
     PlaylistContent(
         uiState = uiState,
-        onTrackClick = { /*TODO*/ },
+        onTrackClick = { viewModel.onTrackClick(true, it) },
         onSettingsClick = { /*TODO*/ },
         onBackClick = onBackClick,
         modifier = modifier.fillMaxSize()
@@ -57,7 +57,7 @@ fun PlaylistScreen(
 @Composable
 fun PlaylistContent(
     uiState: TracksListUiState,
-    onTrackClick: (String) -> Unit,
+    onTrackClick: (Track) -> Unit,
     onSettingsClick: () -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -79,7 +79,7 @@ fun PlaylistContent(
 @Composable
 private fun TrackItem(
     track: Track,
-    onTrackClick: (String) -> Unit,
+    onTrackClick: (Track) -> Unit,
     onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -89,7 +89,7 @@ private fun TrackItem(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp, horizontal = 16.dp)
-            .clickable { onTrackClick(track.id) }
+            .clickable { onTrackClick(track) }
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             NetworkImage(

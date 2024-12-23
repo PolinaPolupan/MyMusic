@@ -3,7 +3,9 @@ package com.example.mymusic.feature.playlist
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mymusic.appremote.SpotifyAppRemoteManager
 import com.example.mymusic.core.data.repository.MusicRepository
+import com.example.mymusic.core.data.repository.UserDataRepository
 import com.example.mymusic.core.designsystem.component.OneOf
 import com.example.mymusic.core.designsystem.component.TracksListUiState
 import com.example.mymusic.core.model.Playlist
@@ -15,10 +17,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PlaylistViewModel @Inject constructor(
+    private val userDataRepository: UserDataRepository,
+    private val appRemoteManager: SpotifyAppRemoteManager,
     savedStateHandle: SavedStateHandle,
     musicRepository: MusicRepository
 ): ViewModel() {
@@ -44,4 +49,12 @@ class PlaylistViewModel @Inject constructor(
             )
         }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), TracksListUiState.Loading)
+
+    fun onTrackClick(isPlaying: Boolean, track: Track) {
+        viewModelScope.launch {
+            userDataRepository.setIsPlaying(isPlaying)
+            userDataRepository.setTrackId(track.id)
+        }
+        appRemoteManager.play(track.uri)
+    }
 }

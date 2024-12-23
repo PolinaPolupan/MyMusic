@@ -52,6 +52,7 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:data"))
     implementation(project(":core:designsystem"))
+    implementation(project(":app-remote"))
 
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
