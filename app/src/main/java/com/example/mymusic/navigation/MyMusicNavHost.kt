@@ -46,13 +46,10 @@ fun MyMusicNavHost(
         playerScreen(
             onBackClick = navController::popBackStack,
             onAddToPlaylistClick = navController::navigateToAddToPlaylist,
-            onNavigateToAlbum = navController::navigateToAlbum)
-
-        addToPlaylistScreen(onBackClick = navController::popBackStack)
-        albumScreen(
-            onBackClick = navController::popBackStack,
-            onNavigateToPlayer = navController::navigateToPlayer
+            onNavigateToAlbum = navController::navigateToAlbum
         )
+        addToPlaylistScreen(onBackClick = navController::popBackStack)
+        albumScreen(onBackClick = navController::popBackStack)
         playlistScreen(onBackClick = navController::popBackStack)
     }
 }

@@ -19,10 +19,7 @@ fun NavController.navigateToAlbum(albumId: String) {
     }
 }
 
-fun NavGraphBuilder.albumScreen(
-    onNavigateToPlayer: (String) -> Unit,
-    onBackClick: () -> Unit
-) {
+fun NavGraphBuilder.albumScreen(onBackClick: () -> Unit) {
     composable(
         enterTransition = {fadeIn()},
         route = "${ALBUM_ROUTE}/{${ALBUM_ID_ARG}}",
@@ -30,6 +27,6 @@ fun NavGraphBuilder.albumScreen(
             navArgument(ALBUM_ID_ARG) { type = NavType.StringType },
         )
     ) {
-        AlbumScreen(onBackClick = onBackClick, onNavigateToPlayer = onNavigateToPlayer)
+        AlbumScreen(onBackClick = onBackClick)
     }
 }

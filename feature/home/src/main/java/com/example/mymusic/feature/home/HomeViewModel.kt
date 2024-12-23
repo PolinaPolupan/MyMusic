@@ -46,21 +46,11 @@ class HomeViewModel @Inject constructor(
 
     val recentlyPlayed = musicRepository.observeRecentlyPlayed().cachedIn(viewModelScope)
 
-    private fun setTrackId(trackId: String) {
-        viewModelScope.launch {
-            userDataRepository.setTrackId(trackId)
-        }
-    }
-
-    private fun setIsPlaying(isPlaying: Boolean) {
+    fun onTrackClick(isPlaying: Boolean, track: Track) {
         viewModelScope.launch {
             userDataRepository.setIsPlaying(isPlaying)
+            userDataRepository.setTrackId(track.id)
         }
-    }
-
-    fun onTrackClick(isPlaying: Boolean, track: Track) {
-        setIsPlaying(isPlaying)
-        setTrackId(track.id)
         appRemoteManager.play(track.uri)
     }
 }

@@ -23,7 +23,8 @@ data class LocalSimplifiedTrackWithArtists(
 fun LocalSimplifiedTrackWithArtists.toExternal() = SimplifiedTrack(
     id = simplifiedTrack.id,
     name = simplifiedTrack.name,
-    artists = artists.toExternal()
+    artists = artists.toExternal(),
+    uri = simplifiedTrack.uri
 )
 
 @JvmName("LocalSimplifiedTrackWithArtistsListToExternalSimplifiedTracks")

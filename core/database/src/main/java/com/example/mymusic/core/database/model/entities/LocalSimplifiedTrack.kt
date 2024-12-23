@@ -11,5 +11,6 @@ import androidx.room.PrimaryKey
 data class LocalSimplifiedTrack(
     @ColumnInfo(name = "simplifiedTrackId")
     @PrimaryKey val id: String,
-    @ColumnInfo(name = "simplifiedTrackName") val name: String
+    @ColumnInfo(name = "simplifiedTrackName") val name: String,
+    val uri: String
 )

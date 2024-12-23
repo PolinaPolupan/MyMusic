@@ -3,7 +3,9 @@ package com.example.mymusic.feature.album
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mymusic.appremote.SpotifyAppRemoteManager
 import com.example.mymusic.core.data.repository.MusicRepository
+import com.example.mymusic.core.data.repository.UserDataRepository
 import com.example.mymusic.core.designsystem.component.OneOf
 import com.example.mymusic.core.designsystem.component.TracksListUiState
 import com.example.mymusic.core.model.Album
@@ -21,7 +23,9 @@ import javax.inject.Inject
 @HiltViewModel
 class AlbumViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val musicRepository: MusicRepository
+    private val musicRepository: MusicRepository,
+    private val userDataRepository: UserDataRepository,
+    private val appRemoteManager: SpotifyAppRemoteManager,
 ) : ViewModel() {
 
     private val _albumId: String = checkNotNull(savedStateHandle[ALBUM_ID_ARG])
@@ -47,9 +51,12 @@ class AlbumViewModel @Inject constructor(
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), TracksListUiState.Loading)
 
-    fun loadTrack(id: String) {
+    fun onTrackClick(isPlaying: Boolean, track: SimplifiedTrack) {
         viewModelScope.launch {
-            musicRepository.loadTrack(id)
+            musicRepository.loadTrack(track.id)
+            userDataRepository.setIsPlaying(isPlaying)
+            userDataRepository.setTrackId(track.id)
         }
+        appRemoteManager.play(track.uri)
     }
 }

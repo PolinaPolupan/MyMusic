@@ -17,16 +17,18 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "62yJjFtgkhUrXktIoSjgP2",
             name = "Radioactive",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
-                    name = "Taylor Swift"
+                    name = "Taylor Swift",
                 )
             ),
         ),
         SimplifiedTrack(
             id = "7lBPn6LpIvbvAihTRvBMig",
             name = "Tiptoe",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -37,6 +39,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "7MXlTgQeo3IVlMpLnZuhxc",
             name = "It's Time",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -47,6 +50,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "5qaEfEh1AtSdrdrByCP7qR",
             name = "Demons",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -57,6 +61,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "213x4gsFDm04hSqIUkg88w",
             name = "On Top Of The World",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -67,6 +72,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "5gXdinVZqeuDIVxogWzRk0",
             name = "Amsterdam",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -77,6 +83,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "76cy1WJvNGJTj78UqeA5zr",
             name = "IDGAF",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -87,6 +94,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "2ekn2ttSfGqwhhate0LSR0",
             name = "New Rules",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -97,6 +105,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "4wNQAG2BzbVkLhdajjxGpR",
             name = "Begging",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -107,6 +116,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "10nqz67NQWWa7XPq7ycihi",
             name = "Welcome To New York",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -117,6 +127,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "2ls70nUDfjzm1lSRDuKxmw",
             name = "Blank Space",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -127,6 +138,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "71PmZqBXH0RUETqxpwlV0w",
             name = "Style",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -137,6 +149,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "7EpVQjqtKygiwJIASxMWNg",
             name = "Out Of The Woods",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",
@@ -147,6 +160,7 @@ object PreviewParameterData {
         SimplifiedTrack(
             id = "1kKlhuQE0HXp1IwBRpaH2P",
             name = "Shake It Off",
+            uri = "",
             artists = listOf(
                 SimplifiedArtist(
                     id = "06HL4z0CvFAxyc27GXpf02",

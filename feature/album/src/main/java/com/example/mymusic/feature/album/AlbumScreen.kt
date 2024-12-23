@@ -33,7 +33,6 @@ import com.example.mymusic.core.model.SimplifiedTrack
 
 @Composable
 fun AlbumScreen(
-    onNavigateToPlayer: (String) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AlbumViewModel = hiltViewModel()
@@ -41,10 +40,7 @@ fun AlbumScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     AlbumContent(
         uiState = uiState,
-        onTrackClick = {
-            viewModel.loadTrack(it)
-            onNavigateToPlayer(it)
-        },
+        onTrackClick = { viewModel.onTrackClick(true, it) },
         onSettingsClick = { /*TODO*/ },
         onBackClick = onBackClick,
         modifier = modifier.fillMaxSize()
@@ -54,7 +50,7 @@ fun AlbumScreen(
 @Composable
 fun AlbumContent(
     uiState: TracksListUiState,
-    onTrackClick: (String) -> Unit,
+    onTrackClick: (SimplifiedTrack) -> Unit,
     onSettingsClick: () -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -74,7 +70,7 @@ fun AlbumContent(
 @Composable
 private fun TrackItem(
     track: SimplifiedTrack,
-    onTrackClick: (String) -> Unit,
+    onTrackClick: (SimplifiedTrack) -> Unit,
     onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -83,7 +79,7 @@ private fun TrackItem(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp, horizontal = 16.dp)
-            .clickable { onTrackClick(track.id) }
+            .clickable { onTrackClick(track) }
     ) {
         Column(modifier = Modifier.fillMaxWidth(0.9f)) {
             Text(

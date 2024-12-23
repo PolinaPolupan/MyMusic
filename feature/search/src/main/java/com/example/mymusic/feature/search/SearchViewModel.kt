@@ -8,6 +8,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(): ViewModel() {
     val searchQuery: String = ""
     val recentSearches: List<String> = listOf()
+
     fun onSearchTriggered(query: String) {
 
     }

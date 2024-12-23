@@ -37,7 +37,8 @@ data class SpotifySimplifiedTrack(
 @JvmName("SpotifySimplifiedTrackToLocalSimplifiedTrack")
 fun SpotifySimplifiedTrack.toLocal() = LocalSimplifiedTrack(
     id = id,
-    name = name
+    name = name,
+    uri = uri
 )
 
 @JvmName("SpotifySimplifiedTrackListToLocalSimplifiedTracks")

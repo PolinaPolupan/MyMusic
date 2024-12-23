@@ -247,7 +247,8 @@ class MusicDaoTest {
             SimplifiedTrack(
                 it.id,
                 it.name,
-                networkSimplifiedArtists.toLocal().toExternal()
+                networkSimplifiedArtists.toLocal().toExternal(),
+                uri = ""
             )
         }
 

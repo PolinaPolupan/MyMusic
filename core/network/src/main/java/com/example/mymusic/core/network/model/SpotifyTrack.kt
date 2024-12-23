@@ -55,7 +55,8 @@ fun List<SpotifyTrack>.toLocalTracks() = map(SpotifyTrack::toLocalTrack)
 @JvmName("SpotifyTrackToLocalSimplifiedTrackConversion")
 fun SpotifyTrack.toLocalSimplifiedTrack() = LocalSimplifiedTrack(
     id = id,
-    name = name
+    name = name,
+    uri = uri
 )
 
 fun List<SpotifyTrack>.toLocalSimplifiedTracks() = map(SpotifyTrack::toLocalSimplifiedTrack)
