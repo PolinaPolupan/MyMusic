@@ -55,7 +55,9 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="com.example.mymusic"
+                <data
+                    android:host="https"
+                    android:scheme="com.example.mymusic"
                     android:path="/oauth2redirect"/>
             </intent-filter>
             <intent-filter>
@@ -63,7 +65,9 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="com.example.mymusic"
+                <data
+                    android:host="https"
+                    android:scheme="com.example.mymusic"
                     android:path="/logout"/>
             </intent-filter>
         </activity>
