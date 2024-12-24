@@ -67,7 +67,19 @@ class FakeNetworkDataSource @Inject constructor(
             val inputStream = context.resources.openRawResource(R.raw.saved_albums)
                 .bufferedReader().use { it.readText() }
 
-           Json.decodeFromString<SavedAlbumsResponse?>(inputStream)
+            val response = Json.decodeFromString<SavedAlbumsResponse?>(inputStream)
+            val albums = response?.items
+
+           val albumsPaginated = albums?.drop(offset)?.take(limit)
+            SavedAlbumsResponse(
+                href = response?.href ?: "",
+                limit = limit,
+                next = response?.next,
+                offset = offset,
+                previous = response?.previous,
+                total = response?.total ?: 0,
+                items = albumsPaginated ?: emptyList()
+            )
         }
 
     override suspend fun getSavedPlaylists(offset: Int, limit: Int): SavedPlaylistResponse? =
@@ -75,7 +87,20 @@ class FakeNetworkDataSource @Inject constructor(
             val inputStream = context.resources.openRawResource(R.raw.saved_playlists)
                 .bufferedReader().use { it.readText() }
 
-            Json.decodeFromString<SavedPlaylistResponse?>(inputStream)
+            val response = Json.decodeFromString<SavedPlaylistResponse?>(inputStream)
+            val playlists = response?.items
+
+            val playlistsPaginated = playlists?.drop(offset)?.take(limit)
+
+            SavedPlaylistResponse(
+                href = response?.href ?: "",
+                limit = limit,
+                next = response?.next,
+                offset = offset,
+                previous = response?.previous,
+                total = response?.total ?: 0,
+                items = playlistsPaginated ?: emptyList()
+            )
         }
 
     override suspend fun getPlaylistTracks(id: String, fields: String): List<PlaylistTrack> =

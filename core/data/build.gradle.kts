@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.room)
     implementation(libs.network.response.adapter)
+    androidTestImplementation(project(":core:designsystem"))
     compileOnly(libs.androidx.hilt.common)
     implementation(libs.hilt.android)
     implementation(libs.androidx.room.ktx)
@@ -59,5 +60,9 @@ dependencies {
 
     androidTestImplementation(libs.androidx.junit.test.ext)
     androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.hilt.android)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(project(":core:testing"))
+
     kspAndroidTest(libs.hilt.compiler)
 }

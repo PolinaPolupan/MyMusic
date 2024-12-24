@@ -46,6 +46,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.example.mymusic.feature.home.AuthenticatedUiState
 import com.example.mymusic.core.designsystem.component.AlbumCard
 import com.example.mymusic.core.designsystem.component.AnimationBox
@@ -59,6 +61,8 @@ import com.example.mymusic.core.designsystem.component.SortBottomSheet
 import com.example.mymusic.core.designsystem.component.SortOption
 import com.example.mymusic.core.designsystem.theme.MyMusicTheme
 import com.example.mymusic.core.designsystem.util.lerpScrollOffset
+import com.example.mymusic.core.model.SimplifiedAlbum
+import com.example.mymusic.core.model.SimplifiedPlaylist
 import kotlinx.coroutines.flow.flowOf
 import kotlin.math.abs
 
@@ -116,8 +120,8 @@ fun LibraryScreen(
 @Composable
 fun LibraryContent(
     uiState: AuthenticatedUiState,
-    albums: LazyPagingItems<com.example.mymusic.core.model.SimplifiedAlbum>,
-    playlists: LazyPagingItems<com.example.mymusic.core.model.SimplifiedPlaylist>,
+    albums: LazyPagingItems<SimplifiedAlbum>,
+    playlists: LazyPagingItems<SimplifiedPlaylist>,
     onSortOptionChanged: (SortOption) -> Unit,
     onNavigateToPlaylist: (String) -> Unit,
     onNavigateToAlbumClick: (String) -> Unit,
@@ -233,40 +237,43 @@ fun LibraryContent(
 }
 
 fun LazyListScope.albumsList(
-    albums: LazyPagingItems<com.example.mymusic.core.model.SimplifiedAlbum>,
+    albums: LazyPagingItems<SimplifiedAlbum>,
     onNavigateToAlbumClick: (String) -> Unit,
     onAlbumClick: (String) -> Unit
 ) {
     items(
-        items = albums.itemSnapshotList,
-        key = { it?.id ?: "0" }
-    ) {
-        album ->
-        AnimationBox {
+        key = albums.itemKey { it.id },
+        count = albums.itemCount,
+        contentType = albums.itemContentType { "albums" }
+    ) { index ->
+        val album = albums[index]
+
             AlbumCard(
                 name = album!!.name,
                 artists = album.artists,
                 imageUrl = album.imageUrl,
                 onClick = {
                     onAlbumClick(album.id)
-                    onNavigateToAlbumClick(album.id) },
+                    onNavigateToAlbumClick(album.id)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
             )
-        }
+
     }
 }
 
 fun LazyListScope.playlistsList(
-    playlists: LazyPagingItems<com.example.mymusic.core.model.SimplifiedPlaylist>,
+    playlists: LazyPagingItems<SimplifiedPlaylist>,
     onNavigateToPlaylistClick: (String) -> Unit,
     onPlaylistClick: (String) -> Unit
 ) {
     items(
-        items = playlists.itemSnapshotList,
-        key = { it?.id ?: "0" }
-    ) { playlist ->
-        AnimationBox {
+        key = playlists.itemKey { it.id },
+        count = playlists.itemCount,
+        contentType = playlists.itemContentType { "playlists" }
+    ) { index ->
+        val playlist = playlists[index]
             PlaylistCard(
                 name = playlist!!.name,
                 ownerName = playlist.ownerName,
@@ -279,7 +286,7 @@ fun LazyListScope.playlistsList(
                 },
                 modifier = Modifier.fillMaxWidth()
             )
-        }
+
     }
 }
 

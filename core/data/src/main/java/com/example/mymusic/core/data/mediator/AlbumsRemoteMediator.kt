@@ -57,7 +57,7 @@ class AlbumsRemoteMediator @Inject constructor(
             val next = data?.next
             val albums = data?.items
 
-            val endOfPaginationReached = albums?.isEmpty() == true || next == null
+            val endOfPaginationReached = albums?.isEmpty() == true
 
             musicDatabase.withTransaction {
 
@@ -78,7 +78,7 @@ class AlbumsRemoteMediator @Inject constructor(
                     musicDatabase.remoteKeysDao().insertAllKeys(keys)
                 }
 
-                if (albums != null) {
+                if (!albums.isNullOrEmpty()) {
 
                     musicDao.upsertSavedAlbums(albums.toLocal())
                     musicDao.upsertAlbums(albums.toLocalAlbum())

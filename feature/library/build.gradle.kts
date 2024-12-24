@@ -67,6 +67,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit.test.ext)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(libs.androidx.paging.testing)
     androidTestImplementation(project(":core:testing"))
     kspAndroidTest(libs.hilt.compiler)
 }
