@@ -103,7 +103,7 @@ androidx-runner = { group = "androidx.test", name = "runner", version.ref = "run
 androidx-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "core-ktx" }
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit-ktx-version" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "ui-tooling" }
-spotifyappremote = { module = "com.spotify.android:spotify-app-remote", version.ref = "spotifyappremote" }
+spotifyappremote = { group = "com.spotify.android", name = "spotify-app-remote", version.ref = "spotifyappremote" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
