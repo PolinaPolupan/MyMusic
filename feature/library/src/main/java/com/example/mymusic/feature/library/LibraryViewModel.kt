@@ -9,6 +9,7 @@ import com.example.mymusic.core.data.repository.MusicRepository
 import com.example.mymusic.core.data.repository.UserDataRepository
 import com.example.mymusic.sync.SyncManager
 import com.example.mymusic.core.designsystem.component.SortOption
+import com.example.mymusic.feature.home.AuthenticatedUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -26,13 +27,13 @@ class LibraryViewModel @Inject constructor(
 
     private val _userDataFlow = userDataRepository.userPreferencesFlow
 
-    val authenticatedUiState: StateFlow<com.example.mymusic.feature.home.AuthenticatedUiState> =
+    val authenticatedUiState: StateFlow<AuthenticatedUiState> =
         _userDataFlow
             .map { userData ->
-                if (userData.authState.isNullOrEmpty()) com.example.mymusic.feature.home.AuthenticatedUiState.NotAuthenticated
-                else com.example.mymusic.feature.home.AuthenticatedUiState.Success(userImageUrl = userData.imageUrl)
+                if (userData.authState.isNullOrEmpty()) AuthenticatedUiState.NotAuthenticated
+                else AuthenticatedUiState.Success(userImageUrl = userData.imageUrl)
             }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), com.example.mymusic.feature.home.AuthenticatedUiState.Loading)
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), AuthenticatedUiState.Loading)
 
     val savedPlaylists = musicRepository.observeSavedPlaylists().cachedIn(viewModelScope)
 
